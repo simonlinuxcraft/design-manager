@@ -117,3 +117,46 @@ window.silber .navigation-sidebar {
   color: #aab0b8;
   padding: 8px 4px;
 }
+
+/* 10. Akzentfarb-Auswahl auf der System-Seite. Runde Farbflächen; der gewählte
+       Kreis bekommt einen hellen Ring. Die Farben sind die von GNOME 47. */
+.akzent-swatch {
+  min-width: 30px;
+  min-height: 30px;
+  padding: 0;
+  border-radius: 50%;
+  background-image: none;
+  box-shadow: none;
+  border: 2px solid transparent;
+}
+
+.akzent-swatch:hover {
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.akzent-swatch:checked {
+  border-color: @window_fg_color;
+}
+
+/* 11. Fortschrittspunkte im Willkommens-Dialog. */
+.onboarding-dots .dot {
+  min-width: 8px;
+  min-height: 8px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.22);
+  transition: background-color 150ms ease;
+}
+
+.onboarding-dots .dot.aktiv {
+  background-color: #c7ced6;
+}
+
+.akzent-blue   { background-color: #3584e4; }
+.akzent-teal   { background-color: #2190a4; }
+.akzent-green  { background-color: #3a944a; }
+.akzent-yellow { background-color: #c88800; }
+.akzent-orange { background-color: #ed5b00; }
+.akzent-red    { background-color: #e62d42; }
+.akzent-pink   { background-color: #d56199; }
+.akzent-purple { background-color: #9141ac; }
+.akzent-slate  { background-color: #6f8396; }

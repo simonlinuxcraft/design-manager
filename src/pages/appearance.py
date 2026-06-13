@@ -11,6 +11,7 @@ dconf-Schlüssel setzt.
 from gi.repository import Adw, GLib, Gtk
 
 from src.core import themes
+from src.widgets.dropzone import InstallDropzone
 from src.widgets.theme_card import ThemeCard
 
 
@@ -52,7 +53,10 @@ class AppearancePage(Adw.NavigationPage):
         box.append(self._feld_titel("Symbol-Design (Icons)"))
         box.append(self._icon_karten())
 
-        box.append(self._dropzone())
+        box.append(self._feld_titel("Neues Design installieren"))
+        box.append(InstallDropzone(
+            "GTK- oder Symbol-Design (.tar.gz/.zip) hierher ziehen",
+            erwartet={"gtk", "icon"}))
 
         scroll = Gtk.ScrolledWindow()
         scroll.set_vexpand(True)
@@ -120,22 +124,3 @@ class AppearancePage(Adw.NavigationPage):
         for andere in self._cards:
             andere.set_aktiv(andere is karte)
         self._settings.set_icon_theme(karte.theme_name)
-
-    def _dropzone(self):
-        """Optische Ablage zum Installieren (Funktion folgt in Schritt 8)."""
-        box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=4)
-        box.add_css_class("dropzone")
-        box.set_margin_top(6)
-
-        icon = Gtk.Image.new_from_icon_name("folder-download-symbolic")
-        icon.set_pixel_size(24)
-        icon.set_halign(Gtk.Align.CENTER)
-        box.append(icon)
-
-        text = Gtk.Label(
-            label="Neues Design installieren (.tar.gz oder .zip hierher ziehen)")
-        text.set_halign(Gtk.Align.CENTER)
-        box.append(text)
-
-        box.set_tooltip_text("Wird in einem späteren Schritt funktionsfähig.")
-        return box

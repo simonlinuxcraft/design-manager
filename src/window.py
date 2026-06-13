@@ -9,8 +9,9 @@ Zeile merkt sich ihre Seiten-Erzeuger-Funktion direkt am Objekt
 
 import os
 
-from gi.repository import Adw, Gdk, Gtk
+from gi.repository import Adw, Gdk, Gio, GLib, Gtk
 
+from src.core import onboarding
 from src.core.settings import AppSettings
 from src.pages.appearance import AppearancePage
 from src.pages.background import BackgroundPage
@@ -18,6 +19,9 @@ from src.pages.backup import BackupPage
 from src.pages.cursor import CursorPage
 from src.pages.extensions import ExtensionsPage
 from src.pages.fonts import FontsPage
+from src.pages.shell import ShellPage
+from src.pages.system import SystemPage
+from src.widgets.welcome import WelcomeDialog
 
 
 APP_VERSION = "0.1.0"
@@ -36,7 +40,7 @@ class MainWindow(Adw.ApplicationWindow):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        self.set_title("Linux Anpassung")
+        self.set_title("Design Manager")
         self.set_default_size(960, 640)
 
         # CSS-Klasse, über die unser Stylesheet (Chrom-Silber) greift.
@@ -44,6 +48,9 @@ class MainWindow(Adw.ApplicationWindow):
 
         # Eine gemeinsame Settings-Instanz für alle Seiten.
         self._settings = AppSettings()
+
+        # Aktionen für das Hauptmenü (Über, Beenden) registrieren.
+        self._setup_actions()
 
         # Die Bereiche der Seitenleiste. Pro Eintrag: Titel (Pango-Markup, daher
         # "&amp;"), Icon-Name und eine Funktion, die die Seite baut.
@@ -56,24 +63,71 @@ class MainWindow(Adw.ApplicationWindow):
              lambda: CursorPage(self._settings)),
             ("Schriftarten", "font-x-generic-symbolic",
              lambda: FontsPage(self._settings)),
+            ("Shell-Design", "video-display-symbolic",
+             lambda: ShellPage(self._settings)),
             ("Erweiterungen", "application-x-addon-symbolic",
              lambda: ExtensionsPage(self._settings)),
+            ("System", "applications-system-symbolic",
+             lambda: SystemPage(self._settings)),
             ("Sicherung", "document-save-symbolic",
              lambda: BackupPage(self._settings)),
         ]
 
         self._split = Adw.NavigationSplitView()
         self._split.set_sidebar(self._build_sidebar())
-        self.set_content(self._split)
+
+        # Toast-Overlay um den ganzen Inhalt, damit Meldungen (z.B. nach einer
+        # Installation) über jeder Seite erscheinen können.
+        self._toasts = Adw.ToastOverlay()
+        self._toasts.set_child(self._split)
+        self.set_content(self._toasts)
 
         # Startauswahl: erste echte Zeile, löst row-selected aus.
         self._listbox.select_row(self._erste_zeile)
+
+        # Beim allerersten Start die Einführung zeigen. Über idle_add, damit das
+        # Fenster vorher sichtbar ist (der Dialog braucht ein präsentiertes
+        # Eltern-Fenster).
+        if onboarding.ist_erster_start():
+            GLib.idle_add(self._zeige_willkommen)
+
+    def _zeige_willkommen(self):
+        WelcomeDialog().present(self)
+        onboarding.als_gesehen_markieren()
+        return GLib.SOURCE_REMOVE
+
+    def melde_installation(self, ergebnis, fehler):
+        """Rückmeldung der Dropzone: Toast zeigen und die Liste neu laden.
+
+        Die Dropzone ruft das nach einer Installation auf. Bei Erfolg bauen wir
+        die aktive Seite neu, damit ein neu installiertes Design sofort in ihrer
+        Liste erscheint.
+        """
+        if fehler:
+            self._toasts.add_toast(
+                Adw.Toast(title="Installation fehlgeschlagen: " + fehler))
+            return
+        self._toasts.add_toast(
+            Adw.Toast(title="Installiert: " + ", ".join(ergebnis)))
+        self._reload_aktive_seite()
+
+    def _reload_aktive_seite(self):
+        """Baut die gerade gewählte Seite neu (verwirft ihren Cache)."""
+        zeile = self._listbox.get_selected_row()
+        if zeile is None:
+            return
+        erzeuge_seite = getattr(zeile, "erzeuge_seite", None)
+        if erzeuge_seite is None:
+            return
+        zeile.seite = erzeuge_seite()
+        self._split.set_content(zeile.seite)
 
     def _build_sidebar(self):
         """Linke Spalte: flache Kopfleiste mit Marke, darunter die Liste."""
         header = Adw.HeaderBar()
         header.add_css_class("flat")  # kein eigener Hintergrund -> ein Block
         header.pack_start(self._logo())
+        header.pack_end(self._menue_knopf())
         header.set_title_widget(
             Adw.WindowTitle(title="Design Manager", subtitle="v" + APP_VERSION)
         )
@@ -87,6 +141,42 @@ class MainWindow(Adw.ApplicationWindow):
         toolbar.add_top_bar(header)
         toolbar.set_content(inhalt)
         return Adw.NavigationPage(title="Design Manager", child=toolbar)
+
+    def _setup_actions(self):
+        """Fenster-Aktionen für das Hauptmenü anlegen (win.about, win.quit)."""
+        ueber = Gio.SimpleAction.new("about", None)
+        ueber.connect("activate", self._on_ueber)
+        self.add_action(ueber)
+
+        beenden = Gio.SimpleAction.new("quit", None)
+        beenden.connect("activate", lambda *_: self.close())
+        self.add_action(beenden)
+
+    def _menue_knopf(self):
+        """Hamburger-Menü rechts in der Kopfleiste."""
+        menue = Gio.Menu()
+        menue.append("Über Design Manager", "win.about")
+        menue.append("Beenden", "win.quit")
+
+        knopf = Gtk.MenuButton()
+        knopf.set_icon_name("open-menu-symbolic")
+        knopf.set_menu_model(menue)
+        knopf.set_tooltip_text("Hauptmenü")
+        return knopf
+
+    def _on_ueber(self, _action, _param):
+        """Zeigt den Über-Dialog mit Version, Logo und Lizenz."""
+        dialog = Adw.AboutDialog(
+            application_name="Design Manager",
+            application_icon="io.github.simonlinuxcraft.DesignManager",
+            version=APP_VERSION,
+            developer_name="simonlinuxcraft",
+            comments="Das Erscheinungsbild von GNOME zentral anpassen: "
+                     "Hintergrund, Designs, Symbole, Mauszeiger und Schrift.",
+            license_type=Gtk.License.GPL_3_0,
+            copyright="© 2026 simonlinuxcraft",
+        )
+        dialog.present(self)
 
     def _logo(self):
         """Kleines App-Logo für die Kopfleiste.

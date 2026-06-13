@@ -5,10 +5,11 @@ Zeiger), genau wie die Symbol-Designs. Klick setzt sofort; unter Wayland wird
 der neue Zeiger teils erst nach erneuter Anmeldung überall übernommen.
 """
 
-from gi.repository import Adw, Gtk
+from gi.repository import Adw, GLib, Gtk
 
 from src.core import themes
 from src.widgets.cursor_card import CursorCard
+from src.widgets.dropzone import InstallDropzone
 
 
 class CursorPage(Adw.NavigationPage):
@@ -26,12 +27,17 @@ class CursorPage(Adw.NavigationPage):
         box.set_margin_end(18)
 
         untertitel = Gtk.Label(
-            label="Wirkt unter Wayland teils erst nach erneuter Anmeldung.",
+            label="Programme wechseln sofort. Der Zeiger über dem Desktop und "
+                  "in manchen Bereichen folgt erst nach erneuter Anmeldung.",
             xalign=0)
         untertitel.add_css_class("dim-label")
         box.append(untertitel)
 
         box.append(self._karten())
+
+        box.append(InstallDropzone(
+            "Mauszeiger-Design (.tar.gz/.zip) hierher ziehen",
+            erwartet={"cursor"}))
 
         scroll = Gtk.ScrolledWindow()
         scroll.set_vexpand(True)
@@ -51,13 +57,26 @@ class CursorPage(Adw.NavigationPage):
         flowbox.set_row_spacing(10)
         flowbox.set_homogeneous(True)
 
-        aktuell = self._settings.cursor_theme()
-        for name in themes.list_cursor_themes():
-            karte = CursorCard(name, aktiv=(name == aktuell))
-            flowbox.append(karte)
-            self._cards.append(karte)
-
         flowbox.connect("child-activated", self._on_karte_aktiviert)
+
+        # Karten häppchenweise über den Idle-Handler bauen. Jede Karte parst
+        # eine Xcursor-Binärdatei; alle auf einmal würde das Öffnen der Seite
+        # sonst kurz einfrieren. So erscheint die Seite sofort und füllt sich.
+        aktuell = self._settings.cursor_theme()
+        namen = iter(themes.list_cursor_themes())
+
+        def baue_naechste():
+            for _ in range(2):  # zwei Karten pro Durchlauf
+                try:
+                    name = next(namen)
+                except StopIteration:
+                    return False  # fertig, Idle beenden
+                karte = CursorCard(name, aktiv=(name == aktuell))
+                flowbox.append(karte)
+                self._cards.append(karte)
+            return True
+
+        GLib.idle_add(baue_naechste)
         return flowbox
 
     def _on_karte_aktiviert(self, _flowbox, karte):

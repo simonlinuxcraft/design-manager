@@ -121,3 +121,19 @@ def list_cursor_themes():
         if os.path.isdir(os.path.join(pfad, "cursors")):
             namen.add(name)
     return sorted(namen, key=str.lower)
+
+
+def list_shell_themes():
+    """Namen aller GNOME-Shell-Designs, alphabetisch, ohne Duplikate.
+
+    Ein Shell-Design erkennt man am Unterordner gnome-shell/ (dort liegt die
+    gnome-shell.css). Das Design wird über die Erweiterung „User Themes"
+    gesetzt; rein optisch wirkt es auf Topbar, Kalender und Schnelleinstellungen.
+    """
+    namen = set()
+    for name, pfad in _ordner_in(THEME_DIRS):
+        if name in VERSTECKTE_THEMES:
+            continue
+        if os.path.isdir(os.path.join(pfad, "gnome-shell")):
+            namen.add(name)
+    return sorted(namen, key=str.lower)
