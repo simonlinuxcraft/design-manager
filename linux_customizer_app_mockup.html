@@ -1,0 +1,96 @@
+<h2 class="sr-only">Mockup einer Ubuntu-Anpassungs-App mit Seitenleiste für Hintergrund, Design, Symbole, Mauszeiger und Schriftarten sowie einem Inhaltsbereich für Symbol-Designs.</h2>
+<style>.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);border:0}</style>
+
+<div style="background: var(--color-background-secondary); border-radius: var(--border-radius-lg); padding: 1.1rem;">
+ <div style="background: var(--color-background-primary); border:0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); overflow:hidden;">
+
+  <div style="display:flex; align-items:center; justify-content:space-between; padding:9px 13px; border-bottom:0.5px solid var(--color-border-tertiary); background: var(--color-background-secondary);">
+   <div style="display:flex; align-items:center; gap:11px;">
+    <span style="width:11px;height:11px;border-radius:50%;background:#E24B4A;display:inline-block;"></span>
+    <span style="width:11px;height:11px;border-radius:50%;background:#EF9F27;display:inline-block;"></span>
+    <span style="width:11px;height:11px;border-radius:50%;background:#1D9E75;display:inline-block;"></span>
+    <span style="font-weight:500; font-size:14px; margin-left:6px;">Linux Anpassung</span>
+   </div>
+   <div style="display:flex; gap:4px; align-items:center;">
+    <button style="width:30px;height:30px;padding:0;display:flex;align-items:center;justify-content:center;" aria-label="Suchen"><i class="ti ti-search" style="font-size:17px;" aria-hidden="true"></i></button>
+    <button style="width:30px;height:30px;padding:0;display:flex;align-items:center;justify-content:center;" aria-label="Menü"><i class="ti ti-menu-2" style="font-size:17px;" aria-hidden="true"></i></button>
+   </div>
+  </div>
+
+  <div style="display:flex; min-height:430px;">
+
+   <div style="width:172px; border-right:0.5px solid var(--color-border-tertiary); padding:8px; background: var(--color-background-secondary);">
+    <p style="font-size:11px;color:var(--color-text-tertiary);margin:6px 8px 4px;letter-spacing:.04em;">EINSTELLUNGEN</p>
+    <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--border-radius-md);font-size:13px;color:var(--color-text-secondary);"><i class="ti ti-photo" style="font-size:18px;" aria-hidden="true"></i>Hintergrund</div>
+    <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--border-radius-md);font-size:13px;font-weight:500;color:var(--color-text-info);background:var(--color-background-info);"><i class="ti ti-palette" style="font-size:18px;" aria-hidden="true"></i>Symbole &amp; Design</div>
+    <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--border-radius-md);font-size:13px;color:var(--color-text-secondary);"><i class="ti ti-pointer" style="font-size:18px;" aria-hidden="true"></i>Mauszeiger</div>
+    <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--border-radius-md);font-size:13px;color:var(--color-text-secondary);"><i class="ti ti-typography" style="font-size:18px;" aria-hidden="true"></i>Schriftarten</div>
+    <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--border-radius-md);font-size:13px;color:var(--color-text-secondary);"><i class="ti ti-puzzle" style="font-size:18px;" aria-hidden="true"></i>Erweiterungen</div>
+    <div style="height:0.5px;background:var(--color-border-tertiary);margin:8px 6px;"></div>
+    <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--border-radius-md);font-size:13px;color:var(--color-text-secondary);"><i class="ti ti-archive" style="font-size:18px;" aria-hidden="true"></i>Sicherung</div>
+   </div>
+
+   <div style="flex:1; padding:16px 18px; min-width:0;">
+    <h3 style="margin:0 0 2px;">Symbole &amp; Design</h3>
+    <p style="font-size:13px;color:var(--color-text-secondary);margin:0 0 18px;">Änderungen werden sofort übernommen.</p>
+
+    <p style="font-size:13px;font-weight:500;margin:0 0 8px;">GTK-Design (Fenster &amp; Programme)</p>
+    <select style="width:100%;margin-bottom:18px;">
+     <option>Yaru-dark</option><option>Adwaita</option><option>Arc-Dark</option><option>Catppuccin-Mocha</option>
+    </select>
+
+    <p style="font-size:13px;font-weight:500;margin:0 0 8px;">Symbol-Design (Icons)</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:10px;margin-bottom:18px;">
+
+     <div style="border:2px solid var(--color-border-info);border-radius:var(--border-radius-md);padding:10px;position:relative;">
+      <div style="display:flex;gap:5px;margin-bottom:8px;">
+       <span style="width:26px;height:26px;border-radius:7px;background:var(--color-background-info);display:flex;align-items:center;justify-content:center;color:var(--color-text-info);"><i class="ti ti-folder" style="font-size:15px;" aria-hidden="true"></i></span>
+       <span style="width:26px;height:26px;border-radius:7px;background:var(--color-background-success);display:flex;align-items:center;justify-content:center;color:var(--color-text-success);"><i class="ti ti-music" style="font-size:15px;" aria-hidden="true"></i></span>
+       <span style="width:26px;height:26px;border-radius:7px;background:var(--color-background-danger);display:flex;align-items:center;justify-content:center;color:var(--color-text-danger);"><i class="ti ti-camera" style="font-size:15px;" aria-hidden="true"></i></span>
+      </div>
+      <div style="font-size:13px;font-weight:500;">Papirus</div>
+      <div style="font-size:11px;color:var(--color-text-info);">Aktiv</div>
+      <span style="position:absolute;top:7px;right:7px;width:18px;height:18px;border-radius:50%;background:var(--color-text-info);color:var(--color-background-primary);display:flex;align-items:center;justify-content:center;"><i class="ti ti-check" style="font-size:12px;" aria-hidden="true"></i></span>
+     </div>
+
+     <div style="border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:10px;">
+      <div style="display:flex;gap:5px;margin-bottom:8px;">
+       <span style="width:26px;height:26px;border-radius:50%;background:var(--color-background-warning);display:flex;align-items:center;justify-content:center;color:var(--color-text-warning);"><i class="ti ti-folder" style="font-size:15px;" aria-hidden="true"></i></span>
+       <span style="width:26px;height:26px;border-radius:50%;background:var(--color-background-info);display:flex;align-items:center;justify-content:center;color:var(--color-text-info);"><i class="ti ti-music" style="font-size:15px;" aria-hidden="true"></i></span>
+       <span style="width:26px;height:26px;border-radius:50%;background:var(--color-background-secondary);display:flex;align-items:center;justify-content:center;color:var(--color-text-secondary);"><i class="ti ti-camera" style="font-size:15px;" aria-hidden="true"></i></span>
+      </div>
+      <div style="font-size:13px;font-weight:500;">Yaru</div>
+      <div style="font-size:11px;color:var(--color-text-tertiary);">Standard</div>
+     </div>
+
+     <div style="border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:10px;">
+      <div style="display:flex;gap:5px;margin-bottom:8px;">
+       <span style="width:26px;height:26px;border-radius:7px;background:var(--color-background-secondary);display:flex;align-items:center;justify-content:center;color:var(--color-text-secondary);"><i class="ti ti-folder" style="font-size:15px;" aria-hidden="true"></i></span>
+       <span style="width:26px;height:26px;border-radius:7px;background:var(--color-background-secondary);display:flex;align-items:center;justify-content:center;color:var(--color-text-secondary);"><i class="ti ti-music" style="font-size:15px;" aria-hidden="true"></i></span>
+       <span style="width:26px;height:26px;border-radius:7px;background:var(--color-background-secondary);display:flex;align-items:center;justify-content:center;color:var(--color-text-secondary);"><i class="ti ti-camera" style="font-size:15px;" aria-hidden="true"></i></span>
+      </div>
+      <div style="font-size:13px;font-weight:500;">Adwaita</div>
+      <div style="font-size:11px;color:var(--color-text-tertiary);">Installiert</div>
+     </div>
+    </div>
+
+    <p style="font-size:13px;font-weight:500;margin:0 0 8px;">Mauszeiger</p>
+    <select style="width:100%;margin-bottom:18px;">
+     <option>Yaru</option><option>Adwaita</option><option>Bibata-Modern-Classic</option><option>Breeze</option>
+    </select>
+
+    <div style="border:1px dashed var(--color-border-secondary);border-radius:var(--border-radius-md);padding:16px;text-align:center;color:var(--color-text-secondary);">
+     <i class="ti ti-upload" style="font-size:20px;" aria-hidden="true"></i>
+     <div style="font-size:13px;margin-top:4px;">Neues Design installieren (.tar.gz hierher ziehen)</div>
+    </div>
+
+   </div>
+  </div>
+
+  <div style="display:flex;align-items:center;gap:8px;padding:8px 14px;border-top:0.5px solid var(--color-border-tertiary);background:var(--color-background-secondary);font-size:12px;color:var(--color-text-secondary);">
+   <i class="ti ti-info-circle" style="font-size:15px;" aria-hidden="true"></i>
+   Shell-Designs benötigen die Erweiterung „User Themes".
+  </div>
+
+ </div>
+</div>

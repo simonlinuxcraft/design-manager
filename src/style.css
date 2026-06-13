@@ -1,0 +1,119 @@
+/* Dunkles Chrom-Silber, abgestimmt auf das App-Logo (anthrazit + Chrom).
+   Greift über die CSS-Klasse "silber", die das Hauptfenster trägt
+   (siehe window.py). Ziel: ein ruhiger, einheitlicher Dunkelton; der
+   Chrom-Schimmer lebt auf den Karten und aktiven Elementen. */
+
+/* 1. Grundfarben des libadwaita-Themes. Fenster und Kopfleiste teilen sich
+      einen Ton, damit oben kein Bruch entsteht. */
+@define-color window_bg_color    #1c1f24;
+@define-color window_fg_color    #e7eaef;
+@define-color view_bg_color      #20242a;
+@define-color view_fg_color      #e7eaef;
+@define-color card_bg_color      #2a2e34;
+@define-color card_fg_color      #e7eaef;
+@define-color headerbar_bg_color #1c1f24;
+@define-color headerbar_fg_color #e7eaef;
+@define-color accent_bg_color    #c7ced6;   /* Chrom-Silber als Akzentfläche */
+@define-color accent_fg_color    #1b1d21;   /* dunkle Schrift auf Silber */
+@define-color accent_color       #cfd6de;   /* silberne Akzent-Schrift */
+
+/* 2. Metallischer Chrom-Verlauf (gebürstetes, dunkles Silber). Sichtbar im
+      rechten Inhaltsbereich; die deckende Seitenleiste (.sidebar-pane) hält die
+      linke Spalte ruhig. */
+window.silber {
+  background-image: linear-gradient(
+    135deg,
+    #16181c  0%,
+    #2b3038 16%,
+    #1b1e24 34%,
+    #333942 52%,
+    #1c2026 70%,
+    #2c323a 86%,
+    #181b20 100%
+  );
+}
+
+/* 3. Kopfleiste schlicht: kein Glanzstreifen. Nur Nicht-flache Header
+      bekommen eine dezente Trennlinie unten; der flache Sidebar-Header bleibt
+      ohne Linie, damit die Seitenleiste ein Block ist. */
+window.silber headerbar {
+  background-image: none;
+  box-shadow: none;
+}
+
+window.silber headerbar:not(.flat) {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+/* 4. Seitenleiste als ein durchgehender dunkler Block (Kopf + Körper). */
+window.silber .sidebar-pane {
+  background-color: #17191d;
+}
+
+window.silber .navigation-sidebar {
+  background: transparent;   /* zeigt den Pane-Ton, behält Zeilen-Styling */
+}
+
+/* 5. Kleine Abschnitts-Überschrift in der Seitenleiste. */
+.sidebar-caption {
+  font-size: 0.78em;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+/* 6. Kleine Feld-Überschriften im Inhalt (über den Dropdowns). */
+.feld-titel {
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+/* 7. Vorschaukarten für Symbol-Designs. */
+.theme-card {
+  background-image: linear-gradient(160deg, #2c3037, #22252b);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 12px;
+  padding: 12px;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.theme-card:hover {
+  border-color: rgba(199, 206, 214, 0.45);
+}
+
+/* Aktive (gewählte) Karte mit silbernem Rahmen markieren. */
+.theme-card.aktiv {
+  border-color: #c7ced6;
+  box-shadow: inset 0 0 0 1px #c7ced6;
+}
+
+.card-title {
+  font-weight: 700;
+}
+
+.card-status {
+  font-size: 0.85em;
+  color: #aab0b8;
+}
+
+.theme-card.aktiv .card-status {
+  color: #d7dde4;
+}
+
+/* Thumbnail in den Hintergrund-Karten leicht abrunden. */
+.wallpaper-thumb {
+  border-radius: 8px;
+}
+
+/* 8. Drag-&-Drop-Zone für neue Designs (Funktion folgt in Schritt 8). */
+.dropzone {
+  border: 1px dashed rgba(199, 206, 214, 0.35);
+  border-radius: 12px;
+  padding: 18px;
+  color: #aab0b8;
+}
+
+/* 9. Hinweis-Band unten. */
+.hinweis {
+  color: #aab0b8;
+  padding: 8px 4px;
+}

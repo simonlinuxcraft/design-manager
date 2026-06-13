@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=Application
+Name=Design Manager
+GenericName=Appearance Settings
+GenericName[de]=Erscheinungsbild
+Comment=Customize the GNOME desktop appearance
+Comment[de]=Das Erscheinungsbild von GNOME anpassen
+Exec=design-manager
+Icon=io.github.simonlinuxcraft.DesignManager
+Terminal=false
+Categories=Settings;DesktopSettings;GTK;
+StartupNotify=true
+StartupWMClass=io.github.simonlinuxcraft.DesignManager
+Keywords=theme;icons;cursor;font;wallpaper;appearance;

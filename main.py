@@ -1,0 +1,94 @@
+#!/usr/bin/env python3
+"""Einstiegspunkt der App.
+
+Startet die Adw.Application und zeigt das Hauptfenster. Mehr passiert hier
+bewusst nicht: die eigentliche Oberflaeche liegt in src/window.py.
+"""
+
+import os
+import sys
+
+import gi
+
+# Vor dem Import der Bibliotheken muss feststehen, welche Version wir wollen.
+gi.require_version("Gtk", "4.0")
+gi.require_version("Adw", "1")
+
+from gi.repository import Adw, Gdk, Gio, GLib, Gtk  # noqa: E402  (Import erst nach require_version)
+
+from src.window import MainWindow  # noqa: E402
+
+
+# Pfad zum eigenen Stylesheet (silberne Optik), relativ zu dieser Datei.
+STYLE_FILE = os.path.join(os.path.dirname(__file__), "src", "style.css")
+
+
+# Eindeutige App-ID im Reverse-DNS-Stil. GNOME ordnet darüber das Fenster der
+# passenden .desktop-Datei zu und zeigt deren Icon im Dock. Der Name muss zum
+# Dateinamen der .desktop-Datei und zum installierten Icon passen.
+APP_ID = "io.github.simonlinuxcraft.DesignManager"
+
+
+class LinuxAnpassungApp(Adw.Application):
+    """Die Anwendung selbst.
+
+    Adw.Application übernimmt den App-Lebenszyklus (Start, Beenden) und bringt
+    das libadwaita-Styling mit.
+    """
+
+    def __init__(self):
+        super().__init__(
+            application_id=APP_ID,
+            flags=Gio.ApplicationFlags.DEFAULT_FLAGS,
+        )
+
+    def do_startup(self):
+        """Einmalig beim App-Start. Hier laden wir unser eigenes Stylesheet."""
+        Adw.Application.do_startup(self)
+
+        # Unter X11 bildet GTK die WM_CLASS aus dem Programmnamen. Ohne das hier
+        # waere sie "main.py" und GNOME faende die .desktop-Datei nicht, das
+        # Dock-Icon bliebe generisch. Mit der App-ID passt die Zuordnung.
+        GLib.set_prgname(APP_ID)
+
+        # Das Logo ist dunkles Anthrazit mit Chrom-Silber, dazu passt der
+        # dunkle Modus. Darum fix auf dunkel, unabhaengig vom System.
+        Adw.StyleManager.get_default().set_color_scheme(Adw.ColorScheme.FORCE_DARK)
+
+        self._load_styles()
+
+    def _load_styles(self):
+        """Liest src/style.css ein und legt es über das Standard-Theme."""
+        provider = Gtk.CssProvider()
+        provider.load_from_path(STYLE_FILE)
+
+        # USER-Priorität sorgt dafür, dass unsere Regeln das Theme überschreiben.
+        Gtk.StyleContext.add_provider_for_display(
+            Gdk.Display.get_default(),
+            provider,
+            Gtk.STYLE_PROVIDER_PRIORITY_USER,
+        )
+
+    def do_activate(self):
+        """Wird beim Start aufgerufen (und wenn die App erneut aktiviert wird).
+
+        Wir verwenden ein eventuell schon offenes Fenster wieder, statt ein
+        zweites aufzumachen.
+        """
+        window = self.props.active_window
+        if not window:
+            window = MainWindow(application=self)
+            # Icon-Name = App-ID. Greift, sobald ein gleichnamiges Icon im
+            # Theme installiert ist (siehe data/dev-install.sh). Das Dock-Icon
+            # selbst zieht GNOME aus der .desktop-Datei.
+            window.set_icon_name(APP_ID)
+        window.present()
+
+
+def main():
+    app = LinuxAnpassungApp()
+    return app.run(sys.argv)
+
+
+if __name__ == "__main__":
+    sys.exit(main())
