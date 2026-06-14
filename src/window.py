@@ -17,6 +17,7 @@ from src.pages.appearance import AppearancePage
 from src.pages.background import BackgroundPage
 from src.pages.backup import BackupPage
 from src.pages.cursor import CursorPage
+from src.pages.dock import DockPage
 from src.pages.extensions import ExtensionsPage
 from src.pages.fonts import FontsPage
 from src.pages.shell import ShellPage
@@ -65,6 +66,8 @@ class MainWindow(Adw.ApplicationWindow):
              lambda: FontsPage(self._settings)),
             ("Shell-Design", "video-display-symbolic",
              lambda: ShellPage(self._settings)),
+            ("Dock", "view-app-grid-symbolic",
+             lambda: DockPage(self._settings)),
             ("Erweiterungen", "application-x-addon-symbolic",
              lambda: ExtensionsPage(self._settings)),
             ("System", "applications-system-symbolic",
@@ -108,12 +111,18 @@ class MainWindow(Adw.ApplicationWindow):
         Liste erscheint.
         """
         if fehler:
-            self._toasts.add_toast(
-                Adw.Toast(title="Installation fehlgeschlagen: " + fehler))
+            self.zeige_toast("Installation fehlgeschlagen: " + fehler)
             return
-        self._toasts.add_toast(
-            Adw.Toast(title="Installiert: " + ", ".join(ergebnis)))
+        self.zeige_toast("Installiert: " + ", ".join(ergebnis))
         self._reload_aktive_seite()
+
+    def zeige_toast(self, text):
+        """Zeigt eine kurze Meldung über dem aktuellen Inhalt.
+
+        Die Seiten nutzen das über get_root() für Rückmeldungen (z.B. nach dem
+        Entfernen eines Designs).
+        """
+        self._toasts.add_toast(Adw.Toast(title=text))
 
     def _reload_aktive_seite(self):
         """Baut die gerade gewählte Seite neu (verwirft ihren Cache)."""

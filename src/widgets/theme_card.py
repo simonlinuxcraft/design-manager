@@ -12,6 +12,7 @@ die echten Icons genau dieses Designs, ohne das System-Design zu verändern.
 from gi.repository import Gtk
 
 from src.core import themes
+from src.widgets.card_common import status_zeile
 
 
 # Beispiel-Icons, die in fast jedem Design vorkommen. Pro Platz mehrere Namen
@@ -36,7 +37,7 @@ def _icon_theme_fuer(name):
 class ThemeCard(Gtk.FlowBoxChild):
     """Eine anklickbare Vorschaukarte für genau ein Symbol-Design."""
 
-    def __init__(self, theme_name, aktiv):
+    def __init__(self, theme_name, aktiv, loeschbar=False, on_loeschen=None):
         super().__init__()
         self.theme_name = theme_name
         self.add_css_class("theme-card")
@@ -50,9 +51,7 @@ class ThemeCard(Gtk.FlowBoxChild):
         name_label.set_ellipsize(3)  # PANGO_ELLIPSIZE_END: lange Namen kürzen
         box.append(name_label)
 
-        self._status = Gtk.Label(xalign=0)
-        self._status.add_css_class("card-status")
-        box.append(self._status)
+        box.append(status_zeile(self, loeschbar, on_loeschen))
 
         self.set_child(box)
         self.set_aktiv(aktiv)

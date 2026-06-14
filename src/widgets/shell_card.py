@@ -12,6 +12,7 @@ import math
 from gi.repository import Gtk
 
 from src.core import shell_preview
+from src.widgets.card_common import status_zeile
 
 
 TOPBAR_HOEHE = 40
@@ -20,7 +21,8 @@ TOPBAR_HOEHE = 40
 class ShellCard(Gtk.FlowBoxChild):
     """Anklickbare Vorschaukarte für genau ein Shell-Design."""
 
-    def __init__(self, theme_name, anzeige_name, aktiv):
+    def __init__(self, theme_name, anzeige_name, aktiv,
+                 loeschbar=False, on_loeschen=None):
         super().__init__()
         self.theme_name = theme_name  # "" steht für das Standard-Design
         self.add_css_class("theme-card")
@@ -33,9 +35,7 @@ class ShellCard(Gtk.FlowBoxChild):
         name_label.set_ellipsize(3)  # lange Namen kürzen
         box.append(name_label)
 
-        self._status = Gtk.Label(xalign=0)
-        self._status.add_css_class("card-status")
-        box.append(self._status)
+        box.append(status_zeile(self, loeschbar, on_loeschen))
 
         self.set_child(box)
         self.set_aktiv(aktiv)

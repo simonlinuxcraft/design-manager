@@ -9,6 +9,7 @@ Hauptpfeil gezeigt; fehlt auch der, ein generisches Maus-Symbol.
 from gi.repository import Gtk
 
 from src.core import cursors
+from src.widgets.card_common import status_zeile
 
 
 VORSCHAU_GROESSE = 30
@@ -17,7 +18,7 @@ VORSCHAU_GROESSE = 30
 class CursorCard(Gtk.FlowBoxChild):
     """Eine anklickbare Vorschaukarte für genau ein Mauszeiger-Design."""
 
-    def __init__(self, theme_name, aktiv):
+    def __init__(self, theme_name, aktiv, loeschbar=False, on_loeschen=None):
         super().__init__()
         self.theme_name = theme_name
         self.add_css_class("theme-card")
@@ -30,9 +31,7 @@ class CursorCard(Gtk.FlowBoxChild):
         name_label.set_ellipsize(3)  # lange Namen kürzen
         box.append(name_label)
 
-        self._status = Gtk.Label(xalign=0)
-        self._status.add_css_class("card-status")
-        box.append(self._status)
+        box.append(status_zeile(self, loeschbar, on_loeschen))
 
         self.set_child(box)
         self.set_aktiv(aktiv)

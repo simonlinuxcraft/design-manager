@@ -9,9 +9,14 @@ werden.
 
 from gi.repository import Adw, GLib, Gtk
 
-from src.core import themes
+from src.core import themes, uninstaller
 from src.widgets.cursor_card import CursorCard
 from src.widgets.dropzone import InstallDropzone
+
+
+# Sicherer Rückfallwert, falls das gerade aktive Design entfernt wird. Adwaita
+# liegt systemweit (/usr/share/icons/Adwaita) und hat einen Mauszeiger.
+STANDARD_CURSOR = "Adwaita"
 
 
 class CursorPage(Adw.NavigationPage):
@@ -69,6 +74,7 @@ class CursorPage(Adw.NavigationPage):
         flowbox.set_hexpand(True)
 
         flowbox.connect("child-activated", self._on_karte_aktiviert)
+        self._flowbox = flowbox
 
         # Karten häppchenweise über den Idle-Handler bauen. Jede Karte parst
         # eine Xcursor-Binärdatei; alle auf einmal würde das Öffnen der Seite
@@ -82,7 +88,10 @@ class CursorPage(Adw.NavigationPage):
                     name = next(namen)
                 except StopIteration:
                     return False  # fertig, Idle beenden
-                karte = CursorCard(name, aktiv=(name == aktuell))
+                karte = CursorCard(
+                    name, aktiv=(name == aktuell),
+                    loeschbar=uninstaller.ist_loeschbar(name, "cursor"),
+                    on_loeschen=self._on_loeschen)
                 flowbox.append(karte)
                 self._cards.append(karte)
             return True
@@ -94,3 +103,43 @@ class CursorPage(Adw.NavigationPage):
         for andere in self._cards:
             andere.set_aktiv(andere is karte)
         self._settings.set_cursor_theme(karte.theme_name)
+
+    # --- Entfernen ---
+
+    def _on_loeschen(self, karte):
+        """Sicherheitsabfrage vor dem Entfernen eines Mauszeiger-Designs."""
+        dialog = Adw.AlertDialog(
+            heading="Mauszeiger entfernen?",
+            body="„%s“ wird dauerhaft aus deinem Benutzerordner gelöscht. "
+                 "Das lässt sich nicht rückgängig machen." % karte.theme_name)
+        dialog.add_response("abbrechen", "Abbrechen")
+        dialog.add_response("loeschen", "Entfernen")
+        dialog.set_response_appearance(
+            "loeschen", Adw.ResponseAppearance.DESTRUCTIVE)
+        dialog.set_default_response("abbrechen")
+        dialog.set_close_response("abbrechen")
+        dialog.connect("response", self._on_loeschen_antwort, karte)
+        dialog.present(self)
+
+    def _on_loeschen_antwort(self, _dialog, antwort, karte):
+        if antwort != "loeschen":
+            return
+        name = karte.theme_name
+        # War es das aktive Design, vorher auf den sicheren Standard schalten,
+        # damit kein gelöschtes Theme gesetzt bleibt.
+        if self._settings.cursor_theme() == name:
+            self._settings.set_cursor_theme(STANDARD_CURSOR)
+            for andere in self._cards:
+                andere.set_aktiv(andere.theme_name == STANDARD_CURSOR)
+        if uninstaller.deinstalliere(name, "cursor"):
+            self._flowbox.remove(karte)
+            if karte in self._cards:
+                self._cards.remove(karte)
+            self._melde("Entfernt: " + name)
+        else:
+            self._melde("Konnte nicht entfernt werden: " + name)
+
+    def _melde(self, text):
+        fenster = self.get_root()
+        if fenster is not None and hasattr(fenster, "zeige_toast"):
+            fenster.zeige_toast(text)
