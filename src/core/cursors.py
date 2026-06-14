@@ -15,20 +15,25 @@ from gi.repository import Gdk, GLib
 from src.core import themes
 
 
-# Dateinamen, unter denen der normale Pfeil-Zeiger liegt (erster Treffer zählt).
+# Cursor-Namen für die Vorschau, in drei Gruppen wie die drei Beispiel-Icons der
+# Symbol-Karten: Pfeil, Hand (Link), Text. Pro Gruppe mehrere Namen als Fallback,
+# weil Themes denselben Zeiger unterschiedlich benennen; der erste gefundene zählt.
 ZEIGER_NAMEN = ["left_ptr", "default", "arrow"]
+HAND_NAMEN = ["hand2", "pointer", "hand1", "pointing_hand"]
+TEXT_NAMEN = ["xterm", "text", "ibeam"]
+VORSCHAU_GRUPPEN = [ZEIGER_NAMEN, HAND_NAMEN, TEXT_NAMEN]
 
 # Chunk-Typ für Bilder im Xcursor-Format.
 TYP_BILD = 0xFFFD0002
 
 
-def _finde_zeiger_datei(theme_name):
-    """Pfad zur Zeiger-Datei des Designs, oder None."""
+def _finde_cursor_datei(theme_name, namen):
+    """Pfad zur ersten vorhandenen Cursor-Datei aus 'namen', oder None."""
     for basis in themes.ICON_DIRS:
         cursors = os.path.join(basis, theme_name, "cursors")
         if not os.path.isdir(cursors):
             continue
-        for name in ZEIGER_NAMEN:
+        for name in namen:
             pfad = os.path.join(cursors, name)
             if os.path.exists(pfad):
                 # Symlinks (z.B. left_ptr -> default) auflösen.
@@ -40,12 +45,11 @@ def _uint32(daten, offset):
     return struct.unpack_from("<I", daten, offset)[0]
 
 
-def load_cursor_texture(theme_name, size=36):
-    """Gibt eine Gdk.MemoryTexture des Hauptzeigers zurück, oder None.
-
-    Wählt aus den enthaltenen Größen die, die 'size' am nächsten kommt.
+def load_cursor_texture(theme_name, namen, size=36):
+    """Gibt eine Gdk.MemoryTexture des ersten in 'namen' gefundenen Zeigers
+    zurück, oder None. Wählt aus den enthaltenen Größen die zu 'size' nächste.
     """
-    pfad = _finde_zeiger_datei(theme_name)
+    pfad = _finde_cursor_datei(theme_name, namen)
     if pfad is None:
         return None
     try:

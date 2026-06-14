@@ -14,7 +14,7 @@ import threading
 
 from gi.repository import Adw, Gio, GLib, Gtk
 
-from src.core import backgrounds, gdm, lockscreen
+from src.core import backgrounds, gdm, lockscreen, variety
 from src.widgets.wallpaper_card import WallpaperCard
 
 
@@ -41,12 +41,17 @@ class BackgroundPage(Adw.NavigationPage):
         super().__init__(title="Hintergrund")
         self._settings = settings
         self._cards = []
+        # Einmal prüfen, ob Variety läuft; steuert Hinweis und Modus-Auswahl.
+        self._variety_aktiv = variety.laeuft()
 
         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12)
         box.set_margin_top(16)
         box.set_margin_bottom(16)
         box.set_margin_start(18)
         box.set_margin_end(18)
+
+        if self._variety_aktiv:
+            box.append(self._variety_banner())
 
         box.append(self._feld_titel("Aktuelles Bild"))
         box.append(self._vorschau_bereich())
@@ -96,6 +101,54 @@ class BackgroundPage(Adw.NavigationPage):
         label = Gtk.Label(label=text, xalign=0)
         label.add_css_class("feld-titel")
         return label
+
+    def _variety_banner(self):
+        """Hinweis, dass Variety den Hintergrund verwaltet, plus ein Knopf zum
+        Rausnehmen (Autostart aus, beenden, Bild stabil setzen). Reversibel."""
+        self._variety_label = Gtk.Label(
+            label="Variety verwaltet den Hintergrund. Deine Bildauswahl wird an "
+                  "Variety übergeben und bleibt über jeden Login erhalten. Den "
+                  "Anpassungsmodus unten kannst du ändern, beim nächsten Login "
+                  "setzt Variety aber wieder seinen eigenen. Für volle Kontrolle "
+                  "über Bild und Modus kannst du Variety hier rausnehmen.",
+            xalign=0, wrap=True)
+        self._variety_label.add_css_class("dim-label")
+
+        self._variety_knopf = Gtk.Button(label="Variety rausnehmen")
+        self._variety_knopf.set_halign(Gtk.Align.START)
+        self._variety_knopf.set_tooltip_text(
+            "Variety aus dem Autostart nehmen und beenden, damit die App den "
+            "Hintergrund und den Modus direkt steuert. Umkehrbar, Variety bleibt "
+            "installiert.")
+        self._variety_knopf.connect("clicked", self._on_variety_raus)
+
+        self._variety_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=8)
+        self._variety_box.append(self._variety_label)
+        self._variety_box.append(self._variety_knopf)
+        return self._variety_box
+
+    def _on_variety_raus(self, _knopf):
+        """Nimmt Variety aus dem Spiel: Autostart aus, beenden, Hintergrund von
+        Varietys Zwischendatei auf ein stabiles Quellbild umbiegen."""
+        quelle = variety.aktuelles_quellbild()  # vor dem Beenden lesen
+        variety.autostart_aus()
+        variety.beenden()
+        self._variety_aktiv = False
+
+        # Bild von Varietys Zwischendatei auf das echte Quellbild umbiegen, damit
+        # es bleibt, falls Varietys Cache mal geleert wird.
+        if quelle and os.path.isfile(quelle):
+            uri = Gio.File.new_for_path(quelle).get_uri()
+            self._settings.set_background_uri(uri)
+            self._settings.set_background_uri_dark(uri)
+            self._vorschau_setzen(quelle)
+
+        self._variety_label.set_label(
+            "Variety wurde aus dem Autostart genommen und beendet. Die App "
+            "verwaltet den Hintergrund jetzt direkt, dein Anpassungsmodus bleibt "
+            "erhalten. Rückgängig: Variety wieder starten und im Autostart "
+            "aktivieren.")
+        self._variety_box.remove(self._variety_knopf)
 
     def _vorschau_bereich(self):
         """Vorschau-Bild mit einem Platzhalter-Hinweis, falls kein Bild gesetzt ist."""
@@ -170,9 +223,14 @@ class BackgroundPage(Adw.NavigationPage):
         self._setze_bild(karte.pfad)
 
     def _setze_bild(self, pfad):
-        uri = Gio.File.new_for_path(pfad).get_uri()
-        self._settings.set_background_uri(uri)
-        self._settings.set_background_uri_dark(uri)
+        # Läuft Variety, würde eine direkte gsettings-Änderung beim nächsten
+        # Login überschrieben. Darum die Wahl an Variety übergeben: es macht sie
+        # zu seinem aktuellen Bild und legt sie dauerhaft wieder auf. Klappt das
+        # nicht (Variety aus oder Fehler), fallen wir auf den direkten Weg zurück.
+        if not (variety.laeuft() and variety.setze_wallpaper(pfad)):
+            uri = Gio.File.new_for_path(pfad).get_uri()
+            self._settings.set_background_uri(uri)
+            self._settings.set_background_uri_dark(uri)
         self._vorschau_setzen(pfad)
 
     def _on_eigenes(self, _knopf):

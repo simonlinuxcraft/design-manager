@@ -41,7 +41,7 @@ class MainWindow(Adw.ApplicationWindow):
         super().__init__(**kwargs)
 
         self.set_title("Design Manager")
-        self.set_default_size(960, 640)
+        self.set_default_size(1280, 840)
 
         # CSS-Klasse, über die unser Stylesheet (Chrom-Silber) greift.
         self.add_css_class("silber")
@@ -74,6 +74,10 @@ class MainWindow(Adw.ApplicationWindow):
         ]
 
         self._split = Adw.NavigationSplitView()
+        # Seitenleiste auf feste Breite nageln (min == max), sonst ziehen breite
+        # Inhalte wie die Karten der Mauszeiger-Seite sie schmaler als anderswo.
+        self._split.set_min_sidebar_width(270)
+        self._split.set_max_sidebar_width(270)
         self._split.set_sidebar(self._build_sidebar())
 
         # Toast-Overlay um den ganzen Inhalt, damit Meldungen (z.B. nach einer

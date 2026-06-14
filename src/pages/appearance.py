@@ -44,11 +44,7 @@ class AppearancePage(Adw.NavigationPage):
         box.append(untertitel)
 
         box.append(self._feld_titel("GTK-Design (Fenster & Programme)"))
-        box.append(self._dropdown(
-            namen=themes.list_gtk_themes(),
-            aktuell=self._settings.gtk_theme(),
-            setter=self._settings.set_gtk_theme,
-        ))
+        box.append(self._gtk_design_zeile())
 
         box.append(self._feld_titel("Symbol-Design (Icons)"))
         box.append(self._icon_karten())
@@ -70,23 +66,56 @@ class AppearancePage(Adw.NavigationPage):
         label.add_css_class("feld-titel")
         return label
 
-    def _dropdown(self, namen, aktuell, setter):
-        """Ein Dropdown über 'namen', das 'aktuell' vorauswählt."""
-        dropdown = Gtk.DropDown.new_from_strings(namen)
-        dropdown.set_hexpand(True)
+    def _gtk_design_zeile(self):
+        """GTK-Design-Dropdown plus ein 'Standard'-Knopf als Notausstieg.
 
-        if aktuell in namen:
-            dropdown.set_selected(namen.index(aktuell))
+        Der Knopf setzt das GTK-Design auf Adwaita zurück. Adwaita ist in GTK
+        eingebaut und immer gültig, also der schnelle Weg zurück, falls ein
+        gewähltes Design (z.B. mit ungültigem CSS) die Oberfläche unbrauchbar
+        macht. Adwaita steht auf diesem System ohnehin in der Liste.
+        """
+        self._gtk_namen = themes.list_gtk_themes()
+        if self._settings.SAFE_GTK_THEME not in self._gtk_namen:
+            self._gtk_namen.insert(0, self._settings.SAFE_GTK_THEME)
 
-        # Erst nach dem Vorauswählen verbinden, sonst zählt die Vorauswahl
-        # schon als Änderung. Der setter wird an den Handler durchgereicht.
-        dropdown.connect("notify::selected", self._on_dropdown_changed, setter)
-        return dropdown
+        self._gtk_dropdown = Gtk.DropDown.new_from_strings(self._gtk_namen)
+        self._gtk_dropdown.set_hexpand(True)
+        aktuell = self._settings.gtk_theme()
+        if aktuell in self._gtk_namen:
+            self._gtk_dropdown.set_selected(self._gtk_namen.index(aktuell))
+        # Erst nach dem Vorauswählen verbinden, sonst zählt die Vorauswahl schon
+        # als Änderung. Handler-ID merken, damit das Nachziehen beim Reset nicht
+        # erneut als Nutzerauswahl zählt.
+        self._gtk_handler_id = self._gtk_dropdown.connect(
+            "notify::selected", self._on_dropdown_changed,
+            self._settings.set_gtk_theme)
+
+        standard = Gtk.Button(label="Standard")
+        standard.set_valign(Gtk.Align.CENTER)
+        standard.set_tooltip_text(
+            "GTK-Design auf das sichere Standard-Design (Adwaita) zurücksetzen")
+        standard.connect("clicked", self._on_gtk_reset)
+
+        zeile = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8)
+        zeile.append(self._gtk_dropdown)
+        zeile.append(standard)
+        return zeile
 
     def _on_dropdown_changed(self, dropdown, _param, setter):
         eintrag = dropdown.get_selected_item()
         if eintrag is not None:
             setter(eintrag.get_string())
+
+    def _on_gtk_reset(self, _knopf):
+        """Notausstieg: GTK-Design auf Adwaita zurück und Dropdown nachziehen."""
+        self._settings.reset_gtk_theme()
+        name = self._settings.SAFE_GTK_THEME
+        if name in self._gtk_namen:
+            # Handler blockieren: das Nachziehen ist Folge des Resets, keine
+            # neue Nutzerauswahl, sonst würde set_gtk_theme doppelt feuern.
+            self._gtk_dropdown.handler_block(self._gtk_handler_id)
+            self._gtk_dropdown.set_selected(self._gtk_namen.index(name))
+            self._gtk_dropdown.handler_unblock(self._gtk_handler_id)
 
     def _icon_karten(self):
         """Ein Raster aus Vorschaukarten, eine pro Symbol-Design."""

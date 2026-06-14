@@ -2,8 +2,9 @@
 
 Eine heruntergeladene Datei (.tar.gz, .tar.xz, .tar.bz2 oder .zip) wird in einen
 temporären Ordner entpackt. Darin suchen wir die enthaltenen Designs bzw.
-Schriften und kopieren sie in die passenden Ordner unter ~/.local/share. Ziele
-sind immer die Nutzer-Ordner, nie systemweite (kein sudo).
+Schriften und kopieren sie in die passenden Nutzer-Ordner (Designs und Symbole
+nach ~/.local/share, Mauszeiger nach ~/.icons, damit der X-Server sie findet),
+nie in systemweite (kein sudo).
 
 Erkennung: ein Ordner mit gtk-*/gnome-shell ist ein GTK-/Shell-Design, einer mit
 cursors/ ein Mauszeiger-Design, einer nur mit index.theme ein Symbol-Design.
@@ -26,6 +27,12 @@ import zipfile
 THEMES_DIR = os.path.expanduser("~/.local/share/themes")
 ICONS_DIR = os.path.expanduser("~/.local/share/icons")
 FONTS_DIR = os.path.expanduser("~/.local/share/fonts")
+# Mauszeiger gehen nach ~/.icons, NICHT ~/.local/share/icons: der X-Server
+# (libXcursor) durchsucht nur ~/.icons, /usr/share/icons und /usr/share/pixmaps.
+# Ein nur unter ~/.local/share/icons liegendes Cursor-Theme würde unter X11 nie
+# als Zeiger geladen. Symbol-Designs bleiben in ~/.local/share/icons, die findet
+# die GTK-Icon-Suche dort problemlos.
+CURSORS_DIR = os.path.expanduser("~/.icons")
 
 SCHRIFT_ENDUNGEN = (".ttf", ".otf", ".ttc", ".pfb")
 
@@ -43,7 +50,7 @@ THEME_MARKER = {
 # Pro Design-Art: Zielordner und das Wort fürs Erfolgs-Label.
 ZIELE = {
     "gtk": (THEMES_DIR, "Design"),
-    "cursor": (ICONS_DIR, "Mauszeiger"),
+    "cursor": (CURSORS_DIR, "Mauszeiger"),
     "icon": (ICONS_DIR, "Symbole"),
 }
 
@@ -156,14 +163,13 @@ def _entpacke(archiv_pfad, ziel):
                 z.extractall(ziel)
         elif tarfile.is_tarfile(archiv_pfad):
             with tarfile.open(archiv_pfad) as t:
-                # Member statt nur Namen prüfen: der data-Filter (Python 3.12+)
-                # blockt Symlink-Ausbrüche, der Fallback auf älterem Python aber
-                # nicht. Darum hier auch Linkziele selbst gegenprüfen.
-                _pruefe_tar_member(t.getmembers())
+                # Nur die gefahrlosen Member entpacken: Namens-Ausbrüche brechen
+                # ab, unsichere Links werden übersprungen (siehe _sichere_tar_member).
+                sichere = _sichere_tar_member(t.getmembers())
                 try:
-                    t.extractall(ziel, filter="data")
+                    t.extractall(ziel, members=sichere, filter="data")
                 except TypeError:
-                    t.extractall(ziel)  # ältere Python: Member sind oben geprüft
+                    t.extractall(ziel, members=sichere)  # ältere Python ohne filter
         else:
             raise InstallFehler("Format nicht unterstützt (nur .zip und .tar.*).")
     except (zipfile.BadZipFile, tarfile.TarError, OSError) as fehler:
@@ -182,23 +188,33 @@ def _pruefe_namen(namen):
             raise InstallFehler("Archiv enthält unsichere Pfade.")
 
 
-def _pruefe_tar_member(members):
-    """Wie _pruefe_namen, prüft zusätzlich die Linkziele von Symlinks/Hardlinks.
+def _sichere_tar_member(members):
+    """Liste der gefahrlos entpackbaren Member.
 
-    Ein Symlink mit harmlosem Namen, dessen Ziel aber absolut ist oder nach außen
-    zeigt, würde im data-filter-losen Fallback sonst angelegt und beim Kopieren
-    dereferenziert (Datenabfluss aus dem Home).
+    Member, deren NAME aus dem Ziel ausbricht (absoluter Pfad oder '..'), sind ein
+    echter Angriff und brechen die Installation ab. Sym-/Hardlinks auf absolute
+    oder ausbrechende Ziele werden dagegen nur übersprungen, nicht abgelehnt: wir
+    verfolgen Links beim Kopieren nicht (kein Datenabfluss), und solche Links sind
+    in der Praxis meist kaputte Build-Artefakte (z.B. ein absoluter Link ins Home
+    des Paketbauers). So lässt sich ein sonst gültiges Design trotz einzelner
+    solcher Links installieren, statt es komplett abzulehnen.
     """
+    sicher = []
     for m in members:
         if _ist_ausbruch(m.name):
             raise InstallFehler("Archiv enthält unsichere Pfade.")
-        if m.issym() or m.islnk():
-            if os.path.isabs(m.linkname):
-                raise InstallFehler("Archiv enthält unsichere Verknüpfungen.")
-            ziel = os.path.normpath(
-                os.path.join(os.path.dirname(m.name), m.linkname))
-            if ziel.startswith(".."):
-                raise InstallFehler("Archiv enthält unsichere Verknüpfungen.")
+        if (m.issym() or m.islnk()) and _link_unsicher(m):
+            continue  # überspringen, nicht entpacken
+        sicher.append(m)
+    return sicher
+
+
+def _link_unsicher(m):
+    """True, wenn das Link-Ziel absolut ist oder aus dem Ziel ausbricht."""
+    if os.path.isabs(m.linkname):
+        return True
+    ziel = os.path.normpath(os.path.join(os.path.dirname(m.name), m.linkname))
+    return ziel.startswith("..")
 
 
 # --- Designs erkennen und kopieren ---

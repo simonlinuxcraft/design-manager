@@ -85,6 +85,54 @@ def _ist_unser_stub(index_pfad):
         return False
 
 
+def _xcursor_pfade():
+    """Orte, die der X-Server (libXcursor) nach Cursor-Themes durchsucht.
+
+    Das ist der einkompilierte Default-Pfad von libXcursor. ~/.local/share/icons
+    ist hier bewusst NICHT dabei: der Ordner gehört zwar zum XDG-Standard und
+    GTK findet dort Symbol-Designs, aber libXcursor kennt ihn nicht.
+    """
+    return [
+        os.path.expanduser("~/.icons"),
+        "/usr/share/icons",
+        "/usr/share/pixmaps",
+    ]
+
+
+def _ist_cursor_theme(ordner):
+    return os.path.isdir(os.path.join(ordner, "cursors"))
+
+
+def _spiegele_cursor_in_pfad(name):
+    """Verlinkt ein Cursor-Theme nach ~/.icons, falls es nur unter
+    ~/.local/share/icons liegt.
+
+    Unter X11 lädt der Zeiger nur, wenn das Theme in einem der Xcursor-Pfade
+    liegt. Ein per Installer oder von Hand nach ~/.local/share/icons gelegtes
+    Cursor-Theme wird dort nie gefunden, der Zeiger bleibt beim alten. Wir legen
+    darum einen Symlink in ~/.icons an. Liegt das Theme schon im Suchpfad,
+    passiert nichts (auch idempotent: ein bereits gesetzter Symlink zählt als
+    vorhanden). Reine Absicherung; gesetzt wird der Zeiger ohnehin über dconf.
+    """
+    if not name:
+        return
+    for basis in _xcursor_pfade():
+        if _ist_cursor_theme(os.path.join(basis, name)):
+            return  # schon auffindbar
+    quelle = os.path.join(os.path.expanduser("~/.local/share/icons"), name)
+    if not _ist_cursor_theme(quelle):
+        return  # nicht vorhanden oder kein Cursor-Theme
+    icons = os.path.expanduser("~/.icons")
+    ziel = os.path.join(icons, name)
+    try:
+        os.makedirs(icons, exist_ok=True)
+        # Nichts Bestehendes antasten (auch keinen toten Symlink reparieren).
+        if not os.path.exists(ziel) and not os.path.islink(ziel):
+            os.symlink(quelle, ziel)
+    except OSError:
+        pass  # Cursor ist via dconf gesetzt; der Symlink ist nur die Absicherung
+
+
 class AppSettings:
     """Gebündelter Zugriff auf alle Einstellungen, die die App verändert.
 
@@ -105,6 +153,11 @@ class AppSettings:
     # ist (steht dann in org.gnome.shell/enabled-extensions).
     SHELL = "org.gnome.shell"
     USER_THEME_UUID = "user-theme@gnome-shell-extensions.gcampax.github.com"
+
+    # Sicheres Standard-GTK-Design für den Notausstieg-Knopf. Adwaita ist in GTK
+    # fest eingebaut, existiert also immer und kann keine Parse-Fehler werfen,
+    # selbst wenn ein selbstgebautes Design die Oberfläche unbrauchbar macht.
+    SAFE_GTK_THEME = "Adwaita"
 
     # Schlüssel, die Sicherung & Wiederherstellung erfasst. Alle sind vom Typ
     # String. Jeder Eintrag ist (Schema-ID, Schlüsselname). Diese eine Liste ist
@@ -169,6 +222,15 @@ class AppSettings:
     def set_gtk_theme(self, name):
         self._interface.set_string("gtk-theme", name)
 
+    def reset_gtk_theme(self):
+        """Setzt das GTK-Design auf das sichere Standard-Design (Adwaita).
+
+        Notausstieg: ein kaputtes Design (ungültiges CSS) kann die ganze Sitzung
+        lahmlegen. Adwaita ist in GTK eingebaut und immer gültig, darum als
+        garantierter Rückfallwert.
+        """
+        self._interface.set_string("gtk-theme", self.SAFE_GTK_THEME)
+
     # --- Symbol-Design (Icons) ---
 
     def icon_theme(self):
@@ -183,6 +245,11 @@ class AppSettings:
         return self._interface.get_string("cursor-theme")
 
     def set_cursor_theme(self, name):
+        # Reihenfolge wichtig fürs Live-Umschalten ohne Neuanmeldung: erst das
+        # Theme in den Xcursor-Pfad spiegeln, DANN den dconf-Schlüssel setzen.
+        # gsd-xsettings reagiert sofort auf die Änderung und kann den Zeiger nur
+        # live übernehmen, wenn das Theme zu dem Zeitpunkt schon auffindbar ist.
+        _spiegele_cursor_in_pfad(name)
         self._interface.set_string("cursor-theme", name)
         _schreibe_default_cursor(name)
 
@@ -401,8 +468,10 @@ class AppSettings:
                 settings.set_value(key, wert)
                 # Der Mauszeiger braucht zusätzlich den ~/.icons/default-Stub,
                 # damit er nach Restore/Profilwechsel überall greift (sonst zeigt
-                # nur GTK das neue, der Desktop-Zeiger das alte Theme).
+                # nur GTK das neue, der Desktop-Zeiger das alte Theme). Und er
+                # muss im Xcursor-Pfad liegen, sonst lädt X11 ihn gar nicht.
                 if schema_id == self.INTERFACE and key == "cursor-theme":
+                    _spiegele_cursor_in_pfad(wert.get_string())
                     _schreibe_default_cursor(wert.get_string())
             except (GLib.Error, TypeError, ValueError):
                 continue  # beschädigter oder unpassender Eintrag -> überspringen

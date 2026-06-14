@@ -1,8 +1,10 @@
 """Seite 'Mauszeiger'.
 
 Zeigt die installierten Mauszeiger-Designs als Vorschaukarten (mit echtem
-Zeiger), genau wie die Symbol-Designs. Klick setzt sofort; unter Wayland wird
-der neue Zeiger teils erst nach erneuter Anmeldung überall übernommen.
+Zeiger), genau wie die Symbol-Designs. Klick setzt sofort: GTK-Programme und der
+Desktop-Zeiger wechseln live. Nur schon geöffnete Nicht-GTK-Programme (manche
+Terminals, Electron-Apps) behalten den alten Zeiger, bis sie neu gestartet
+werden.
 """
 
 from gi.repository import Adw, GLib, Gtk
@@ -27,9 +29,14 @@ class CursorPage(Adw.NavigationPage):
         box.set_margin_end(18)
 
         untertitel = Gtk.Label(
-            label="Programme wechseln sofort. Der Zeiger über dem Desktop und "
-                  "in manchen Bereichen folgt erst nach erneuter Anmeldung.",
+            label="GTK-Programme und der Zeiger über dem Desktop wechseln "
+                  "sofort. Schon geöffnete Nicht-GTK-Programme (manche "
+                  "Terminals, Electron-Apps) zeigen den alten Zeiger, bis du "
+                  "sie neu startest.",
             xalign=0)
+        # Umbrechen lassen, sonst fordert der lange Text seine volle Breite als
+        # Mindestbreite und zieht die ganze Seite (und das Fenster) breit.
+        untertitel.set_wrap(True)
         untertitel.add_css_class("dim-label")
         box.append(untertitel)
 
@@ -56,6 +63,10 @@ class CursorPage(Adw.NavigationPage):
         flowbox.set_column_spacing(10)
         flowbox.set_row_spacing(10)
         flowbox.set_homogeneous(True)
+        # Die FlowBox auf die Fensterbreite ziehen, damit das Raster in Reihen
+        # umbricht (wie auf der Symbol-Seite, deren Breite das Dropdown vorgibt)
+        # und die Seite keine übergroße Mindestbreite fordert.
+        flowbox.set_hexpand(True)
 
         flowbox.connect("child-activated", self._on_karte_aktiviert)
 
