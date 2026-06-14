@@ -68,9 +68,9 @@ Version: $VERSION
 Architecture: $ARCH
 Maintainer: simonlinuxcraft <245174420+simonlinuxcraft@users.noreply.github.com>
 Installed-Size: $INSTALLED_KB
-Depends: python3, python3-gi, python3-gi-cairo, gir1.2-gtk-4.0, gir1.2-adw-1, gir1.2-gdkpixbuf-2.0
-Recommends: policykit-1, libglib2.0-bin
-Suggests: variety, imagemagick
+Depends: python3, python3-gi, python3-gi-cairo, gir1.2-gtk-4.0, gir1.2-adw-1, gir1.2-gdkpixbuf-2.0, gir1.2-pango-1.0, gsettings-desktop-schemas
+Recommends: pkexec | policykit-1, libglib2.0-bin, libglib2.0-dev-bin, fontconfig, webp-pixbuf-loader
+Suggests: variety
 Section: x11
 Priority: optional
 Homepage: https://github.com/simonlinuxcraft/design-manager
