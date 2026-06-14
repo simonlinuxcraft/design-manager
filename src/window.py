@@ -13,13 +13,14 @@ from gi.repository import Adw, Gdk, Gio, GLib, Gtk
 
 from src.core import healthcheck, onboarding, restorepoint
 from src.core.settings import AppSettings
-from src.pages.appearance import AppearancePage
 from src.pages.background import BackgroundPage
 from src.pages.backup import BackupPage
 from src.pages.cursor import CursorPage
 from src.pages.dock import DockPage
 from src.pages.extensions import ExtensionsPage
 from src.pages.fonts import FontsPage
+from src.pages.gtk_theme import GtkThemePage
+from src.pages.icons import IconsPage
 from src.pages.looks import LooksPage
 from src.pages.overview import OverviewPage
 from src.pages.shell import ShellPage
@@ -65,8 +66,10 @@ class MainWindow(Adw.ApplicationWindow):
              lambda: LooksPage(self._settings)),
             ("background", "Hintergrund", "image-x-generic-symbolic",
              lambda: BackgroundPage(self._settings)),
-            ("appearance", "Symbole &amp; Design", "applications-graphics-symbolic",
-             lambda: AppearancePage(self._settings)),
+            ("gtk", "GTK-Design", "preferences-desktop-appearance-symbolic",
+             lambda: GtkThemePage(self._settings)),
+            ("icons", "Symbole", "applications-graphics-symbolic",
+             lambda: IconsPage(self._settings)),
             ("cursor", "Mauszeiger", "input-mouse-symbolic",
              lambda: CursorPage(self._settings)),
             ("fonts", "Schriftarten", "font-x-generic-symbolic",
@@ -190,7 +193,6 @@ class MainWindow(Adw.ApplicationWindow):
         header.add_css_class("flat")  # kein eigener Hintergrund -> ein Block
         header.pack_start(self._logo())
         header.pack_end(self._menue_knopf())
-        header.pack_end(self._farbschema_knopf())
         header.set_title_widget(
             Adw.WindowTitle(title="Design Manager", subtitle="v" + APP_VERSION)
         )
@@ -219,19 +221,6 @@ class MainWindow(Adw.ApplicationWindow):
         safe.connect("activate", self._on_safe_state)
         self.add_action(safe)
 
-        # Zustands-Aktion fürs System-Farbschema (hell/dunkel/automatisch). Das
-        # Menü zeigt am aktiven Wert automatisch einen Punkt, weil die Aktion
-        # einen String-Zustand hat.
-        schema = Gio.SimpleAction.new_stateful(
-            "color-scheme", GLib.VariantType.new("s"),
-            GLib.Variant.new_string(self._settings.color_scheme()))
-        schema.connect("activate", self._on_color_scheme)
-        self.add_action(schema)
-
-    def _on_color_scheme(self, action, parameter):
-        action.set_state(parameter)
-        self._settings.set_color_scheme(parameter.get_string())
-
     def _menue_knopf(self):
         """Hamburger-Menü rechts in der Kopfleiste."""
         menue = Gio.Menu()
@@ -243,24 +232,6 @@ class MainWindow(Adw.ApplicationWindow):
         knopf.set_icon_name("open-menu-symbolic")
         knopf.set_menu_model(menue)
         knopf.set_tooltip_text("Hauptmenü")
-        return knopf
-
-    def _farbschema_knopf(self):
-        """Umschalter fürs System-Farbschema (hell/dunkel/automatisch).
-
-        Steuert org.gnome.desktop.interface/color-scheme. Das eigene Fenster
-        bleibt bewusst dunkel (die App erzwingt FORCE_DARK in main.py); der
-        Umschalter wirkt auf den Rest des Systems.
-        """
-        menue = Gio.Menu()
-        menue.append("Hell", "win.color-scheme::prefer-light")
-        menue.append("Dunkel", "win.color-scheme::prefer-dark")
-        menue.append("Automatisch", "win.color-scheme::default")
-
-        knopf = Gtk.MenuButton()
-        knopf.set_icon_name("display-brightness-symbolic")
-        knopf.set_menu_model(menue)
-        knopf.set_tooltip_text("Helligkeit (System-Farbschema)")
         return knopf
 
     def _on_ueber(self, _action, _param):

@@ -1,19 +1,21 @@
 """Seite 'Looks'.
 
-Eine Galerie mitgelieferter, stimmiger Komplett-Looks (siehe core/looks.py). Ein
-Klick wendet einen Look an, nachdem der aktuelle Stand automatisch als Profil
-gesichert wurde. Teile, die auf diesem System fehlen (z.B. ein nicht
-installiertes Design), werden übersprungen und im Toast genannt.
+Zwei Galerien: oben die mitgelieferten, kuratierten Komplett-Looks (siehe
+core/looks.py), darunter die selbst gespeicherten Profile (siehe core/backup.py,
+angelegt auf der Sicherungsseite). Beide setzen mit einem Klick einen ganzen
+Look. Bei den mitgelieferten Looks wird der aktuelle Stand vorher als Profil
+gesichert; fehlende Teile werden übersprungen und im Toast genannt. Ein eigenes
+Profil wird unverändert wieder angewendet.
 """
 
 from gi.repository import Adw, Gtk
 
-from src.core import looks
+from src.core import backup, looks
 from src.widgets.look_card import LookCard
 
 
 class LooksPage(Adw.NavigationPage):
-    """Navigationsseite mit den kuratierten Looks als Vorschaukarten."""
+    """Navigationsseite mit kuratierten Looks und eigenen Profilen als Karten."""
 
     def __init__(self, settings):
         super().__init__(title="Looks")
@@ -26,7 +28,8 @@ class LooksPage(Adw.NavigationPage):
 
     def _inhalt(self):
         self._looks = looks.lade_looks()
-        if not self._looks:
+        self._profile = looks.eigene_profile_als_looks()
+        if not self._looks and not self._profile:
             return Adw.StatusPage(
                 title="Keine Looks gefunden",
                 description="Mitgelieferte Looks liegen unter data/looks/.",
@@ -39,13 +42,34 @@ class LooksPage(Adw.NavigationPage):
         box.set_margin_end(18)
 
         untertitel = Gtk.Label(
-            label="Ein Klick setzt den ganzen Look. Vorher wird automatisch ein "
-                  "Profil „vorher-…“ angelegt, sodass du zurück kannst.",
+            label="Ein Klick setzt den ganzen Look. Bei den mitgelieferten Looks "
+                  "wird vorher automatisch ein Profil „vorher-…“ angelegt, sodass "
+                  "du zurück kannst.",
             xalign=0)
         untertitel.add_css_class("dim-label")
         untertitel.set_wrap(True)
         box.append(untertitel)
 
+        if self._looks:
+            box.append(self._ueberschrift("Mitgelieferte Looks"))
+            box.append(self._galerie(self._looks, self._on_look_aktiviert))
+
+        if self._profile:
+            box.append(self._ueberschrift("Eigene Profile"))
+            box.append(self._galerie(self._profile, self._on_profil_aktiviert))
+
+        scroll = Gtk.ScrolledWindow()
+        scroll.set_vexpand(True)
+        scroll.set_child(box)
+        return scroll
+
+    def _ueberschrift(self, text):
+        label = Gtk.Label(label=text, xalign=0)
+        label.add_css_class("heading")
+        label.set_margin_top(6)
+        return label
+
+    def _galerie(self, looks_liste, handler):
         flowbox = Gtk.FlowBox()
         flowbox.set_selection_mode(Gtk.SelectionMode.NONE)
         flowbox.set_max_children_per_line(3)
@@ -54,17 +78,14 @@ class LooksPage(Adw.NavigationPage):
         flowbox.set_row_spacing(10)
         flowbox.set_homogeneous(True)
         flowbox.set_hexpand(True)
-        flowbox.connect("child-activated", self._on_aktiviert)
-        for look in self._looks:
+        flowbox.connect("child-activated", handler)
+        for look in looks_liste:
             flowbox.append(LookCard(look))
-        box.append(flowbox)
+        return flowbox
 
-        scroll = Gtk.ScrolledWindow()
-        scroll.set_vexpand(True)
-        scroll.set_child(box)
-        return scroll
+    # --- Mitgelieferte Looks ---
 
-    def _on_aktiviert(self, _flowbox, karte):
+    def _on_look_aktiviert(self, _flowbox, karte):
         look = karte.look
         dialog = Adw.AlertDialog(
             heading="Look „%s“ anwenden?" % look.get("name", ""),
@@ -76,10 +97,10 @@ class LooksPage(Adw.NavigationPage):
             "anwenden", Adw.ResponseAppearance.SUGGESTED)
         dialog.set_default_response("abbrechen")
         dialog.set_close_response("abbrechen")
-        dialog.connect("response", self._on_antwort, look)
+        dialog.connect("response", self._on_look_antwort, look)
         dialog.present(self)
 
-    def _on_antwort(self, _dialog, antwort, look):
+    def _on_look_antwort(self, _dialog, antwort, look):
         if antwort != "anwenden":
             return
         uebersprungen = looks.wende_an(self._settings, look)
@@ -88,6 +109,36 @@ class LooksPage(Adw.NavigationPage):
                         % (look.get("name", ""), ", ".join(uebersprungen)))
         else:
             self._melde("Look „%s“ angewendet." % look.get("name", ""))
+
+    # --- Eigene Profile ---
+
+    def _on_profil_aktiviert(self, _flowbox, karte):
+        name = karte.look.get("_profil", "")
+        dialog = Adw.AlertDialog(
+            heading="Profil „%s“ anwenden?" % name,
+            body="Setzt den gespeicherten Stand dieses Profils.")
+        dialog.add_response("abbrechen", "Abbrechen")
+        dialog.add_response("anwenden", "Anwenden")
+        dialog.set_response_appearance(
+            "anwenden", Adw.ResponseAppearance.SUGGESTED)
+        dialog.set_default_response("abbrechen")
+        dialog.set_close_response("abbrechen")
+        dialog.connect("response", self._on_profil_antwort, name)
+        dialog.present(self)
+
+    def _on_profil_antwort(self, _dialog, antwort, name):
+        if antwort != "anwenden":
+            return
+        try:
+            erfolg = backup.load_profile(self._settings, name)
+        except (OSError, ValueError):
+            self._melde("Das Profil konnte nicht gelesen werden.")
+            return
+        if not erfolg:
+            self._melde("Das Profil ist beschädigt.")
+            return
+        self._melde("Profil „%s“ angewendet. App neu starten, um die Auswahl in "
+                    "den einzelnen Bereichen zu aktualisieren." % name)
 
     def _melde(self, text):
         fenster = self.get_root()

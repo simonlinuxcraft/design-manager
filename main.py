@@ -77,11 +77,19 @@ class LinuxAnpassungApp(Adw.Application):
         provider = Gtk.CssProvider()
         provider.load_from_path(STYLE_FILE)
 
-        # USER-Priorität sorgt dafür, dass unsere Regeln das Theme überschreiben.
+        # Knapp ÜBER USER-Priorität. GTK lädt ~/.config/gtk-4.0/gtk.css ebenfalls
+        # mit USER-Priorität; das ist genau die Datei, in die der Design-Manager
+        # ein gewähltes GTK-Design für libadwaita-Apps spiegelt (auch in dieses
+        # Fenster). +1 sorgt dafür, dass unsere eigenen Regeln gleichrangige
+        # Theme-Regeln schlagen, also überall dort, wo style.css eine Eigenschaft
+        # explizit setzt (window.silber, Sidebar, Karten, Akzentpunkte). Achtung:
+        # Eigenschaften, die style.css NICHT setzt (Farbe nackter Knöpfe/Labels),
+        # erbt das Fenster weiter vom gespiegelten Theme. Das ist akzeptiert, rein
+        # optisch; die Marke trägt über die explizit gesetzten Flächen.
         Gtk.StyleContext.add_provider_for_display(
             Gdk.Display.get_default(),
             provider,
-            Gtk.STYLE_PROVIDER_PRIORITY_USER,
+            Gtk.STYLE_PROVIDER_PRIORITY_USER + 1,
         )
 
     def do_activate(self):

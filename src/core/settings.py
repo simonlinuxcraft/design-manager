@@ -10,8 +10,13 @@ hübsch verpackt.
 """
 
 import os
+import shutil
+from datetime import datetime
+from urllib.parse import quote
 
 from gi.repository import GLib, Gio
+
+from src.core import themes, variety
 
 
 def schema_vorhanden(schema_id):
@@ -133,6 +138,213 @@ def _spiegele_cursor_in_pfad(name):
         pass  # Cursor ist via dconf gesetzt; der Symlink ist nur die Absicherung
 
 
+# --- libadwaita-Spiegel (~/.config/gtk-4.0) ---
+# Moderne GNOME-Apps (Nautilus, Einstellungen, Texteditor) sind gegen libadwaita
+# gelinkt und ignorieren den benannten gtk-theme-Schluessel komplett. Sie laden
+# nur hell/dunkel und, falls vorhanden, ein eigenes Stylesheet unter
+# ~/.config/gtk-4.0/gtk.css. Damit ein gewaehltes GTK-Design auch dort wirkt,
+# spiegeln wir das gtk-4.0-CSS des Themes per kleiner @import-Stubdatei dorthin.
+#
+# Das ist der fragilste Eingriff der App, darum streng reversibel und defensiv:
+#  - angelegt wird nur eine kleine echte gtk.css mit Markerzeile, die das
+#    gtk-4.0-CSS des Themes per @import mit ABSOLUTEM file://-Pfad einbindet. So
+#    loesen sich dessen relative url("../assets/..")-Pfade (Checkboxen, Radios)
+#    korrekt zum Theme-Ordner auf statt gegen ~/.config; ein direkter Symlink
+#    wuerde genau diese 199 Asset-Pfade zerbrechen,
+#  - ein bereits vorhandener FREMDER Override (z.B. von kde-gtk-config) wird vor
+#    dem Ueberschreiben einmalig in ein Backup geschoben, nie blind geloescht,
+#  - Yaru und Adwaita erzwingen NIE einen Override (sie sind die sicheren
+#    Standards und sehen unter libadwaita ohnehin richtig aus),
+#  - reset_gtk_theme raeumt den Spiegel restlos weg, damit der Notausstieg auch
+#    libadwaita-Apps garantiert auf das eingebaute Adwaita zuruecksetzt.
+
+_GTK4_CONFIG = os.path.expanduser("~/.config/gtk-4.0")
+# Diese Eintraege verwaltet die App. Beim Anlegen wird nur die gtk.css-Stubdatei
+# geschrieben; gtk-dark.css und assets stehen hier mit drin, damit Eintraege aus
+# einer frueheren (Symlink-)Fassung beim Aufraeumen sicher mit weggehen.
+_LIBADW_EINTRAEGE = ("gtk.css", "gtk-dark.css", "assets")
+_GTK4_BACKUP_BASIS = os.path.expanduser(
+    "~/.local/share/design-manager/gtk-4.0-backup")
+# Markerzeile am Anfang unserer Stubdatei. Daran erkennen wir beim Aufraeumen
+# zweifelsfrei die eigene Datei und fassen fremde gtk.css nie an.
+_MARKER = "design-manager: libadwaita-Spiegel"
+
+
+def _css_spiegelbar(pfad):
+    """True, wenn pfad eine echte, aus dem Dateikontext ladbare Stylesheet ist.
+
+    Lehnt gresource-Weiterleitungen ab: manche Themes (z.B. die Yaru-Familie)
+    haben als gtk-4.0/gtk.css nur einen Stub `@import url("resource://...")`, der
+    eigentliche Style steckt in einer .gresource. Ueber unseren file://-Spiegel
+    laesst sich diese nicht registrierte Ressource nicht laden, das Theme kaeme
+    praktisch leer an. Solche Stubs haben keine CSS-Regel, also keine geschweifte
+    Klammer. Bei Lesefehler konservativ False (lieber kein Override).
+    """
+    try:
+        with open(pfad, "r", encoding="utf-8", errors="ignore") as f:
+            return "{" in f.read(65536)
+    except OSError:
+        return False
+
+
+def _theme_gtk4_quelle(name):
+    """(gtk4_ordner, css_datei) des Themes oder None, wenn kein Override noetig.
+
+    Liefert den gtk-4.0-Ordner und dessen gtk.css. Adwaita, Yaru und ein leerer
+    Name brauchen keinen Override und ergeben None.
+    """
+    if not name:
+        return None
+    kennung = name.lower()
+    if kennung == "adwaita" or kennung.startswith("yaru"):
+        return None
+    for basis in themes.THEME_DIRS:
+        gtk4 = os.path.join(basis, name, "gtk-4.0")
+        css = os.path.join(gtk4, "gtk.css")
+        if os.path.isfile(css) and _css_spiegelbar(css):
+            return gtk4, css
+    return None
+
+
+def _existiert(pfad):
+    return os.path.islink(pfad) or os.path.exists(pfad)
+
+
+def _ist_unser_override(pfad):
+    """True, wenn 'pfad' unser eigener libadwaita-Spiegel ist.
+
+    Unser Spiegel ist eine kleine echte Datei mit einer Markerzeile (siehe
+    _MARKER). So trennen wir ihn sicher von echten Dateien, die der Nutzer oder
+    ein anderes Werkzeug (kde-gtk-config) dort abgelegt hat: nur was den Marker
+    trägt (oder ein Alt-Symlink in ein Theme-Verzeichnis aus einer früheren
+    Fassung ist) wird je entfernt oder ersetzt. Fremdes bleibt unberührt.
+    """
+    if os.path.islink(pfad):
+        ziel = os.path.realpath(pfad)
+        return any(ziel.startswith(os.path.realpath(d) + os.sep)
+                   for d in themes.THEME_DIRS)
+    try:
+        with open(pfad, "r", encoding="utf-8", errors="ignore") as f:
+            return _MARKER in f.read(256)
+    except OSError:
+        return False
+
+
+def _sichere_fremden_override():
+    """Schiebt einen vorhandenen FREMDEN Override einmalig in ein Backup.
+
+    Nur was wirklich fremd ist (echte Datei/Ordner oder ein Symlink, der nicht
+    in ein Theme-Verzeichnis zeigt) wird gesichert; unsere eigenen Symlinks aus
+    einem frueheren Lauf bleiben liegen und werden gleich ueberschrieben. Gelingt
+    das Sichern nicht, wird nichts angefasst (lieber Override behalten als Daten
+    verlieren).
+    """
+    fremd = [e for e in _LIBADW_EINTRAEGE
+             if _existiert(os.path.join(_GTK4_CONFIG, e))
+             and not _ist_unser_override(os.path.join(_GTK4_CONFIG, e))]
+    if not fremd:
+        return True
+    ziel = _GTK4_BACKUP_BASIS + "-" + datetime.now().strftime("%Y%m%d-%H%M%S")
+    try:
+        os.makedirs(ziel, exist_ok=True)
+        for e in fremd:
+            shutil.move(os.path.join(_GTK4_CONFIG, e), os.path.join(ziel, e))
+        return True
+    except OSError:
+        return False
+
+
+def _schreibe_stub(css_pfad):
+    """Schreibt ~/.config/gtk-4.0/gtk.css als Stub, der css_pfad per @import lädt.
+
+    Der @import nutzt einen absoluten file://-Pfad, damit die relativen
+    url("../assets/..")-Verweise in der importierten Theme-CSS sich gegen den
+    Theme-Ordner auflösen, nicht gegen ~/.config. Eine etwaige eigene Datei wird
+    ersetzt; eine echte Fremd-Datei (Sicherung schlug fehl) bleibt unberührt.
+    """
+    ziel = os.path.join(_GTK4_CONFIG, "gtk.css")
+    if os.path.islink(ziel) and _ist_unser_override(ziel):
+        os.unlink(ziel)  # Alt-Symlink aus früherer Fassung weg, dann neu schreiben
+    elif _existiert(ziel) and not _ist_unser_override(ziel):
+        return  # echte Fremd-Datei, nicht überschreiben (sollte gesichert sein)
+    uri = "file://" + quote(os.path.abspath(css_pfad))
+    inhalt = "/* %s */\n@import url(\"%s\");\n" % (_MARKER, uri)
+    with open(ziel, "w", encoding="utf-8") as f:
+        f.write(inhalt)
+
+
+def _entferne_libadwaita():
+    """Entfernt unseren libadwaita-Spiegel restlos (eigene Stubdatei/Alt-Symlinks).
+
+    Fremde Dateien im selben Ordner werden nie angefasst. Danach fallen
+    libadwaita-Apps auf das eingebaute Adwaita zurueck, also auf einen
+    garantiert gueltigen Zustand. Traegt den Notausstieg mit.
+    """
+    for eintrag in _LIBADW_EINTRAEGE:
+        ziel = os.path.join(_GTK4_CONFIG, eintrag)
+        if _ist_unser_override(ziel):
+            try:
+                os.unlink(ziel)
+            except OSError:
+                pass
+
+
+def _spiegle_libadwaita(name):
+    """Spiegelt das gtk-4.0-CSS des Themes nach ~/.config/gtk-4.0/gtk.css.
+
+    Hat das Theme kein nutzbares gtk-4.0 (oder ist es Adwaita/Yaru), wird ein
+    evtl. von uns angelegter Spiegel entfernt, damit libadwaita-Apps sauber auf
+    den Standard zuruckfallen, statt am alten Design zu kleben. Schlaegt das
+    Sichern eines fremden Overrides fehl, wird nichts ueberschrieben.
+
+    Bekannte (rein kosmetische) Grenze, kein Crash-Risiko: ein Theme, das fuer
+    ein neueres libadwaita gebaut ist als das lokale (z.B. var(--accent-bg-color)
+    aus 1.6 auf 1.5), erzeugt beim Laden Parser-Warnungen; GTK ueberspringt die
+    Regeln, das Theme wirkt dort unvollstaendig. Betrifft jede Lademethode, nicht
+    nur den Spiegel.
+    """
+    quelle = _theme_gtk4_quelle(name)
+    if quelle is None:
+        _entferne_libadwaita()
+        return
+    _gtk4, css = quelle
+    try:
+        if not _sichere_fremden_override():
+            return
+        os.makedirs(_GTK4_CONFIG, exist_ok=True)
+        # Stubdatei mit @import auf die zum Modus passende Quelle (hell/dunkel).
+        _schreibe_stub(css)
+        # Reste aus einer früheren (Symlink-)Fassung wegräumen: gtk-dark.css und
+        # assets legt die Stub-Variante nicht mehr an, der @import löst die
+        # Assets selbst aus dem Theme-Ordner auf.
+        for rest in ("gtk-dark.css", "assets"):
+            ziel = os.path.join(_GTK4_CONFIG, rest)
+            if _ist_unser_override(ziel):
+                os.unlink(ziel)
+    except OSError:
+        pass  # gtk-theme ist via dconf gesetzt; der Spiegel ist nur Zugabe
+
+
+def _stabiler_hintergrund_wert(wert):
+    """Ersetzt einen Variety-Zwischendatei-URI durch das echte Quellbild.
+
+    Variety legt in picture-uri seine flüchtige wallpaper-auto-rotated-Datei ab,
+    die es später löscht. Für eine Sicherung das stabile Quellbild nehmen, sonst
+    zeigt das Profil später auf eine nicht mehr existierende Datei. Ist der Wert
+    kein Variety-Temp-Pfad (oder kein Quellbild bekannt), bleibt er unverändert.
+    """
+    uri = wert.get_string()
+    if not uri:
+        return wert
+    pfad = Gio.File.new_for_uri(uri).get_path()
+    if pfad and os.path.realpath(pfad).startswith(
+            os.path.realpath(variety.TEMP_WALLPAPER)):
+        quelle = variety.aktuelles_quellbild()
+        if quelle:
+            return GLib.Variant("s", Gio.File.new_for_path(quelle).get_uri())
+    return wert
+
+
 class AppSettings:
     """Gebündelter Zugriff auf alle Einstellungen, die die App verändert.
 
@@ -177,7 +389,6 @@ class AppSettings:
         (INTERFACE, "text-scaling-factor"),
         (INTERFACE, "font-antialiasing"),
         (INTERFACE, "font-hinting"),
-        (INTERFACE, "color-scheme"),
         (INTERFACE, "accent-color"),
         (INTERFACE, "enable-animations"),
         (INTERFACE, "show-battery-percentage"),
@@ -224,16 +435,24 @@ class AppSettings:
         return self._interface.get_string("gtk-theme")
 
     def set_gtk_theme(self, name):
+        # Benannte GTK-Designs wirken nur auf GTK3-Apps. libadwaita-Apps
+        # (Nautilus, Einstellungen, ...) lesen den Schluessel nicht; fuer die
+        # spiegeln wir zusaetzlich das gtk-4.0-CSS nach ~/.config/gtk-4.0. Die
+        # zum Modus passende Variante (hell/dunkel) waehlt _spiegle_libadwaita.
         self._interface.set_string("gtk-theme", name)
+        _spiegle_libadwaita(name)
 
     def reset_gtk_theme(self):
         """Setzt das GTK-Design auf das sichere Standard-Design (Adwaita).
 
         Notausstieg: ein kaputtes Design (ungültiges CSS) kann die ganze Sitzung
         lahmlegen. Adwaita ist in GTK eingebaut und immer gültig, darum als
-        garantierter Rückfallwert.
+        garantierter Rückfallwert. Zusätzlich wird der libadwaita-Spiegel
+        restlos entfernt, damit auch Nautilus & Co. auf Adwaita zurückfallen und
+        nicht an einem kaputten gtk-4.0/gtk.css kleben bleiben.
         """
         self._interface.set_string("gtk-theme", self.SAFE_GTK_THEME)
+        _entferne_libadwaita()
 
     # --- Symbol-Design (Icons) ---
 
@@ -276,16 +495,6 @@ class AppSettings:
 
     def set_font_name(self, name):
         self._interface.set_string("font-name", name)
-
-    # --- Hell-/Dunkel-Modus ---
-    # color-scheme ist ein Enum-Schluessel. Als Text sind die Werte
-    # "default", "prefer-dark" und "prefer-light".
-
-    def color_scheme(self):
-        return self._interface.get_string("color-scheme")
-
-    def set_color_scheme(self, wert):
-        self._interface.set_string("color-scheme", wert)
 
     # --- Hintergrundbild ---
     # GNOME speichert Pfade hier als URI, also z.B. "file:///home/.../bild.jpg".
@@ -464,7 +673,13 @@ class AppSettings:
             settings = self._nach_schema.get(schema_id)
             if not _hat_schluessel(settings, key):
                 continue
-            daten.setdefault(schema_id, {})[key] = settings.get_value(key).print_(True)
+            wert = settings.get_value(key)
+            # Hintergrund: zeigt picture-uri auf Varietys flüchtige
+            # Zwischendatei, stattdessen das stabile Quellbild sichern.
+            if schema_id == self.BACKGROUND and key in (
+                    "picture-uri", "picture-uri-dark"):
+                wert = _stabiler_hintergrund_wert(wert)
+            daten.setdefault(schema_id, {})[key] = wert.print_(True)
         return daten
 
     def import_settings(self, daten):
@@ -496,3 +711,20 @@ class AppSettings:
                     _schreibe_default_cursor(wert.get_string())
             except (GLib.Error, TypeError, ValueError):
                 continue  # beschädigter oder unpassender Eintrag -> überspringen
+
+        # Nach dem Wiederherstellen den libadwaita-Spiegel an das jetzt gesetzte
+        # GTK-Design angleichen. Sonst zeigt Nautilus nach einem Profilwechsel
+        # oder der Tag/Nacht-Automatik weiter das alte Design oder bleibt an
+        # einem alten Spiegel kleben. Reiner Datei-Vorgang, läuft auch im
+        # fensterlosen --apply-profile-Pfad ohne GTK.
+        _spiegle_libadwaita(self.gtk_theme())
+
+        # Lief Variety, würde es den gerade gesetzten Hintergrund beim nächsten
+        # Login durch sein eigenes Bild ersetzen. Darum das Bild zusätzlich an
+        # Variety übergeben, damit es dieses adoptiert und wieder auflegt.
+        if variety.laeuft():
+            uri = self._background.get_string("picture-uri")
+            if uri:
+                pfad = Gio.File.new_for_uri(uri).get_path()
+                if pfad and os.path.isfile(pfad):
+                    variety.setze_wallpaper(pfad)

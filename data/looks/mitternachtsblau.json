@@ -1,7 +1,6 @@
 {
   "name": "Mitternachtsblau",
   "beschreibung": "Dunkel mit blauem Akzent.",
-  "color_scheme": "prefer-dark",
   "gtk": "Yaru-dark",
   "icons": "Yaru",
   "accent": "blue"

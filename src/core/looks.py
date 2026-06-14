@@ -1,8 +1,8 @@
 """Kuratierte Komplett-Looks laden und anwenden.
 
-Ein Look ist ein stimmiges Set aus Hell/Dunkel-Modus, GTK-Design, Symbolen,
-Akzentfarbe, Schrift und optional einem Hintergrundbild. Die mitgelieferten
-Looks liegen als JSON unter data/looks/. Jedes Feld ist optional.
+Ein Look ist ein stimmiges Set aus GTK-Design, Symbolen, Akzentfarbe, Schrift
+und optional einem Hintergrundbild. Die mitgelieferten Looks liegen als JSON
+unter data/looks/. Jedes Feld ist optional.
 
 Anwenden ist bewusst defensiv: Erst wird der aktuelle Stand als Profil
 "vorher-<name>" gesichert (ein Klick zurück über die Sicherungsseite genügt),
@@ -14,7 +14,10 @@ ungültigen Wert zu setzen.
 import json
 import os
 
+from gi.repository import GLib
+
 from src.core import backgrounds, backup, themes
+from src.core.settings import AppSettings
 
 
 # data/looks/ liegt in der Projektwurzel (src/core/looks.py -> zwei Ebenen hoch).
@@ -43,6 +46,52 @@ def lade_looks():
     return sorted(looks, key=lambda look: look["name"].lower())
 
 
+def _profil_wert(daten, schema, key):
+    """Liest einen gesicherten String-Wert (GVariant-Text) aus Profildaten."""
+    text = daten.get("einstellungen", {}).get(schema, {}).get(key)
+    if not text:
+        return ""
+    try:
+        return GLib.Variant.parse(
+            GLib.VariantType.new("s"), text, None, None).get_string()
+    except (GLib.Error, TypeError):
+        return ""
+
+
+def eigene_profile_als_looks():
+    """Gespeicherte Profile als look-ähnliche Dicts für die Vorschaukarten.
+
+    Ein Profil enthält bereits alle Werte, aus denen die Look-Karte ihre
+    Vorschau baut (Akzentfarbe, Symbole, Hintergrundbild). Wir leiten sie daraus
+    ab und markieren das Dict mit '_profil', damit ein Klick es als Profil
+    anwendet (backup.load_profile), nicht als kuratierten Look.
+    """
+    ergebnis = []
+    for name in backup.list_profiles():
+        try:
+            with open(os.path.join(backup.PROFIL_DIR, name + ".json")) as f:
+                daten = json.load(f)
+        except (OSError, ValueError):
+            continue
+        if not isinstance(daten, dict):
+            continue
+        look = {"name": name, "_profil": name, "beschreibung": "Eigenes Profil"}
+        accent = _profil_wert(daten, AppSettings.INTERFACE, "accent-color")
+        if accent:
+            look["accent"] = accent
+        icons = _profil_wert(daten, AppSettings.INTERFACE, "icon-theme")
+        if icons:
+            look["icons"] = icons
+        uri = _profil_wert(daten, AppSettings.BACKGROUND, "picture-uri")
+        if uri:
+            try:
+                look["wallpaper"], _ = GLib.filename_from_uri(uri)
+            except (GLib.Error, TypeError):
+                pass
+        ergebnis.append(look)
+    return ergebnis
+
+
 def wende_an(settings, look):
     """Wendet einen Look an und gibt die übersprungenen Teile als Liste zurück.
 
@@ -54,10 +103,6 @@ def wende_an(settings, look):
         pass  # Sicherung ist Komfort, kein Grund das Anwenden abzubrechen
 
     uebersprungen = []
-
-    wert = look.get("color_scheme")
-    if wert:
-        settings.set_color_scheme(wert)
 
     gtk = look.get("gtk")
     if gtk:

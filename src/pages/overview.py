@@ -42,8 +42,8 @@ class OverviewPage(Adw.NavigationPage):
         gruppe = Adw.PreferencesGroup(
             title="Aktueller Look",
             description="Klick auf eine Zeile springt in den jeweiligen Bereich.")
-        gruppe.add(self._wert_zeile("gtk", "GTK-Design", "appearance"))
-        gruppe.add(self._wert_zeile("icon", "Symbole", "appearance"))
+        gruppe.add(self._wert_zeile("gtk", "GTK-Design", "gtk"))
+        gruppe.add(self._wert_zeile("icon", "Symbole", "icons"))
         gruppe.add(self._wert_zeile("cursor", "Mauszeiger", "cursor"))
         gruppe.add(self._wert_zeile("font", "Schrift", "fonts"))
         if self._settings.accent_verfuegbar():

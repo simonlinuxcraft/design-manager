@@ -53,8 +53,9 @@ class BackupPage(Adw.NavigationPage):
         """Eingabezeile zum Anlegen eines Profils aus dem aktuellen Stand."""
         gruppe = Adw.PreferencesGroup(
             title="Profile",
-            description="Mehrere komplette Looks speichern und per Klick "
-                        "wechseln. Ein Profil merkt sich den aktuellen Stand.")
+            description="Den aktuellen Stand als benanntes Set speichern und per "
+                        "Klick wieder anwenden. Gespeicherte Profile erscheinen "
+                        "auch auf der Looks-Seite.")
         self._name_entry = Adw.EntryRow(title="Neues Profil benennen")
         self._name_entry.set_show_apply_button(True)
         self._name_entry.connect("apply", self._on_profil_speichern)
@@ -148,10 +149,11 @@ class BackupPage(Adw.NavigationPage):
         self._auto_zeilen = []
 
         self._profil_namen = backup.list_profiles()
-        if not self._profil_namen:
+        if len(self._profil_namen) < 2:
             leer = Adw.ActionRow(
-                title="Noch keine Profile",
-                subtitle="Erst zwei Profile (z.B. Tag und Nacht) anlegen.")
+                title="Noch nicht genug Profile",
+                subtitle="Erst zwei verschiedene Profile anlegen (z.B. ein "
+                         "helles „Tag“ und ein dunkles „Nacht“).")
             leer.set_sensitive(False)
             self._auto_gruppe.add(leer)
             self._auto_zeilen.append(leer)
@@ -210,6 +212,11 @@ class BackupPage(Adw.NavigationPage):
                 and schedule.zeit_ok(konfig["nacht"]["zeit"])):
             self._auto_switch_still(False)
             self._melde("Bitte gültige Uhrzeiten im Format HH:MM eingeben.")
+            return
+        if konfig["tag"]["profil"] == konfig["nacht"]["profil"]:
+            self._auto_switch_still(False)
+            self._melde("Tag- und Nacht-Profil müssen verschieden sein, sonst "
+                        "schaltet sich nichts um.")
             return
         if schedule.aktiviere(konfig):
             if not still:

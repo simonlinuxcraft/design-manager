@@ -72,29 +72,42 @@ def list_user_wallpapers():
 def aktuelles_wallpaper(settings):
     """Dateipfad des aktuell gesetzten Hintergrunds, oder None.
 
-    Erst der dconf-Wert (als file://-URI), ersatzweise das Quellbild von Variety
-    (das den Hintergrund bei aktivem Rotator verwaltet).
+    Der dconf-Wert (file://-URI) ist die erste Quelle. Bei aktivem Variety steht
+    dort aber oft dessen flüchtige Zwischendatei (wallpaper-auto-rotated-*), die
+    keinem Galerie-Bild entspricht und ohnehin gelöscht wird; in dem Fall führen
+    wir auf Varietys echtes Quellbild zurück, damit die App das gewählte Bild
+    erkennt.
     """
     uri = settings.background_uri()
     if uri:
         pfad = Gio.File.new_for_uri(uri).get_path()
-        if pfad and os.path.isfile(pfad):
-            return os.path.realpath(pfad)
+        if pfad:
+            real = os.path.realpath(pfad)
+            if real.startswith(os.path.realpath(variety.TEMP_WALLPAPER)):
+                quelle = variety.aktuelles_quellbild()
+                if quelle and os.path.isfile(quelle):
+                    return os.path.realpath(quelle)
+            if os.path.isfile(real):
+                return real
     quelle = variety.aktuelles_quellbild()
     if quelle and os.path.isfile(quelle):
-        return quelle
+        return os.path.realpath(quelle)
     return None
 
 
 def apply_wallpaper(settings, pfad):
     """Setzt ein Hintergrundbild und respektiert dabei Variety.
 
-    Läuft Variety, würde ein direkt gesetzter dconf-Wert beim nächsten Login
-    überschrieben. Darum die Wahl an Variety übergeben; klappt das nicht (Variety
-    aus oder Fehler), den dconf-Schlüssel direkt setzen (hell und dunkel).
+    Läuft Variety, übergeben wir die Wahl per --set, damit Variety sie als sein
+    aktuelles Bild übernimmt und über jeden Login wieder auflegt. Den dconf-
+    Schlüssel setzen wir IMMER zusätzlich auf das stabile Quellbild: zum einen
+    greift das auch, wenn Variety den --set still verschluckt (z.B. dasselbe
+    Bild erneut), zum anderen erkennt die App-UI (Vorschau, aktive Karte) so das
+    gewählte Bild statt Varietys flüchtiger Zwischendatei. Der Desktop zeigt in
+    beiden Fällen dasselbe Bild.
     """
-    if variety.laeuft() and variety.setze_wallpaper(pfad):
-        return
+    if variety.laeuft():
+        variety.setze_wallpaper(pfad)
     uri = Gio.File.new_for_path(pfad).get_uri()
     settings.set_background_uri(uri)
     settings.set_background_uri_dark(uri)

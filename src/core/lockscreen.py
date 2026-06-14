@@ -15,6 +15,7 @@ entfernen ihn rückstandslos wieder.
 
 import os
 import re
+import tempfile
 
 from src.core import themes
 
@@ -109,5 +110,27 @@ def _lies(pfad):
 
 
 def _schreib(pfad, text):
-    with open(pfad, "w", encoding="utf-8") as f:
-        f.write(text)
+    """Schreibt die Datei atomar: erst in eine temporäre Datei im selben Ordner,
+    dann per os.replace an ihren Platz ziehen.
+
+    Diese gnome-shell.css gehört zum aktiven Shell-Design und wird von der
+    laufenden Shell gelesen. Ein direkter open(..,"w")-Write könnte sie bei einem
+    Abbruch (Kill, volle Platte) halb geschrieben und damit unbrauchbar
+    zurücklassen. os.replace ist atomar: entweder steht die komplette neue Datei
+    da oder die unveränderte alte, nie ein Torso. Schlägt das Schreiben fehl,
+    bleibt das Original unangetastet und die temporäre Datei wird entfernt.
+    """
+    ordner = os.path.dirname(pfad)
+    fd, tmp = tempfile.mkstemp(dir=ordner, prefix=".dm-shell-", suffix=".css")
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as f:
+            f.write(text)
+            f.flush()
+            os.fsync(f.fileno())
+        os.replace(tmp, pfad)
+    except OSError:
+        try:
+            os.unlink(tmp)
+        except OSError:
+            pass
+        raise

@@ -169,12 +169,12 @@ class BackgroundPage(Adw.NavigationPage):
         return overlay
 
     def _aktueller_pfad(self):
-        """Dateipfad des aktuell gesetzten Hintergrunds, oder None."""
-        uri = self._settings.background_uri()
-        if not uri:
-            return None
-        pfad = Gio.File.new_for_uri(uri).get_path()
-        return os.path.realpath(pfad) if pfad else None
+        """Dateipfad des aktuell gesetzten Hintergrunds, oder None.
+
+        Über backgrounds.aktuelles_wallpaper, damit Varietys flüchtige
+        Zwischendatei auf das echte Quellbild zurückgeführt wird und die Galerie
+        das gewählte Bild als aktiv markiert."""
+        return backgrounds.aktuelles_wallpaper(self._settings)
 
     def _zeige_aktuellen(self):
         pfad = self._aktueller_pfad()

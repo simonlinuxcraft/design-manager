@@ -23,7 +23,7 @@ versteckt jeweils eine Lese-/Schreib-Closure.
 import json
 import os
 
-from gi.repository import Gio
+from gi.repository import Gio, GLib
 
 from src.core.settings import schema_vorhanden
 
@@ -121,16 +121,25 @@ def _panel_schema_dir():
 
 
 def _panel_settings():
-    """Gio.Settings für Dash to Panel (Schema aus dem Erweiterungsordner)."""
+    """Gio.Settings für Dash to Panel (Schema aus dem Erweiterungsordner).
+
+    Die gschemas.compiled gehört einer Fremderweiterung, wir kontrollieren sie
+    nicht: nach einem glib-Upgrade oder bei halb geschriebener Datei kann das
+    Laden mit GLib.Error scheitern ('invalid gvdb header'). Das fangen wir ab
+    und liefern None, sonst crasht die Dock-Seite beim Öffnen.
+    """
     d = _panel_schema_dir()
     if d is None:
         return None
-    quelle = Gio.SettingsSchemaSource.new_from_directory(
-        d, Gio.SettingsSchemaSource.get_default(), False)
-    schema = quelle.lookup(DASH_TO_PANEL_SCHEMA, False)
-    if schema is None:
+    try:
+        quelle = Gio.SettingsSchemaSource.new_from_directory(
+            d, Gio.SettingsSchemaSource.get_default(), False)
+        schema = quelle.lookup(DASH_TO_PANEL_SCHEMA, False)
+        if schema is None:
+            return None
+        return Gio.Settings.new_full(schema, None, None)
+    except GLib.Error:
         return None
-    return Gio.Settings.new_full(schema, None, None)
 
 
 def aktives_dock():

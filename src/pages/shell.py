@@ -176,6 +176,14 @@ class ShellPage(Adw.NavigationPage):
             for andere in self._cards:
                 andere.set_aktiv(andere.theme_name == STANDARD_SHELL)
         if uninstaller.deinstalliere(name, "shell"):
+            # Viele Designs liefern in EINEM Ordner gnome-shell/ UND gtk-4.0/
+            # (z.B. Juno-ocean). Beim Entfernen verschwindet auch die gtk-4.0-CSS.
+            # War dasselbe Design zugleich als GTK-Design aktiv, zeigen jetzt der
+            # dconf-Wert und der libadwaita-Spiegel auf einen gelöschten Ordner.
+            # Darum das GTK-Design hier mit auf den sicheren Standard (Adwaita)
+            # zurücksetzen; reset_gtk_theme räumt zugleich den Spiegel restlos weg.
+            if self._settings.gtk_theme() == name:
+                self._settings.reset_gtk_theme()
             self._flowbox.remove(karte)
             if karte in self._cards:
                 self._cards.remove(karte)
