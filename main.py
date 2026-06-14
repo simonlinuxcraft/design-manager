@@ -21,6 +21,7 @@ bewusst nicht: die eigentliche Oberflaeche liegt in src/window.py.
 """
 
 import os
+import subprocess
 import sys
 
 import gi
@@ -131,10 +132,51 @@ def _apply_profile_headless(argv):
     return 0
 
 
+def _software_gl():
+    """True, wenn die GL-Wiedergabe in Software läuft (kein Hardware-Treiber).
+
+    Erst GL direkt fragen (genauester Hinweis: meldet der Renderer llvmpipe/
+    softpipe/swrast?). Fehlt glxinfo, gilt eine VM als Software-GL-Verdacht.
+    """
+    try:
+        ausgabe = subprocess.run(
+            ["glxinfo", "-B"], capture_output=True, text=True, timeout=2).stdout
+        if ausgabe:
+            return any(s in ausgabe.lower()
+                       for s in ("llvmpipe", "softpipe", "swrast"))
+    except (OSError, subprocess.SubprocessError):
+        pass
+    try:
+        return subprocess.run(
+            ["systemd-detect-virt", "--quiet"], timeout=2).returncode == 0
+    except (OSError, subprocess.SubprocessError):
+        return False
+
+
+def _waehle_renderer():
+    """Auf Systemen ohne brauchbare GPU den Cairo-Renderer erzwingen.
+
+    GTK4 nutzt ab 4.14 standardmäßig den GL-Renderer. Auf Software-GL (llvmpipe,
+    typisch in VMs) hängt der oder zeichnet eigene DrawingAreas leer (etwa die
+    Shell-Vorschaukarten). Cairo zeichnet rein in Software, ist dort nicht
+    langsamer und immer korrekt. Echte GPUs behalten den schnellen GL-Renderer.
+    Eine vom Nutzer/System gesetzte GSK_RENDERER-Wahl bleibt unangetastet.
+    """
+    if os.environ.get("GSK_RENDERER"):
+        return
+    if _software_gl():
+        os.environ["GSK_RENDERER"] = "cairo"
+        print("Design Manager: Software-GL erkannt, nutze GSK_RENDERER=cairo.",
+              file=sys.stderr)
+
+
 def main():
     # Headless-Modus für die Automatik-Timer, bevor irgendetwas GTK initialisiert.
     if "--apply-profile" in sys.argv:
         return _apply_profile_headless(sys.argv)
+    # Renderer-Wahl vor dem ersten Fenster (GTK legt den Renderer beim
+    # Realisieren der ersten Oberfläche an, danach wirkt GSK_RENDERER nicht mehr).
+    _waehle_renderer()
     app = LinuxAnpassungApp()
     return app.run(sys.argv)
 
