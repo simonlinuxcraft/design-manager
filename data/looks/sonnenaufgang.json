@@ -1,0 +1,8 @@
+{
+  "name": "Sonnenaufgang",
+  "beschreibung": "Hell mit warmem Orange.",
+  "color_scheme": "prefer-light",
+  "gtk": "Yaru",
+  "icons": "Yaru",
+  "accent": "orange"
+}

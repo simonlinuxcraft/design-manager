@@ -11,7 +11,7 @@ import os
 
 from gi.repository import Adw, Gdk, Gio, GLib, Gtk
 
-from src.core import onboarding
+from src.core import healthcheck, onboarding, restorepoint
 from src.core.settings import AppSettings
 from src.pages.appearance import AppearancePage
 from src.pages.background import BackgroundPage
@@ -20,6 +20,8 @@ from src.pages.cursor import CursorPage
 from src.pages.dock import DockPage
 from src.pages.extensions import ExtensionsPage
 from src.pages.fonts import FontsPage
+from src.pages.looks import LooksPage
+from src.pages.overview import OverviewPage
 from src.pages.shell import ShellPage
 from src.pages.system import SystemPage
 from src.widgets.welcome import WelcomeDialog
@@ -53,28 +55,36 @@ class MainWindow(Adw.ApplicationWindow):
         # Aktionen für das Hauptmenü (Über, Beenden) registrieren.
         self._setup_actions()
 
-        # Die Bereiche der Seitenleiste. Pro Eintrag: Titel (Pango-Markup, daher
-        # "&amp;"), Icon-Name und eine Funktion, die die Seite baut.
+        # Die Bereiche der Seitenleiste. Pro Eintrag: ein stabiler Schlüssel
+        # (für Sprünge aus der Übersicht), Titel (Pango-Markup, daher "&amp;"),
+        # Icon-Name und eine Funktion, die die Seite baut.
         self._bereiche = [
-            ("Hintergrund", "image-x-generic-symbolic",
+            ("overview", "Übersicht", "view-grid-symbolic",
+             lambda: OverviewPage(self._settings, self._springe_zu)),
+            ("looks", "Looks", "starred-symbolic",
+             lambda: LooksPage(self._settings)),
+            ("background", "Hintergrund", "image-x-generic-symbolic",
              lambda: BackgroundPage(self._settings)),
-            ("Symbole &amp; Design", "applications-graphics-symbolic",
+            ("appearance", "Symbole &amp; Design", "applications-graphics-symbolic",
              lambda: AppearancePage(self._settings)),
-            ("Mauszeiger", "input-mouse-symbolic",
+            ("cursor", "Mauszeiger", "input-mouse-symbolic",
              lambda: CursorPage(self._settings)),
-            ("Schriftarten", "font-x-generic-symbolic",
+            ("fonts", "Schriftarten", "font-x-generic-symbolic",
              lambda: FontsPage(self._settings)),
-            ("Shell-Design", "video-display-symbolic",
+            ("shell", "Shell-Design", "video-display-symbolic",
              lambda: ShellPage(self._settings)),
-            ("Dock", "view-app-grid-symbolic",
+            ("dock", "Dock", "view-app-grid-symbolic",
              lambda: DockPage(self._settings)),
-            ("Erweiterungen", "application-x-addon-symbolic",
+            ("extensions", "Erweiterungen", "application-x-addon-symbolic",
              lambda: ExtensionsPage(self._settings)),
-            ("System", "applications-system-symbolic",
+            ("system", "System", "applications-system-symbolic",
              lambda: SystemPage(self._settings)),
-            ("Sicherung", "document-save-symbolic",
+            ("backup", "Sicherung", "document-save-symbolic",
              lambda: BackupPage(self._settings)),
         ]
+        # Schlüssel -> Listenposition, für Sprünge aus der Übersicht.
+        self._index_nach_key = {
+            eintrag[0]: i for i, eintrag in enumerate(self._bereiche)}
 
         self._split = Adw.NavigationSplitView()
         # Seitenleiste auf feste Breite nageln (min == max), sonst ziehen breite
@@ -87,7 +97,21 @@ class MainWindow(Adw.ApplicationWindow):
         # Installation) über jeder Seite erscheinen können.
         self._toasts = Adw.ToastOverlay()
         self._toasts.set_child(self._split)
-        self.set_content(self._toasts)
+        self._toasts.set_vexpand(True)
+
+        # Fensterweites Banner über dem Inhalt, anfangs eingeklappt. Der
+        # Health-Check (siehe core/healthcheck.py) blendet es nach dem Start ein,
+        # wenn ein gesetztes Design auf der Platte fehlt und GNOME still auf
+        # Adwaita zurückgefallen ist.
+        self._banner = Adw.Banner()
+        self._banner.set_revealed(False)
+        self._banner.connect("button-clicked", self._on_banner_korrektur)
+        self._banner_probleme = []
+
+        wurzel = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        wurzel.append(self._banner)
+        wurzel.append(self._toasts)
+        self.set_content(wurzel)
 
         # Startauswahl: erste echte Zeile, löst row-selected aus.
         self._listbox.select_row(self._erste_zeile)
@@ -98,10 +122,35 @@ class MainWindow(Adw.ApplicationWindow):
         if onboarding.ist_erster_start():
             GLib.idle_add(self._zeige_willkommen)
 
+        # Nach dem ersten Frame prüfen, ob ein gesetztes Design fehlt (still auf
+        # Adwaita zurückgefallen). idle_add, damit das Fenster zuerst erscheint.
+        GLib.idle_add(self._pruefe_gesundheit)
+
     def _zeige_willkommen(self):
         WelcomeDialog().present(self)
         onboarding.als_gesehen_markieren()
         return GLib.SOURCE_REMOVE
+
+    def _pruefe_gesundheit(self):
+        """Blendet ein Banner ein, wenn ein gesetztes Design auf der Platte fehlt."""
+        self._banner_probleme = healthcheck.pruefe(self._settings)
+        if not self._banner_probleme:
+            return GLib.SOURCE_REMOVE
+        labels = ", ".join(label for label, _ in self._banner_probleme)
+        self._banner.set_title(
+            "Nicht gefunden: " + labels + ". GNOME nutzt ersatzweise Adwaita.")
+        self._banner.set_button_label("Standard setzen")
+        self._banner.set_revealed(True)
+        return GLib.SOURCE_REMOVE
+
+    def _on_banner_korrektur(self, _banner):
+        """Schließt die gemeldeten Lücken über die reset_*-Methoden."""
+        for _label, methode in self._banner_probleme:
+            getattr(self._settings, methode)()
+        self._banner_probleme = []
+        self._banner.set_revealed(False)
+        self.zeige_toast("Auf sicheres Standard-Design gesetzt.")
+        self._reload_aktive_seite()
 
     def melde_installation(self, ergebnis, fehler):
         """Rückmeldung der Dropzone: Toast zeigen und die Liste neu laden.
@@ -141,6 +190,7 @@ class MainWindow(Adw.ApplicationWindow):
         header.add_css_class("flat")  # kein eigener Hintergrund -> ein Block
         header.pack_start(self._logo())
         header.pack_end(self._menue_knopf())
+        header.pack_end(self._farbschema_knopf())
         header.set_title_widget(
             Adw.WindowTitle(title="Design Manager", subtitle="v" + APP_VERSION)
         )
@@ -165,9 +215,27 @@ class MainWindow(Adw.ApplicationWindow):
         beenden.connect("activate", lambda *_: self.close())
         self.add_action(beenden)
 
+        safe = Gio.SimpleAction.new("safe-state", None)
+        safe.connect("activate", self._on_safe_state)
+        self.add_action(safe)
+
+        # Zustands-Aktion fürs System-Farbschema (hell/dunkel/automatisch). Das
+        # Menü zeigt am aktiven Wert automatisch einen Punkt, weil die Aktion
+        # einen String-Zustand hat.
+        schema = Gio.SimpleAction.new_stateful(
+            "color-scheme", GLib.VariantType.new("s"),
+            GLib.Variant.new_string(self._settings.color_scheme()))
+        schema.connect("activate", self._on_color_scheme)
+        self.add_action(schema)
+
+    def _on_color_scheme(self, action, parameter):
+        action.set_state(parameter)
+        self._settings.set_color_scheme(parameter.get_string())
+
     def _menue_knopf(self):
         """Hamburger-Menü rechts in der Kopfleiste."""
         menue = Gio.Menu()
+        menue.append("Sicheren Zustand herstellen", "win.safe-state")
         menue.append("Über Design Manager", "win.about")
         menue.append("Beenden", "win.quit")
 
@@ -175,6 +243,24 @@ class MainWindow(Adw.ApplicationWindow):
         knopf.set_icon_name("open-menu-symbolic")
         knopf.set_menu_model(menue)
         knopf.set_tooltip_text("Hauptmenü")
+        return knopf
+
+    def _farbschema_knopf(self):
+        """Umschalter fürs System-Farbschema (hell/dunkel/automatisch).
+
+        Steuert org.gnome.desktop.interface/color-scheme. Das eigene Fenster
+        bleibt bewusst dunkel (die App erzwingt FORCE_DARK in main.py); der
+        Umschalter wirkt auf den Rest des Systems.
+        """
+        menue = Gio.Menu()
+        menue.append("Hell", "win.color-scheme::prefer-light")
+        menue.append("Dunkel", "win.color-scheme::prefer-dark")
+        menue.append("Automatisch", "win.color-scheme::default")
+
+        knopf = Gtk.MenuButton()
+        knopf.set_icon_name("display-brightness-symbolic")
+        knopf.set_menu_model(menue)
+        knopf.set_tooltip_text("Helligkeit (System-Farbschema)")
         return knopf
 
     def _on_ueber(self, _action, _param):
@@ -190,6 +276,38 @@ class MainWindow(Adw.ApplicationWindow):
             copyright="© 2026 simonlinuxcraft",
         )
         dialog.present(self)
+
+    def _on_safe_state(self, _action, _param):
+        """Notausstieg: nach Sicherungspunkt alles auf sichere Standards setzen."""
+        dialog = Adw.AlertDialog(
+            heading="Sicheren Zustand herstellen?",
+            body="Erst wird ein Sicherungspunkt angelegt, dann werden Design, "
+                 "Symbole, Mauszeiger und Shell-Design auf garantiert lauffähige "
+                 "Standardwerte (Adwaita) gesetzt. Das hilft, wenn ein Design die "
+                 "Oberfläche unbrauchbar gemacht hat.")
+        dialog.add_response("abbrechen", "Abbrechen")
+        dialog.add_response("anwenden", "Sicheren Zustand setzen")
+        dialog.set_response_appearance(
+            "anwenden", Adw.ResponseAppearance.SUGGESTED)
+        dialog.set_default_response("abbrechen")
+        dialog.set_close_response("abbrechen")
+        dialog.connect("response", self._on_safe_state_antwort)
+        dialog.present(self)
+
+    def _on_safe_state_antwort(self, _dialog, antwort):
+        if antwort != "anwenden":
+            return
+        restorepoint.erstelle(self._settings, "vor Notausstieg")
+        # Die reset_*-Methoden setzen ausschließlich auf Adwaita bzw. den leeren
+        # Shell-Wert, also auf garantiert vorhandene, gültige Designs. Eine
+        # Whitelist-Prüfung erübrigt sich, weil die Ziele bekannt sicher sind.
+        self._settings.reset_gtk_theme()
+        self._settings.reset_icon_theme()
+        self._settings.reset_cursor_theme()
+        self._settings.reset_shell_theme()
+        self._banner.set_revealed(False)
+        self.zeige_toast("Sicherer Zustand gesetzt (Adwaita).")
+        self._reload_aktive_seite()
 
     def _logo(self):
         """Kleines App-Logo für die Kopfleiste.
@@ -222,7 +340,7 @@ class MainWindow(Adw.ApplicationWindow):
         self._listbox.connect("row-selected", self._on_row_selected)
 
         self._erste_zeile = None
-        for titel, icon_name, erzeuge_seite in self._bereiche:
+        for _key, titel, icon_name, erzeuge_seite in self._bereiche:
             zeile = Adw.ActionRow(title=titel)
             zeile.add_prefix(Gtk.Image(icon_name=icon_name))
             # Erzeuger-Funktion direkt an der Zeile merken (siehe Modul-Doku).
@@ -233,6 +351,15 @@ class MainWindow(Adw.ApplicationWindow):
                 self._erste_zeile = zeile
 
         return self._listbox
+
+    def _springe_zu(self, key):
+        """Wählt den Bereich mit diesem Schlüssel an (Sprung aus der Übersicht)."""
+        index = self._index_nach_key.get(key)
+        if index is None:
+            return
+        zeile = self._listbox.get_row_at_index(index)
+        if zeile is not None:
+            self._listbox.select_row(zeile)
 
     def _on_row_selected(self, _listbox, zeile):
         """Bei Auswahl die zur Zeile gehörende Seite rechts anzeigen."""

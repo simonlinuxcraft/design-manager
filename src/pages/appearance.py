@@ -10,7 +10,7 @@ dconf-Schlüssel setzt.
 
 from gi.repository import Adw, GLib, Gtk
 
-from src.core import themes, uninstaller
+from src.core import restorepoint, theme_check, themes, uninstaller
 from src.widgets.dropzone import InstallDropzone
 from src.widgets.theme_card import ThemeCard
 
@@ -108,8 +108,44 @@ class AppearancePage(Adw.NavigationPage):
 
     def _on_dropdown_changed(self, dropdown, _param, setter):
         eintrag = dropdown.get_selected_item()
-        if eintrag is not None:
-            setter(eintrag.get_string())
+        if eintrag is None:
+            return
+        name = eintrag.get_string()
+        # Vor dem Aktivieren prüfen, ob die gtk.css wirklich da ist. Fehlt sie,
+        # würde GNOME still auf Adwaita zurückfallen; lieber vorher fragen.
+        ok, grund = theme_check.pruefe_gtk(name)
+        if not ok:
+            self._gtk_trotzdem_fragen(name, grund)
+            return
+        restorepoint.erstelle(self._settings, "vor GTK-Design " + name)
+        setter(name)
+
+    def _gtk_trotzdem_fragen(self, name, grund):
+        dialog = Adw.AlertDialog(
+            heading="Design trotzdem aktivieren?",
+            body="„%s“: %s" % (name, grund))
+        dialog.add_response("abbrechen", "Abbrechen")
+        dialog.add_response("trotzdem", "Trotzdem aktivieren")
+        dialog.set_response_appearance(
+            "trotzdem", Adw.ResponseAppearance.DESTRUCTIVE)
+        dialog.set_default_response("abbrechen")
+        dialog.set_close_response("abbrechen")
+        dialog.connect("response", self._on_gtk_trotzdem, name)
+        dialog.present(self)
+
+    def _on_gtk_trotzdem(self, _dialog, antwort, name):
+        if antwort == "trotzdem":
+            restorepoint.erstelle(self._settings, "vor GTK-Design " + name)
+            self._settings.set_gtk_theme(name)
+            return
+        # Abbrechen: das Dropdown hat die Auswahl schon geändert, also auf das
+        # tatsächlich aktive Design zurückziehen (ohne den Handler erneut
+        # auszulösen).
+        aktuell = self._settings.gtk_theme()
+        if aktuell in self._gtk_namen:
+            self._gtk_dropdown.handler_block(self._gtk_handler_id)
+            self._gtk_dropdown.set_selected(self._gtk_namen.index(aktuell))
+            self._gtk_dropdown.handler_unblock(self._gtk_handler_id)
 
     def _on_gtk_reset(self, _knopf):
         """Notausstieg: GTK-Design auf Adwaita zurück und Dropdown nachziehen."""

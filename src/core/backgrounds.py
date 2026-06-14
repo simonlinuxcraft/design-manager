@@ -10,7 +10,9 @@ import json
 import os
 import threading
 
-from gi.repository import Gdk, GdkPixbuf, GLib
+from gi.repository import Gdk, GdkPixbuf, Gio, GLib
+
+from src.core import variety
 
 
 SYSTEM_DIR = "/usr/share/backgrounds"
@@ -65,6 +67,37 @@ def list_user_wallpapers():
     versteckt = _versteckte()
     return [p for p in _bilder_in(USER_DIR)
             if os.path.realpath(p) not in versteckt]
+
+
+def aktuelles_wallpaper(settings):
+    """Dateipfad des aktuell gesetzten Hintergrunds, oder None.
+
+    Erst der dconf-Wert (als file://-URI), ersatzweise das Quellbild von Variety
+    (das den Hintergrund bei aktivem Rotator verwaltet).
+    """
+    uri = settings.background_uri()
+    if uri:
+        pfad = Gio.File.new_for_uri(uri).get_path()
+        if pfad and os.path.isfile(pfad):
+            return os.path.realpath(pfad)
+    quelle = variety.aktuelles_quellbild()
+    if quelle and os.path.isfile(quelle):
+        return quelle
+    return None
+
+
+def apply_wallpaper(settings, pfad):
+    """Setzt ein Hintergrundbild und respektiert dabei Variety.
+
+    Läuft Variety, würde ein direkt gesetzter dconf-Wert beim nächsten Login
+    überschrieben. Darum die Wahl an Variety übergeben; klappt das nicht (Variety
+    aus oder Fehler), den dconf-Schlüssel direkt setzen (hell und dunkel).
+    """
+    if variety.laeuft() and variety.setze_wallpaper(pfad):
+        return
+    uri = Gio.File.new_for_path(pfad).get_uri()
+    settings.set_background_uri(uri)
+    settings.set_background_uri_dark(uri)
 
 
 def load_texture_async(pfad, breite, hoehe, callback):

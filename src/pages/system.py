@@ -9,6 +9,8 @@ Alle Werte sind dconf-Schlüssel, jede Auswahl wirkt sofort.
 
 from gi.repository import Adw, Gtk
 
+from src.core import accent_suggest, backgrounds
+
 
 # Die Akzentfarben von GNOME (ab Version 47). Pro Eintrag: der interne Name, wie
 # ihn dconf speichert, und ein deutsches Label für den Tooltip.
@@ -93,6 +95,7 @@ class SystemPage(Adw.NavigationPage):
         reihe = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8)
         aktuell = self._settings.accent_color()
 
+        self._akzent_knoepfe = {}
         erster = None
         for name, anzeige in AKZENTE:
             knopf = Gtk.ToggleButton()
@@ -106,15 +109,43 @@ class SystemPage(Adw.NavigationPage):
                 knopf.set_group(erster)
             knopf.set_active(name == aktuell)
             knopf.connect("toggled", self._on_akzent, name)
+            self._akzent_knoepfe[name] = knopf
             reihe.append(knopf)
 
-        return reihe
+        vorschlag = Gtk.Button(label="Farbe aus Hintergrund")
+        vorschlag.set_halign(Gtk.Align.START)
+        vorschlag.set_tooltip_text(
+            "Die zum aktuellen Hintergrundbild passende Akzentfarbe wählen")
+        vorschlag.connect("clicked", self._on_akzent_vorschlag)
+
+        box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
+        box.append(reihe)
+        box.append(vorschlag)
+        return box
 
     def _on_akzent(self, knopf, name):
         # Nur auf das Einschalten reagieren (das Ausschalten des vorherigen
         # Knopfes feuert ebenfalls, soll aber nichts setzen).
         if knopf.get_active():
             self._settings.set_accent_color(name)
+
+    def _on_akzent_vorschlag(self, _knopf):
+        pfad = backgrounds.aktuelles_wallpaper(self._settings)
+        if pfad is None:
+            self._melde("Kein Hintergrundbild gefunden.")
+            return
+        name = accent_suggest.vorschlag(pfad)
+        if name is None or name not in self._akzent_knoepfe:
+            self._melde("Keine passende Akzentfarbe gefunden.")
+            return
+        # set_active feuert 'toggled' -> _on_akzent setzt die Farbe.
+        self._akzent_knoepfe[name].set_active(True)
+        self._melde("Akzentfarbe aus dem Hintergrund gewählt.")
+
+    def _melde(self, text):
+        fenster = self.get_root()
+        if fenster is not None and hasattr(fenster, "zeige_toast"):
+            fenster.zeige_toast(text)
 
     # --- Fensterknöpfe (Titelleiste) ---
 

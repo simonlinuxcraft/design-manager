@@ -100,7 +100,33 @@ class LinuxAnpassungApp(Adw.Application):
         window.present()
 
 
+def _apply_profile_headless(argv):
+    """Wendet ein Profil ohne Fenster an (für die Timer der Tag/Nacht-Automatik).
+
+    Reiner dconf-Write über AppSettings, daher kein Display und kein GTK nötig.
+    Ohne aktive Session-Bus-Adresse landen die Writes nicht im laufenden
+    grafischen Login, darum vorher prüfen. Bei fehlendem oder kaputtem Profil
+    passiert still nichts.
+    """
+    i = argv.index("--apply-profile")
+    if i + 1 >= len(argv):
+        return 2
+    name = argv[i + 1]
+    if not os.environ.get("DBUS_SESSION_BUS_ADDRESS"):
+        return 1
+    from src.core import backup
+    from src.core.settings import AppSettings
+    try:
+        backup.load_profile(AppSettings(), name)
+    except (OSError, ValueError):
+        return 1
+    return 0
+
+
 def main():
+    # Headless-Modus für die Automatik-Timer, bevor irgendetwas GTK initialisiert.
+    if "--apply-profile" in sys.argv:
+        return _apply_profile_headless(sys.argv)
     app = LinuxAnpassungApp()
     return app.run(sys.argv)
 

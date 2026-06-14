@@ -223,14 +223,9 @@ class BackgroundPage(Adw.NavigationPage):
         self._setze_bild(karte.pfad)
 
     def _setze_bild(self, pfad):
-        # Läuft Variety, würde eine direkte gsettings-Änderung beim nächsten
-        # Login überschrieben. Darum die Wahl an Variety übergeben: es macht sie
-        # zu seinem aktuellen Bild und legt sie dauerhaft wieder auf. Klappt das
-        # nicht (Variety aus oder Fehler), fallen wir auf den direkten Weg zurück.
-        if not (variety.laeuft() and variety.setze_wallpaper(pfad)):
-            uri = Gio.File.new_for_path(pfad).get_uri()
-            self._settings.set_background_uri(uri)
-            self._settings.set_background_uri_dark(uri)
+        # Variety-respektierendes Setzen liegt jetzt zentral in core/backgrounds,
+        # damit auch Look-Sets denselben Weg nutzen.
+        backgrounds.apply_wallpaper(self._settings, pfad)
         self._vorschau_setzen(pfad)
 
     def _on_eigenes(self, _knopf):

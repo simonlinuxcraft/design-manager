@@ -158,6 +158,10 @@ class AppSettings:
     # fest eingebaut, existiert also immer und kann keine Parse-Fehler werfen,
     # selbst wenn ein selbstgebautes Design die Oberfläche unbrauchbar macht.
     SAFE_GTK_THEME = "Adwaita"
+    # Sichere Standardwerte für Symbole und Mauszeiger. Adwaita liegt systemweit
+    # in /usr/share/icons und hat sowohl Icons als auch einen Mauszeiger.
+    SAFE_ICON_THEME = "Adwaita"
+    SAFE_CURSOR_THEME = "Adwaita"
 
     # Schlüssel, die Sicherung & Wiederherstellung erfasst. Alle sind vom Typ
     # String. Jeder Eintrag ist (Schema-ID, Schlüsselname). Diese eine Liste ist
@@ -239,6 +243,10 @@ class AppSettings:
     def set_icon_theme(self, name):
         self._interface.set_string("icon-theme", name)
 
+    def reset_icon_theme(self):
+        """Setzt das Symbol-Design auf den sicheren Standard (Adwaita)."""
+        self._interface.set_string("icon-theme", self.SAFE_ICON_THEME)
+
     # --- Mauszeiger ---
 
     def cursor_theme(self):
@@ -252,6 +260,14 @@ class AppSettings:
         _spiegele_cursor_in_pfad(name)
         self._interface.set_string("cursor-theme", name)
         _schreibe_default_cursor(name)
+
+    def reset_cursor_theme(self):
+        """Setzt den Mauszeiger auf den sicheren Standard (Adwaita).
+
+        Geht über set_cursor_theme, damit der ~/.icons-Spiegel und der
+        default-Stub mitgezogen werden.
+        """
+        self.set_cursor_theme(self.SAFE_CURSOR_THEME)
 
     # --- Systemschriftart (z.B. "Cantarell 11") ---
 
@@ -325,6 +341,11 @@ class AppSettings:
     def set_shell_theme(self, name):
         if self._user_theme is not None:
             self._user_theme.set_string("name", name)
+
+    def reset_shell_theme(self):
+        """Setzt das Shell-Design auf den GNOME-Standard (leerer Wert)."""
+        if self._user_theme is not None:
+            self._user_theme.set_string("name", "")
 
     # --- Dokument- und Festbreitenschrift ---
     # Neben der allgemeinen Oberflächenschrift (font-name) kennt GNOME eine

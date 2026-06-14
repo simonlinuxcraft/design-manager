@@ -1,0 +1,8 @@
+{
+  "name": "Waldlichtung",
+  "beschreibung": "Dunkelgrün und ruhig.",
+  "color_scheme": "prefer-dark",
+  "gtk": "Yaru-dark",
+  "icons": "Yaru",
+  "accent": "green"
+}

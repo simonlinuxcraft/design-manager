@@ -9,7 +9,7 @@ Design). Ein Klick wirkt sofort über org.gnome.shell.extensions.user-theme/name
 
 from gi.repository import Adw, GLib, Gtk
 
-from src.core import themes, uninstaller
+from src.core import restorepoint, theme_check, themes, uninstaller
 from src.widgets.shell_card import ShellCard
 
 
@@ -117,9 +117,38 @@ class ShellPage(Adw.NavigationPage):
         return flowbox
 
     def _on_karte_aktiviert(self, _flowbox, karte):
+        # Vor dem Aktivieren prüfen, ob die gnome-shell.css da ist.
+        ok, grund = theme_check.pruefe_shell(karte.theme_name)
+        if not ok:
+            self._shell_trotzdem_fragen(karte, grund)
+            return
+        self._aktiviere_shell(karte)
+
+    def _aktiviere_shell(self, karte):
         for andere in self._cards:
             andere.set_aktiv(andere is karte)
+        restorepoint.erstelle(
+            self._settings, "vor Shell-Design " + (karte.theme_name or "Standard"))
         self._settings.set_shell_theme(karte.theme_name)
+
+    def _shell_trotzdem_fragen(self, karte, grund):
+        dialog = Adw.AlertDialog(
+            heading="Shell-Design trotzdem aktivieren?",
+            body="„%s“: %s" % (karte.theme_name or "Standard", grund))
+        dialog.add_response("abbrechen", "Abbrechen")
+        dialog.add_response("trotzdem", "Trotzdem aktivieren")
+        dialog.set_response_appearance(
+            "trotzdem", Adw.ResponseAppearance.DESTRUCTIVE)
+        dialog.set_default_response("abbrechen")
+        dialog.set_close_response("abbrechen")
+        # Bei Abbruch bleibt die alte Markierung stehen, weil wir set_aktiv erst
+        # in _aktiviere_shell setzen.
+        dialog.connect("response", self._on_shell_trotzdem, karte)
+        dialog.present(self)
+
+    def _on_shell_trotzdem(self, _dialog, antwort, karte):
+        if antwort == "trotzdem":
+            self._aktiviere_shell(karte)
 
     # --- Entfernen ---
 

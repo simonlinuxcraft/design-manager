@@ -9,7 +9,7 @@ werden.
 
 from gi.repository import Adw, GLib, Gtk
 
-from src.core import themes, uninstaller
+from src.core import restorepoint, themes, uninstaller
 from src.widgets.cursor_card import CursorCard
 from src.widgets.dropzone import InstallDropzone
 
@@ -102,6 +102,7 @@ class CursorPage(Adw.NavigationPage):
     def _on_karte_aktiviert(self, _flowbox, karte):
         for andere in self._cards:
             andere.set_aktiv(andere is karte)
+        restorepoint.erstelle(self._settings, "vor Mauszeiger " + karte.theme_name)
         self._settings.set_cursor_theme(karte.theme_name)
 
     # --- Entfernen ---
