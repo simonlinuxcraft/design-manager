@@ -68,7 +68,7 @@ Version: $VERSION
 Architecture: $ARCH
 Maintainer: simonlinuxcraft <245174420+simonlinuxcraft@users.noreply.github.com>
 Installed-Size: $INSTALLED_KB
-Depends: python3, python3-gi, gir1.2-gtk-4.0, gir1.2-adw-1, gir1.2-gdkpixbuf-2.0
+Depends: python3, python3-gi, python3-gi-cairo, gir1.2-gtk-4.0, gir1.2-adw-1, gir1.2-gdkpixbuf-2.0
 Recommends: policykit-1, libglib2.0-bin
 Suggests: variety, imagemagick
 Section: x11
