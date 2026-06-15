@@ -9,6 +9,7 @@ werden.
 
 from gi.repository import Adw, GLib, Gtk
 
+from src import compat
 from src.core import restorepoint, themes, uninstaller
 from src.widgets.cursor_card import CursorCard
 from src.widgets.dropzone import InstallDropzone
@@ -19,7 +20,7 @@ from src.widgets.dropzone import InstallDropzone
 STANDARD_CURSOR = "Adwaita"
 
 
-class CursorPage(Adw.NavigationPage):
+class CursorPage(compat.PageBase):
     """Navigationsseite mit Vorschaukarten der Mauszeiger-Designs."""
 
     def __init__(self, settings):
@@ -55,9 +56,8 @@ class CursorPage(Adw.NavigationPage):
         scroll.set_vexpand(True)
         scroll.set_child(box)
 
-        toolbar = Adw.ToolbarView()
-        toolbar.add_top_bar(Adw.HeaderBar())
-        toolbar.set_content(scroll)
+        toolbar = compat.toolbar_view(
+            top_bars=[Adw.HeaderBar()], content=scroll)
         self.set_child(toolbar)
 
     def _karten(self):
@@ -109,20 +109,17 @@ class CursorPage(Adw.NavigationPage):
 
     def _on_loeschen(self, karte):
         """Sicherheitsabfrage vor dem Entfernen eines Mauszeiger-Designs."""
-        dialog = Adw.AlertDialog(
-            heading="Mauszeiger entfernen?",
-            body="„%s“ wird dauerhaft aus deinem Benutzerordner gelöscht. "
-                 "Das lässt sich nicht rückgängig machen." % karte.theme_name)
-        dialog.add_response("abbrechen", "Abbrechen")
-        dialog.add_response("loeschen", "Entfernen")
-        dialog.set_response_appearance(
-            "loeschen", Adw.ResponseAppearance.DESTRUCTIVE)
-        dialog.set_default_response("abbrechen")
-        dialog.set_close_response("abbrechen")
-        dialog.connect("response", self._on_loeschen_antwort, karte)
-        dialog.present(self)
+        compat.alert(
+            self,
+            "Mauszeiger entfernen?",
+            "„%s“ wird dauerhaft aus deinem Benutzerordner gelöscht. "
+            "Das lässt sich nicht rückgängig machen." % karte.theme_name,
+            [("abbrechen", "Abbrechen", ""),
+             ("loeschen", "Entfernen", "destructive")],
+            default="abbrechen", close="abbrechen",
+            on_response=lambda antwort: self._on_loeschen_antwort(antwort, karte))
 
-    def _on_loeschen_antwort(self, _dialog, antwort, karte):
+    def _on_loeschen_antwort(self, antwort, karte):
         if antwort != "loeschen":
             return
         name = karte.theme_name

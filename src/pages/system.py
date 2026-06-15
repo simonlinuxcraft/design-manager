@@ -9,6 +9,7 @@ Alle Werte sind dconf-Schlüssel, jede Auswahl wirkt sofort.
 
 from gi.repository import Adw, Gtk
 
+from src import compat
 from src.core import accent_suggest, backgrounds
 
 
@@ -32,7 +33,7 @@ AKZENTE = [
 FENSTER_KNOEPFE = {"minimize", "maximize", "close"}
 
 
-class SystemPage(Adw.NavigationPage):
+class SystemPage(compat.PageBase):
     """Navigationsseite mit Akzentfarbe, Fensterknöpfen und Leisten-Schaltern."""
 
     def __init__(self, settings):
@@ -55,9 +56,8 @@ class SystemPage(Adw.NavigationPage):
         scroll.set_vexpand(True)
         scroll.set_child(box)
 
-        toolbar = Adw.ToolbarView()
-        toolbar.add_top_bar(Adw.HeaderBar())
-        toolbar.set_content(scroll)
+        toolbar = compat.toolbar_view(
+            top_bars=[Adw.HeaderBar()], content=scroll)
         self.set_child(toolbar)
 
     # --- kleine Bausteine ---
@@ -73,7 +73,7 @@ class SystemPage(Adw.NavigationPage):
         set_active steht bewusst vor connect, sonst würde schon das Vorbelegen
         als Änderung zählen und den Schlüssel überschreiben.
         """
-        zeile = Adw.SwitchRow(title=titel)
+        zeile = compat.SwitchRow(title=titel)
         if untertitel:
             zeile.set_subtitle(untertitel)
         zeile.set_active(get_wert())
@@ -157,12 +157,12 @@ class SystemPage(Adw.NavigationPage):
             description="Welche Knöpfe die Titelleiste zeigt und auf welcher "
                         "Seite. Schließen bleibt immer sichtbar.")
 
-        self._sw_minimieren = Adw.SwitchRow(title="Minimieren")
+        self._sw_minimieren = compat.SwitchRow(title="Minimieren")
         self._sw_minimieren.set_active("minimize" in aktive)
         self._sw_minimieren.connect("notify::active", self._on_knoepfe)
         gruppe.add(self._sw_minimieren)
 
-        self._sw_maximieren = Adw.SwitchRow(title="Maximieren")
+        self._sw_maximieren = compat.SwitchRow(title="Maximieren")
         self._sw_maximieren.set_active("maximize" in aktive)
         self._sw_maximieren.connect("notify::active", self._on_knoepfe)
         gruppe.add(self._sw_maximieren)

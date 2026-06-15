@@ -9,6 +9,7 @@ Design). Ein Klick wirkt sofort über org.gnome.shell.extensions.user-theme/name
 
 from gi.repository import Adw, GLib, Gtk
 
+from src import compat
 from src.core import restorepoint, theme_check, themes, uninstaller
 from src.widgets.shell_card import ShellCard
 
@@ -18,7 +19,7 @@ from src.widgets.shell_card import ShellCard
 STANDARD_SHELL = ""
 
 
-class ShellPage(Adw.NavigationPage):
+class ShellPage(compat.PageBase):
     """Navigationsseite zur Auswahl des GNOME-Shell-Designs."""
 
     def __init__(self, settings):
@@ -26,9 +27,8 @@ class ShellPage(Adw.NavigationPage):
         self._settings = settings
         self._cards = []
 
-        toolbar = Adw.ToolbarView()
-        toolbar.add_top_bar(Adw.HeaderBar())
-        toolbar.set_content(self._inhalt())
+        toolbar = compat.toolbar_view(
+            top_bars=[Adw.HeaderBar()], content=self._inhalt())
         self.set_child(toolbar)
 
     def _inhalt(self):
@@ -132,21 +132,18 @@ class ShellPage(Adw.NavigationPage):
         self._settings.set_shell_theme(karte.theme_name)
 
     def _shell_trotzdem_fragen(self, karte, grund):
-        dialog = Adw.AlertDialog(
-            heading="Shell-Design trotzdem aktivieren?",
-            body="„%s“: %s" % (karte.theme_name or "Standard", grund))
-        dialog.add_response("abbrechen", "Abbrechen")
-        dialog.add_response("trotzdem", "Trotzdem aktivieren")
-        dialog.set_response_appearance(
-            "trotzdem", Adw.ResponseAppearance.DESTRUCTIVE)
-        dialog.set_default_response("abbrechen")
-        dialog.set_close_response("abbrechen")
         # Bei Abbruch bleibt die alte Markierung stehen, weil wir set_aktiv erst
         # in _aktiviere_shell setzen.
-        dialog.connect("response", self._on_shell_trotzdem, karte)
-        dialog.present(self)
+        compat.alert(
+            self,
+            "Shell-Design trotzdem aktivieren?",
+            "„%s“: %s" % (karte.theme_name or "Standard", grund),
+            [("abbrechen", "Abbrechen", ""),
+             ("trotzdem", "Trotzdem aktivieren", "destructive")],
+            default="abbrechen", close="abbrechen",
+            on_response=lambda antwort: self._on_shell_trotzdem(antwort, karte))
 
-    def _on_shell_trotzdem(self, _dialog, antwort, karte):
+    def _on_shell_trotzdem(self, antwort, karte):
         if antwort == "trotzdem":
             self._aktiviere_shell(karte)
 
@@ -154,20 +151,17 @@ class ShellPage(Adw.NavigationPage):
 
     def _on_loeschen(self, karte):
         """Sicherheitsabfrage vor dem Entfernen eines Shell-Designs."""
-        dialog = Adw.AlertDialog(
-            heading="Shell-Design entfernen?",
-            body="„%s“ wird dauerhaft aus deinem Benutzerordner gelöscht. "
-                 "Das lässt sich nicht rückgängig machen." % karte.theme_name)
-        dialog.add_response("abbrechen", "Abbrechen")
-        dialog.add_response("loeschen", "Entfernen")
-        dialog.set_response_appearance(
-            "loeschen", Adw.ResponseAppearance.DESTRUCTIVE)
-        dialog.set_default_response("abbrechen")
-        dialog.set_close_response("abbrechen")
-        dialog.connect("response", self._on_loeschen_antwort, karte)
-        dialog.present(self)
+        compat.alert(
+            self,
+            "Shell-Design entfernen?",
+            "„%s“ wird dauerhaft aus deinem Benutzerordner gelöscht. "
+            "Das lässt sich nicht rückgängig machen." % karte.theme_name,
+            [("abbrechen", "Abbrechen", ""),
+             ("loeschen", "Entfernen", "destructive")],
+            default="abbrechen", close="abbrechen",
+            on_response=lambda antwort: self._on_loeschen_antwort(antwort, karte))
 
-    def _on_loeschen_antwort(self, _dialog, antwort, karte):
+    def _on_loeschen_antwort(self, antwort, karte):
         if antwort != "loeschen":
             return
         name = karte.theme_name

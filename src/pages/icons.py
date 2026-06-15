@@ -7,6 +7,7 @@ Klick auf eine Karte aktiviert das Design sofort.
 
 from gi.repository import Adw, GLib, Gtk
 
+from src import compat
 from src.core import themes, uninstaller
 from src.widgets.dropzone import InstallDropzone
 from src.widgets.theme_card import ThemeCard
@@ -17,7 +18,7 @@ from src.widgets.theme_card import ThemeCard
 STANDARD_ICON = "Adwaita"
 
 
-class IconsPage(Adw.NavigationPage):
+class IconsPage(compat.PageBase):
     """Navigationsseite mit den Symbol-Designs als Vorschau-Karten."""
 
     def __init__(self, settings):
@@ -25,9 +26,8 @@ class IconsPage(Adw.NavigationPage):
         self._settings = settings
         self._cards = []
 
-        toolbar = Adw.ToolbarView()
-        toolbar.add_top_bar(Adw.HeaderBar())
-        toolbar.set_content(self._inhalt())
+        toolbar = compat.toolbar_view(
+            top_bars=[Adw.HeaderBar()], content=self._inhalt())
         self.set_child(toolbar)
 
     def _inhalt(self):
@@ -107,20 +107,17 @@ class IconsPage(Adw.NavigationPage):
 
     def _on_loeschen(self, karte):
         """Sicherheitsabfrage vor dem Entfernen eines Symbol-Designs."""
-        dialog = Adw.AlertDialog(
-            heading="Symbol-Design entfernen?",
-            body="„%s“ wird dauerhaft aus deinem Benutzerordner gelöscht. "
-                 "Das lässt sich nicht rückgängig machen." % karte.theme_name)
-        dialog.add_response("abbrechen", "Abbrechen")
-        dialog.add_response("loeschen", "Entfernen")
-        dialog.set_response_appearance(
-            "loeschen", Adw.ResponseAppearance.DESTRUCTIVE)
-        dialog.set_default_response("abbrechen")
-        dialog.set_close_response("abbrechen")
-        dialog.connect("response", self._on_loeschen_antwort, karte)
-        dialog.present(self)
+        compat.alert(
+            self,
+            "Symbol-Design entfernen?",
+            "„%s“ wird dauerhaft aus deinem Benutzerordner gelöscht. "
+            "Das lässt sich nicht rückgängig machen." % karte.theme_name,
+            [("abbrechen", "Abbrechen", ""),
+             ("loeschen", "Entfernen", "destructive")],
+            default="abbrechen", close="abbrechen",
+            on_response=lambda antwort: self._on_loeschen_antwort(antwort, karte))
 
-    def _on_loeschen_antwort(self, _dialog, antwort, karte):
+    def _on_loeschen_antwort(self, antwort, karte):
         if antwort != "loeschen":
             return
         name = karte.theme_name

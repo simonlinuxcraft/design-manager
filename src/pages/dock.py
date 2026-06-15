@@ -10,10 +10,11 @@ Seite einen Hinweis statt einer leeren Liste.
 
 from gi.repository import Adw, Gtk
 
+from src import compat
 from src.core import dock
 
 
-class DockPage(Adw.NavigationPage):
+class DockPage(compat.PageBase):
     """Navigationsseite mit den Einstellungen des aktiven Docks."""
 
     def __init__(self, settings):
@@ -21,9 +22,8 @@ class DockPage(Adw.NavigationPage):
         self._settings = settings
         self._dock = dock.aktives_dock()
 
-        toolbar = Adw.ToolbarView()
-        toolbar.add_top_bar(Adw.HeaderBar())
-        toolbar.set_content(self._inhalt())
+        toolbar = compat.toolbar_view(
+            top_bars=[Adw.HeaderBar()], content=self._inhalt())
         self.set_child(toolbar)
 
     def _inhalt(self):
@@ -55,7 +55,7 @@ class DockPage(Adw.NavigationPage):
         return Adw.ActionRow(title=e.titel)
 
     def _schalter_zeile(self, e):
-        row = Adw.SwitchRow(title=e.titel, subtitle=e.untertitel)
+        row = compat.SwitchRow(title=e.titel, subtitle=e.untertitel)
         row.set_active(bool(e.lesen()))
         # Erst nach set_active verbinden, sonst zählt die Vorbelegung als Änderung.
         row.connect("notify::active", lambda r, _p: e.schreiben(r.get_active()))
@@ -75,7 +75,7 @@ class DockPage(Adw.NavigationPage):
 
     def _regler_zeile(self, e):
         lo, hi, schritt = e.spanne
-        row = Adw.SpinRow.new_with_range(lo, hi, schritt)
+        row = compat.SpinRow.new_with_range(lo, hi, schritt)
         row.set_title(e.titel)
         row.set_subtitle(e.untertitel)
         row.set_value(e.lesen())

@@ -8,6 +8,7 @@ import os
 
 from gi.repository import Gtk
 
+from src import compat
 from src.core import backgrounds
 
 
@@ -26,7 +27,7 @@ class WallpaperCard(Gtk.FlowBoxChild):
         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
 
         thumb = Gtk.Picture()
-        thumb.set_content_fit(Gtk.ContentFit.COVER)
+        compat.set_cover(thumb)
         thumb.set_size_request(THUMB_BREITE, THUMB_HOEHE)
         thumb.add_css_class("wallpaper-thumb")
         # Thumbnail verkleinert und nebenher laden (kein Ruckeln beim Aufbau).

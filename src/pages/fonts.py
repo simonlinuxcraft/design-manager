@@ -10,8 +10,9 @@ Darunter die Darstellung: die globale Schrift-Skalierung sowie Glättung
 (Antialiasing) und Hinting. Unten eine Ablage zum Installieren neuer Schriften.
 """
 
-from gi.repository import Adw, Gtk, Pango
+from gi.repository import Adw, Gtk
 
+from src import compat
 from src.widgets.dropzone import InstallDropzone
 
 
@@ -29,7 +30,7 @@ HINTING = [
 ]
 
 
-class FontsPage(Adw.NavigationPage):
+class FontsPage(compat.PageBase):
     """Navigationsseite zur Auswahl und Darstellung der Systemschriften."""
 
     def __init__(self, settings):
@@ -76,41 +77,28 @@ class FontsPage(Adw.NavigationPage):
         seite.add(darstellung)
         seite.add(installieren)
 
-        toolbar = Adw.ToolbarView()
-        toolbar.add_top_bar(Adw.HeaderBar())
-        toolbar.set_content(seite)
+        toolbar = compat.toolbar_view(
+            top_bars=[Adw.HeaderBar()], content=seite)
         self.set_child(toolbar)
 
     # --- Schrift-Wähler ---
 
     def _schrift_zeile(self, titel, get_wert, set_wert):
-        """Eine Zeile mit Gtk.FontDialogButton, an einen Schlüssel gebunden."""
+        """Eine Zeile mit Schrift-Auswahlknopf, an einen Schlüssel gebunden."""
         zeile = Adw.ActionRow(title=titel)
 
-        button = Gtk.FontDialogButton.new(Gtk.FontDialog())
+        button = compat.font_button(get_wert(), set_wert)
         button.set_valign(Gtk.Align.CENTER)
-
-        aktuell = get_wert()
-        if aktuell:
-            button.set_font_desc(Pango.FontDescription.from_string(aktuell))
-
-        # Erst nach dem Voreinstellen verbinden, sonst löst das schon aus.
-        button.connect("notify::font-desc", self._on_schrift_changed, set_wert)
 
         zeile.add_suffix(button)
         zeile.set_activatable_widget(button)
         return zeile
 
-    def _on_schrift_changed(self, button, _param, set_wert):
-        desc = button.get_font_desc()
-        if desc is not None:
-            set_wert(desc.to_string())
-
     # --- Skalierung ---
 
     def _skalierung_zeile(self):
         """Schrift-Skalierung als Drehfeld (1.0 = Standard)."""
-        zeile = Adw.SpinRow.new_with_range(0.5, 2.0, 0.05)
+        zeile = compat.SpinRow.new_with_range(0.5, 2.0, 0.05)
         zeile.set_title("Größe (Skalierung)")
         zeile.set_subtitle("1.0 ist die Standardgröße.")
         zeile.set_digits(2)

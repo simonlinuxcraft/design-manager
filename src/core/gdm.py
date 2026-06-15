@@ -74,11 +74,12 @@ def apply(bild_pfad):
             return False
 
         gres = os.path.join(work, "theme.gresource")
-        res_pfad = _bauen(png, gres)
-        if not res_pfad:
+        gebaut = _bauen(png, gres)
+        if not gebaut:
             return False
+        res_pfad, greeter_css = gebaut
 
-        if not _gresource_ok(gres, res_pfad):
+        if not _gresource_ok(gres, res_pfad, greeter_css):
             return False
 
         return _pkexec("install", gres)
@@ -102,15 +103,21 @@ def _als_png(quelle, ziel):
     Skaliert zu breite Bilder herunter. False, wenn die Quelle kein ladbares
     Bild ist.
     """
+    # Erst die Maße ohne vollen Decode lesen, dann zu breite Bilder schon beim
+    # Laden herunterskalieren. Sonst landet ein riesiges Quellbild zuerst in
+    # voller Auflösung im RAM (Problem auf schwachen, RAM-armen Maschinen).
+    info = GdkPixbuf.Pixbuf.get_file_info(quelle)
+    if info is None or info[0] is None:
+        return False
+    breite = info[1]
     try:
-        pix = GdkPixbuf.Pixbuf.new_from_file(quelle)
+        if breite > _MAX_BREITE:
+            pix = GdkPixbuf.Pixbuf.new_from_file_at_scale(
+                quelle, _MAX_BREITE, -1, True)
+        else:
+            pix = GdkPixbuf.Pixbuf.new_from_file(quelle)
     except GLib.Error:
         return False
-
-    breite, hoehe = pix.get_width(), pix.get_height()
-    if breite > _MAX_BREITE:
-        neu_h = max(1, round(hoehe * _MAX_BREITE / breite))
-        pix = pix.scale_simple(_MAX_BREITE, neu_h, GdkPixbuf.InterpType.BILINEAR)
     if pix is None:
         return False
 
@@ -122,8 +129,11 @@ def _als_png(quelle, ziel):
 
 
 def _bauen(png, out):
-    """Ruft 'build' im Helfer-Skript (als Nutzer, kein root). Gibt den
-    resource-Pfad des eingebetteten Bildes zurueck, oder None."""
+    """Ruft 'build' im Helfer-Skript (als Nutzer, kein root).
+
+    Gibt (resource-Pfad des Bildes, Liste der Greeter-CSS-resource-Pfade)
+    zurueck, oder None. Die Greeter-CSS-Liste sind die gdm*.css, in die der
+    Helfer die Hintergrundregel geschrieben hat; sie wird unten validiert."""
     try:
         erg = subprocess.run(
             ["bash", HELFER, "build", png, out],
@@ -132,15 +142,28 @@ def _bauen(png, out):
         return None
     if erg.returncode != 0 or not os.path.isfile(out):
         return None
+    res_pfad = None
+    greeter_css = []
     for zeile in erg.stdout.splitlines():
         if zeile.startswith("RESOURCE="):
-            return zeile[len("RESOURCE="):].strip()
-    return None
+            res_pfad = zeile[len("RESOURCE="):].strip()
+        elif zeile.startswith("GREETER_CSS="):
+            greeter_css.append(zeile[len("GREETER_CSS="):].strip())
+    if not res_pfad:
+        return None
+    return res_pfad, greeter_css
 
 
-def _gresource_ok(gres, res_pfad):
-    """Prueft, dass das Bild in der gresource am erwarteten Pfad steckt und sich
-    als Bild laden laesst. Faengt fehlenden Bildverweis und kaputte Bytes ab."""
+def _gresource_ok(gres, res_pfad, greeter_css):
+    """Prueft die gebaute gresource hart, bevor pkexec etwas anfasst:
+
+    1. das Bild steckt am erwarteten Pfad und laesst sich als Bild dekodieren,
+    2. die Hintergrundregel ist wirklich in der Greeter-CSS (gdm.css) gelandet.
+
+    Punkt 2 faengt den frueheren stillen No-Op ab: der Greeter laedt gdm.css,
+    nicht gnome-shell.css. Fehlt die Regel dort, waere das Theme unsichtbar, und
+    wir wollen lieber laut hier scheitern als ein bestaetigt-aber-wirkungsloses
+    Theme ausliefern."""
     try:
         res = Gio.Resource.load(gres)
     except GLib.Error:
@@ -156,7 +179,22 @@ def _gresource_ok(gres, res_pfad):
         lader.close()
     except GLib.Error:
         return False
-    return lader.get_pixbuf() is not None
+    if lader.get_pixbuf() is None:
+        return False
+
+    if not greeter_css:
+        return False
+    marker = b"design-manager-gdm"
+    bildname = res_pfad.rsplit("/", 1)[-1].encode()
+    for css_pfad in greeter_css:
+        try:
+            roh = res.lookup_data(
+                css_pfad, Gio.ResourceLookupFlags.NONE).get_data()
+        except GLib.Error:
+            continue
+        if marker in roh and bildname in roh:
+            return True
+    return False
 
 
 # --- Zustand / pkexec -------------------------------------------------------

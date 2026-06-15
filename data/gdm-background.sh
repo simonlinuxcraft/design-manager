@@ -101,12 +101,19 @@ build() {
     bildname="design-manager-gdm-bg.$ext"
     cp -f "$bild" "$srcroot/$bildname"
 
-    # Konservative Hintergrundregel an jede Shell-CSS anhaengen. background-color
+    # Konservative Hintergrundregel an die Shell-CSS anhaengen. background-color
     # und background-image getrennt (kein url()-Shorthand), background-size: cover
     # versteht St. Genau diese Form ist erprobt; ein Shorthand kann den Greeter
-    # crashen. Die Shell-CSS liegen je nach Theme tiefer (bei Yaru unter Yaru/),
-    # darum rekursiv suchen statt nur direkt unter srcroot.
-    local css
+    # crashen.
+    #
+    # WICHTIG: der GDM-Greeter laedt gdm.css (eigenstaendig, kein @import auf
+    # gnome-shell.css), NICHT gnome-shell.css. Nur an gnome-shell*.css anzuhaengen
+    # ist auf Yaru ein stiller No-Op. Darum gdm*.css mitpatchen. gdm.css bringt
+    # eine eigene #lockDialogGroup-Regel mit (ohne !important), unser Block steht
+    # danach und gewinnt durch Reihenfolge. Fuer jede gepatchte Greeter-CSS wird
+    # GREETER_CSS=<resource-pfad> ausgegeben, damit die Python-Seite vor pkexec
+    # hart pruefen kann, dass die Regel wirklich in der Greeter-CSS gelandet ist.
+    local css rel
     while IFS= read -r css; do
         cat >> "$css" <<EOF
 
@@ -120,7 +127,13 @@ build() {
 }
 /* === design-manager-gdm END === */
 EOF
-    done < <(find "$srcroot" -type f -name 'gnome-shell*.css')
+        case "$(basename "$css")" in
+            gdm*.css)
+                rel="${css#"$srcroot"/}"
+                echo "GREETER_CSS=$prefix/$rel"
+                ;;
+        esac
+    done < <(find "$srcroot" -type f \( -name 'gnome-shell*.css' -o -name 'gdm*.css' \))
 
     local xml="$work/dm.gresource.xml"
     {
@@ -189,21 +202,44 @@ EOF
     # vorhandenem STATE (ConditionPathExists). Wuerde die Weiche zuerst gesetzt
     # und der Prozess vor dem STATE-Write sterben, bliebe ein evtl. defektes Theme
     # ohne Auto-Rollback aktiv. Reihenfolge darum: erst STATE, dann aktivieren.
-    printf 'boots=0\nconfirmed=0\n' > "$STATE"
-    chmod 644 "$STATE"
+    write_state "boots=0" "confirmed=0"
 
     update-alternatives --install "$ALT_LINK" "$ALT_NAME" "$OUR" "$ALT_PRIO"
-    update-alternatives --set "$ALT_NAME" "$OUR"
+    # AUTO statt --set (manual): bei prio 99 ist OUR ohnehin die hoechste
+    # Alternative und wird gewaehlt, aber im Auto-Modus faellt die Weiche von
+    # selbst auf das Original zurueck, falls OUR mal verschwindet (manuelles rm,
+    # /var-Cleanup). --set wuerde sie auf ein totes Ziel festnageln.
+    update-alternatives --auto "$ALT_NAME"
     echo "installiert"
 }
 
 # --- confirm / reset / guard ------------------------------------------------
 
+# write_state schreibt STATE atomar: temp-Datei im selben Verzeichnis, dann mv.
+# Ein abgebrochener Write (Stromausfall) kann so nie eine halbe Datei
+# hinterlassen. Jedes Argument ist eine key=value-Zeile.
+write_state() {
+    mkdir -p "$STATE_DIR"
+    local tmp
+    tmp="$(mktemp "$STATE_DIR/.gdm.state.XXXXXX" 2>/dev/null)" || {
+        printf '%s\n' "$@" > "$STATE"; chmod 644 "$STATE"; return; }
+    printf '%s\n' "$@" > "$tmp"
+    chmod 644 "$tmp"
+    mv -f "$tmp" "$STATE"
+}
+
 confirm() {
     [ -f "$STATE" ] || { echo "nichts zu bestaetigen"; return 0; }
-    printf 'boots=0\nconfirmed=1\n' > "$STATE"
-    chmod 644 "$STATE"
-    systemctl disable "$GUARD_NAME" >/dev/null 2>&1 || true
+    # Stock-gresource und ihren Zeitstempel merken: der Integritaets-Guard rollt
+    # spaeter automatisch zurueck, falls das System-Theme aktualisiert wird und
+    # unsere eingefrorene Kopie nicht mehr dazu passt.
+    local src mtime
+    src="$(quelle_gresource)"
+    mtime=""
+    [ -n "$src" ] && [ -f "$src" ] && mtime="$(stat -c %Y "$src" 2>/dev/null || echo)"
+    write_state "boots=0" "confirmed=1" "stock=$src" "stockmtime=$mtime"
+    # Guard NICHT abschalten: ab jetzt prueft er nur noch die Integritaet (OUR
+    # ladbar, Stock-Theme unveraendert) statt die Boots zu zaehlen.
     echo "bestaetigt"
 }
 
@@ -226,11 +262,38 @@ read_state() {
     echo "${line#*=}"
 }
 
+# Nach der Bestaetigung: nur bei eindeutigem Defekt zurueckrollen, sonst das
+# bestaetigte Theme stehen lassen. Laesst sich der Zustand nicht ermitteln (Tool
+# fehlt, Feld leer), NICHTS tun, um keinen funktionierenden Greeter grundlos zu
+# verwerfen.
+integrity_check() {
+    [ -f "$OUR" ] || { rollback; return; }
+    command -v gresource >/dev/null 2>&1 || return 0
+    gresource list "$OUR" >/dev/null 2>&1 || { rollback; return; }
+
+    local stored src cur
+    stored="$(read_state stockmtime)"
+    [ -n "$stored" ] || return 0
+    src="$(read_state stock)"
+    [ -n "$src" ] && [ -f "$src" ] || return 0
+    cur="$(stat -c %Y "$src" 2>/dev/null || echo)"
+    [ -n "$cur" ] || return 0
+    if [ "$cur" != "$stored" ]; then
+        # Stock-Theme wurde nach der Bestaetigung aktualisiert: unsere
+        # eingefrorene gresource passt evtl. nicht mehr zur neuen Shell. Sicher
+        # auf den Standard zurueck.
+        rollback
+    fi
+}
+
 guard() {
     [ -f "$STATE" ] || exit 0
     local confirmed boots
     confirmed="$(read_state confirmed)"
-    [ "$confirmed" = "1" ] && exit 0
+    if [ "$confirmed" = "1" ]; then
+        integrity_check
+        exit 0
+    fi
 
     boots="$(read_state boots)"
     case "$boots" in ''|*[!0-9]*) boots=0 ;; esac
@@ -242,9 +305,11 @@ guard() {
         rollback
     else
         # Erster Boot mit dem neuen Theme: stehen lassen, damit es sich zeigen
-        # und der Nutzer sich einloggen plus bestaetigen kann.
-        printf 'boots=%s\nconfirmed=0\n' "$boots" > "$STATE"
-        chmod 644 "$STATE"
+        # und der Nutzer sich einloggen plus bestaetigen kann. (Nicht frueher
+        # zurueckrollen: der Guard zaehlt am Anfang genau des Boots hoch, der das
+        # Theme erstmals zeigen soll. Ein Rollback bei boots>=1 wuerde es vor dem
+        # ersten Anzeigen verwerfen, der Nutzer koennte nie bestaetigen.)
+        write_state "boots=$boots" "confirmed=0"
     fi
 }
 

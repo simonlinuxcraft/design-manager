@@ -9,11 +9,13 @@ gesetzt, der Modus über picture-options.
 """
 
 import os
+import re
 import shutil
 import threading
 
 from gi.repository import Adw, Gio, GLib, Gtk
 
+from src import compat
 from src.core import backgrounds, gdm, lockscreen, variety
 from src.widgets.wallpaper_card import WallpaperCard
 
@@ -34,7 +36,7 @@ MODI = [
 ]
 
 
-class BackgroundPage(Adw.NavigationPage):
+class BackgroundPage(compat.PageBase):
     """Navigationsseite zum Setzen des Hintergrundbilds und seines Modus."""
 
     def __init__(self, settings):
@@ -90,9 +92,8 @@ class BackgroundPage(Adw.NavigationPage):
         scroll.set_vexpand(True)
         scroll.set_child(box)
 
-        toolbar = Adw.ToolbarView()
-        toolbar.add_top_bar(Adw.HeaderBar())
-        toolbar.set_content(scroll)
+        toolbar = compat.toolbar_view(
+            top_bars=[Adw.HeaderBar()], content=scroll)
         self.set_child(toolbar)
 
     # --- Bausteine ---
@@ -153,7 +154,7 @@ class BackgroundPage(Adw.NavigationPage):
     def _vorschau_bereich(self):
         """Vorschau-Bild mit einem Platzhalter-Hinweis, falls kein Bild gesetzt ist."""
         self._vorschau = Gtk.Picture()
-        self._vorschau.set_content_fit(Gtk.ContentFit.COVER)
+        compat.set_cover(self._vorschau)
         self._vorschau.set_size_request(-1, 200)
         self._vorschau.add_css_class("card")
 
@@ -193,7 +194,7 @@ class BackgroundPage(Adw.NavigationPage):
 
         System-Bilder sind fest, eigene Bilder bekommen einen Entfernen-Knopf.
         """
-        self._galerie.remove_all()
+        compat.flowbox_clear(self._galerie)
         self._cards = []
         aktuell = self._aktueller_pfad()
 
@@ -229,25 +230,13 @@ class BackgroundPage(Adw.NavigationPage):
         self._vorschau_setzen(pfad)
 
     def _on_eigenes(self, _knopf):
-        dialog = Gtk.FileDialog()
-        dialog.set_title("Hintergrundbild wählen")
-
         bilder = Gtk.FileFilter()
         bilder.set_name("Bilder")
         bilder.add_mime_type("image/*")
-        filter_liste = Gio.ListStore.new(Gtk.FileFilter)
-        filter_liste.append(bilder)
-        dialog.set_filters(filter_liste)
+        compat.open_file(self.get_root(), "Hintergrundbild wählen",
+                         [bilder], self._on_gewaehlt)
 
-        dialog.open(self.get_root(), None, self._on_gewaehlt)
-
-    def _on_gewaehlt(self, dialog, ergebnis):
-        try:
-            datei = dialog.open_finish(ergebnis)
-        except GLib.Error:
-            return  # abgebrochen oder Fehler
-
-        pfad = datei.get_path()
+    def _on_gewaehlt(self, pfad):
         if not pfad:
             return
 
@@ -258,7 +247,12 @@ class BackgroundPage(Adw.NavigationPage):
 
     def _kopiere_ins_backgrounds(self, quelle):
         os.makedirs(BACKGROUND_DIR, exist_ok=True)
-        ziel = os.path.join(BACKGROUND_DIR, os.path.basename(quelle))
+        # CSS-empfindliche Zeichen aus dem Dateinamen nehmen: das Sperrbild landet
+        # als Pfad in der Shell-CSS. lockscreen.py kodiert die URL ohnehin, das
+        # hier ist die zweite Verteidigungslinie, damit auf der Platte gar kein
+        # heikler Name entsteht.
+        name = re.sub(r'["\\\n\r\x00-\x1f]', "_", os.path.basename(quelle)) or "bild"
+        ziel = os.path.join(BACKGROUND_DIR, name)
         if os.path.abspath(quelle) != os.path.abspath(ziel):
             shutil.copy2(quelle, ziel)
         return ziel
@@ -283,7 +277,7 @@ class BackgroundPage(Adw.NavigationPage):
             return hinweis
 
         self._sperr_vorschau = Gtk.Picture()
-        self._sperr_vorschau.set_content_fit(Gtk.ContentFit.COVER)
+        compat.set_cover(self._sperr_vorschau)
         self._sperr_vorschau.set_size_request(-1, 140)
         self._sperr_vorschau.add_css_class("card")
 
@@ -357,24 +351,13 @@ class BackgroundPage(Adw.NavigationPage):
         self._sperr_platzhalter.set_visible(True)
 
     def _on_sperr_eigenes(self, _knopf):
-        dialog = Gtk.FileDialog()
-        dialog.set_title("Sperrbildschirm-Bild wählen")
-
         bilder = Gtk.FileFilter()
         bilder.set_name("Bilder")
         bilder.add_mime_type("image/*")
-        liste = Gio.ListStore.new(Gtk.FileFilter)
-        liste.append(bilder)
-        dialog.set_filters(liste)
+        compat.open_file(self.get_root(), "Sperrbildschirm-Bild wählen",
+                         [bilder], self._on_sperr_gewaehlt)
 
-        dialog.open(self.get_root(), None, self._on_sperr_gewaehlt)
-
-    def _on_sperr_gewaehlt(self, dialog, ergebnis):
-        try:
-            datei = dialog.open_finish(ergebnis)
-        except GLib.Error:
-            return  # abgebrochen oder Fehler
-        pfad = datei.get_path()
+    def _on_sperr_gewaehlt(self, pfad):
         if pfad:
             self._sperr_setze_bild(pfad)
 
@@ -398,9 +381,11 @@ class BackgroundPage(Adw.NavigationPage):
 
         warnung = Gtk.Label(
             label="Ändert den systemweiten Anmeldebildschirm und braucht das "
-                  "Administrator-Passwort. Wirkt erst beim nächsten An- und "
-                  "Abmelden. Das Original wird nie überschrieben; bei einem "
-                  "Problem stellt sich der Standard automatisch wieder her.",
+                  "Administrator-Passwort. Wirkt erst nach einem Neustart. Das "
+                  "Original wird nie überschrieben. Zeigt der Anmeldebildschirm "
+                  "ein Problem, stellt sich der Standard nach zwei Neustarts von "
+                  "selbst wieder her; per Terminal jederzeit mit "
+                  "„sudo /usr/local/lib/design-manager/gdm-helper.sh reset“.",
             xalign=0, wrap=True)
         warnung.add_css_class("dim-label")
 
@@ -431,10 +416,10 @@ class BackgroundPage(Adw.NavigationPage):
             self._gdm_status.set_label(
                 "Neuer Anmeldebildschirm gesetzt, noch nicht bestätigt.")
             self._gdm_hinweis.set_label(
-                "Melde dich einmal ab und wieder an. Erscheint der "
-                "Anmeldebildschirm normal, klicke „Behalten“. Tust du das "
-                "nicht, stellt sich beim übernächsten Start automatisch der "
-                "Standard wieder her.")
+                "Starte den Rechner einmal neu. Erscheint der "
+                "Anmeldebildschirm normal, melde dich an und klicke "
+                "„Behalten“. Tust du das nicht, stellt sich nach zwei "
+                "Neustarts automatisch der Standard wieder her.")
             self._gdm_hinweis.set_visible(True)
             self._gdm_knoepfe.append(
                 self._gdm_knopf("Behalten", self._on_gdm_confirm))
@@ -460,24 +445,13 @@ class BackgroundPage(Adw.NavigationPage):
         self._gdm_anwenden(gdm.confirm, "Wird bestätigt … ")
 
     def _on_gdm_eigenes(self, _knopf):
-        dialog = Gtk.FileDialog()
-        dialog.set_title("Anmeldebildschirm-Bild wählen")
-
         bilder = Gtk.FileFilter()
         bilder.set_name("Bilder")
         bilder.add_mime_type("image/*")
-        liste = Gio.ListStore.new(Gtk.FileFilter)
-        liste.append(bilder)
-        dialog.set_filters(liste)
+        compat.open_file(self.get_root(), "Anmeldebildschirm-Bild wählen",
+                         [bilder], self._on_gdm_gewaehlt)
 
-        dialog.open(self.get_root(), None, self._on_gdm_gewaehlt)
-
-    def _on_gdm_gewaehlt(self, dialog, ergebnis):
-        try:
-            datei = dialog.open_finish(ergebnis)
-        except GLib.Error:
-            return
-        pfad = datei.get_path()
+    def _on_gdm_gewaehlt(self, pfad):
         if pfad:
             self._gdm_anwenden(lambda: gdm.apply(pfad), "Wird gesetzt … ")
 

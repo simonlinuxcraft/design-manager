@@ -8,10 +8,12 @@ Zeile merkt sich ihre Seiten-Erzeuger-Funktion direkt am Objekt
 """
 
 import os
+import threading
 
 from gi.repository import Adw, Gdk, Gio, GLib, Gtk
 
-from src.core import healthcheck, onboarding, restorepoint
+from src import compat
+from src.core import gdm, healthcheck, lockscreen, onboarding, restorepoint, updater
 from src.core.settings import AppSettings
 from src.pages.background import BackgroundPage
 from src.pages.backup import BackupPage
@@ -89,7 +91,7 @@ class MainWindow(Adw.ApplicationWindow):
         self._index_nach_key = {
             eintrag[0]: i for i, eintrag in enumerate(self._bereiche)}
 
-        self._split = Adw.NavigationSplitView()
+        self._split = compat.make_split()
         # Seitenleiste auf feste Breite nageln (min == max), sonst ziehen breite
         # Inhalte wie die Karten der Mauszeiger-Seite sie schmaler als anderswo.
         self._split.set_min_sidebar_width(270)
@@ -106,7 +108,7 @@ class MainWindow(Adw.ApplicationWindow):
         # Health-Check (siehe core/healthcheck.py) blendet es nach dem Start ein,
         # wenn ein gesetztes Design auf der Platte fehlt und GNOME still auf
         # Adwaita zurückgefallen ist.
-        self._banner = Adw.Banner()
+        self._banner = compat.Banner()
         self._banner.set_revealed(False)
         self._banner.connect("button-clicked", self._on_banner_korrektur)
         self._banner_probleme = []
@@ -129,8 +131,12 @@ class MainWindow(Adw.ApplicationWindow):
         # Adwaita zurückgefallen). idle_add, damit das Fenster zuerst erscheint.
         GLib.idle_add(self._pruefe_gesundheit)
 
+        # Verzögert und im Hintergrund nach einer neueren Version sehen.
+        if updater.werkzeuge_da():
+            GLib.timeout_add_seconds(3, self._auto_update_check)
+
     def _zeige_willkommen(self):
-        WelcomeDialog().present(self)
+        compat.dialog_present(WelcomeDialog(), self)
         onboarding.als_gesehen_markieren()
         return GLib.SOURCE_REMOVE
 
@@ -201,11 +207,9 @@ class MainWindow(Adw.ApplicationWindow):
         inhalt.append(self._caption("EINSTELLUNGEN"))
         inhalt.append(self._bereich_liste())
 
-        toolbar = Adw.ToolbarView()
+        toolbar = compat.toolbar_view(top_bars=[header], content=inhalt)
         toolbar.add_css_class("sidebar-pane")  # ein durchgehender dunkler Ton
-        toolbar.add_top_bar(header)
-        toolbar.set_content(inhalt)
-        return Adw.NavigationPage(title="Design Manager", child=toolbar)
+        return compat.PageBase(title="Design Manager", child=toolbar)
 
     def _setup_actions(self):
         """Fenster-Aktionen für das Hauptmenü anlegen (win.about, win.quit)."""
@@ -221,10 +225,16 @@ class MainWindow(Adw.ApplicationWindow):
         safe.connect("activate", self._on_safe_state)
         self.add_action(safe)
 
+        aktualisieren = Gio.SimpleAction.new("check-updates", None)
+        aktualisieren.connect("activate", self._on_check_updates)
+        self.add_action(aktualisieren)
+
     def _menue_knopf(self):
         """Hamburger-Menü rechts in der Kopfleiste."""
         menue = Gio.Menu()
         menue.append("Sicheren Zustand herstellen", "win.safe-state")
+        if updater.werkzeuge_da():
+            menue.append("Nach Updates suchen", "win.check-updates")
         menue.append("Über Design Manager", "win.about")
         menue.append("Beenden", "win.quit")
 
@@ -236,7 +246,8 @@ class MainWindow(Adw.ApplicationWindow):
 
     def _on_ueber(self, _action, _param):
         """Zeigt den Über-Dialog mit Version, Logo und Lizenz."""
-        dialog = Adw.AboutDialog(
+        compat.show_about(
+            self,
             application_name="Design Manager",
             application_icon="io.github.simonlinuxcraft.DesignManager",
             version=APP_VERSION,
@@ -246,26 +257,22 @@ class MainWindow(Adw.ApplicationWindow):
             license_type=Gtk.License.GPL_3_0,
             copyright="© 2026 simonlinuxcraft",
         )
-        dialog.present(self)
 
     def _on_safe_state(self, _action, _param):
         """Notausstieg: nach Sicherungspunkt alles auf sichere Standards setzen."""
-        dialog = Adw.AlertDialog(
-            heading="Sicheren Zustand herstellen?",
-            body="Erst wird ein Sicherungspunkt angelegt, dann werden Design, "
-                 "Symbole, Mauszeiger und Shell-Design auf garantiert lauffähige "
-                 "Standardwerte (Adwaita) gesetzt. Das hilft, wenn ein Design die "
-                 "Oberfläche unbrauchbar gemacht hat.")
-        dialog.add_response("abbrechen", "Abbrechen")
-        dialog.add_response("anwenden", "Sicheren Zustand setzen")
-        dialog.set_response_appearance(
-            "anwenden", Adw.ResponseAppearance.SUGGESTED)
-        dialog.set_default_response("abbrechen")
-        dialog.set_close_response("abbrechen")
-        dialog.connect("response", self._on_safe_state_antwort)
-        dialog.present(self)
+        compat.alert(
+            self,
+            "Sicheren Zustand herstellen?",
+            "Erst wird ein Sicherungspunkt angelegt, dann werden Design, "
+            "Symbole, Mauszeiger und Shell-Design auf garantiert lauffähige "
+            "Standardwerte (Adwaita) gesetzt. Das hilft, wenn ein Design die "
+            "Oberfläche unbrauchbar gemacht hat.",
+            [("abbrechen", "Abbrechen", ""),
+             ("anwenden", "Sicheren Zustand setzen", "suggested")],
+            default="abbrechen", close="abbrechen",
+            on_response=self._on_safe_state_antwort)
 
-    def _on_safe_state_antwort(self, _dialog, antwort):
+    def _on_safe_state_antwort(self, antwort):
         if antwort != "anwenden":
             return
         restorepoint.erstelle(self._settings, "vor Notausstieg")
@@ -276,9 +283,68 @@ class MainWindow(Adw.ApplicationWindow):
         self._settings.reset_icon_theme()
         self._settings.reset_cursor_theme()
         self._settings.reset_shell_theme()
+        # Auch das Sperrbild aus der Shell-CSS nehmen (per-user, kein root).
+        lockscreen.clear_background(self._settings)
+        # Den GDM-Login-Hintergrund nur zurücksetzen, wenn überhaupt einer aktiv
+        # ist. Das läuft über pkexec (Passwort-Dialog), darum nebenläufig, damit
+        # die schon erledigten dconf-Resets nicht an einem Abbruch hängen.
+        if gdm.aktiv() or gdm.bestaetigung_offen():
+            threading.Thread(target=gdm.reset, daemon=True).start()
         self._banner.set_revealed(False)
         self.zeige_toast("Sicherer Zustand gesetzt (Adwaita).")
         self._reload_aktive_seite()
+
+    # --- Updates (GitHub-Release) ---
+
+    def _on_check_updates(self, _action, _param):
+        self.zeige_toast("Suche nach Updates …")
+        self._update_thread(manuell=True)
+
+    def _auto_update_check(self):
+        self._update_thread(manuell=False)
+        return GLib.SOURCE_REMOVE
+
+    def _update_thread(self, manuell):
+        """Fragt im Hintergrund nach der neuesten Version, meldet per idle_add."""
+        def arbeit():
+            info = updater.pruefe(APP_VERSION)
+            GLib.idle_add(self._update_ergebnis, info, manuell)
+
+        threading.Thread(target=arbeit, daemon=True).start()
+
+    def _update_ergebnis(self, info, manuell):
+        if info is None:
+            if manuell:
+                self.zeige_toast("Du hast die neueste Version.")
+            return GLib.SOURCE_REMOVE
+        compat.alert(
+            self,
+            "Update verfügbar",
+            "Version %s steht bereit (installiert: %s). Jetzt herunterladen und "
+            "installieren? Dafür wird einmal das Administrator-Passwort "
+            "abgefragt." % (info["version"], APP_VERSION),
+            [("spaeter", "Später", ""),
+             ("jetzt", "Aktualisieren", "suggested")],
+            default="jetzt", close="spaeter",
+            on_response=lambda antwort: (
+                self._starte_update(info) if antwort == "jetzt" else None))
+        return GLib.SOURCE_REMOVE
+
+    def _starte_update(self, info):
+        self.zeige_toast("Lädt Version %s … (Passwort eingeben)" % info["version"])
+
+        def arbeit():
+            erfolg = updater.lade_und_installiere(info)
+            GLib.idle_add(self._update_fertig, erfolg)
+
+        threading.Thread(target=arbeit, daemon=True).start()
+
+    def _update_fertig(self, erfolg):
+        if erfolg:
+            self.zeige_toast("Aktualisiert. Bitte die App neu starten.")
+        else:
+            self.zeige_toast("Update fehlgeschlagen oder abgebrochen.")
+        return GLib.SOURCE_REMOVE
 
     def _logo(self):
         """Kleines App-Logo für die Kopfleiste.

@@ -11,12 +11,13 @@ einen Hinweis statt der Liste.
 
 from gi.repository import Adw, GLib, Gtk
 
+from src import compat
 from src.core.extensions import (
     ShellExtensions, STATE_ERROR, TYPE_SYSTEM, TYPE_USER,
 )
 
 
-class ExtensionsPage(Adw.NavigationPage):
+class ExtensionsPage(compat.PageBase):
     """Navigationsseite zum Verwalten der GNOME-Shell-Erweiterungen."""
 
     def __init__(self, settings):
@@ -28,9 +29,8 @@ class ExtensionsPage(Adw.NavigationPage):
         self._rows = {}        # uuid -> Adw.SwitchRow
         self._user_rows = []   # (row, can_change) der Benutzer-Erweiterungen
 
-        toolbar = Adw.ToolbarView()
-        toolbar.add_top_bar(Adw.HeaderBar())
-        toolbar.set_content(self._inhalt())
+        toolbar = compat.toolbar_view(
+            top_bars=[Adw.HeaderBar()], content=self._inhalt())
         self.set_child(toolbar)
 
     def _inhalt(self):
@@ -64,7 +64,7 @@ class ExtensionsPage(Adw.NavigationPage):
 
     def _master_gruppe(self):
         gruppe = Adw.PreferencesGroup()
-        self._master = Adw.SwitchRow(
+        self._master = compat.SwitchRow(
             title="Erweiterungen aktiviert",
             subtitle="Schaltet alle Benutzer-Erweiterungen gemeinsam.",
         )
@@ -95,7 +95,7 @@ class ExtensionsPage(Adw.NavigationPage):
         return gruppe
 
     def _ext_zeile(self, x):
-        row = Adw.SwitchRow(title=GLib.markup_escape_text(x["name"]))
+        row = compat.SwitchRow(title=GLib.markup_escape_text(x["name"]))
         row.set_sensitive(x["can_change"])
 
         # Bei Fehler die Fehlermeldung zeigen, sonst die Beschreibung.

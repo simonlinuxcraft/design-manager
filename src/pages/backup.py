@@ -11,12 +11,13 @@ Bilddateien selbst.
 import os
 import time
 
-from gi.repository import Adw, Gio, GLib, Gtk
+from gi.repository import Adw, Gtk
 
+from src import compat
 from src.core import backup, looksbundle, restorepoint, schedule
 
 
-class BackupPage(Adw.NavigationPage):
+class BackupPage(compat.PageBase):
     """Seite zum Sichern und Wiederherstellen der Einstellungen."""
 
     def __init__(self, settings):
@@ -38,9 +39,8 @@ class BackupPage(Adw.NavigationPage):
         self._toasts = Adw.ToastOverlay()
         self._toasts.set_child(seite)
 
-        toolbar = Adw.ToolbarView()
-        toolbar.add_top_bar(Adw.HeaderBar())
-        toolbar.set_content(self._toasts)
+        toolbar = compat.toolbar_view(
+            top_bars=[Adw.HeaderBar()], content=self._toasts)
         self.set_child(toolbar)
 
         self._fuelle_profile()
@@ -56,7 +56,7 @@ class BackupPage(Adw.NavigationPage):
             description="Den aktuellen Stand als benanntes Set speichern und per "
                         "Klick wieder anwenden. Gespeicherte Profile erscheinen "
                         "auch auf der Looks-Seite.")
-        self._name_entry = Adw.EntryRow(title="Neues Profil benennen")
+        self._name_entry = compat.EntryRow(title="Neues Profil benennen")
         self._name_entry.set_show_apply_button(True)
         self._name_entry.connect("apply", self._on_profil_speichern)
         gruppe.add(self._name_entry)
@@ -167,7 +167,7 @@ class BackupPage(Adw.NavigationPage):
         self._auto_nacht_zeit = self._zeit_zeile(
             "Nacht ab (HH:MM)", konfig["nacht"]["zeit"])
 
-        self._auto_switch = Adw.SwitchRow(title="Automatik aktiv")
+        self._auto_switch = compat.SwitchRow(title="Automatik aktiv")
         self._auto_switch.set_active(konfig["aktiv"])
         self._auto_gruppe.add(self._auto_switch)
         self._auto_zeilen.append(self._auto_switch)
@@ -186,7 +186,7 @@ class BackupPage(Adw.NavigationPage):
         return combo
 
     def _zeit_zeile(self, titel, wert):
-        zeile = Adw.EntryRow(title=titel)
+        zeile = compat.EntryRow(title=titel)
         zeile.set_text(wert)
         zeile.set_show_apply_button(True)
         self._auto_gruppe.add(zeile)
@@ -339,17 +339,11 @@ class BackupPage(Adw.NavigationPage):
     # --- Sichern ---
 
     def _on_sichern(self, _knopf):
-        dialog = Gtk.FileDialog()
-        dialog.set_title("Einstellungen sichern")
-        dialog.set_initial_name("design-manager-sicherung.json")
-        dialog.save(self.get_root(), None, self._on_speicherziel)
+        compat.save_file(
+            self.get_root(), "Einstellungen sichern",
+            "design-manager-sicherung.json", None, self._on_speicherziel)
 
-    def _on_speicherziel(self, dialog, ergebnis):
-        try:
-            datei = dialog.save_finish(ergebnis)
-        except GLib.Error:
-            return  # abgebrochen
-        pfad = datei.get_path()
+    def _on_speicherziel(self, pfad):
         if not pfad:
             return
         try:
@@ -362,24 +356,13 @@ class BackupPage(Adw.NavigationPage):
     # --- Wiederherstellen ---
 
     def _on_wiederherstellen(self, _knopf):
-        dialog = Gtk.FileDialog()
-        dialog.set_title("Sicherung wiederherstellen")
-
         nur_json = Gtk.FileFilter()
         nur_json.set_name("Sicherungen (*.json)")
         nur_json.add_pattern("*.json")
-        liste = Gio.ListStore.new(Gtk.FileFilter)
-        liste.append(nur_json)
-        dialog.set_filters(liste)
+        compat.open_file(self.get_root(), "Sicherung wiederherstellen",
+                         [nur_json], self._on_quelle)
 
-        dialog.open(self.get_root(), None, self._on_quelle)
-
-    def _on_quelle(self, dialog, ergebnis):
-        try:
-            datei = dialog.open_finish(ergebnis)
-        except GLib.Error:
-            return  # abgebrochen
-        pfad = datei.get_path()
+    def _on_quelle(self, pfad):
         if not pfad:
             return
         try:
@@ -410,17 +393,10 @@ class BackupPage(Adw.NavigationPage):
         return gruppe
 
     def _on_look_export(self, _knopf):
-        dialog = Gtk.FileDialog()
-        dialog.set_title("Look-Paket exportieren")
-        dialog.set_initial_name("mein-look.dmlook")
-        dialog.save(self.get_root(), None, self._on_look_export_ziel)
+        compat.save_file(self.get_root(), "Look-Paket exportieren",
+                         "mein-look.dmlook", None, self._on_look_export_ziel)
 
-    def _on_look_export_ziel(self, dialog, ergebnis):
-        try:
-            datei = dialog.save_finish(ergebnis)
-        except GLib.Error:
-            return  # abgebrochen
-        pfad = datei.get_path()
+    def _on_look_export_ziel(self, pfad):
         if not pfad:
             return
         try:
@@ -431,24 +407,13 @@ class BackupPage(Adw.NavigationPage):
         self._melde("Look-Paket gespeichert: " + os.path.basename(pfad))
 
     def _on_look_import(self, _knopf):
-        dialog = Gtk.FileDialog()
-        dialog.set_title("Look-Paket importieren")
-
         nur = Gtk.FileFilter()
         nur.set_name("Look-Pakete (*.dmlook)")
         nur.add_pattern("*.dmlook")
-        liste = Gio.ListStore.new(Gtk.FileFilter)
-        liste.append(nur)
-        dialog.set_filters(liste)
+        compat.open_file(self.get_root(), "Look-Paket importieren",
+                         [nur], self._on_look_import_quelle)
 
-        dialog.open(self.get_root(), None, self._on_look_import_quelle)
-
-    def _on_look_import_quelle(self, dialog, ergebnis):
-        try:
-            datei = dialog.open_finish(ergebnis)
-        except GLib.Error:
-            return  # abgebrochen
-        pfad = datei.get_path()
+    def _on_look_import_quelle(self, pfad):
         if not pfad:
             return
         try:

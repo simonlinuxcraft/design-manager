@@ -27,6 +27,20 @@ To register the app icon and a desktop entry for local testing:
     data/dev-install.sh      # installs into ~/.local/share, reversible
     data/dev-uninstall.sh    # removes them again
 
+## Login screen recovery
+
+The GDM login background never overwrites the system theme; it hooks in via
+`update-alternatives` and a boot guard restores the stock greeter automatically
+if a freshly set theme is not confirmed. If you ever need to force the stock
+login screen back from a terminal (for example the app itself will not start),
+run:
+
+    sudo /usr/local/lib/design-manager/gdm-helper.sh reset
+
+This removes the override and falls back to the original greeter. A system
+upgrade of gnome-shell or the Yaru theme may also reset a confirmed login
+background to stock on the next boot; just set it again.
+
 ## License
 
 GPL-3.0-or-later. See [LICENSE](LICENSE).

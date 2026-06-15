@@ -104,7 +104,27 @@ if command -v update-desktop-database >/dev/null 2>&1; then
     update-desktop-database -q /usr/share/applications || true
 fi
 EOF
-chmod 755 "$STAGE/DEBIAN/postinst" "$STAGE/DEBIAN/postrm"
+# prerm: on real removal, undo any active GDM login-screen override before the
+# package files vanish. The runtime state (gresource, guard unit/helper,
+# update-alternatives pin) lives outside the package, so without this it would
+# survive uninstall and freeze the greeter on a snapshot with no way back from
+# the UI. Skip on upgrade. prerm already runs as root, so no pkexec. Best-effort:
+# a failed reset must never block removal.
+cat > "$STAGE/DEBIAN/prerm" <<'EOF'
+#!/bin/sh
+set -e
+if [ "$1" = "remove" ]; then
+    for h in /usr/local/lib/design-manager/gdm-helper.sh \
+             /usr/lib/design-manager/data/gdm-background.sh; do
+        if [ -x "$h" ]; then
+            "$h" reset || true
+            break
+        fi
+    done
+fi
+exit 0
+EOF
+chmod 755 "$STAGE/DEBIAN/postinst" "$STAGE/DEBIAN/postrm" "$STAGE/DEBIAN/prerm"
 
 # 7. Rechte: alles root-lesbar, ausführbar nur Skripte/Helfer. gdm-background.sh
 #    muss root-owned und nicht nutzer-schreibbar sein (pkexec-Helfer).

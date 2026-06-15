@@ -10,20 +10,20 @@ Profil wird unverändert wieder angewendet.
 
 from gi.repository import Adw, Gtk
 
+from src import compat
 from src.core import backup, looks
 from src.widgets.look_card import LookCard
 
 
-class LooksPage(Adw.NavigationPage):
+class LooksPage(compat.PageBase):
     """Navigationsseite mit kuratierten Looks und eigenen Profilen als Karten."""
 
     def __init__(self, settings):
         super().__init__(title="Looks")
         self._settings = settings
 
-        toolbar = Adw.ToolbarView()
-        toolbar.add_top_bar(Adw.HeaderBar())
-        toolbar.set_content(self._inhalt())
+        toolbar = compat.toolbar_view(
+            top_bars=[Adw.HeaderBar()], content=self._inhalt())
         self.set_child(toolbar)
 
     def _inhalt(self):
@@ -87,20 +87,17 @@ class LooksPage(Adw.NavigationPage):
 
     def _on_look_aktiviert(self, _flowbox, karte):
         look = karte.look
-        dialog = Adw.AlertDialog(
-            heading="Look „%s“ anwenden?" % look.get("name", ""),
-            body="Der aktuelle Stand wird zuerst als Profil gesichert. Nicht "
-                 "installierte Teile werden übersprungen.")
-        dialog.add_response("abbrechen", "Abbrechen")
-        dialog.add_response("anwenden", "Anwenden")
-        dialog.set_response_appearance(
-            "anwenden", Adw.ResponseAppearance.SUGGESTED)
-        dialog.set_default_response("abbrechen")
-        dialog.set_close_response("abbrechen")
-        dialog.connect("response", self._on_look_antwort, look)
-        dialog.present(self)
+        compat.alert(
+            self,
+            "Look „%s“ anwenden?" % look.get("name", ""),
+            "Der aktuelle Stand wird zuerst als Profil gesichert. Nicht "
+            "installierte Teile werden übersprungen.",
+            [("abbrechen", "Abbrechen", ""),
+             ("anwenden", "Anwenden", "suggested")],
+            default="abbrechen", close="abbrechen",
+            on_response=lambda antwort: self._on_look_antwort(antwort, look))
 
-    def _on_look_antwort(self, _dialog, antwort, look):
+    def _on_look_antwort(self, antwort, look):
         if antwort != "anwenden":
             return
         uebersprungen = looks.wende_an(self._settings, look)
@@ -114,19 +111,16 @@ class LooksPage(Adw.NavigationPage):
 
     def _on_profil_aktiviert(self, _flowbox, karte):
         name = karte.look.get("_profil", "")
-        dialog = Adw.AlertDialog(
-            heading="Profil „%s“ anwenden?" % name,
-            body="Setzt den gespeicherten Stand dieses Profils.")
-        dialog.add_response("abbrechen", "Abbrechen")
-        dialog.add_response("anwenden", "Anwenden")
-        dialog.set_response_appearance(
-            "anwenden", Adw.ResponseAppearance.SUGGESTED)
-        dialog.set_default_response("abbrechen")
-        dialog.set_close_response("abbrechen")
-        dialog.connect("response", self._on_profil_antwort, name)
-        dialog.present(self)
+        compat.alert(
+            self,
+            "Profil „%s“ anwenden?" % name,
+            "Setzt den gespeicherten Stand dieses Profils.",
+            [("abbrechen", "Abbrechen", ""),
+             ("anwenden", "Anwenden", "suggested")],
+            default="abbrechen", close="abbrechen",
+            on_response=lambda antwort: self._on_profil_antwort(antwort, name))
 
-    def _on_profil_antwort(self, _dialog, antwort, name):
+    def _on_profil_antwort(self, antwort, name):
         if antwort != "anwenden":
             return
         try:

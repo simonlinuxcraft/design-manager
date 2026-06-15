@@ -8,8 +8,9 @@ das Ergebnis meldet die Dropzone an das Hauptfenster (Toast + Liste neu laden).
 
 import threading
 
-from gi.repository import Gdk, GLib, Gio, Gtk
+from gi.repository import Gdk, GLib, Gtk
 
+from src import compat
 from src.core import installer
 
 
@@ -60,26 +61,15 @@ class InstallDropzone(Gtk.Box):
         return True
 
     def _on_waehlen(self, _knopf):
-        dialog = Gtk.FileDialog()
-        dialog.set_title("Design oder Schrift wählen")
-
         archive = Gtk.FileFilter()
         archive.set_name("Designs und Schriften")
         for muster in ("*.tar.gz", "*.tgz", "*.tar.xz", "*.tar.bz2", "*.zip",
                        "*.ttf", "*.otf", "*.ttc"):
             archive.add_pattern(muster)
-        liste = Gio.ListStore.new(Gtk.FileFilter)
-        liste.append(archive)
-        dialog.set_filters(liste)
+        compat.open_file(self.get_root(), "Design oder Schrift wählen",
+                         [archive], self._on_pfad)
 
-        dialog.open(self.get_root(), None, self._on_gewaehlt)
-
-    def _on_gewaehlt(self, dialog, ergebnis):
-        try:
-            datei = dialog.open_finish(ergebnis)
-        except GLib.Error:
-            return  # abgebrochen
-        pfad = datei.get_path()
+    def _on_pfad(self, pfad):
         if pfad:
             self._starte(pfad)
 

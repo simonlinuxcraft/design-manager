@@ -13,6 +13,8 @@ import os
 
 from gi.repository import Adw, Gdk, Gtk
 
+from src import compat
+
 
 # Das App-Logo liegt in der Projektwurzel, zwei Ebenen über src/widgets/.
 LOGO_FILE = os.path.join(
@@ -36,14 +38,12 @@ KARTEN = [
 ]
 
 
-class WelcomeDialog(Adw.Dialog):
+class WelcomeDialog(compat.DialogBase):
     """Mehrseitige Einführung, gezeigt beim ersten Programmstart."""
 
     def __init__(self):
         super().__init__()
-        self.set_title("Willkommen")
-        self.set_content_width(460)
-        self.set_content_height(580)
+        compat.dialog_setup(self, "Willkommen", 460, 580)
         self._index = 0
 
         self._stack = Gtk.Stack()
@@ -69,12 +69,10 @@ class WelcomeDialog(Adw.Dialog):
         knopf_box.set_margin_end(18)
         knopf_box.append(self._weiter)
 
-        toolbar = Adw.ToolbarView()
-        toolbar.add_top_bar(header)
-        toolbar.set_content(self._stack)
-        toolbar.add_bottom_bar(self._punkt_leiste(len(KARTEN)))
-        toolbar.add_bottom_bar(knopf_box)
-        self.set_child(toolbar)
+        toolbar = compat.toolbar_view(
+            top_bars=[header], content=self._stack,
+            bottom_bars=[self._punkt_leiste(len(KARTEN)), knopf_box])
+        compat.dialog_set_content(self, toolbar)
 
     # --- Karten ---
 

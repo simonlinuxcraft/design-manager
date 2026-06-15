@@ -13,10 +13,11 @@ import os
 
 from gi.repository import Adw, Gtk
 
+from src import compat
 from src.core import backgrounds
 
 
-class OverviewPage(Adw.NavigationPage):
+class OverviewPage(compat.PageBase):
     """Kompakte Zusammenfassung des aktiven Looks mit Sprüngen in die Bereiche."""
 
     def __init__(self, settings, springe_zu):
@@ -29,9 +30,8 @@ class OverviewPage(Adw.NavigationPage):
         seite.add(self._look_gruppe())
         seite.add(self._hintergrund_gruppe())
 
-        toolbar = Adw.ToolbarView()
-        toolbar.add_top_bar(Adw.HeaderBar())
-        toolbar.set_content(seite)
+        toolbar = compat.toolbar_view(
+            top_bars=[Adw.HeaderBar()], content=seite)
         self.set_child(toolbar)
 
         self._aktualisiere()
@@ -69,7 +69,7 @@ class OverviewPage(Adw.NavigationPage):
         # Kleine Vorschau links, wird in _aktualisiere asynchron gefüllt.
         self._thumb = Gtk.Picture()
         self._thumb.set_size_request(96, 60)
-        self._thumb.set_content_fit(Gtk.ContentFit.COVER)
+        compat.set_cover(self._thumb)
         self._thumb.add_css_class("card")
         zeile.add_prefix(self._thumb)
         zeile.add_suffix(Gtk.Image(icon_name="go-next-symbolic"))

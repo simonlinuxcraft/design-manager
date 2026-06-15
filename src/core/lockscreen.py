@@ -17,6 +17,8 @@ import os
 import re
 import tempfile
 
+from gi.repository import Gio
+
 from src.core import themes
 
 
@@ -29,7 +31,7 @@ _BLOCK = re.compile(
     re.escape(MARKER_START) + r".*?" + re.escape(MARKER_END) + r"\n?",
     re.DOTALL,
 )
-_URL = re.compile(r'url\("file://([^"]+)"\)')
+_URL = re.compile(r'url\("(file://[^"]+)"\)')
 
 
 def _css_pfad(settings):
@@ -63,7 +65,12 @@ def aktuelles_bild(settings):
     if not treffer:
         return None
     url = _URL.search(treffer.group(0))
-    return url.group(1) if url else None
+    if not url:
+        return None
+    # Der Eintrag ist eine percent-kodierte file://-URI; zurueck auf den echten
+    # Dateipfad, sonst findet os.path.isfile() ein Bild mit Leer- oder
+    # Sonderzeichen im Namen nicht.
+    return Gio.File.new_for_uri(url.group(1)).get_path()
 
 
 def set_background(settings, bild_pfad):
@@ -77,11 +84,19 @@ def set_background(settings, bild_pfad):
     if css is None or not os.access(css, os.W_OK):
         return False
 
+    # Steuerzeichen im Pfad abweisen: sie haetten in der Shell-CSS nichts zu
+    # suchen und koennten die Regel zerreissen. Alles uebrige (Leerzeichen,
+    # Klammern, Anfuehrungszeichen) wird von get_uri() percent-kodiert, kann den
+    # url()-Wert also nicht mehr vorzeitig schliessen.
+    if any(ord(c) < 32 for c in bild_pfad):
+        return False
+    uri = Gio.File.new_for_path(bild_pfad).get_uri()
+
     text = _BLOCK.sub("", _lies(css)).rstrip() + "\n"
     block = (
         MARKER_START + "\n"
         "#lockDialogGroup {\n"
-        '  background-image: url("file://' + bild_pfad + '");\n'
+        '  background-image: url("' + uri + '");\n'
         "  background-size: cover;\n"
         "  background-repeat: no-repeat;\n"
         "  background-position: center;\n"

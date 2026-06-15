@@ -11,6 +11,7 @@ import os
 
 from gi.repository import Gtk
 
+from src import compat
 from src.core import backgrounds
 from src.widgets.theme_card import _icon_theme_fuer
 
@@ -57,7 +58,7 @@ class LookCard(Gtk.FlowBoxChild):
         if pfad and os.path.isfile(pfad):
             bild = Gtk.Picture()
             bild.set_size_request(-1, FLAECHE_HOEHE)
-            bild.set_content_fit(Gtk.ContentFit.COVER)
+            compat.set_cover(bild)
             bild.add_css_class("card")
             backgrounds.load_texture_async(pfad, 240, 150, bild.set_paintable)
             return bild

@@ -13,20 +13,20 @@ wieder weg.
 
 from gi.repository import Adw, Gtk
 
+from src import compat
 from src.core import restorepoint, theme_check, themes
 from src.widgets.dropzone import InstallDropzone
 
 
-class GtkThemePage(Adw.NavigationPage):
+class GtkThemePage(compat.PageBase):
     """Navigationsseite für die Auswahl des GTK-Designs."""
 
     def __init__(self, settings):
         super().__init__(title="GTK-Design")
         self._settings = settings
 
-        toolbar = Adw.ToolbarView()
-        toolbar.add_top_bar(Adw.HeaderBar())
-        toolbar.set_content(self._inhalt())
+        toolbar = compat.toolbar_view(
+            top_bars=[Adw.HeaderBar()], content=self._inhalt())
         self.set_child(toolbar)
 
     def _inhalt(self):
@@ -113,19 +113,16 @@ class GtkThemePage(Adw.NavigationPage):
         setter(name)
 
     def _gtk_trotzdem_fragen(self, name, grund):
-        dialog = Adw.AlertDialog(
-            heading="Design trotzdem aktivieren?",
-            body="„%s“: %s" % (name, grund))
-        dialog.add_response("abbrechen", "Abbrechen")
-        dialog.add_response("trotzdem", "Trotzdem aktivieren")
-        dialog.set_response_appearance(
-            "trotzdem", Adw.ResponseAppearance.DESTRUCTIVE)
-        dialog.set_default_response("abbrechen")
-        dialog.set_close_response("abbrechen")
-        dialog.connect("response", self._on_gtk_trotzdem, name)
-        dialog.present(self)
+        compat.alert(
+            self,
+            "Design trotzdem aktivieren?",
+            "„%s“: %s" % (name, grund),
+            [("abbrechen", "Abbrechen", ""),
+             ("trotzdem", "Trotzdem aktivieren", "destructive")],
+            default="abbrechen", close="abbrechen",
+            on_response=lambda antwort: self._on_gtk_trotzdem(antwort, name))
 
-    def _on_gtk_trotzdem(self, _dialog, antwort, name):
+    def _on_gtk_trotzdem(self, antwort, name):
         if antwort == "trotzdem":
             restorepoint.erstelle(self._settings, "vor GTK-Design " + name)
             self._settings.set_gtk_theme(name)
