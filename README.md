@@ -15,6 +15,19 @@ live previews.
 Settings are applied live through `Gio.Settings` (dconf), no `gsettings`
 subprocess calls.
 
+## Where to get themes, icons and cursors
+
+Design Manager switches between what is already installed; it does not download
+themes itself. The main source for GNOME GTK themes, shell themes, icon packs,
+cursors and wallpapers is [gnome-look.org](https://www.gnome-look.org/).
+
+Install a downloaded set into one of these and it shows up in the app:
+
+- GTK and shell themes: `~/.themes/` or `~/.local/share/themes/`
+- Icons and cursors: `~/.icons/` or `~/.local/share/icons/`
+
+Shell themes also need the User Themes extension enabled.
+
 ## Run
 
 Requires GTK 4 and libadwaita with PyGObject:
