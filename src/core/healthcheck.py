@@ -7,6 +7,7 @@ die Korrektur passiert nur auf Knopfdruck (siehe window.py).
 """
 
 from src.core import themes
+from src.i18n import _
 
 
 # Immer vorhanden: Adwaita ist in GTK eingebaut, Yaru liegt systemweit auf
@@ -32,12 +33,12 @@ def pruefe(settings):
     """
     probleme = []
     if _fehlt(settings.gtk_theme(), themes.list_gtk_themes()):
-        probleme.append(("GTK-Design", "reset_gtk_theme"))
+        probleme.append((_("GTK theme"), "reset_gtk_theme"))
     if _fehlt(settings.icon_theme(), themes.list_icon_themes()):
-        probleme.append(("Symbol-Design", "reset_icon_theme"))
+        probleme.append((_("icon theme"), "reset_icon_theme"))
     if _fehlt(settings.cursor_theme(), themes.list_cursor_themes()):
-        probleme.append(("Mauszeiger", "reset_cursor_theme"))
+        probleme.append((_("cursor"), "reset_cursor_theme"))
     if settings.user_themes_verfuegbar() and \
             _fehlt(settings.shell_theme(), themes.list_shell_themes()):
-        probleme.append(("Shell-Design", "reset_shell_theme"))
+        probleme.append((_("shell theme"), "reset_shell_theme"))
     return probleme

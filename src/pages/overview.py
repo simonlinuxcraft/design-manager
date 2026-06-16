@@ -15,13 +15,14 @@ from gi.repository import Adw, Gtk
 
 from src import compat
 from src.core import backgrounds
+from src.i18n import _
 
 
 class OverviewPage(compat.PageBase):
     """Kompakte Zusammenfassung des aktiven Looks mit Sprüngen in die Bereiche."""
 
     def __init__(self, settings, springe_zu):
-        super().__init__(title="Übersicht")
+        super().__init__(title=_("Overview"))
         self._settings = settings
         self._springe_zu = springe_zu
         self._wert_zeilen = {}
@@ -40,15 +41,15 @@ class OverviewPage(compat.PageBase):
 
     def _look_gruppe(self):
         gruppe = Adw.PreferencesGroup(
-            title="Aktueller Look",
-            description="Klick auf eine Zeile springt in den jeweiligen Bereich.")
-        gruppe.add(self._wert_zeile("gtk", "GTK-Design", "gtk"))
-        gruppe.add(self._wert_zeile("icon", "Symbole", "icons"))
-        gruppe.add(self._wert_zeile("cursor", "Mauszeiger", "cursor"))
-        gruppe.add(self._wert_zeile("font", "Schrift", "fonts"))
+            title=_("Current look"),
+            description=_("Click a row to jump to that section."))
+        gruppe.add(self._wert_zeile("gtk", _("GTK Theme"), "gtk"))
+        gruppe.add(self._wert_zeile("icon", _("Icons"), "icons"))
+        gruppe.add(self._wert_zeile("cursor", _("Cursor"), "cursor"))
+        gruppe.add(self._wert_zeile("font", _("Font"), "fonts"))
         if self._settings.accent_verfuegbar():
-            gruppe.add(self._wert_zeile("accent", "Akzentfarbe", "system"))
-        gruppe.add(self._wert_zeile("shell", "Shell-Design", "shell"))
+            gruppe.add(self._wert_zeile("accent", _("Accent color"), "system"))
+        gruppe.add(self._wert_zeile("shell", _("Shell Theme"), "shell"))
         return gruppe
 
     def _wert_zeile(self, key, titel, ziel):
@@ -61,8 +62,8 @@ class OverviewPage(compat.PageBase):
         return zeile
 
     def _hintergrund_gruppe(self):
-        gruppe = Adw.PreferencesGroup(title="Hintergrund")
-        zeile = Adw.ActionRow(title="Hintergrundbild")
+        gruppe = Adw.PreferencesGroup(title=_("Background"))
+        zeile = Adw.ActionRow(title=_("Wallpaper"))
         zeile.set_activatable(True)
         zeile.connect("activated", lambda _z: self._springe_zu("background"))
 
@@ -87,21 +88,21 @@ class OverviewPage(compat.PageBase):
         self._setze(self._wert_zeilen.get("font"), self._settings.font_name())
         if "accent" in self._wert_zeilen:
             self._setze(self._wert_zeilen["accent"], self._settings.accent_color())
-        shell = self._settings.shell_theme() or "Standard"
+        shell = self._settings.shell_theme() or _("Default")
         if not self._settings.user_themes_verfuegbar():
-            shell = "nicht verfügbar (User Themes fehlt)"
+            shell = _("not available (User Themes missing)")
         self._setze(self._wert_zeilen.get("shell"), shell)
 
         self._aktualisiere_hintergrund()
 
     def _setze(self, zeile, wert):
         if zeile is not None:
-            zeile.set_subtitle(wert or "nicht gesetzt")
+            zeile.set_subtitle(wert or _("not set"))
 
     def _aktualisiere_hintergrund(self):
         pfad = backgrounds.aktuelles_wallpaper(self._settings)
         if pfad is None:
-            self._hintergrund_zeile.set_subtitle("Kein Bild gesetzt")
+            self._hintergrund_zeile.set_subtitle(_("No image set"))
             self._thumb.set_paintable(None)
             return
         self._hintergrund_zeile.set_subtitle(os.path.basename(pfad))

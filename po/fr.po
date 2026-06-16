@@ -1,0 +1,1231 @@
+# French translation for Design Manager.
+# Copyright (C) 2026 simonlinuxcraft
+# This file is distributed under the same license as the Design Manager package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Design Manager\n"
+"Report-Msgid-Bugs-To: https://github.com/simonlinuxcraft\n"
+"POT-Creation-Date: 2026-06-16 09:55+0200\n"
+"PO-Revision-Date: 2026-06-16 00:00+0200\n"
+"Last-Translator: simonlinuxcraft\n"
+"Language-Team: French\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "Remove this theme"
+msgstr "Supprimer ce thème"
+
+msgid "Active"
+msgstr "Actif"
+
+msgid "Installed"
+msgstr "Installé"
+
+msgid "Remove from the app (file is kept)"
+msgstr "Retirer de l'application (le fichier est conservé)"
+
+msgid "Customize the GNOME desktop appearance in one place."
+msgstr "Personnalisez l'apparence du bureau GNOME en un seul endroit."
+
+msgid "Everything in one place"
+msgstr "Tout au même endroit"
+
+msgid ""
+"Background, GTK theme, icons, cursor, fonts and the shell theme. Every "
+"change takes effect immediately."
+msgstr ""
+"Arrière-plan, thème GTK, icônes, curseur, polices et thème du Shell. Chaque "
+"modification prend effet immédiatement."
+
+msgid "Save looks"
+msgstr "Enregistrer des apparences"
+
+msgid ""
+"Create profiles, for example day and night, and switch with one click. Or "
+"back up everything to a file."
+msgstr ""
+"Créez des profils, par exemple jour et nuit, et basculez en un clic. Ou "
+"sauvegardez tout dans un fichier."
+
+msgid "Ready"
+msgstr "Prêt"
+
+msgid ""
+"Tip: some shell themes need the User Themes extension. Have fun customizing."
+msgstr ""
+"Conseil : certains thèmes du Shell nécessitent l'extension User Themes. "
+"Bonne personnalisation."
+
+msgid "Welcome"
+msgstr "Bienvenue"
+
+msgid "Next"
+msgstr "Suivant"
+
+msgid "Get started"
+msgstr "Commencer"
+
+msgid "Drag an archive (.tar.gz or .zip) here"
+msgstr "Faites glisser une archive (.tar.gz ou .zip) ici"
+
+msgid "Choose file…"
+msgstr "Choisir un fichier…"
+
+msgid "Themes and fonts"
+msgstr "Thèmes et polices"
+
+msgid "Choose theme or font"
+msgstr "Choisir un thème ou une police"
+
+msgid "Installing…"
+msgstr "Installation…"
+
+#, python-brace-format
+msgid "Failed: {error}"
+msgstr "Échec : {error}"
+
+#, python-brace-format
+msgid "Installed: {items}"
+msgstr "Installé : {items}"
+
+msgid "GTK theme"
+msgstr "Thème GTK"
+
+msgid "icon theme"
+msgstr "thème d'icônes"
+
+msgid "cursor"
+msgstr "curseur"
+
+msgid "shell theme"
+msgstr "thème du Shell"
+
+msgid "The theme folder was not found."
+msgstr "Le dossier du thème est introuvable."
+
+#, python-brace-format
+msgid "The file {sub}/gtk.css is not readable."
+msgstr "Le fichier {sub}/gtk.css n'est pas lisible."
+
+msgid "The theme is missing gtk-4.0/gtk.css. GNOME would fall back to Adwaita."
+msgstr "Le thème ne contient pas gtk-4.0/gtk.css. GNOME utiliserait Adwaita à la place."
+
+msgid "The theme is missing gnome-shell/gnome-shell.css."
+msgstr "Le thème ne contient pas gnome-shell/gnome-shell.css."
+
+msgid "The file gnome-shell.css is not readable."
+msgstr "Le fichier gnome-shell.css n'est pas lisible."
+
+msgid "Left"
+msgstr "Gauche"
+
+msgid "Right"
+msgstr "Droite"
+
+msgid "Top"
+msgstr "Haut"
+
+msgid "Bottom"
+msgstr "Bas"
+
+msgid "Position"
+msgstr "Position"
+
+msgid "Screen edge the dock sits on"
+msgstr "Bord de l'écran où se trouve le Dock"
+
+msgid "Always visible"
+msgstr "Toujours visible"
+
+msgid "Pin the dock to the edge instead of hiding it"
+msgstr "Épingler le Dock sur le bord au lieu de le masquer"
+
+msgid "Auto-hide"
+msgstr "Masquage automatique"
+
+msgid "Hide the dock until the pointer touches the edge"
+msgstr "Masquer le Dock jusqu'à ce que le pointeur touche le bord"
+
+msgid "Smart hide"
+msgstr "Masquage intelligent"
+
+msgid "Only hide when a window covers the dock"
+msgstr "Masquer uniquement quand une fenêtre recouvre le Dock"
+
+msgid "Icon size"
+msgstr "Taille des icônes"
+
+msgid "Maximum size of the app icons in pixels"
+msgstr "Taille maximale des icônes d'applications en pixels"
+
+msgid "Full height"
+msgstr "Hauteur totale"
+
+msgid "Stretch the dock along the whole screen edge (panel style)"
+msgstr "Étirer le Dock sur toute la longueur du bord de l'écran (style panneau)"
+
+msgid "Apps button on top"
+msgstr "Bouton Applications en haut"
+
+msgid "Put the applications button at the start"
+msgstr "Placer le bouton Applications au début"
+
+msgid "Show drives"
+msgstr "Afficher les lecteurs"
+
+msgid "Show mounted volumes in the dock"
+msgstr "Afficher les volumes montés dans le Dock"
+
+msgid "Show trash"
+msgstr "Afficher la corbeille"
+
+msgid "Show the trash in the dock"
+msgstr "Afficher la corbeille dans le Dock"
+
+msgid "On all monitors"
+msgstr "Sur tous les moniteurs"
+
+msgid "Show the dock on every screen"
+msgstr "Afficher le Dock sur chaque écran"
+
+msgid "Screen edge the panel sits on"
+msgstr "Bord de l'écran où se trouve le panneau"
+
+msgid "Panel height"
+msgstr "Hauteur du panneau"
+
+msgid "Thickness of the bar in pixels"
+msgstr "Épaisseur de la barre en pixels"
+
+msgid "Indicator position"
+msgstr "Position de l'indicateur"
+
+msgid "Where the dot for open apps sits"
+msgstr "Emplacement du point des applications ouvertes"
+
+msgid "Group windows"
+msgstr "Grouper les fenêtres"
+
+msgid "Bundle multiple windows of an app into one icon"
+msgstr "Regrouper plusieurs fenêtres d'une application en une seule icône"
+
+msgid "Show favorites"
+msgstr "Afficher les favoris"
+
+msgid "Show pinned apps in the bar"
+msgstr "Afficher les applications épinglées dans la barre"
+
+msgid "Separate workspaces"
+msgstr "Espaces de travail séparés"
+
+msgid "Only show windows of the current workspace"
+msgstr "Afficher uniquement les fenêtres de l'espace de travail actuel"
+
+msgid "Hide the panel until it is needed"
+msgstr "Masquer le panneau jusqu'à ce qu'il soit nécessaire"
+
+msgid "Show the panel on every screen"
+msgstr "Afficher le panneau sur chaque écran"
+
+msgid "Midnight Blue"
+msgstr "Bleu nuit"
+
+msgid "Dark with a blue accent."
+msgstr "Sombre avec une accentuation bleue."
+
+msgid "Sunrise"
+msgstr "Aube"
+
+msgid "Light with warm orange."
+msgstr "Clair avec un orange chaleureux."
+
+msgid "Forest Clearing"
+msgstr "Clairière"
+
+msgid "Dark green and calm."
+msgstr "Vert sombre et apaisant."
+
+msgid "Your profile"
+msgstr "Votre profil"
+
+#, python-brace-format
+msgid "GTK theme \"{name}\""
+msgstr "Thème GTK \"{name}\""
+
+#, python-brace-format
+msgid "Icons \"{name}\""
+msgstr "Icônes \"{name}\""
+
+#, python-brace-format
+msgid "Cursor \"{name}\""
+msgstr "Curseur \"{name}\""
+
+#, python-brace-format
+msgid "Shell theme \"{name}\""
+msgstr "Thème du Shell \"{name}\""
+
+msgid "Accent color (only from GNOME 47)"
+msgstr "Couleur d'accentuation (à partir de GNOME 47 uniquement)"
+
+msgid "Wallpaper"
+msgstr "Arrière-plan"
+
+msgid "Theme"
+msgstr "Thème"
+
+msgid "Cursor"
+msgstr "Curseur"
+
+msgid "Icons"
+msgstr "Icônes"
+
+msgid "This is a cursor theme."
+msgstr "Ceci est un thème de curseur."
+
+msgid "This is an icon theme."
+msgstr "Ceci est un thème d'icônes."
+
+msgid "This is a GTK theme."
+msgstr "Ceci est un thème GTK."
+
+msgid "GTK Theme"
+msgstr "Thème GTK"
+
+msgid "This is a font."
+msgstr "Ceci est une police."
+
+msgid "Fonts"
+msgstr "Polices"
+
+msgid ""
+"This is a folder, not an archive. Please choose an archive (.tar.gz/.zip)."
+msgstr ""
+"Ceci est un dossier, pas une archive. Veuillez choisir une archive (.tar.gz/.zip)."
+
+msgid "The file was not found."
+msgstr "Le fichier est introuvable."
+
+msgid "The font could not be copied."
+msgstr "La police n'a pas pu être copiée."
+
+#, python-brace-format
+msgid "{sentence} Please install it on the \"{page}\" page."
+msgstr "{sentence} Veuillez l'installer depuis la page \"{page}\"."
+
+msgid ""
+"This is a Windows cursor (.cur/.ani). GNOME cannot use it directly. Download "
+"the Linux variant of the theme (a folder with a \"cursors\" subfolder)."
+msgstr ""
+"Ceci est un curseur Windows (.cur/.ani). GNOME ne peut pas l'utiliser "
+"directement. Téléchargez la variante Linux du thème (un dossier contenant "
+"un sous-dossier \"cursors\")."
+
+msgid "No theme and no font found in the archive."
+msgstr "Aucun thème ni police trouvé dans l'archive."
+
+msgid "Format not supported (only .zip and .tar.*)."
+msgstr "Format non pris en charge (uniquement .zip et .tar.*)."
+
+msgid "The archive could not be extracted."
+msgstr "L'archive n'a pas pu être extraite."
+
+msgid "The archive contains unsafe paths."
+msgstr "L'archive contient des chemins non sécurisés."
+
+#, python-brace-format
+msgid "Font: {n} file"
+msgid_plural "Font: {n} files"
+msgstr[0] "Police : {n} fichier"
+msgstr[1] "Police : {n} fichiers"
+
+msgid "Changes take effect immediately."
+msgstr "Les modifications prennent effet immédiatement."
+
+msgid "Icon theme"
+msgstr "Thème d'icônes"
+
+msgid "Install a new icon theme"
+msgstr "Installer un nouveau thème d'icônes"
+
+msgid "Drag an icon theme (.tar.gz/.zip) here"
+msgstr "Faites glisser un thème d'icônes (.tar.gz/.zip) ici"
+
+msgid "Remove icon theme?"
+msgstr "Supprimer le thème d'icônes ?"
+
+#, python-brace-format
+msgid ""
+"\"{name}\" will be permanently deleted from your user folder. This cannot be "
+"undone."
+msgstr ""
+"\"{name}\" sera définitivement supprimé de votre dossier utilisateur. "
+"Cette action est irréversible."
+
+msgid "Cancel"
+msgstr "Annuler"
+
+msgid "Remove"
+msgstr "Supprimer"
+
+#, python-brace-format
+msgid "Removed: {name}"
+msgstr "Supprimé : {name}"
+
+#, python-brace-format
+msgid "Could not be removed: {name}"
+msgstr "Impossible de supprimer : {name}"
+
+msgid "Extensions"
+msgstr "Extensions"
+
+msgid "Not available here"
+msgstr "Non disponible ici"
+
+msgid ""
+"Managing extensions needs access to the GNOME Shell service, which is not "
+"reachable here (e.g. in a sandbox)."
+msgstr ""
+"La gestion des extensions nécessite l'accès au service GNOME Shell, "
+"qui n'est pas accessible ici (par exemple dans un bac à sable)."
+
+msgid "User extensions"
+msgstr "Extensions utilisateur"
+
+msgid "System extensions"
+msgstr "Extensions système"
+
+msgid "Extensions enabled"
+msgstr "Extensions activées"
+
+msgid "Toggles all user extensions together."
+msgstr "Active ou désactive toutes les extensions utilisateur en même temps."
+
+msgid "Extension settings"
+msgstr "Paramètres de l'extension"
+
+msgid ""
+"Determines how application windows look. Applied immediately, also to modern "
+"apps like Files."
+msgstr ""
+"Détermine l'apparence des fenêtres d'applications. Appliqué immédiatement, "
+"y compris aux applications modernes comme Fichiers."
+
+msgid "GTK theme (windows & apps)"
+msgstr "Thème GTK (fenêtres et applications)"
+
+msgid "Install a new GTK theme"
+msgstr "Installer un nouveau thème GTK"
+
+msgid "Drag a GTK theme (.tar.gz/.zip) here"
+msgstr "Faites glisser un thème GTK (.tar.gz/.zip) ici"
+
+msgid "Default"
+msgstr "Par défaut"
+
+msgid "Reset the GTK theme to the safe default theme (Adwaita)"
+msgstr "Réinitialiser le thème GTK au thème sûr par défaut (Adwaita)"
+
+#, python-brace-format
+msgid "before GTK theme {name}"
+msgstr "avant le thème GTK {name}"
+
+msgid "Activate theme anyway?"
+msgstr "Activer le thème quand même ?"
+
+msgid "Activate anyway"
+msgstr "Activer quand même"
+
+msgid "Overview"
+msgstr "Vue d'ensemble"
+
+msgid "Current look"
+msgstr "Apparence actuelle"
+
+msgid "Click a row to jump to that section."
+msgstr "Cliquez sur une ligne pour accéder à cette section."
+
+msgid "Font"
+msgstr "Police"
+
+msgid "Accent color"
+msgstr "Couleur d'accentuation"
+
+msgid "Shell Theme"
+msgstr "Thème du Shell"
+
+msgid "Background"
+msgstr "Arrière-plan"
+
+msgid "not available (User Themes missing)"
+msgstr "non disponible (User Themes absent)"
+
+msgid "not set"
+msgstr "non défini"
+
+msgid "No image set"
+msgstr "Aucune image définie"
+
+msgid "Backup"
+msgstr "Sauvegarde"
+
+msgid "Profiles"
+msgstr "Profils"
+
+msgid ""
+"Save the current state as a named set and reapply it with a click. Saved "
+"profiles also appear on the Looks page."
+msgstr ""
+"Enregistrez l'état actuel sous un nom et réappliquez-le en un clic. "
+"Les profils enregistrés apparaissent aussi sur la page Apparences."
+
+msgid "Name a new profile"
+msgstr "Nommer un nouveau profil"
+
+msgid "Saved profiles"
+msgstr "Profils enregistrés"
+
+msgid "No profiles yet"
+msgstr "Aucun profil pour l'instant"
+
+msgid "Enter a name above and save."
+msgstr "Saisissez un nom ci-dessus et enregistrez."
+
+msgid "Apply"
+msgstr "Appliquer"
+
+msgid "Delete profile"
+msgstr "Supprimer le profil"
+
+msgid "Please enter a name."
+msgstr "Veuillez saisir un nom."
+
+#, python-brace-format
+msgid "Saving failed: {error}"
+msgstr "Enregistrement échoué : {error}"
+
+msgid "Error"
+msgstr "Erreur"
+
+#, python-brace-format
+msgid "Profile saved: {name}"
+msgstr "Profil enregistré : {name}"
+
+msgid "The profile could not be read."
+msgstr "Le profil n'a pas pu être lu."
+
+msgid "The profile is damaged."
+msgstr "Le profil est endommagé."
+
+#, python-brace-format
+msgid "Profile applied: {name}. Restart the app to refresh the selection here."
+msgstr "Profil appliqué : {name}. Redémarrez l'application pour actualiser la sélection ici."
+
+#, python-brace-format
+msgid "Profile deleted: {name}"
+msgstr "Profil supprimé : {name}"
+
+msgid "Day/night automation"
+msgstr "Automatisation jour/nuit"
+
+msgid ""
+"Bind two profiles to fixed times. Switches the whole look automatically via "
+"a systemd timer."
+msgstr ""
+"Associez deux profils à des heures fixes. Bascule l'apparence entière "
+"automatiquement via un minuteur systemd."
+
+msgid "Not enough profiles yet"
+msgstr "Pas encore assez de profils"
+
+msgid ""
+"Create two different profiles first (e.g. a light \"Day\" and a dark "
+"\"Night\")."
+msgstr ""
+"Créez d'abord deux profils différents (par exemple un clair \"Jour\" "
+"et un sombre \"Nuit\")."
+
+msgid "Day profile"
+msgstr "Profil de jour"
+
+msgid "Day from (HH:MM)"
+msgstr "Jour à partir de (HH:MM)"
+
+msgid "Night profile"
+msgstr "Profil de nuit"
+
+msgid "Night from (HH:MM)"
+msgstr "Nuit à partir de (HH:MM)"
+
+msgid "Automation active"
+msgstr "Automatisation active"
+
+msgid "Day/night automation turned off."
+msgstr "Automatisation jour/nuit désactivée."
+
+msgid "Please enter valid times in HH:MM format."
+msgstr "Veuillez saisir des heures valides au format HH:MM."
+
+msgid "Day and night profile must differ, otherwise nothing switches."
+msgstr "Le profil de jour et de nuit doivent être différents, sinon rien ne change."
+
+msgid "Day/night automation active."
+msgstr "Automatisation jour/nuit active."
+
+msgid "Automation could not be set up."
+msgstr "L'automatisation n'a pas pu être configurée."
+
+msgid "Restore points"
+msgstr "Points de restauration"
+
+msgid ""
+"Created automatically before every theme, cursor or shell change. Restores "
+"the state from before."
+msgstr ""
+"Créé automatiquement avant chaque changement de thème, curseur ou Shell. "
+"Restaure l'état précédent."
+
+msgid "No restore points yet"
+msgstr "Aucun point de restauration pour l'instant"
+
+msgid "One is created as soon as you change a theme."
+msgstr "Un point est créé dès que vous changez un thème."
+
+msgid "Restore"
+msgstr "Restaurer"
+
+msgid "Delete restore point"
+msgstr "Supprimer le point de restauration"
+
+msgid "Restore point applied. Restart the app to refresh the selection here."
+msgstr "Point de restauration appliqué. Redémarrez l'application pour actualiser la sélection ici."
+
+msgid "The restore point could not be read."
+msgstr "Le point de restauration n'a pas pu être lu."
+
+msgid "Restore point deleted."
+msgstr "Point de restauration supprimé."
+
+msgid "Backup file"
+msgstr "Fichier de sauvegarde"
+
+msgid "Export the current state to a file or restore from an earlier backup."
+msgstr "Exportez l'état actuel dans un fichier ou restaurez depuis une sauvegarde antérieure."
+
+msgid "Back up"
+msgstr "Sauvegarder"
+
+msgid "Export to a file"
+msgstr "Exporter dans un fichier"
+
+msgid "Import from a file"
+msgstr "Importer depuis un fichier"
+
+msgid "Back up settings"
+msgstr "Sauvegarder les paramètres"
+
+#, python-brace-format
+msgid "Backup failed: {error}"
+msgstr "Sauvegarde échouée : {error}"
+
+#, python-brace-format
+msgid "Backed up: {file}"
+msgstr "Sauvegardé : {file}"
+
+msgid "Backups (*.json)"
+msgstr "Sauvegardes (*.json)"
+
+msgid "Restore backup"
+msgstr "Restaurer une sauvegarde"
+
+msgid "The file could not be read."
+msgstr "Le fichier n'a pas pu être lu."
+
+msgid "That is not a valid backup."
+msgstr "Ce n'est pas une sauvegarde valide."
+
+msgid "Restored. Restart the app to refresh the selection here."
+msgstr "Restauré. Redémarrez l'application pour actualiser la sélection ici."
+
+msgid "Share look package"
+msgstr "Partager un paquet d'apparence"
+
+msgid ""
+"Bundle the whole look as a .dmlook, including the theme files and the "
+"wallpaper, or import such a package."
+msgstr ""
+"Regroupez l'apparence entière dans un fichier .dmlook, y compris les "
+"fichiers de thème et l'arrière-plan, ou importez un tel paquet."
+
+msgid "Export look"
+msgstr "Exporter l'apparence"
+
+msgid "Pack themes and image into a .dmlook"
+msgstr "Regrouper thèmes et image dans un .dmlook"
+
+msgid "Import look"
+msgstr "Importer une apparence"
+
+msgid "Install and apply from a .dmlook"
+msgstr "Installer et appliquer depuis un .dmlook"
+
+msgid "Export look package"
+msgstr "Exporter le paquet d'apparence"
+
+#, python-brace-format
+msgid "Export failed: {error}"
+msgstr "Exportation échouée : {error}"
+
+#, python-brace-format
+msgid "Look package saved: {file}"
+msgstr "Paquet d'apparence enregistré : {file}"
+
+msgid "Look packages (*.dmlook)"
+msgstr "Paquets d'apparence (*.dmlook)"
+
+msgid "Import look package"
+msgstr "Importer un paquet d'apparence"
+
+msgid "The look package could not be read."
+msgstr "Le paquet d'apparence n'a pas pu être lu."
+
+msgid "That is not a valid look package."
+msgstr "Ce n'est pas un paquet d'apparence valide."
+
+msgid "Look package applied. Restart the app to refresh the selection here."
+msgstr "Paquet d'apparence appliqué. Redémarrez l'application pour actualiser la sélection ici."
+
+msgid "Dock"
+msgstr "Dock"
+
+msgid "No dock extension active"
+msgstr "Aucune extension de Dock active"
+
+msgid ""
+"This page controls Ubuntu Dock / Dash to Dock or Dash to Panel. None of them "
+"is enabled on this system."
+msgstr ""
+"Cette page contrôle Ubuntu Dock / Dash to Dock ou Dash to Panel. "
+"Aucun d'entre eux n'est activé sur ce système."
+
+msgid "Blue"
+msgstr "Bleu"
+
+msgid "Teal"
+msgstr "Sarcelle"
+
+msgid "Green"
+msgstr "Vert"
+
+msgid "Yellow"
+msgstr "Jaune"
+
+msgid "Orange"
+msgstr "Orange"
+
+msgid "Red"
+msgstr "Rouge"
+
+msgid "Pink"
+msgstr "Rose"
+
+msgid "Purple"
+msgstr "Violet"
+
+msgid "Slate"
+msgstr "Ardoise"
+
+msgid "System"
+msgstr "Système"
+
+msgid "The accent color can only be set from GNOME 47 onwards."
+msgstr "La couleur d'accentuation ne peut être définie qu'à partir de GNOME 47."
+
+msgid "Color from background"
+msgstr "Couleur depuis l'arrière-plan"
+
+msgid "Pick the accent color matching the current wallpaper"
+msgstr "Choisir la couleur d'accentuation correspondant à l'arrière-plan actuel"
+
+msgid "No wallpaper found."
+msgstr "Aucun arrière-plan trouvé."
+
+msgid "No matching accent color found."
+msgstr "Aucune couleur d'accentuation correspondante trouvée."
+
+msgid "Accent color picked from the background."
+msgstr "Couleur d'accentuation choisie depuis l'arrière-plan."
+
+msgid "Window buttons"
+msgstr "Boutons de fenêtre"
+
+msgid ""
+"Which buttons the title bar shows and on which side. Close always stays "
+"visible."
+msgstr ""
+"Les boutons affichés dans la barre de titre et de quel côté. "
+"Le bouton Fermer reste toujours visible."
+
+msgid "Minimize"
+msgstr "Réduire"
+
+msgid "Maximize"
+msgstr "Agrandir"
+
+msgid "Arrangement"
+msgstr "Disposition"
+
+msgid "Top bar"
+msgstr "Barre supérieure"
+
+msgid "What the clock and the system area show."
+msgstr "Ce qu'affichent l'horloge et la zone système."
+
+msgid "Seconds in the clock"
+msgstr "Secondes dans l'horloge"
+
+msgid "Show weekday"
+msgstr "Afficher le jour de la semaine"
+
+msgid "Show date"
+msgstr "Afficher la date"
+
+msgid "Battery level in percent"
+msgstr "Niveau de batterie en pourcentage"
+
+msgid "Motion"
+msgstr "Mouvement"
+
+msgid "Animations"
+msgstr "Animations"
+
+msgid "Fade and transition effects of the interface."
+msgstr "Effets de fondu et de transition de l'interface."
+
+msgid "User Themes is required"
+msgstr "User Themes est requis"
+
+msgid ""
+"The GNOME shell theme is set via the User Themes extension. It is not "
+"installed on this system."
+msgstr ""
+"Le thème du Shell GNOME est défini via l'extension User Themes. "
+"Elle n'est pas installée sur ce système."
+
+msgid "User Themes is not enabled"
+msgstr "User Themes n'est pas activé"
+
+msgid ""
+"The User Themes extension is installed but switched off. While it is off, a "
+"chosen shell theme is not applied. Enable it under Extensions, then you can "
+"pick one here."
+msgstr ""
+"L'extension User Themes est installée mais désactivée. Tant qu'elle est "
+"désactivée, le thème du Shell choisi n'est pas appliqué. Activez-la sous "
+"Extensions, puis vous pouvez en choisir un ici."
+
+msgid ""
+"Affects the top bar, calendar and quick settings. The preview shows panel "
+"and accent color (approximation)."
+msgstr ""
+"Affecte la barre supérieure, le calendrier et les réglages rapides. "
+"L'aperçu montre le panneau et la couleur d'accentuation (approximation)."
+
+#, python-brace-format
+msgid "before shell theme {name}"
+msgstr "avant le thème du Shell {name}"
+
+msgid "Activate shell theme anyway?"
+msgstr "Activer le thème du Shell quand même ?"
+
+msgid "Remove shell theme?"
+msgstr "Supprimer le thème du Shell ?"
+
+msgid "Looks"
+msgstr "Apparences"
+
+msgid "No looks found"
+msgstr "Aucune apparence trouvée"
+
+msgid "Bundled looks live under data/looks/."
+msgstr "Les apparences intégrées se trouvent dans data/looks/."
+
+msgid ""
+"One click applies the whole look. For bundled looks a \"before-…\" profile "
+"is created first, so you can go back."
+msgstr ""
+"Un clic applique l'apparence entière. Pour les apparences intégrées, "
+"un profil \"avant-...\" est d'abord créé pour pouvoir revenir en arrière."
+
+msgid "Bundled looks"
+msgstr "Apparences intégrées"
+
+msgid "Your profiles"
+msgstr "Vos profils"
+
+#, python-brace-format
+msgid "Apply look \"{name}\"?"
+msgstr "Appliquer l'apparence \"{name}\" ?"
+
+msgid ""
+"The current state is saved as a profile first. Parts that are not installed "
+"are skipped."
+msgstr ""
+"L'état actuel est d'abord enregistré comme profil. "
+"Les parties non installées sont ignorées."
+
+#, python-brace-format
+msgid "Look \"{name}\" applied. Skipped: {items}."
+msgstr "Apparence \"{name}\" appliquée. Ignoré : {items}."
+
+#, python-brace-format
+msgid "Look \"{name}\" applied."
+msgstr "Apparence \"{name}\" appliquée."
+
+#, python-brace-format
+msgid "Apply profile \"{name}\"?"
+msgstr "Appliquer le profil \"{name}\" ?"
+
+msgid "Applies this profile's saved state."
+msgstr "Applique l'état enregistré de ce profil."
+
+#, python-brace-format
+msgid ""
+"Profile \"{name}\" applied. Restart the app to refresh the selection in each "
+"section."
+msgstr ""
+"Profil \"{name}\" appliqué. Redémarrez l'application pour actualiser "
+"la sélection dans chaque section."
+
+msgid "Zoom (fill screen)"
+msgstr "Zoom (remplir l'écran)"
+
+msgid "Fitted"
+msgstr "Ajusté"
+
+msgid "Stretched"
+msgstr "Étiré"
+
+msgid "Centered"
+msgstr "Centré"
+
+msgid "Tiled"
+msgstr "En mosaïque"
+
+msgid "Across multiple screens"
+msgstr "Sur plusieurs écrans"
+
+msgid "None"
+msgstr "Aucun"
+
+msgid "Current image"
+msgstr "Image actuelle"
+
+msgid "Default backgrounds"
+msgstr "Arrière-plans par défaut"
+
+msgid "Choose your own image…"
+msgstr "Choisir votre propre image…"
+
+msgid "Adjustment"
+msgstr "Ajustement"
+
+msgid "Lock screen"
+msgstr "Écran de verrouillage"
+
+msgid "Login screen (GDM)"
+msgstr "Écran de connexion (GDM)"
+
+msgid ""
+"Variety manages the background. Your image choice is handed to Variety and "
+"stays across every login. You can change the adjustment mode below, but at "
+"the next login Variety sets its own again. For full control over image and "
+"mode you can remove Variety here."
+msgstr ""
+"Variety gère l'arrière-plan. Votre choix d'image est transmis à Variety "
+"et persiste à chaque connexion. Vous pouvez modifier le mode d'ajustement "
+"ci-dessous, mais à la prochaine connexion Variety redéfinira le sien. "
+"Pour un contrôle total sur l'image et le mode, vous pouvez supprimer "
+"Variety ici."
+
+msgid "Remove Variety"
+msgstr "Supprimer Variety"
+
+msgid ""
+"Remove Variety from autostart and quit it, so the app controls the "
+"background and mode directly. Reversible, Variety stays installed."
+msgstr ""
+"Retirer Variety du démarrage automatique et le quitter, pour que "
+"l'application contrôle directement l'arrière-plan et le mode. "
+"Réversible, Variety reste installé."
+
+msgid ""
+"Variety was removed from autostart and quit. The app now manages the "
+"background directly, your adjustment mode is kept. To undo: start Variety "
+"again and enable it in autostart."
+msgstr ""
+"Variety a été retiré du démarrage automatique et fermé. L'application "
+"gère maintenant l'arrière-plan directement, votre mode d'ajustement "
+"est conservé. Pour annuler : redémarrez Variety et activez-le dans le "
+"démarrage automatique."
+
+msgid "No wallpaper set"
+msgstr "Aucun arrière-plan défini"
+
+msgid "Images"
+msgstr "Images"
+
+msgid "Choose wallpaper"
+msgstr "Choisir un arrière-plan"
+
+msgid ""
+"First choose a custom theme (not the default one) under Shell Theme. The app "
+"writes the lock screen image into that theme's style."
+msgstr ""
+"Choisissez d'abord un thème personnalisé (pas celui par défaut) sous "
+"Thème du Shell. L'application écrit l'image de l'écran de verrouillage "
+"dans le style de ce thème."
+
+msgid "No custom image set"
+msgstr "Aucune image personnalisée définie"
+
+msgid "Same as background"
+msgstr "Identique à l'arrière-plan"
+
+msgid ""
+"Experimental. Takes effect only after logging in again and may be covered by "
+"the blurred lock screen on newer GNOME versions."
+msgstr ""
+"Expérimental. Ne prend effet qu'après une nouvelle connexion et peut être "
+"recouvert par l'écran de verrouillage flouté sur les versions récentes de GNOME."
+
+msgid "Choose lock screen image"
+msgstr "Choisir l'image de l'écran de verrouillage"
+
+msgid ""
+"Changes the system-wide login screen and needs the administrator password. "
+"Takes effect after a restart. The original is never overwritten. If the "
+"login screen shows a problem, the default restores itself after two "
+"restarts; from a terminal any time with \"sudo /usr/local/lib/design-manager/"
+"gdm-helper.sh reset\"."
+msgstr ""
+"Modifie l'écran de connexion du système et nécessite le mot de passe "
+"administrateur. Prend effet après un redémarrage. L'original n'est jamais "
+"écrasé. Si l'écran de connexion présente un problème, la valeur par défaut "
+"se restaure automatiquement après deux redémarrages ; depuis un terminal "
+"à tout moment avec \"sudo /usr/local/lib/design-manager/gdm-helper.sh reset\"."
+
+msgid "New login screen set, not yet confirmed."
+msgstr "Nouvel écran de connexion défini, pas encore confirmé."
+
+msgid ""
+"Restart the computer once. If the login screen appears normally, log in and "
+"click \"Keep\". If you do not, the default restores itself automatically "
+"after two restarts."
+msgstr ""
+"Redémarrez l'ordinateur une fois. Si l'écran de connexion s'affiche "
+"normalement, connectez-vous et cliquez sur \"Conserver\". Sinon, "
+"la valeur par défaut se restaure automatiquement après deux redémarrages."
+
+msgid "Keep"
+msgstr "Conserver"
+
+msgid "Discard"
+msgstr "Ignorer"
+
+msgid "A custom login screen background is active."
+msgstr "Un arrière-plan personnalisé de l'écran de connexion est actif."
+
+msgid "Default login screen."
+msgstr "Écran de connexion par défaut."
+
+msgid "Reset"
+msgstr "Réinitialiser"
+
+msgid "Confirming… "
+msgstr "Confirmation… "
+
+msgid "Choose login screen image"
+msgstr "Choisir l'image de l'écran de connexion"
+
+msgid "Applying… "
+msgstr "Application… "
+
+msgid "Resetting… "
+msgstr "Réinitialisation… "
+
+msgid "(enter password)"
+msgstr "(saisir le mot de passe)"
+
+msgid "Not changed (canceled or error)."
+msgstr "Non modifié (annulé ou erreur)."
+
+msgid ""
+"GTK apps and the cursor over the desktop change immediately. Already open "
+"non-GTK apps (some terminals, Electron apps) show the old cursor until you "
+"restart them."
+msgstr ""
+"Les applications GTK et le curseur sur le bureau changent immédiatement. "
+"Les applications non-GTK déjà ouvertes (certains terminaux, applications "
+"Electron) affichent l'ancien curseur jusqu'au redémarrage."
+
+msgid "Drag a cursor theme (.tar.gz/.zip) here"
+msgstr "Faites glisser un thème de curseur (.tar.gz/.zip) ici"
+
+#, python-brace-format
+msgid "before cursor {name}"
+msgstr "avant le curseur {name}"
+
+msgid "Remove cursor theme?"
+msgstr "Supprimer le thème de curseur ?"
+
+msgid "Grayscale"
+msgstr "Niveaux de gris"
+
+msgid "Subpixel (RGBA)"
+msgstr "Sous-pixel (RGBA)"
+
+msgid "Full"
+msgstr "Complet"
+
+msgid "Medium"
+msgstr "Moyen"
+
+msgid "Slight"
+msgstr "Léger"
+
+msgid "GNOME keeps three fonts separate."
+msgstr "GNOME gère trois polices séparément."
+
+msgid "Interface"
+msgstr "Interface"
+
+msgid "Documents"
+msgstr "Documents"
+
+msgid "Monospace"
+msgstr "Monospace"
+
+msgid "Rendering"
+msgstr "Rendu"
+
+msgid "Size and smoothing of the font rendering."
+msgstr "Taille et lissage du rendu des polices."
+
+msgid "Smoothing"
+msgstr "Lissage"
+
+msgid "Hinting"
+msgstr "Hinting"
+
+msgid "Install a font"
+msgstr "Installer une police"
+
+msgid ""
+"Drag a font file (.ttf/.otf) or an archive here. It is copied to ~/.local/"
+"share/fonts and the font cache is refreshed."
+msgstr ""
+"Faites glisser un fichier de police (.ttf/.otf) ou une archive ici. "
+"Il est copié dans ~/.local/share/fonts et le cache des polices est actualisé."
+
+msgid "Drag a font (.ttf/.otf) or archive here"
+msgstr "Faites glisser une police (.ttf/.otf) ou une archive ici"
+
+msgid "Size (scaling)"
+msgstr "Taille (mise à l'échelle)"
+
+msgid "1.0 is the default size."
+msgstr "1.0 est la taille par défaut."
+
+#, python-brace-format
+msgid "Not found: {names}. GNOME falls back to Adwaita."
+msgstr "Introuvable : {names}. GNOME utilise Adwaita à la place."
+
+msgid "Set default"
+msgstr "Définir par défaut"
+
+msgid "Reset to a safe default theme."
+msgstr "Réinitialiser à un thème sûr par défaut."
+
+#, python-brace-format
+msgid "Installation failed: {error}"
+msgstr "Installation échouée : {error}"
+
+msgid "SETTINGS"
+msgstr "PARAMÈTRES"
+
+msgid "Restore safe state"
+msgstr "Restaurer l'état sûr"
+
+msgid "Check for updates"
+msgstr "Rechercher des mises à jour"
+
+msgid "About Design Manager"
+msgstr "À propos de Design Manager"
+
+msgid "Quit"
+msgstr "Quitter"
+
+msgid "Main menu"
+msgstr "Menu principal"
+
+msgid ""
+"Customize the GNOME desktop appearance in one place: background, themes, "
+"icons, cursor and fonts."
+msgstr ""
+"Personnalisez l'apparence du bureau GNOME en un seul endroit : arrière-plan, "
+"thèmes, icônes, curseur et polices."
+
+msgid "Restore safe state?"
+msgstr "Restaurer l'état sûr ?"
+
+msgid ""
+"First a restore point is created, then the theme, icons, cursor and shell "
+"theme are set to guaranteed working defaults (Adwaita). This helps when a "
+"theme has made the interface unusable."
+msgstr ""
+"Un point de restauration est d'abord créé, puis le thème, les icônes, "
+"le curseur et le thème du Shell sont réinitialisés à des valeurs par défaut "
+"garanties (Adwaita). Utile quand un thème a rendu l'interface inutilisable."
+
+msgid "before emergency reset"
+msgstr "avant la réinitialisation d'urgence"
+
+msgid "Safe state restored (Adwaita)."
+msgstr "État sûr restauré (Adwaita)."
+
+msgid "Checking for updates…"
+msgstr "Recherche de mises à jour…"
+
+msgid "You have the latest version."
+msgstr "Vous avez la dernière version."
+
+msgid "Update available"
+msgstr "Mise à jour disponible"
+
+#, python-brace-format
+msgid ""
+"Version {new} is ready (installed: {cur}). Download and install it now? This "
+"asks for the administrator password once."
+msgstr ""
+"La version {new} est disponible (installée : {cur}). Télécharger et "
+"installer maintenant ? Le mot de passe administrateur sera demandé une fois."
+
+msgid "Later"
+msgstr "Plus tard"
+
+msgid "Update"
+msgstr "Mettre à jour"
+
+#, python-brace-format
+msgid "Downloading version {ver}… (enter password)"
+msgstr "Téléchargement de la version {ver}… (saisir le mot de passe)"
+
+msgid "Updated. Please restart the app."
+msgstr "Mis à jour. Veuillez redémarrer l'application."
+
+msgid "Update failed or canceled."
+msgstr "Mise à jour échouée ou annulée."

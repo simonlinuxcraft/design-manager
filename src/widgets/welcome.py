@@ -14,6 +14,7 @@ import os
 from gi.repository import Adw, Gdk, Gtk
 
 from src import compat
+from src.i18n import _
 
 
 # Das App-Logo liegt in der Projektwurzel, zwei Ebenen über src/widgets/.
@@ -25,16 +26,16 @@ LOGO_FILE = os.path.join(
 # Inhalt der Karten: Symbolname (oder None für das Logo), Titel, Beschreibung.
 KARTEN = [
     (None, "Design Manager",
-     "Das Erscheinungsbild von GNOME an einem Ort anpassen."),
-    ("applications-graphics-symbolic", "Alles an einem Ort",
-     "Hintergrund, GTK-Design, Symbole, Mauszeiger, Schriften und das "
-     "Shell-Design. Jede Änderung wirkt sofort."),
-    ("document-save-symbolic", "Looks speichern",
-     "Leg dir Profile an, etwa Tag und Nacht, und wechsle mit einem Klick. "
-     "Oder sichere alles in eine Datei."),
-    ("emblem-default-symbolic", "Bereit",
-     "Tipp: Manche Shell-Designs brauchen die Erweiterung User Themes. "
-     "Viel Spaß beim Anpassen."),
+     _("Customize the GNOME desktop appearance in one place.")),
+    ("applications-graphics-symbolic", _("Everything in one place"),
+     _("Background, GTK theme, icons, cursor, fonts and the shell theme. "
+       "Every change takes effect immediately.")),
+    ("document-save-symbolic", _("Save looks"),
+     _("Create profiles, for example day and night, and switch with one "
+       "click. Or back up everything to a file.")),
+    ("emblem-default-symbolic", _("Ready"),
+     _("Tip: some shell themes need the User Themes extension. "
+       "Have fun customizing.")),
 ]
 
 
@@ -43,7 +44,7 @@ class WelcomeDialog(compat.DialogBase):
 
     def __init__(self):
         super().__init__()
-        compat.dialog_setup(self, "Willkommen", 460, 580)
+        compat.dialog_setup(self, _("Welcome"), 460, 580)
         self._index = 0
 
         self._stack = Gtk.Stack()
@@ -56,7 +57,7 @@ class WelcomeDialog(compat.DialogBase):
         header = Adw.HeaderBar()
         header.add_css_class("flat")
 
-        self._weiter = Gtk.Button(label="Weiter")
+        self._weiter = Gtk.Button(label=_("Next"))
         self._weiter.set_hexpand(True)
         self._weiter.add_css_class("pill")
         self._weiter.add_css_class("suggested-action")
@@ -122,4 +123,4 @@ class WelcomeDialog(compat.DialogBase):
             else:
                 punkt.remove_css_class("aktiv")
         letzte = self._index >= len(KARTEN) - 1
-        self._weiter.set_label("Los geht's" if letzte else "Weiter")
+        self._weiter.set_label(_("Get started") if letzte else _("Next"))

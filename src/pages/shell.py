@@ -11,6 +11,7 @@ from gi.repository import Adw, GLib, Gtk
 
 from src import compat
 from src.core import restorepoint, theme_check, themes, uninstaller
+from src.i18n import _
 from src.widgets.shell_card import ShellCard
 
 
@@ -23,7 +24,7 @@ class ShellPage(compat.PageBase):
     """Navigationsseite zur Auswahl des GNOME-Shell-Designs."""
 
     def __init__(self, settings):
-        super().__init__(title="Shell-Design")
+        super().__init__(title=_("Shell Theme"))
         self._settings = settings
         self._cards = []
 
@@ -34,16 +35,15 @@ class ShellPage(compat.PageBase):
     def _inhalt(self):
         if not self._settings.user_themes_verfuegbar():
             return self._hinweis(
-                "User Themes wird benötigt",
-                "Das GNOME-Shell-Design wird über die Erweiterung User Themes "
-                "gesetzt. Sie ist auf diesem System nicht installiert.")
+                _("User Themes is required"),
+                _("The GNOME shell theme is set via the User Themes "
+                  "extension. It is not installed on this system."))
         if not self._settings.user_themes_aktiv():
             return self._hinweis(
-                "User Themes ist nicht eingeschaltet",
-                "Die Erweiterung User Themes ist installiert, aber "
-                "ausgeschaltet. Solange sie aus ist, wird ein gewähltes "
-                "Shell-Design nicht angewendet. Schalte sie unter "
-                "Erweiterungen ein, dann kannst du hier eines wählen.")
+                _("User Themes is not enabled"),
+                _("The User Themes extension is installed but switched off. "
+                  "While it is off, a chosen shell theme is not applied. "
+                  "Enable it under Extensions, then you can pick one here."))
         return self._auswahl()
 
     def _hinweis(self, titel, beschreibung):
@@ -61,14 +61,14 @@ class ShellPage(compat.PageBase):
         box.set_margin_end(18)
 
         untertitel = Gtk.Label(
-            label="Wirkt auf Topbar, Kalender und Schnelleinstellungen. "
-                  "Die Vorschau zeigt Panel- und Akzentfarbe (Annäherung).",
+            label=_("Affects the top bar, calendar and quick settings. The "
+                    "preview shows panel and accent color (approximation)."),
             xalign=0)
         untertitel.add_css_class("dim-label")
         untertitel.set_wrap(True)
         box.append(untertitel)
 
-        box.append(self._feld_titel("Shell-Design"))
+        box.append(self._feld_titel(_("Shell Theme")))
         box.append(self._karten())
 
         scroll = Gtk.ScrolledWindow()
@@ -94,7 +94,7 @@ class ShellPage(compat.PageBase):
 
         # Einträge (theme_name, Anzeige): "Standard" (leerer Wert) zuerst.
         aktuell = self._settings.shell_theme()
-        eintraege = iter([("", "Standard")]
+        eintraege = iter([("", _("Default"))]
                          + [(n, n) for n in themes.list_shell_themes()])
 
         # Karten häppchenweise bauen (jede parst eine CSS), damit die Seite
@@ -128,7 +128,9 @@ class ShellPage(compat.PageBase):
         for andere in self._cards:
             andere.set_aktiv(andere is karte)
         restorepoint.erstelle(
-            self._settings, "vor Shell-Design " + (karte.theme_name or "Standard"))
+            self._settings,
+            _("before shell theme {name}").format(
+                name=karte.theme_name or _("Default")))
         self._settings.set_shell_theme(karte.theme_name)
 
     def _shell_trotzdem_fragen(self, karte, grund):
@@ -136,10 +138,11 @@ class ShellPage(compat.PageBase):
         # in _aktiviere_shell setzen.
         compat.alert(
             self,
-            "Shell-Design trotzdem aktivieren?",
-            "„%s“: %s" % (karte.theme_name or "Standard", grund),
-            [("abbrechen", "Abbrechen", ""),
-             ("trotzdem", "Trotzdem aktivieren", "destructive")],
+            _("Activate shell theme anyway?"),
+            '"{name}": {reason}'.format(
+                name=karte.theme_name or _("Default"), reason=grund),
+            [("abbrechen", _("Cancel"), ""),
+             ("trotzdem", _("Activate anyway"), "destructive")],
             default="abbrechen", close="abbrechen",
             on_response=lambda antwort: self._on_shell_trotzdem(antwort, karte))
 
@@ -153,11 +156,11 @@ class ShellPage(compat.PageBase):
         """Sicherheitsabfrage vor dem Entfernen eines Shell-Designs."""
         compat.alert(
             self,
-            "Shell-Design entfernen?",
-            "„%s“ wird dauerhaft aus deinem Benutzerordner gelöscht. "
-            "Das lässt sich nicht rückgängig machen." % karte.theme_name,
-            [("abbrechen", "Abbrechen", ""),
-             ("loeschen", "Entfernen", "destructive")],
+            _("Remove shell theme?"),
+            _('"{name}" will be permanently deleted from your user folder. '
+              "This cannot be undone.").format(name=karte.theme_name),
+            [("abbrechen", _("Cancel"), ""),
+             ("loeschen", _("Remove"), "destructive")],
             default="abbrechen", close="abbrechen",
             on_response=lambda antwort: self._on_loeschen_antwort(antwort, karte))
 
@@ -181,9 +184,9 @@ class ShellPage(compat.PageBase):
             self._flowbox.remove(karte)
             if karte in self._cards:
                 self._cards.remove(karte)
-            self._melde("Entfernt: " + name)
+            self._melde(_("Removed: {name}").format(name=name))
         else:
-            self._melde("Konnte nicht entfernt werden: " + name)
+            self._melde(_("Could not be removed: {name}").format(name=name))
 
     def _melde(self, text):
         fenster = self.get_root()

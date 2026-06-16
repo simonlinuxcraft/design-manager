@@ -12,13 +12,15 @@ from gi.repository import Gdk, GLib, Gtk
 
 from src import compat
 from src.core import installer
+from src.i18n import _
 
 
 class InstallDropzone(Gtk.Box):
     """Drop-Ziel + Auswahl-Knopf zum Installieren von Designs und Schriften."""
 
-    def __init__(self, hinweis="Archiv (.tar.gz oder .zip) hierher ziehen",
-                 erwartet=None):
+    def __init__(self, hinweis=None, erwartet=None):
+        if hinweis is None:
+            hinweis = _("Drag an archive (.tar.gz or .zip) here")
         super().__init__(orientation=Gtk.Orientation.VERTICAL, spacing=6)
         self.add_css_class("dropzone")
         self.set_margin_top(6)
@@ -38,7 +40,7 @@ class InstallDropzone(Gtk.Box):
         self._label.set_justify(Gtk.Justification.CENTER)
         self.append(self._label)
 
-        knopf = Gtk.Button(label="Datei wählen …")
+        knopf = Gtk.Button(label=_("Choose file…"))
         knopf.set_halign(Gtk.Align.CENTER)
         knopf.connect("clicked", self._on_waehlen)
         self.append(knopf)
@@ -62,11 +64,11 @@ class InstallDropzone(Gtk.Box):
 
     def _on_waehlen(self, _knopf):
         archive = Gtk.FileFilter()
-        archive.set_name("Designs und Schriften")
+        archive.set_name(_("Themes and fonts"))
         for muster in ("*.tar.gz", "*.tgz", "*.tar.xz", "*.tar.bz2", "*.zip",
                        "*.ttf", "*.otf", "*.ttc"):
             archive.add_pattern(muster)
-        compat.open_file(self.get_root(), "Design oder Schrift wählen",
+        compat.open_file(self.get_root(), _("Choose theme or font"),
                          [archive], self._on_pfad)
 
     def _on_pfad(self, pfad):
@@ -76,7 +78,7 @@ class InstallDropzone(Gtk.Box):
     # --- Installation im Hintergrund ---
 
     def _starte(self, pfad):
-        self._label.set_text("Installiere …")
+        self._label.set_text(_("Installing…"))
 
         def worker():
             try:
@@ -96,6 +98,7 @@ class InstallDropzone(Gtk.Box):
         else:
             # Fallback, falls die Dropzone (noch) nicht im Fenster hängt.
             self._label.set_text(
-                "Fehlgeschlagen: " + fehler if fehler
-                else "Installiert: " + ", ".join(ergebnis))
+                _("Failed: {error}").format(error=fehler) if fehler
+                else _("Installed: {items}").format(
+                    items=", ".join(ergebnis)))
         return False

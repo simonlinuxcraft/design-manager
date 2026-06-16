@@ -11,20 +11,21 @@ from gi.repository import Adw, Gtk
 
 from src import compat
 from src.core import accent_suggest, backgrounds
+from src.i18n import _
 
 
 # Die Akzentfarben von GNOME (ab Version 47). Pro Eintrag: der interne Name, wie
-# ihn dconf speichert, und ein deutsches Label für den Tooltip.
+# ihn dconf speichert, und ein Label für den Tooltip.
 AKZENTE = [
-    ("blue", "Blau"),
-    ("teal", "Türkis"),
-    ("green", "Grün"),
-    ("yellow", "Gelb"),
-    ("orange", "Orange"),
-    ("red", "Rot"),
-    ("pink", "Rosa"),
-    ("purple", "Violett"),
-    ("slate", "Schiefer"),
+    ("blue", _("Blue")),
+    ("teal", _("Teal")),
+    ("green", _("Green")),
+    ("yellow", _("Yellow")),
+    ("orange", _("Orange")),
+    ("red", _("Red")),
+    ("pink", _("Pink")),
+    ("purple", _("Purple")),
+    ("slate", _("Slate")),
 ]
 
 # Die drei Fensterknöpfe (minimize/maximize/close), nach denen button-layout
@@ -37,7 +38,7 @@ class SystemPage(compat.PageBase):
     """Navigationsseite mit Akzentfarbe, Fensterknöpfen und Leisten-Schaltern."""
 
     def __init__(self, settings):
-        super().__init__(title="System")
+        super().__init__(title=_("System"))
         self._settings = settings
 
         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=14)
@@ -46,7 +47,7 @@ class SystemPage(compat.PageBase):
         box.set_margin_start(18)
         box.set_margin_end(18)
 
-        box.append(self._feld_titel("Akzentfarbe"))
+        box.append(self._feld_titel(_("Accent color")))
         box.append(self._akzent_bereich())
         box.append(self._fensterknoepfe_gruppe())
         box.append(self._leisten_gruppe())
@@ -87,7 +88,8 @@ class SystemPage(compat.PageBase):
         """Farbreihe, oder ein Hinweis, falls die GNOME-Version zu alt ist."""
         if not self._settings.accent_verfuegbar():
             hinweis = Gtk.Label(
-                label="Die Akzentfarbe lässt sich erst ab GNOME 47 einstellen.",
+                label=_("The accent color can only be set from GNOME 47 "
+                        "onwards."),
                 xalign=0, wrap=True)
             hinweis.add_css_class("dim-label")
             return hinweis
@@ -112,10 +114,10 @@ class SystemPage(compat.PageBase):
             self._akzent_knoepfe[name] = knopf
             reihe.append(knopf)
 
-        vorschlag = Gtk.Button(label="Farbe aus Hintergrund")
+        vorschlag = Gtk.Button(label=_("Color from background"))
         vorschlag.set_halign(Gtk.Align.START)
         vorschlag.set_tooltip_text(
-            "Die zum aktuellen Hintergrundbild passende Akzentfarbe wählen")
+            _("Pick the accent color matching the current wallpaper"))
         vorschlag.connect("clicked", self._on_akzent_vorschlag)
 
         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
@@ -132,15 +134,15 @@ class SystemPage(compat.PageBase):
     def _on_akzent_vorschlag(self, _knopf):
         pfad = backgrounds.aktuelles_wallpaper(self._settings)
         if pfad is None:
-            self._melde("Kein Hintergrundbild gefunden.")
+            self._melde(_("No wallpaper found."))
             return
         name = accent_suggest.vorschlag(pfad)
         if name is None or name not in self._akzent_knoepfe:
-            self._melde("Keine passende Akzentfarbe gefunden.")
+            self._melde(_("No matching accent color found."))
             return
         # set_active feuert 'toggled' -> _on_akzent setzt die Farbe.
         self._akzent_knoepfe[name].set_active(True)
-        self._melde("Akzentfarbe aus dem Hintergrund gewählt.")
+        self._melde(_("Accent color picked from the background."))
 
     def _melde(self, text):
         fenster = self.get_root()
@@ -153,22 +155,22 @@ class SystemPage(compat.PageBase):
         aktive, rechts = self._parse_layout(self._settings.button_layout())
 
         gruppe = Adw.PreferencesGroup(
-            title="Fensterknöpfe",
-            description="Welche Knöpfe die Titelleiste zeigt und auf welcher "
-                        "Seite. Schließen bleibt immer sichtbar.")
+            title=_("Window buttons"),
+            description=_("Which buttons the title bar shows and on which "
+                          "side. Close always stays visible."))
 
-        self._sw_minimieren = compat.SwitchRow(title="Minimieren")
+        self._sw_minimieren = compat.SwitchRow(title=_("Minimize"))
         self._sw_minimieren.set_active("minimize" in aktive)
         self._sw_minimieren.connect("notify::active", self._on_knoepfe)
         gruppe.add(self._sw_minimieren)
 
-        self._sw_maximieren = compat.SwitchRow(title="Maximieren")
+        self._sw_maximieren = compat.SwitchRow(title=_("Maximize"))
         self._sw_maximieren.set_active("maximize" in aktive)
         self._sw_maximieren.connect("notify::active", self._on_knoepfe)
         gruppe.add(self._sw_maximieren)
 
-        self._cr_seite = Adw.ComboRow(title="Anordnung")
-        self._cr_seite.set_model(Gtk.StringList.new(["Rechts", "Links"]))
+        self._cr_seite = Adw.ComboRow(title=_("Arrangement"))
+        self._cr_seite.set_model(Gtk.StringList.new([_("Right"), _("Left")]))
         self._cr_seite.set_selected(0 if rechts else 1)
         self._cr_seite.connect("notify::selected", self._on_knoepfe)
         gruppe.add(self._cr_seite)
@@ -207,22 +209,22 @@ class SystemPage(compat.PageBase):
 
     def _leisten_gruppe(self):
         gruppe = Adw.PreferencesGroup(
-            title="Obere Leiste",
-            description="Was die Uhr und der Systembereich anzeigen.")
+            title=_("Top bar"),
+            description=_("What the clock and the system area show."))
         gruppe.add(self._schalter(
-            "Sekunden in der Uhr", None,
+            _("Seconds in the clock"), None,
             self._settings.clock_show_seconds,
             self._settings.set_clock_show_seconds))
         gruppe.add(self._schalter(
-            "Wochentag anzeigen", None,
+            _("Show weekday"), None,
             self._settings.clock_show_weekday,
             self._settings.set_clock_show_weekday))
         gruppe.add(self._schalter(
-            "Datum anzeigen", None,
+            _("Show date"), None,
             self._settings.clock_show_date,
             self._settings.set_clock_show_date))
         gruppe.add(self._schalter(
-            "Akkustand in Prozent", None,
+            _("Battery level in percent"), None,
             self._settings.show_battery_percentage,
             self._settings.set_show_battery_percentage))
         return gruppe
@@ -230,9 +232,10 @@ class SystemPage(compat.PageBase):
     # --- Animationen ---
 
     def _bewegung_gruppe(self):
-        gruppe = Adw.PreferencesGroup(title="Bewegung")
+        gruppe = Adw.PreferencesGroup(title=_("Motion"))
         gruppe.add(self._schalter(
-            "Animationen", "Ein- und Ausblendeffekte der Oberfläche.",
+            _("Animations"), _("Fade and transition effects of the "
+                               "interface."),
             self._settings.enable_animations,
             self._settings.set_enable_animations))
         return gruppe

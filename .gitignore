@@ -5,6 +5,9 @@ __pycache__/
 # Build-Artefakte
 *.deb
 
+# Kompilierte Uebersetzungen (.po wird versioniert, .mo nicht)
+build/
+
 # tooling-Werkzeugconfig gehoert nicht ins Repo
 .tooling/
 

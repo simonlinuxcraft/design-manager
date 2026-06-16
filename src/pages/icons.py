@@ -9,6 +9,7 @@ from gi.repository import Adw, GLib, Gtk
 
 from src import compat
 from src.core import themes, uninstaller
+from src.i18n import _
 from src.widgets.dropzone import InstallDropzone
 from src.widgets.theme_card import ThemeCard
 
@@ -22,7 +23,7 @@ class IconsPage(compat.PageBase):
     """Navigationsseite mit den Symbol-Designs als Vorschau-Karten."""
 
     def __init__(self, settings):
-        super().__init__(title="Symbole")
+        super().__init__(title=_("Icons"))
         self._settings = settings
         self._cards = []
 
@@ -38,17 +39,17 @@ class IconsPage(compat.PageBase):
         box.set_margin_start(18)
         box.set_margin_end(18)
 
-        untertitel = Gtk.Label(label="Änderungen werden sofort übernommen.",
+        untertitel = Gtk.Label(label=_("Changes take effect immediately."),
                                xalign=0)
         untertitel.add_css_class("dim-label")
         box.append(untertitel)
 
-        box.append(self._feld_titel("Symbol-Design (Icons)"))
+        box.append(self._feld_titel(_("Icon theme")))
         box.append(self._icon_karten())
 
-        box.append(self._feld_titel("Neues Symbol-Design installieren"))
+        box.append(self._feld_titel(_("Install a new icon theme")))
         box.append(InstallDropzone(
-            "Symbol-Design (.tar.gz/.zip) hierher ziehen", erwartet={"icon"}))
+            _("Drag an icon theme (.tar.gz/.zip) here"), erwartet={"icon"}))
 
         scroll = Gtk.ScrolledWindow()
         scroll.set_vexpand(True)
@@ -109,11 +110,11 @@ class IconsPage(compat.PageBase):
         """Sicherheitsabfrage vor dem Entfernen eines Symbol-Designs."""
         compat.alert(
             self,
-            "Symbol-Design entfernen?",
-            "„%s“ wird dauerhaft aus deinem Benutzerordner gelöscht. "
-            "Das lässt sich nicht rückgängig machen." % karte.theme_name,
-            [("abbrechen", "Abbrechen", ""),
-             ("loeschen", "Entfernen", "destructive")],
+            _("Remove icon theme?"),
+            _('"{name}" will be permanently deleted from your user folder. '
+              "This cannot be undone.").format(name=karte.theme_name),
+            [("abbrechen", _("Cancel"), ""),
+             ("loeschen", _("Remove"), "destructive")],
             default="abbrechen", close="abbrechen",
             on_response=lambda antwort: self._on_loeschen_antwort(antwort, karte))
 
@@ -129,9 +130,9 @@ class IconsPage(compat.PageBase):
             self._flowbox.remove(karte)
             if karte in self._cards:
                 self._cards.remove(karte)
-            self._melde("Entfernt: " + name)
+            self._melde(_("Removed: {name}").format(name=name))
         else:
-            self._melde("Konnte nicht entfernt werden: " + name)
+            self._melde(_("Could not be removed: {name}").format(name=name))
 
     def _melde(self, text):
         fenster = self.get_root()

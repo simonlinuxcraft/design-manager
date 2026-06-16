@@ -12,6 +12,7 @@ die echten Icons genau dieses Designs, ohne das System-Design zu verändern.
 from gi.repository import Gtk
 
 from src.core import themes
+from src.i18n import _
 from src.widgets.card_common import status_zeile
 
 
@@ -84,7 +85,7 @@ class ThemeCard(Gtk.FlowBoxChild):
         """Markiert die Karte als aktiv (silberner Rahmen) oder nicht."""
         if aktiv:
             self.add_css_class("aktiv")
-            self._status.set_text("Aktiv")
+            self._status.set_text(_("Active"))
         else:
             self.remove_css_class("aktiv")
-            self._status.set_text("Installiert")
+            self._status.set_text(_("Installed"))

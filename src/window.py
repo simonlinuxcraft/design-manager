@@ -13,6 +13,7 @@ import threading
 from gi.repository import Adw, Gdk, Gio, GLib, Gtk
 
 from src import compat
+from src.i18n import _
 from src.core import gdm, healthcheck, lockscreen, onboarding, restorepoint, updater
 from src.core.settings import AppSettings
 from src.pages.background import BackgroundPage
@@ -62,29 +63,29 @@ class MainWindow(Adw.ApplicationWindow):
         # (für Sprünge aus der Übersicht), Titel (Pango-Markup, daher "&amp;"),
         # Icon-Name und eine Funktion, die die Seite baut.
         self._bereiche = [
-            ("overview", "Übersicht", "view-grid-symbolic",
+            ("overview", _("Overview"), "view-grid-symbolic",
              lambda: OverviewPage(self._settings, self._springe_zu)),
-            ("looks", "Looks", "starred-symbolic",
+            ("looks", _("Looks"), "starred-symbolic",
              lambda: LooksPage(self._settings)),
-            ("background", "Hintergrund", "image-x-generic-symbolic",
+            ("background", _("Background"), "image-x-generic-symbolic",
              lambda: BackgroundPage(self._settings)),
-            ("gtk", "GTK-Design", "preferences-desktop-appearance-symbolic",
+            ("gtk", _("GTK Theme"), "preferences-desktop-appearance-symbolic",
              lambda: GtkThemePage(self._settings)),
-            ("icons", "Symbole", "applications-graphics-symbolic",
+            ("icons", _("Icons"), "applications-graphics-symbolic",
              lambda: IconsPage(self._settings)),
-            ("cursor", "Mauszeiger", "input-mouse-symbolic",
+            ("cursor", _("Cursor"), "input-mouse-symbolic",
              lambda: CursorPage(self._settings)),
-            ("fonts", "Schriftarten", "font-x-generic-symbolic",
+            ("fonts", _("Fonts"), "font-x-generic-symbolic",
              lambda: FontsPage(self._settings)),
-            ("shell", "Shell-Design", "video-display-symbolic",
+            ("shell", _("Shell Theme"), "video-display-symbolic",
              lambda: ShellPage(self._settings)),
-            ("dock", "Dock", "view-app-grid-symbolic",
+            ("dock", _("Dock"), "view-app-grid-symbolic",
              lambda: DockPage(self._settings)),
-            ("extensions", "Erweiterungen", "application-x-addon-symbolic",
+            ("extensions", _("Extensions"), "application-x-addon-symbolic",
              lambda: ExtensionsPage(self._settings)),
-            ("system", "System", "applications-system-symbolic",
+            ("system", _("System"), "applications-system-symbolic",
              lambda: SystemPage(self._settings)),
-            ("backup", "Sicherung", "document-save-symbolic",
+            ("backup", _("Backup"), "document-save-symbolic",
              lambda: BackupPage(self._settings)),
         ]
         # Schlüssel -> Listenposition, für Sprünge aus der Übersicht.
@@ -145,10 +146,11 @@ class MainWindow(Adw.ApplicationWindow):
         self._banner_probleme = healthcheck.pruefe(self._settings)
         if not self._banner_probleme:
             return GLib.SOURCE_REMOVE
-        labels = ", ".join(label for label, _ in self._banner_probleme)
+        labels = ", ".join(label for label, _meth in self._banner_probleme)
         self._banner.set_title(
-            "Nicht gefunden: " + labels + ". GNOME nutzt ersatzweise Adwaita.")
-        self._banner.set_button_label("Standard setzen")
+            _("Not found: {names}. GNOME falls back to Adwaita.").format(
+                names=labels))
+        self._banner.set_button_label(_("Set default"))
         self._banner.set_revealed(True)
         return GLib.SOURCE_REMOVE
 
@@ -158,7 +160,7 @@ class MainWindow(Adw.ApplicationWindow):
             getattr(self._settings, methode)()
         self._banner_probleme = []
         self._banner.set_revealed(False)
-        self.zeige_toast("Auf sicheres Standard-Design gesetzt.")
+        self.zeige_toast(_("Reset to a safe default theme."))
         self._reload_aktive_seite()
 
     def melde_installation(self, ergebnis, fehler):
@@ -169,9 +171,11 @@ class MainWindow(Adw.ApplicationWindow):
         Liste erscheint.
         """
         if fehler:
-            self.zeige_toast("Installation fehlgeschlagen: " + fehler)
+            self.zeige_toast(
+                _("Installation failed: {error}").format(error=fehler))
             return
-        self.zeige_toast("Installiert: " + ", ".join(ergebnis))
+        self.zeige_toast(
+            _("Installed: {items}").format(items=", ".join(ergebnis)))
         self._reload_aktive_seite()
 
     def zeige_toast(self, text):
@@ -204,7 +208,7 @@ class MainWindow(Adw.ApplicationWindow):
         )
 
         inhalt = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-        inhalt.append(self._caption("EINSTELLUNGEN"))
+        inhalt.append(self._caption(_("SETTINGS")))
         inhalt.append(self._bereich_liste())
 
         toolbar = compat.toolbar_view(top_bars=[header], content=inhalt)
@@ -232,16 +236,16 @@ class MainWindow(Adw.ApplicationWindow):
     def _menue_knopf(self):
         """Hamburger-Menü rechts in der Kopfleiste."""
         menue = Gio.Menu()
-        menue.append("Sicheren Zustand herstellen", "win.safe-state")
+        menue.append(_("Restore safe state"), "win.safe-state")
         if updater.werkzeuge_da():
-            menue.append("Nach Updates suchen", "win.check-updates")
-        menue.append("Über Design Manager", "win.about")
-        menue.append("Beenden", "win.quit")
+            menue.append(_("Check for updates"), "win.check-updates")
+        menue.append(_("About Design Manager"), "win.about")
+        menue.append(_("Quit"), "win.quit")
 
         knopf = Gtk.MenuButton()
         knopf.set_icon_name("open-menu-symbolic")
         knopf.set_menu_model(menue)
-        knopf.set_tooltip_text("Hauptmenü")
+        knopf.set_tooltip_text(_("Main menu"))
         return knopf
 
     def _on_ueber(self, _action, _param):
@@ -252,8 +256,8 @@ class MainWindow(Adw.ApplicationWindow):
             application_icon="io.github.simonlinuxcraft.DesignManager",
             version=APP_VERSION,
             developer_name="simonlinuxcraft",
-            comments="Das Erscheinungsbild von GNOME zentral anpassen: "
-                     "Hintergrund, Designs, Symbole, Mauszeiger und Schrift.",
+            comments=_("Customize the GNOME desktop appearance in one place: "
+                       "background, themes, icons, cursor and fonts."),
             license_type=Gtk.License.GPL_3_0,
             copyright="© 2026 simonlinuxcraft",
         )
@@ -262,20 +266,20 @@ class MainWindow(Adw.ApplicationWindow):
         """Notausstieg: nach Sicherungspunkt alles auf sichere Standards setzen."""
         compat.alert(
             self,
-            "Sicheren Zustand herstellen?",
-            "Erst wird ein Sicherungspunkt angelegt, dann werden Design, "
-            "Symbole, Mauszeiger und Shell-Design auf garantiert lauffähige "
-            "Standardwerte (Adwaita) gesetzt. Das hilft, wenn ein Design die "
-            "Oberfläche unbrauchbar gemacht hat.",
-            [("abbrechen", "Abbrechen", ""),
-             ("anwenden", "Sicheren Zustand setzen", "suggested")],
+            _("Restore safe state?"),
+            _("First a restore point is created, then the theme, icons, cursor "
+              "and shell theme are set to guaranteed working defaults "
+              "(Adwaita). This helps when a theme has made the interface "
+              "unusable."),
+            [("abbrechen", _("Cancel"), ""),
+             ("anwenden", _("Restore safe state"), "suggested")],
             default="abbrechen", close="abbrechen",
             on_response=self._on_safe_state_antwort)
 
     def _on_safe_state_antwort(self, antwort):
         if antwort != "anwenden":
             return
-        restorepoint.erstelle(self._settings, "vor Notausstieg")
+        restorepoint.erstelle(self._settings, _("before emergency reset"))
         # Die reset_*-Methoden setzen ausschließlich auf Adwaita bzw. den leeren
         # Shell-Wert, also auf garantiert vorhandene, gültige Designs. Eine
         # Whitelist-Prüfung erübrigt sich, weil die Ziele bekannt sicher sind.
@@ -291,13 +295,13 @@ class MainWindow(Adw.ApplicationWindow):
         if gdm.aktiv() or gdm.bestaetigung_offen():
             threading.Thread(target=gdm.reset, daemon=True).start()
         self._banner.set_revealed(False)
-        self.zeige_toast("Sicherer Zustand gesetzt (Adwaita).")
+        self.zeige_toast(_("Safe state restored (Adwaita)."))
         self._reload_aktive_seite()
 
     # --- Updates (GitHub-Release) ---
 
     def _on_check_updates(self, _action, _param):
-        self.zeige_toast("Suche nach Updates …")
+        self.zeige_toast(_("Checking for updates…"))
         self._update_thread(manuell=True)
 
     def _auto_update_check(self):
@@ -315,23 +319,25 @@ class MainWindow(Adw.ApplicationWindow):
     def _update_ergebnis(self, info, manuell):
         if info is None:
             if manuell:
-                self.zeige_toast("Du hast die neueste Version.")
+                self.zeige_toast(_("You have the latest version."))
             return GLib.SOURCE_REMOVE
         compat.alert(
             self,
-            "Update verfügbar",
-            "Version %s steht bereit (installiert: %s). Jetzt herunterladen und "
-            "installieren? Dafür wird einmal das Administrator-Passwort "
-            "abgefragt." % (info["version"], APP_VERSION),
-            [("spaeter", "Später", ""),
-             ("jetzt", "Aktualisieren", "suggested")],
+            _("Update available"),
+            _("Version {new} is ready (installed: {cur}). Download and install "
+              "it now? This asks for the administrator password once.").format(
+                new=info["version"], cur=APP_VERSION),
+            [("spaeter", _("Later"), ""),
+             ("jetzt", _("Update"), "suggested")],
             default="jetzt", close="spaeter",
             on_response=lambda antwort: (
                 self._starte_update(info) if antwort == "jetzt" else None))
         return GLib.SOURCE_REMOVE
 
     def _starte_update(self, info):
-        self.zeige_toast("Lädt Version %s … (Passwort eingeben)" % info["version"])
+        self.zeige_toast(
+            _("Downloading version {ver}… (enter password)").format(
+                ver=info["version"]))
 
         def arbeit():
             erfolg = updater.lade_und_installiere(info)
@@ -341,9 +347,9 @@ class MainWindow(Adw.ApplicationWindow):
 
     def _update_fertig(self, erfolg):
         if erfolg:
-            self.zeige_toast("Aktualisiert. Bitte die App neu starten.")
+            self.zeige_toast(_("Updated. Please restart the app."))
         else:
-            self.zeige_toast("Update fehlgeschlagen oder abgebrochen.")
+            self.zeige_toast(_("Update failed or canceled."))
         return GLib.SOURCE_REMOVE
 
     def _logo(self):

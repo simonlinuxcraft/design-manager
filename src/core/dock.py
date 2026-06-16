@@ -26,6 +26,7 @@ import os
 from gi.repository import Gio, GLib
 
 from src.core.settings import schema_vorhanden
+from src.i18n import _
 
 
 DASH_TO_DOCK_SCHEMA = "org.gnome.shell.extensions.dash-to-dock"
@@ -43,8 +44,8 @@ EXTENSION_DIRS = [
 
 # Bildschirmkanten, einheitlich für beide Docks (Dash to Panel kennt keine
 # eigene Reihenfolge, Dash to Dock per Enum LEFT/RIGHT/TOP/BOTTOM).
-KANTEN = [("LEFT", "Links"), ("RIGHT", "Rechts"),
-          ("TOP", "Oben"), ("BOTTOM", "Unten")]
+KANTEN = [("LEFT", _("Left")), ("RIGHT", _("Right")),
+          ("TOP", _("Top")), ("BOTTOM", _("Bottom"))]
 
 
 # --- Einheitliches Einstellungs-Modell ---
@@ -172,26 +173,27 @@ def aktives_dock():
 
 def _dtd_dock(s):
     e = [
-        _auswahl(s, "dock-position", "Position",
-                 "Bildschirmrand, an dem das Dock sitzt", KANTEN),
-        _schalter(s, "dock-fixed", "Immer sichtbar",
-                  "Dock am Rand fixieren, statt es auszublenden"),
-        _schalter(s, "autohide", "Automatisch ausblenden",
-                  "Dock verbergen, bis der Zeiger den Rand berührt"),
-        _schalter(s, "intellihide", "Intelligent ausblenden",
-                  "Nur ausblenden, wenn ein Fenster das Dock überdeckt"),
-        _regler(s, "dash-max-icon-size", "Symbolgröße",
-                "Maximale Größe der App-Symbole in Pixeln", (16, 64, 2)),
-        _schalter(s, "extend-height", "Über volle Höhe",
-                  "Dock über die ganze Bildschirmkante ziehen (Panel-Stil)"),
-        _schalter(s, "show-apps-at-top", "Apps-Knopf oben",
-                  "Den Anwendungen-Knopf an den Anfang setzen"),
-        _schalter(s, "show-mounts", "Laufwerke zeigen",
-                  "Eingehängte Datenträger im Dock anzeigen"),
-        _schalter(s, "show-trash", "Papierkorb zeigen",
-                  "Den Papierkorb im Dock anzeigen"),
-        _schalter(s, "multi-monitor", "Auf allen Monitoren",
-                  "Dock auf jedem Bildschirm anzeigen"),
+        _auswahl(s, "dock-position", _("Position"),
+                 _("Screen edge the dock sits on"), KANTEN),
+        _schalter(s, "dock-fixed", _("Always visible"),
+                  _("Pin the dock to the edge instead of hiding it")),
+        _schalter(s, "autohide", _("Auto-hide"),
+                  _("Hide the dock until the pointer touches the edge")),
+        _schalter(s, "intellihide", _("Smart hide"),
+                  _("Only hide when a window covers the dock")),
+        _regler(s, "dash-max-icon-size", _("Icon size"),
+                _("Maximum size of the app icons in pixels"), (16, 64, 2)),
+        _schalter(s, "extend-height", _("Full height"),
+                  _("Stretch the dock along the whole screen edge "
+                    "(panel style)")),
+        _schalter(s, "show-apps-at-top", _("Apps button on top"),
+                  _("Put the applications button at the start")),
+        _schalter(s, "show-mounts", _("Show drives"),
+                  _("Show mounted volumes in the dock")),
+        _schalter(s, "show-trash", _("Show trash"),
+                  _("Show the trash in the dock")),
+        _schalter(s, "multi-monitor", _("On all monitors"),
+                  _("Show the dock on every screen")),
     ]
     return Dock("Ubuntu Dock", e)
 
@@ -240,7 +242,7 @@ def _json_alle_setzen(s, key, wert):
 
 def _panel_position(s):
     return Einstellung(
-        ART_AUSWAHL, "Position", "Bildschirmrand, an dem das Panel sitzt",
+        ART_AUSWAHL, _("Position"), _("Screen edge the panel sits on"),
         lambda: _json_einheitlich(s, "panel-positions", "TOP"),
         lambda w: _json_alle_setzen(s, "panel-positions", w),
         optionen=KANTEN)
@@ -248,7 +250,7 @@ def _panel_position(s):
 
 def _panel_hoehe(s):
     return Einstellung(
-        ART_REGLER, "Panel-Höhe", "Dicke der Leiste in Pixeln",
+        ART_REGLER, _("Panel height"), _("Thickness of the bar in pixels"),
         lambda: int(_json_einheitlich(s, "panel-sizes", 48)),
         lambda w: _json_alle_setzen(s, "panel-sizes", int(w)),
         spanne=(24, 96, 2))
@@ -258,19 +260,19 @@ def _panel_dock(s):
     e = [
         _panel_position(s),
         _panel_hoehe(s),
-        _auswahl(s, "dot-position", "Indikator-Position",
-                 "Wo der Punkt offener Programme sitzt",
-                 [("BOTTOM", "Unten"), ("TOP", "Oben"),
-                  ("LEFT", "Links"), ("RIGHT", "Rechts")]),
-        _schalter(s, "group-apps", "Fenster gruppieren",
-                  "Mehrere Fenster eines Programms zu einem Symbol bündeln"),
-        _schalter(s, "show-favorites", "Favoriten zeigen",
-                  "Angeheftete Programme in der Leiste anzeigen"),
-        _schalter(s, "isolate-workspaces", "Arbeitsflächen trennen",
-                  "Nur Fenster der aktuellen Arbeitsfläche anzeigen"),
-        _schalter(s, "intellihide", "Automatisch ausblenden",
-                  "Panel verbergen, bis es gebraucht wird"),
-        _schalter(s, "multi-monitors", "Auf allen Monitoren",
-                  "Panel auf jedem Bildschirm anzeigen"),
+        _auswahl(s, "dot-position", _("Indicator position"),
+                 _("Where the dot for open apps sits"),
+                 [("BOTTOM", _("Bottom")), ("TOP", _("Top")),
+                  ("LEFT", _("Left")), ("RIGHT", _("Right"))]),
+        _schalter(s, "group-apps", _("Group windows"),
+                  _("Bundle multiple windows of an app into one icon")),
+        _schalter(s, "show-favorites", _("Show favorites"),
+                  _("Show pinned apps in the bar")),
+        _schalter(s, "isolate-workspaces", _("Separate workspaces"),
+                  _("Only show windows of the current workspace")),
+        _schalter(s, "intellihide", _("Auto-hide"),
+                  _("Hide the panel until it is needed")),
+        _schalter(s, "multi-monitors", _("On all monitors"),
+                  _("Show the panel on every screen")),
     ]
     return Dock("Dash to Panel", e)

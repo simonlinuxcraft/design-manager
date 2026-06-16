@@ -18,12 +18,21 @@ from gi.repository import GLib
 
 from src.core import backgrounds, backup, themes
 from src.core.settings import AppSettings
+from src.i18n import _
 
 
 # data/looks/ liegt in der Projektwurzel (src/core/looks.py -> zwei Ebenen hoch).
 LOOKS_DIR = os.path.join(
     os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
     "data", "looks")
+
+# Name und Beschreibung der mitgelieferten Looks stehen englisch im JSON und
+# werden beim Laden übersetzt. Hier mit _() markiert, damit xgettext sie findet.
+_BUILTIN_LOOK_TEXTE = (
+    _("Midnight Blue"), _("Dark with a blue accent."),
+    _("Sunrise"), _("Light with warm orange."),
+    _("Forest Clearing"), _("Dark green and calm."),
+)
 
 
 def lade_looks():
@@ -42,6 +51,9 @@ def lade_looks():
         except (OSError, ValueError):
             continue
         if isinstance(daten, dict) and daten.get("name"):
+            daten["name"] = _(daten["name"])
+            if daten.get("beschreibung"):
+                daten["beschreibung"] = _(daten["beschreibung"])
             looks.append(daten)
     return sorted(looks, key=lambda look: look["name"].lower())
 
@@ -75,7 +87,7 @@ def eigene_profile_als_looks():
             continue
         if not isinstance(daten, dict):
             continue
-        look = {"name": name, "_profil": name, "beschreibung": "Eigenes Profil"}
+        look = {"name": name, "_profil": name, "beschreibung": _("Your profile")}
         accent = _profil_wert(daten, AppSettings.INTERFACE, "accent-color")
         if accent:
             look["accent"] = accent
@@ -98,7 +110,7 @@ def wende_an(settings, look):
     Vor der ersten Änderung wird der aktuelle Stand als Profil gesichert.
     """
     try:
-        backup.save_profile(settings, "vorher-" + look["name"])
+        backup.save_profile(settings, "before-" + look["name"])
     except (ValueError, OSError):
         pass  # Sicherung ist Komfort, kein Grund das Anwenden abzubrechen
 
@@ -109,35 +121,35 @@ def wende_an(settings, look):
         if gtk == settings.SAFE_GTK_THEME or gtk in themes.list_gtk_themes():
             settings.set_gtk_theme(gtk)
         else:
-            uebersprungen.append("GTK-Design „%s“" % gtk)
+            uebersprungen.append(_('GTK theme "{name}"').format(name=gtk))
 
     icons = look.get("icons")
     if icons:
         if icons == settings.SAFE_ICON_THEME or icons in themes.list_icon_themes():
             settings.set_icon_theme(icons)
         else:
-            uebersprungen.append("Symbole „%s“" % icons)
+            uebersprungen.append(_('Icons "{name}"').format(name=icons))
 
     cursor = look.get("cursor")
     if cursor:
         if cursor == settings.SAFE_CURSOR_THEME or cursor in themes.list_cursor_themes():
             settings.set_cursor_theme(cursor)
         else:
-            uebersprungen.append("Mauszeiger „%s“" % cursor)
+            uebersprungen.append(_('Cursor "{name}"').format(name=cursor))
 
     shell = look.get("shell")
     if shell is not None:  # "" ist gültig (GNOME-Standard-Shell)
         if shell == "" or shell in themes.list_shell_themes():
             settings.set_shell_theme(shell)
         else:
-            uebersprungen.append("Shell-Design „%s“" % shell)
+            uebersprungen.append(_('Shell theme "{name}"').format(name=shell))
 
     accent = look.get("accent")
     if accent:
         if settings.accent_verfuegbar():
             settings.set_accent_color(accent)
         else:
-            uebersprungen.append("Akzentfarbe (erst ab GNOME 47)")
+            uebersprungen.append(_("Accent color (only from GNOME 47)"))
 
     font = look.get("font")
     if font:
@@ -149,6 +161,6 @@ def wende_an(settings, look):
         if os.path.isfile(pfad):
             backgrounds.apply_wallpaper(settings, pfad)
         else:
-            uebersprungen.append("Hintergrundbild")
+            uebersprungen.append(_("Wallpaper"))
 
     return uebersprungen

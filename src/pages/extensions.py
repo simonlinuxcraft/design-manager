@@ -15,13 +15,14 @@ from src import compat
 from src.core.extensions import (
     ShellExtensions, STATE_ERROR, TYPE_SYSTEM, TYPE_USER,
 )
+from src.i18n import _
 
 
 class ExtensionsPage(compat.PageBase):
     """Navigationsseite zum Verwalten der GNOME-Shell-Erweiterungen."""
 
     def __init__(self, settings):
-        super().__init__(title="Erweiterungen")
+        super().__init__(title=_("Extensions"))
         self._ext = ShellExtensions()
         # Guard, damit programmatisches Setzen eines Schalters nicht den
         # Toggle-Handler auslöst (sonst Rückkopplung / unnötige D-Bus-Calls).
@@ -36,10 +37,10 @@ class ExtensionsPage(compat.PageBase):
     def _inhalt(self):
         if not self._ext.verfuegbar():
             return Adw.StatusPage(
-                title="Hier nicht verfügbar",
-                description="Die Verwaltung der Erweiterungen braucht Zugriff "
-                            "auf den GNOME-Shell-Dienst, der hier nicht "
-                            "erreichbar ist (etwa in einer Sandbox).",
+                title=_("Not available here"),
+                description=_("Managing extensions needs access to the GNOME "
+                              "Shell service, which is not reachable here "
+                              "(e.g. in a sandbox)."),
                 icon_name="application-x-addon-symbolic",
             )
 
@@ -50,9 +51,9 @@ class ExtensionsPage(compat.PageBase):
         benutzer = [x for x in liste if x["type"] == TYPE_USER]
         system = [x for x in liste if x["type"] == TYPE_SYSTEM]
         if benutzer:
-            seite.add(self._ext_gruppe("Benutzer-Erweiterungen", benutzer))
+            seite.add(self._ext_gruppe(_("User extensions"), benutzer))
         if system:
-            seite.add(self._ext_gruppe("System-Erweiterungen", system))
+            seite.add(self._ext_gruppe(_("System extensions"), system))
 
         # Anfangszustand der Benutzer-Zeilen an den Master-Schalter anpassen.
         self._master_wirkung(self._ext.user_extensions_enabled())
@@ -65,8 +66,8 @@ class ExtensionsPage(compat.PageBase):
     def _master_gruppe(self):
         gruppe = Adw.PreferencesGroup()
         self._master = compat.SwitchRow(
-            title="Erweiterungen aktiviert",
-            subtitle="Schaltet alle Benutzer-Erweiterungen gemeinsam.",
+            title=_("Extensions enabled"),
+            subtitle=_("Toggles all user extensions together."),
         )
         self._master.set_active(self._ext.user_extensions_enabled())
         # Erst nach set_active verbinden, sonst feuert die Vorbelegung.
@@ -113,7 +114,7 @@ class ExtensionsPage(compat.PageBase):
             knopf = Gtk.Button(icon_name="emblem-system-symbolic")
             knopf.add_css_class("flat")
             knopf.set_valign(Gtk.Align.CENTER)
-            knopf.set_tooltip_text("Einstellungen der Erweiterung")
+            knopf.set_tooltip_text(_("Extension settings"))
             knopf.connect("clicked", self._on_prefs, x["uuid"])
             row.add_suffix(knopf)
 

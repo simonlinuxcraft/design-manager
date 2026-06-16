@@ -60,6 +60,22 @@ for N in 48 64 128 256 512; do
     convert "$MASTER" -resize "${N}x${N}" "$ZIEL/$APP_ID.png"
 done
 
+# 4b. Übersetzungen: po/<lang>.po nach /usr/share/locale kompilieren. Dort
+#     findet gettext.translation() sie zur Laufzeit ohne weitere Konfiguration.
+if [ -d "$PROJEKT/po" ]; then
+    if ! command -v msgfmt >/dev/null 2>&1; then
+        echo "msgfmt fehlt (Paket gettext). Übersetzungen werden nicht gebaut." >&2
+        exit 1
+    fi
+    for PO in "$PROJEKT"/po/*.po; do
+        [ -e "$PO" ] || continue
+        LANG_CODE="$(basename "$PO" .po)"
+        MO_DIR="$STAGE/usr/share/locale/$LANG_CODE/LC_MESSAGES"
+        mkdir -p "$MO_DIR"
+        msgfmt "$PO" -o "$MO_DIR/$PKG.mo"
+    done
+fi
+
 # 5. Steuerdatei.
 INSTALLED_KB="$(du -sk "$STAGE/usr" | cut -f1)"
 cat > "$STAGE/DEBIAN/control" <<EOF

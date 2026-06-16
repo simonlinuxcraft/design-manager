@@ -17,22 +17,22 @@ from gi.repository import Adw, Gio, GLib, Gtk
 
 from src import compat
 from src.core import backgrounds, gdm, lockscreen, variety
+from src.i18n import _
 from src.widgets.wallpaper_card import WallpaperCard
 
 
 # Zielordner für selbst gewählte Bilder.
 BACKGROUND_DIR = os.path.expanduser("~/.local/share/backgrounds")
 
-# Anpassungsmodus: deutsches Label und der dazugehörige Enum-Wert von
-# picture-options.
+# Anpassungsmodus: Label und der dazugehörige Enum-Wert von picture-options.
 MODI = [
-    ("Zoom (Vollbild)", "zoom"),
-    ("Eingepasst", "scaled"),
-    ("Gestreckt", "stretched"),
-    ("Zentriert", "centered"),
-    ("Gekachelt", "wallpaper"),
-    ("Über mehrere Bildschirme", "spanned"),
-    ("Keine", "none"),
+    (_("Zoom (fill screen)"), "zoom"),
+    (_("Fitted"), "scaled"),
+    (_("Stretched"), "stretched"),
+    (_("Centered"), "centered"),
+    (_("Tiled"), "wallpaper"),
+    (_("Across multiple screens"), "spanned"),
+    (_("None"), "none"),
 ]
 
 
@@ -40,7 +40,7 @@ class BackgroundPage(compat.PageBase):
     """Navigationsseite zum Setzen des Hintergrundbilds und seines Modus."""
 
     def __init__(self, settings):
-        super().__init__(title="Hintergrund")
+        super().__init__(title=_("Background"))
         self._settings = settings
         self._cards = []
         # Einmal prüfen, ob Variety läuft; steuert Hinweis und Modus-Auswahl.
@@ -55,11 +55,11 @@ class BackgroundPage(compat.PageBase):
         if self._variety_aktiv:
             box.append(self._variety_banner())
 
-        box.append(self._feld_titel("Aktuelles Bild"))
+        box.append(self._feld_titel(_("Current image")))
         box.append(self._vorschau_bereich())
         self._zeige_aktuellen()
 
-        box.append(self._feld_titel("Standard-Hintergründe"))
+        box.append(self._feld_titel(_("Default backgrounds")))
         self._galerie = Gtk.FlowBox()
         self._galerie.set_selection_mode(Gtk.SelectionMode.NONE)
         self._galerie.set_max_children_per_line(4)
@@ -71,21 +71,21 @@ class BackgroundPage(compat.PageBase):
         box.append(self._galerie)
         self._fuelle_galerie()
 
-        knopf = Gtk.Button(label="Eigenes Bild wählen …")
+        knopf = Gtk.Button(label=_("Choose your own image…"))
         knopf.set_halign(Gtk.Align.START)
         knopf.connect("clicked", self._on_eigenes)
         box.append(knopf)
 
-        box.append(self._feld_titel("Anpassung"))
+        box.append(self._feld_titel(_("Adjustment")))
         box.append(self._modus_dropdown())
 
-        box.append(self._feld_titel("Sperrbildschirm"))
+        box.append(self._feld_titel(_("Lock screen")))
         box.append(self._sperr_bereich())
         self._zeige_sperr()
 
         # Anmeldebildschirm nur zeigen, wenn der root-Weg überhaupt möglich ist.
         if gdm.verfuegbar():
-            box.append(self._feld_titel("Anmeldebildschirm (GDM)"))
+            box.append(self._feld_titel(_("Login screen (GDM)")))
             box.append(self._gdm_bereich())
 
         scroll = Gtk.ScrolledWindow()
@@ -107,20 +107,20 @@ class BackgroundPage(compat.PageBase):
         """Hinweis, dass Variety den Hintergrund verwaltet, plus ein Knopf zum
         Rausnehmen (Autostart aus, beenden, Bild stabil setzen). Reversibel."""
         self._variety_label = Gtk.Label(
-            label="Variety verwaltet den Hintergrund. Deine Bildauswahl wird an "
-                  "Variety übergeben und bleibt über jeden Login erhalten. Den "
-                  "Anpassungsmodus unten kannst du ändern, beim nächsten Login "
-                  "setzt Variety aber wieder seinen eigenen. Für volle Kontrolle "
-                  "über Bild und Modus kannst du Variety hier rausnehmen.",
+            label=_("Variety manages the background. Your image choice is "
+                    "handed to Variety and stays across every login. You can "
+                    "change the adjustment mode below, but at the next login "
+                    "Variety sets its own again. For full control over image "
+                    "and mode you can remove Variety here."),
             xalign=0, wrap=True)
         self._variety_label.add_css_class("dim-label")
 
-        self._variety_knopf = Gtk.Button(label="Variety rausnehmen")
+        self._variety_knopf = Gtk.Button(label=_("Remove Variety"))
         self._variety_knopf.set_halign(Gtk.Align.START)
         self._variety_knopf.set_tooltip_text(
-            "Variety aus dem Autostart nehmen und beenden, damit die App den "
-            "Hintergrund und den Modus direkt steuert. Umkehrbar, Variety bleibt "
-            "installiert.")
+            _("Remove Variety from autostart and quit it, so the app controls "
+              "the background and mode directly. Reversible, Variety stays "
+              "installed."))
         self._variety_knopf.connect("clicked", self._on_variety_raus)
 
         self._variety_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=8)
@@ -145,10 +145,9 @@ class BackgroundPage(compat.PageBase):
             self._vorschau_setzen(quelle)
 
         self._variety_label.set_label(
-            "Variety wurde aus dem Autostart genommen und beendet. Die App "
-            "verwaltet den Hintergrund jetzt direkt, dein Anpassungsmodus bleibt "
-            "erhalten. Rückgängig: Variety wieder starten und im Autostart "
-            "aktivieren.")
+            _("Variety was removed from autostart and quit. The app now "
+              "manages the background directly, your adjustment mode is kept. "
+              "To undo: start Variety again and enable it in autostart."))
         self._variety_box.remove(self._variety_knopf)
 
     def _vorschau_bereich(self):
@@ -158,7 +157,7 @@ class BackgroundPage(compat.PageBase):
         self._vorschau.set_size_request(-1, 200)
         self._vorschau.add_css_class("card")
 
-        self._platzhalter = Gtk.Label(label="Kein Hintergrundbild gesetzt")
+        self._platzhalter = Gtk.Label(label=_("No wallpaper set"))
         self._platzhalter.add_css_class("dim-label")
         self._platzhalter.set_halign(Gtk.Align.CENTER)
         self._platzhalter.set_valign(Gtk.Align.CENTER)
@@ -231,9 +230,9 @@ class BackgroundPage(compat.PageBase):
 
     def _on_eigenes(self, _knopf):
         bilder = Gtk.FileFilter()
-        bilder.set_name("Bilder")
+        bilder.set_name(_("Images"))
         bilder.add_mime_type("image/*")
-        compat.open_file(self.get_root(), "Hintergrundbild wählen",
+        compat.open_file(self.get_root(), _("Choose wallpaper"),
                          [bilder], self._on_gewaehlt)
 
     def _on_gewaehlt(self, pfad):
@@ -269,9 +268,9 @@ class BackgroundPage(compat.PageBase):
         self._sperr_aktiv = lockscreen.verfuegbar(self._settings)
         if not self._sperr_aktiv:
             hinweis = Gtk.Label(
-                label="Dafür zuerst unter Shell-Design ein eigenes Design "
-                      "(nicht das Standard-Design) wählen. In dessen Stil "
-                      "schreibt die App das Sperrbild.",
+                label=_("First choose a custom theme (not the default one) "
+                        "under Shell Theme. The app writes the lock screen "
+                        "image into that theme's style."),
                 xalign=0, wrap=True)
             hinweis.add_css_class("dim-label")
             return hinweis
@@ -281,7 +280,7 @@ class BackgroundPage(compat.PageBase):
         self._sperr_vorschau.set_size_request(-1, 140)
         self._sperr_vorschau.add_css_class("card")
 
-        self._sperr_platzhalter = Gtk.Label(label="Kein eigenes Bild gesetzt")
+        self._sperr_platzhalter = Gtk.Label(label=_("No custom image set"))
         self._sperr_platzhalter.add_css_class("dim-label")
         self._sperr_platzhalter.set_halign(Gtk.Align.CENTER)
         self._sperr_platzhalter.set_valign(Gtk.Align.CENTER)
@@ -291,11 +290,11 @@ class BackgroundPage(compat.PageBase):
         overlay.set_child(self._sperr_vorschau)
         overlay.add_overlay(self._sperr_platzhalter)
 
-        eigenes = Gtk.Button(label="Eigenes Bild wählen …")
+        eigenes = Gtk.Button(label=_("Choose your own image…"))
         eigenes.connect("clicked", self._on_sperr_eigenes)
-        wie_hg = Gtk.Button(label="Wie Hintergrund")
+        wie_hg = Gtk.Button(label=_("Same as background"))
         wie_hg.connect("clicked", self._on_sperr_wie_hintergrund)
-        entfernen = Gtk.Button(label="Entfernen")
+        entfernen = Gtk.Button(label=_("Remove"))
         entfernen.add_css_class("flat")
         entfernen.connect("clicked", self._on_sperr_entfernen)
 
@@ -306,9 +305,9 @@ class BackgroundPage(compat.PageBase):
         knoepfe.append(entfernen)
 
         hinweis = Gtk.Label(
-            label="Experimentell. Wirkt erst nach erneutem Anmelden und kann "
-                  "auf neueren GNOME-Versionen vom unscharfen Sperrbildschirm "
-                  "überdeckt werden.",
+            label=_("Experimental. Takes effect only after logging in again "
+                    "and may be covered by the blurred lock screen on newer "
+                    "GNOME versions."),
             xalign=0, wrap=True)
         hinweis.add_css_class("dim-label")
 
@@ -352,9 +351,9 @@ class BackgroundPage(compat.PageBase):
 
     def _on_sperr_eigenes(self, _knopf):
         bilder = Gtk.FileFilter()
-        bilder.set_name("Bilder")
+        bilder.set_name(_("Images"))
         bilder.add_mime_type("image/*")
-        compat.open_file(self.get_root(), "Sperrbildschirm-Bild wählen",
+        compat.open_file(self.get_root(), _("Choose lock screen image"),
                          [bilder], self._on_sperr_gewaehlt)
 
     def _on_sperr_gewaehlt(self, pfad):
@@ -380,12 +379,13 @@ class BackgroundPage(compat.PageBase):
         self._gdm_knoepfe.set_halign(Gtk.Align.START)
 
         warnung = Gtk.Label(
-            label="Ändert den systemweiten Anmeldebildschirm und braucht das "
-                  "Administrator-Passwort. Wirkt erst nach einem Neustart. Das "
-                  "Original wird nie überschrieben. Zeigt der Anmeldebildschirm "
-                  "ein Problem, stellt sich der Standard nach zwei Neustarts von "
-                  "selbst wieder her; per Terminal jederzeit mit "
-                  "„sudo /usr/local/lib/design-manager/gdm-helper.sh reset“.",
+            label=_("Changes the system-wide login screen and needs the "
+                    "administrator password. Takes effect after a restart. "
+                    "The original is never overwritten. If the login screen "
+                    "shows a problem, the default restores itself after two "
+                    "restarts; from a terminal any time with "
+                    "\"sudo /usr/local/lib/design-manager/gdm-helper.sh "
+                    "reset\"."),
             xalign=0, wrap=True)
         warnung.add_css_class("dim-label")
 
@@ -414,59 +414,59 @@ class BackgroundPage(compat.PageBase):
 
         if gdm.bestaetigung_offen():
             self._gdm_status.set_label(
-                "Neuer Anmeldebildschirm gesetzt, noch nicht bestätigt.")
+                _("New login screen set, not yet confirmed."))
             self._gdm_hinweis.set_label(
-                "Starte den Rechner einmal neu. Erscheint der "
-                "Anmeldebildschirm normal, melde dich an und klicke "
-                "„Behalten“. Tust du das nicht, stellt sich nach zwei "
-                "Neustarts automatisch der Standard wieder her.")
+                _("Restart the computer once. If the login screen appears "
+                  "normally, log in and click \"Keep\". If you do not, the "
+                  "default restores itself automatically after two restarts."))
             self._gdm_hinweis.set_visible(True)
             self._gdm_knoepfe.append(
-                self._gdm_knopf("Behalten", self._on_gdm_confirm))
+                self._gdm_knopf(_("Keep"), self._on_gdm_confirm))
             self._gdm_knoepfe.append(
-                self._gdm_knopf("Verwerfen", self._on_gdm_reset, flach=True))
+                self._gdm_knopf(_("Discard"), self._on_gdm_reset, flach=True))
             return
 
         self._gdm_hinweis.set_visible(False)
         if gdm.aktiv():
             self._gdm_status.set_label(
-                "Eigener Anmeldebildschirm-Hintergrund ist aktiv.")
+                _("A custom login screen background is active."))
         else:
-            self._gdm_status.set_label("Standard-Anmeldebildschirm.")
+            self._gdm_status.set_label(_("Default login screen."))
         self._gdm_knoepfe.append(
-            self._gdm_knopf("Eigenes Bild wählen …", self._on_gdm_eigenes))
+            self._gdm_knopf(_("Choose your own image…"), self._on_gdm_eigenes))
         self._gdm_knoepfe.append(
-            self._gdm_knopf("Wie Hintergrund", self._on_gdm_wie_hintergrund))
+            self._gdm_knopf(_("Same as background"),
+                            self._on_gdm_wie_hintergrund))
         if gdm.aktiv():
             self._gdm_knoepfe.append(
-                self._gdm_knopf("Zurücksetzen", self._on_gdm_reset, flach=True))
+                self._gdm_knopf(_("Reset"), self._on_gdm_reset, flach=True))
 
     def _on_gdm_confirm(self, _knopf):
-        self._gdm_anwenden(gdm.confirm, "Wird bestätigt … ")
+        self._gdm_anwenden(gdm.confirm, _("Confirming… "))
 
     def _on_gdm_eigenes(self, _knopf):
         bilder = Gtk.FileFilter()
-        bilder.set_name("Bilder")
+        bilder.set_name(_("Images"))
         bilder.add_mime_type("image/*")
-        compat.open_file(self.get_root(), "Anmeldebildschirm-Bild wählen",
+        compat.open_file(self.get_root(), _("Choose login screen image"),
                          [bilder], self._on_gdm_gewaehlt)
 
     def _on_gdm_gewaehlt(self, pfad):
         if pfad:
-            self._gdm_anwenden(lambda: gdm.apply(pfad), "Wird gesetzt … ")
+            self._gdm_anwenden(lambda: gdm.apply(pfad), _("Applying… "))
 
     def _on_gdm_wie_hintergrund(self, _knopf):
         pfad = self._aktueller_pfad()
         if pfad and os.path.isfile(pfad):
-            self._gdm_anwenden(lambda: gdm.apply(pfad), "Wird gesetzt … ")
+            self._gdm_anwenden(lambda: gdm.apply(pfad), _("Applying… "))
 
     def _on_gdm_reset(self, _knopf):
-        self._gdm_anwenden(gdm.reset, "Wird zurückgesetzt … ")
+        self._gdm_anwenden(gdm.reset, _("Resetting… "))
 
     def _gdm_anwenden(self, aktion, meldung):
         """Führt eine GDM-Aktion (apply/reset) im Hintergrund aus. pkexec zeigt
         dabei seinen eigenen Passwort-Dialog, darum nicht im Main-Loop blockieren."""
-        self._gdm_status.set_label(meldung + "(Passwort eingeben)")
+        self._gdm_status.set_label(meldung + _("(enter password)"))
 
         def arbeit():
             erfolg = aktion()
@@ -478,16 +478,16 @@ class BackgroundPage(compat.PageBase):
         if erfolg:
             self._gdm_aktualisieren()
         else:
-            self._gdm_status.set_label("Nicht geändert (abgebrochen oder Fehler).")
+            self._gdm_status.set_label(_("Not changed (canceled or error)."))
         return GLib.SOURCE_REMOVE
 
     def _modus_dropdown(self):
-        labels = [label for label, _ in MODI]
+        labels = [label for label, _wert in MODI]
         dropdown = Gtk.DropDown.new_from_strings(labels)
         dropdown.set_hexpand(True)
 
         aktuell = self._settings.picture_options()
-        for i, (_, wert) in enumerate(MODI):
+        for i, (_label, wert) in enumerate(MODI):
             if wert == aktuell:
                 dropdown.set_selected(i)
                 break

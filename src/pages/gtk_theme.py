@@ -15,6 +15,7 @@ from gi.repository import Adw, Gtk
 
 from src import compat
 from src.core import restorepoint, theme_check, themes
+from src.i18n import _
 from src.widgets.dropzone import InstallDropzone
 
 
@@ -22,7 +23,7 @@ class GtkThemePage(compat.PageBase):
     """Navigationsseite für die Auswahl des GTK-Designs."""
 
     def __init__(self, settings):
-        super().__init__(title="GTK-Design")
+        super().__init__(title=_("GTK Theme"))
         self._settings = settings
 
         toolbar = compat.toolbar_view(
@@ -38,18 +39,18 @@ class GtkThemePage(compat.PageBase):
         box.set_margin_end(18)
 
         untertitel = Gtk.Label(
-            label="Bestimmt das Aussehen der Programmfenster. Wird sofort "
-                  "übernommen und auch auf moderne Apps wie Dateien angewendet.",
+            label=_("Determines how application windows look. Applied "
+                    "immediately, also to modern apps like Files."),
             xalign=0, wrap=True)
         untertitel.add_css_class("dim-label")
         box.append(untertitel)
 
-        box.append(self._feld_titel("GTK-Design (Fenster & Programme)"))
+        box.append(self._feld_titel(_("GTK theme (windows & apps)")))
         box.append(self._gtk_design_zeile())
 
-        box.append(self._feld_titel("Neues GTK-Design installieren"))
+        box.append(self._feld_titel(_("Install a new GTK theme")))
         box.append(InstallDropzone(
-            "GTK-Design (.tar.gz/.zip) hierher ziehen", erwartet={"gtk"}))
+            _("Drag a GTK theme (.tar.gz/.zip) here"), erwartet={"gtk"}))
 
         scroll = Gtk.ScrolledWindow()
         scroll.set_vexpand(True)
@@ -87,10 +88,10 @@ class GtkThemePage(compat.PageBase):
             "notify::selected", self._on_dropdown_changed,
             self._settings.set_gtk_theme)
 
-        standard = Gtk.Button(label="Standard")
+        standard = Gtk.Button(label=_("Default"))
         standard.set_valign(Gtk.Align.CENTER)
         standard.set_tooltip_text(
-            "GTK-Design auf das sichere Standard-Design (Adwaita) zurücksetzen")
+            _("Reset the GTK theme to the safe default theme (Adwaita)"))
         standard.connect("clicked", self._on_gtk_reset)
 
         zeile = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8)
@@ -109,22 +110,25 @@ class GtkThemePage(compat.PageBase):
         if not ok:
             self._gtk_trotzdem_fragen(name, grund)
             return
-        restorepoint.erstelle(self._settings, "vor GTK-Design " + name)
+        restorepoint.erstelle(
+            self._settings, _("before GTK theme {name}").format(name=name))
         setter(name)
 
     def _gtk_trotzdem_fragen(self, name, grund):
         compat.alert(
             self,
-            "Design trotzdem aktivieren?",
-            "„%s“: %s" % (name, grund),
-            [("abbrechen", "Abbrechen", ""),
-             ("trotzdem", "Trotzdem aktivieren", "destructive")],
+            _("Activate theme anyway?"),
+            '"{name}": {reason}'.format(name=name, reason=grund),
+            [("abbrechen", _("Cancel"), ""),
+             ("trotzdem", _("Activate anyway"), "destructive")],
             default="abbrechen", close="abbrechen",
             on_response=lambda antwort: self._on_gtk_trotzdem(antwort, name))
 
     def _on_gtk_trotzdem(self, antwort, name):
         if antwort == "trotzdem":
-            restorepoint.erstelle(self._settings, "vor GTK-Design " + name)
+            restorepoint.erstelle(
+                self._settings,
+                _("before GTK theme {name}").format(name=name))
             self._settings.set_gtk_theme(name)
             return
         # Abbrechen: das Dropdown hat die Auswahl schon geändert, also auf das

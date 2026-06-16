@@ -9,6 +9,7 @@ Hauptpfeil gezeigt; fehlt auch der, ein generisches Maus-Symbol.
 from gi.repository import Gtk
 
 from src.core import cursors
+from src.i18n import _
 from src.widgets.card_common import status_zeile
 
 
@@ -62,7 +63,7 @@ class CursorCard(Gtk.FlowBoxChild):
     def set_aktiv(self, aktiv):
         if aktiv:
             self.add_css_class("aktiv")
-            self._status.set_text("Aktiv")
+            self._status.set_text(_("Active"))
         else:
             self.remove_css_class("aktiv")
-            self._status.set_text("Installiert")
+            self._status.set_text(_("Installed"))

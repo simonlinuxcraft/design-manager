@@ -32,6 +32,8 @@ gi.require_version("Adw", "1")
 
 from gi.repository import Adw, Gdk, Gio, GLib, Gtk  # noqa: E402  (Import erst nach require_version)
 
+from src import i18n  # noqa: F401, E402  (initialisiert gettext vor allen anderen src-Modulen)
+
 from src.window import MainWindow  # noqa: E402
 
 

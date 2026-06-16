@@ -10,6 +10,7 @@ from gi.repository import Gtk
 
 from src import compat
 from src.core import backgrounds
+from src.i18n import _
 
 
 THUMB_BREITE = 168
@@ -46,7 +47,7 @@ class WallpaperCard(Gtk.FlowBoxChild):
             knopf.set_valign(Gtk.Align.START)
             knopf.set_margin_top(4)
             knopf.set_margin_end(4)
-            knopf.set_tooltip_text("Aus der App entfernen (Datei bleibt erhalten)")
+            knopf.set_tooltip_text(_("Remove from the app (file is kept)"))
             knopf.connect("clicked", lambda _b: on_entfernen(pfad))
             overlay.add_overlay(knopf)
             box.append(overlay)
@@ -70,7 +71,7 @@ class WallpaperCard(Gtk.FlowBoxChild):
     def set_aktiv(self, aktiv):
         if aktiv:
             self.add_css_class("aktiv")
-            self._status.set_text("Aktiv")
+            self._status.set_text(_("Active"))
         else:
             self.remove_css_class("aktiv")
             self._status.set_text("")

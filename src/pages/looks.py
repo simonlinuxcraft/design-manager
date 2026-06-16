@@ -12,6 +12,7 @@ from gi.repository import Adw, Gtk
 
 from src import compat
 from src.core import backup, looks
+from src.i18n import _
 from src.widgets.look_card import LookCard
 
 
@@ -19,7 +20,7 @@ class LooksPage(compat.PageBase):
     """Navigationsseite mit kuratierten Looks und eigenen Profilen als Karten."""
 
     def __init__(self, settings):
-        super().__init__(title="Looks")
+        super().__init__(title=_("Looks"))
         self._settings = settings
 
         toolbar = compat.toolbar_view(
@@ -31,8 +32,8 @@ class LooksPage(compat.PageBase):
         self._profile = looks.eigene_profile_als_looks()
         if not self._looks and not self._profile:
             return Adw.StatusPage(
-                title="Keine Looks gefunden",
-                description="Mitgelieferte Looks liegen unter data/looks/.",
+                title=_("No looks found"),
+                description=_("Bundled looks live under data/looks/."),
                 icon_name="starred-symbolic")
 
         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12)
@@ -42,20 +43,20 @@ class LooksPage(compat.PageBase):
         box.set_margin_end(18)
 
         untertitel = Gtk.Label(
-            label="Ein Klick setzt den ganzen Look. Bei den mitgelieferten Looks "
-                  "wird vorher automatisch ein Profil „vorher-…“ angelegt, sodass "
-                  "du zurück kannst.",
+            label=_("One click applies the whole look. For bundled looks a "
+                    "\"before-…\" profile is created first, so you can go "
+                    "back."),
             xalign=0)
         untertitel.add_css_class("dim-label")
         untertitel.set_wrap(True)
         box.append(untertitel)
 
         if self._looks:
-            box.append(self._ueberschrift("Mitgelieferte Looks"))
+            box.append(self._ueberschrift(_("Bundled looks")))
             box.append(self._galerie(self._looks, self._on_look_aktiviert))
 
         if self._profile:
-            box.append(self._ueberschrift("Eigene Profile"))
+            box.append(self._ueberschrift(_("Your profiles")))
             box.append(self._galerie(self._profile, self._on_profil_aktiviert))
 
         scroll = Gtk.ScrolledWindow()
@@ -89,11 +90,11 @@ class LooksPage(compat.PageBase):
         look = karte.look
         compat.alert(
             self,
-            "Look „%s“ anwenden?" % look.get("name", ""),
-            "Der aktuelle Stand wird zuerst als Profil gesichert. Nicht "
-            "installierte Teile werden übersprungen.",
-            [("abbrechen", "Abbrechen", ""),
-             ("anwenden", "Anwenden", "suggested")],
+            _('Apply look "{name}"?').format(name=look.get("name", "")),
+            _("The current state is saved as a profile first. Parts that are "
+              "not installed are skipped."),
+            [("abbrechen", _("Cancel"), ""),
+             ("anwenden", _("Apply"), "suggested")],
             default="abbrechen", close="abbrechen",
             on_response=lambda antwort: self._on_look_antwort(antwort, look))
 
@@ -102,10 +103,13 @@ class LooksPage(compat.PageBase):
             return
         uebersprungen = looks.wende_an(self._settings, look)
         if uebersprungen:
-            self._melde("Look „%s“ angewendet. Übersprungen: %s."
-                        % (look.get("name", ""), ", ".join(uebersprungen)))
+            self._melde(
+                _('Look "{name}" applied. Skipped: {items}.').format(
+                    name=look.get("name", ""),
+                    items=", ".join(uebersprungen)))
         else:
-            self._melde("Look „%s“ angewendet." % look.get("name", ""))
+            self._melde(
+                _('Look "{name}" applied.').format(name=look.get("name", "")))
 
     # --- Eigene Profile ---
 
@@ -113,10 +117,10 @@ class LooksPage(compat.PageBase):
         name = karte.look.get("_profil", "")
         compat.alert(
             self,
-            "Profil „%s“ anwenden?" % name,
-            "Setzt den gespeicherten Stand dieses Profils.",
-            [("abbrechen", "Abbrechen", ""),
-             ("anwenden", "Anwenden", "suggested")],
+            _('Apply profile "{name}"?').format(name=name),
+            _("Applies this profile's saved state."),
+            [("abbrechen", _("Cancel"), ""),
+             ("anwenden", _("Apply"), "suggested")],
             default="abbrechen", close="abbrechen",
             on_response=lambda antwort: self._on_profil_antwort(antwort, name))
 
@@ -126,13 +130,14 @@ class LooksPage(compat.PageBase):
         try:
             erfolg = backup.load_profile(self._settings, name)
         except (OSError, ValueError):
-            self._melde("Das Profil konnte nicht gelesen werden.")
+            self._melde(_("The profile could not be read."))
             return
         if not erfolg:
-            self._melde("Das Profil ist beschädigt.")
+            self._melde(_("The profile is damaged."))
             return
-        self._melde("Profil „%s“ angewendet. App neu starten, um die Auswahl in "
-                    "den einzelnen Bereichen zu aktualisieren." % name)
+        self._melde(
+            _('Profile "{name}" applied. Restart the app to refresh the '
+              "selection in each section.").format(name=name))
 
     def _melde(self, text):
         fenster = self.get_root()

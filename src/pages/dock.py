@@ -12,13 +12,14 @@ from gi.repository import Adw, Gtk
 
 from src import compat
 from src.core import dock
+from src.i18n import _
 
 
 class DockPage(compat.PageBase):
     """Navigationsseite mit den Einstellungen des aktiven Docks."""
 
     def __init__(self, settings):
-        super().__init__(title="Dock")
+        super().__init__(title=_("Dock"))
         self._settings = settings
         self._dock = dock.aktives_dock()
 
@@ -29,17 +30,17 @@ class DockPage(compat.PageBase):
     def _inhalt(self):
         if self._dock is None:
             return Adw.StatusPage(
-                title="Keine Dock-Erweiterung aktiv",
-                description="Diese Seite steuert Ubuntu Dock / Dash to Dock oder "
-                            "Dash to Panel. Auf diesem System ist keine davon "
-                            "eingeschaltet.",
+                title=_("No dock extension active"),
+                description=_("This page controls Ubuntu Dock / Dash to Dock "
+                              "or Dash to Panel. None of them is enabled on "
+                              "this system."),
                 icon_name="view-app-grid-symbolic",
             )
 
         seite = Adw.PreferencesPage()
         gruppe = Adw.PreferencesGroup(
             title=self._dock.name,
-            description="Änderungen werden sofort übernommen.")
+            description=_("Changes take effect immediately."))
         for e in self._dock.einstellungen:
             gruppe.add(self._zeile(e))
         seite.add(gruppe)

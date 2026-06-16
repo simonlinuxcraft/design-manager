@@ -23,6 +23,8 @@ import tarfile
 import tempfile
 import zipfile
 
+from src.i18n import _, ngettext
+
 
 THEMES_DIR = os.path.expanduser("~/.local/share/themes")
 ICONS_DIR = os.path.expanduser("~/.local/share/icons")
@@ -49,18 +51,18 @@ THEME_MARKER = {
 
 # Pro Design-Art: Zielordner und das Wort fürs Erfolgs-Label.
 ZIELE = {
-    "gtk": (THEMES_DIR, "Design"),
-    "cursor": (CURSORS_DIR, "Mauszeiger"),
-    "icon": (ICONS_DIR, "Symbole"),
+    "gtk": (THEMES_DIR, _("Theme")),
+    "cursor": (CURSORS_DIR, _("Cursor")),
+    "icon": (ICONS_DIR, _("Icons")),
 }
 
-# Pro Art: ein genus-sicherer Satz und die Seite, auf die sie gehört. Für die
-# Meldung, wenn etwas auf der falschen Seite abgelegt wird.
+# Pro Art: ein Satz und die Seite, auf die sie gehört. Für die Meldung, wenn
+# etwas auf der falschen Seite abgelegt wird.
 ART_INFO = {
-    "cursor": ("Das ist ein Mauszeiger-Design.", "Mauszeiger"),
-    "icon": ("Das ist ein Symbol-Design.", "Symbole & Design"),
-    "gtk": ("Das ist ein GTK-Design.", "Symbole & Design"),
-    "font": ("Das ist eine Schrift.", "Schriften"),
+    "cursor": (_("This is a cursor theme."), _("Cursor")),
+    "icon": (_("This is an icon theme."), _("Icons")),
+    "gtk": (_("This is a GTK theme."), _("GTK Theme")),
+    "font": (_("This is a font."), _("Fonts")),
 }
 
 
@@ -80,10 +82,10 @@ def install(archiv_pfad, erwartet=None):
     konkretem Grund, wenn nichts Passendes gefunden wurde.
     """
     if os.path.isdir(archiv_pfad):
-        raise InstallFehler("Das ist ein Ordner, kein Archiv. Bitte ein "
-                            "Archiv (.tar.gz/.zip) wählen.")
+        raise InstallFehler(_("This is a folder, not an archive. Please "
+                              "choose an archive (.tar.gz/.zip)."))
     if not os.path.isfile(archiv_pfad):
-        raise InstallFehler("Die Datei wurde nicht gefunden.")
+        raise InstallFehler(_("The file was not found."))
 
     # Eine direkt gewählte Schriftdatei (kein Archiv) gleich übernehmen.
     if archiv_pfad.lower().endswith(SCHRIFT_ENDUNGEN):
@@ -91,7 +93,7 @@ def install(archiv_pfad, erwartet=None):
             raise InstallFehler(_falsche_art({"font"}))
         ergebnis = _kopiere_fonts([archiv_pfad])
         if not ergebnis:
-            raise InstallFehler("Die Schrift konnte nicht kopiert werden.")
+            raise InstallFehler(_("The font could not be copied."))
         return ergebnis
 
     with tempfile.TemporaryDirectory() as tmp:
@@ -125,7 +127,8 @@ def _falsche_art(arten):
     """Meldung, wenn nur unpassende Arten im Archiv waren (Verweis auf die
     richtige Seite)."""
     satz, seite = ART_INFO[next(iter(arten))]
-    return satz + " Bitte auf der Seite „" + seite + "“ installieren."
+    return _('{sentence} Please install it on the "{page}" page.').format(
+        sentence=satz, page=seite)
 
 
 def _warum_nichts(basis):
@@ -136,10 +139,10 @@ def _warum_nichts(basis):
     Meldung.
     """
     if _enthaelt_endung(basis, WINDOWS_CURSOR_ENDUNGEN):
-        return ("Das ist ein Windows-Mauszeiger (.cur/.ani). GNOME kann ihn "
-                "nicht direkt verwenden. Lade die Linux-Variante des Designs "
-                "herunter (ein Ordner mit einem Unterordner „cursors“).")
-    return "Im Archiv wurde kein Design und keine Schrift gefunden."
+        return _('This is a Windows cursor (.cur/.ani). GNOME cannot use it '
+                 'directly. Download the Linux variant of the theme (a folder '
+                 'with a "cursors" subfolder).')
+    return _("No theme and no font found in the archive.")
 
 
 def _enthaelt_endung(basis, endungen):
@@ -171,9 +174,11 @@ def _entpacke(archiv_pfad, ziel):
                 except TypeError:
                     t.extractall(ziel, members=sichere)  # ältere Python ohne filter
         else:
-            raise InstallFehler("Format nicht unterstützt (nur .zip und .tar.*).")
+            raise InstallFehler(
+                _("Format not supported (only .zip and .tar.*)."))
     except (zipfile.BadZipFile, tarfile.TarError, OSError) as fehler:
-        raise InstallFehler("Archiv konnte nicht entpackt werden.") from fehler
+        raise InstallFehler(
+            _("The archive could not be extracted.")) from fehler
 
 
 def _ist_ausbruch(pfad):
@@ -185,7 +190,7 @@ def _pruefe_namen(namen):
     """Lehnt absolute Pfade und Ausbrüche über '..' ab (Zip-Slip-Schutz)."""
     for name in namen:
         if _ist_ausbruch(name):
-            raise InstallFehler("Archiv enthält unsichere Pfade.")
+            raise InstallFehler(_("The archive contains unsafe paths."))
 
 
 def _sichere_tar_member(members):
@@ -202,7 +207,7 @@ def _sichere_tar_member(members):
     sicher = []
     for m in members:
         if _ist_ausbruch(m.name):
-            raise InstallFehler("Archiv enthält unsichere Pfade.")
+            raise InstallFehler(_("The archive contains unsafe paths."))
         if (m.issym() or m.islnk()) and _link_unsicher(m):
             continue  # überspringen, nicht entpacken
         sicher.append(m)
@@ -336,7 +341,9 @@ def _kopiere_fonts(dateien):
         shutil.copy2(quelle, os.path.join(FONTS_DIR, os.path.basename(quelle)))
 
     _fc_cache()
-    return ["Schrift: " + str(len(dateien)) + " Datei(en)"]
+    anzahl = len(dateien)
+    return [ngettext("Font: {n} file", "Font: {n} files", anzahl).format(
+        n=anzahl)]
 
 
 def _fc_cache():

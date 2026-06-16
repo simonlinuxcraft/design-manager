@@ -11,6 +11,7 @@ import os
 from src.core import themes
 # Denselben Lookup wie die Shell-Vorschau nutzen, statt ihn zu duplizieren.
 from src.core.shell_preview import _css_pfad as _shell_css_pfad
+from src.i18n import _
 
 
 def _lesbar(pfad):
@@ -39,15 +40,16 @@ def pruefe_gtk(name):
         return True, ""
     ordner = _theme_ordner(name)
     if ordner is None:
-        return False, "Der Design-Ordner wurde nicht gefunden."
+        return False, _("The theme folder was not found.")
     for unter in ("gtk-4.0", "gtk-3.0"):
         css = os.path.join(ordner, unter, "gtk.css")
         if os.path.isfile(css):
             if _lesbar(css):
                 return True, ""
-            return False, "Die Datei %s/gtk.css ist nicht lesbar." % unter
-    return False, ("Dem Design fehlt gtk-4.0/gtk.css. GNOME würde auf Adwaita "
-                   "zurückfallen.")
+            return False, _("The file {sub}/gtk.css is not readable.").format(
+                sub=unter)
+    return False, _("The theme is missing gtk-4.0/gtk.css. GNOME would fall "
+                    "back to Adwaita.")
 
 
 def pruefe_shell(name):
@@ -56,7 +58,7 @@ def pruefe_shell(name):
         return True, ""  # leerer Wert = GNOME-Standard
     css = _shell_css_pfad(name)
     if css is None:
-        return False, "Dem Design fehlt gnome-shell/gnome-shell.css."
+        return False, _("The theme is missing gnome-shell/gnome-shell.css.")
     if not _lesbar(css):
-        return False, "Die Datei gnome-shell.css ist nicht lesbar."
+        return False, _("The file gnome-shell.css is not readable.")
     return True, ""

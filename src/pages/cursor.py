@@ -11,6 +11,7 @@ from gi.repository import Adw, GLib, Gtk
 
 from src import compat
 from src.core import restorepoint, themes, uninstaller
+from src.i18n import _
 from src.widgets.cursor_card import CursorCard
 from src.widgets.dropzone import InstallDropzone
 
@@ -24,7 +25,7 @@ class CursorPage(compat.PageBase):
     """Navigationsseite mit Vorschaukarten der Mauszeiger-Designs."""
 
     def __init__(self, settings):
-        super().__init__(title="Mauszeiger")
+        super().__init__(title=_("Cursor"))
         self._settings = settings
         self._cards = []
 
@@ -35,10 +36,10 @@ class CursorPage(compat.PageBase):
         box.set_margin_end(18)
 
         untertitel = Gtk.Label(
-            label="GTK-Programme und der Zeiger über dem Desktop wechseln "
-                  "sofort. Schon geöffnete Nicht-GTK-Programme (manche "
-                  "Terminals, Electron-Apps) zeigen den alten Zeiger, bis du "
-                  "sie neu startest.",
+            label=_("GTK apps and the cursor over the desktop change "
+                    "immediately. Already open non-GTK apps (some terminals, "
+                    "Electron apps) show the old cursor until you restart "
+                    "them."),
             xalign=0)
         # Umbrechen lassen, sonst fordert der lange Text seine volle Breite als
         # Mindestbreite und zieht die ganze Seite (und das Fenster) breit.
@@ -49,7 +50,7 @@ class CursorPage(compat.PageBase):
         box.append(self._karten())
 
         box.append(InstallDropzone(
-            "Mauszeiger-Design (.tar.gz/.zip) hierher ziehen",
+            _("Drag a cursor theme (.tar.gz/.zip) here"),
             erwartet={"cursor"}))
 
         scroll = Gtk.ScrolledWindow()
@@ -102,7 +103,9 @@ class CursorPage(compat.PageBase):
     def _on_karte_aktiviert(self, _flowbox, karte):
         for andere in self._cards:
             andere.set_aktiv(andere is karte)
-        restorepoint.erstelle(self._settings, "vor Mauszeiger " + karte.theme_name)
+        restorepoint.erstelle(
+            self._settings,
+            _("before cursor {name}").format(name=karte.theme_name))
         self._settings.set_cursor_theme(karte.theme_name)
 
     # --- Entfernen ---
@@ -111,11 +114,11 @@ class CursorPage(compat.PageBase):
         """Sicherheitsabfrage vor dem Entfernen eines Mauszeiger-Designs."""
         compat.alert(
             self,
-            "Mauszeiger entfernen?",
-            "„%s“ wird dauerhaft aus deinem Benutzerordner gelöscht. "
-            "Das lässt sich nicht rückgängig machen." % karte.theme_name,
-            [("abbrechen", "Abbrechen", ""),
-             ("loeschen", "Entfernen", "destructive")],
+            _("Remove cursor theme?"),
+            _('"{name}" will be permanently deleted from your user folder. '
+              "This cannot be undone.").format(name=karte.theme_name),
+            [("abbrechen", _("Cancel"), ""),
+             ("loeschen", _("Remove"), "destructive")],
             default="abbrechen", close="abbrechen",
             on_response=lambda antwort: self._on_loeschen_antwort(antwort, karte))
 
@@ -133,9 +136,9 @@ class CursorPage(compat.PageBase):
             self._flowbox.remove(karte)
             if karte in self._cards:
                 self._cards.remove(karte)
-            self._melde("Entfernt: " + name)
+            self._melde(_("Removed: {name}").format(name=name))
         else:
-            self._melde("Konnte nicht entfernt werden: " + name)
+            self._melde(_("Could not be removed: {name}").format(name=name))
 
     def _melde(self, text):
         fenster = self.get_root()

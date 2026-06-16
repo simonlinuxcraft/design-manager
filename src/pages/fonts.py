@@ -13,20 +13,21 @@ Darunter die Darstellung: die globale Schrift-Skalierung sowie Glättung
 from gi.repository import Adw, Gtk
 
 from src import compat
+from src.i18n import _
 from src.widgets.dropzone import InstallDropzone
 
 
-# Enum-Werte von font-antialiasing und font-hinting mit deutschen Labels.
+# Enum-Werte von font-antialiasing und font-hinting mit ihren Labels.
 ANTIALIASING = [
-    ("Graustufen", "grayscale"),
-    ("Subpixel (RGBA)", "rgba"),
-    ("Keine", "none"),
+    (_("Grayscale"), "grayscale"),
+    (_("Subpixel (RGBA)"), "rgba"),
+    (_("None"), "none"),
 ]
 HINTING = [
-    ("Voll", "full"),
-    ("Mittel", "medium"),
-    ("Leicht", "slight"),
-    ("Keine", "none"),
+    (_("Full"), "full"),
+    (_("Medium"), "medium"),
+    (_("Slight"), "slight"),
+    (_("None"), "none"),
 ]
 
 
@@ -34,42 +35,42 @@ class FontsPage(compat.PageBase):
     """Navigationsseite zur Auswahl und Darstellung der Systemschriften."""
 
     def __init__(self, settings):
-        super().__init__(title="Schriftarten")
+        super().__init__(title=_("Fonts"))
         self._settings = settings
 
         schriften = Adw.PreferencesGroup(
-            title="Schriftarten",
-            description="GNOME führt drei Schriften getrennt.")
+            title=_("Fonts"),
+            description=_("GNOME keeps three fonts separate."))
         schriften.add(self._schrift_zeile(
-            "Oberfläche", self._settings.font_name,
+            _("Interface"), self._settings.font_name,
             self._settings.set_font_name))
         schriften.add(self._schrift_zeile(
-            "Dokumente", self._settings.document_font_name,
+            _("Documents"), self._settings.document_font_name,
             self._settings.set_document_font_name))
         schriften.add(self._schrift_zeile(
-            "Festbreite (Monospace)", self._settings.monospace_font_name,
+            _("Monospace"), self._settings.monospace_font_name,
             self._settings.set_monospace_font_name))
 
         darstellung = Adw.PreferencesGroup(
-            title="Darstellung",
-            description="Größe und Glättung des Schriftbilds.")
+            title=_("Rendering"),
+            description=_("Size and smoothing of the font rendering."))
         darstellung.add(self._skalierung_zeile())
         darstellung.add(self._enum_zeile(
-            "Glättung", ANTIALIASING,
+            _("Smoothing"), ANTIALIASING,
             self._settings.font_antialiasing,
             self._settings.set_font_antialiasing))
         darstellung.add(self._enum_zeile(
-            "Hinting", HINTING,
+            _("Hinting"), HINTING,
             self._settings.font_hinting,
             self._settings.set_font_hinting))
 
         installieren = Adw.PreferencesGroup(
-            title="Schrift installieren",
-            description="Eine Schriftdatei (.ttf/.otf) oder ein Archiv "
-                        "hierher ziehen. Sie wird nach ~/.local/share/fonts "
-                        "kopiert und der Schrift-Cache aufgefrischt.")
+            title=_("Install a font"),
+            description=_("Drag a font file (.ttf/.otf) or an archive here. "
+                          "It is copied to ~/.local/share/fonts and the font "
+                          "cache is refreshed."))
         installieren.add(InstallDropzone(
-            "Schrift (.ttf/.otf) oder Archiv hierher ziehen",
+            _("Drag a font (.ttf/.otf) or archive here"),
             erwartet={"font"}))
 
         seite = Adw.PreferencesPage()
@@ -99,8 +100,8 @@ class FontsPage(compat.PageBase):
     def _skalierung_zeile(self):
         """Schrift-Skalierung als Drehfeld (1.0 = Standard)."""
         zeile = compat.SpinRow.new_with_range(0.5, 2.0, 0.05)
-        zeile.set_title("Größe (Skalierung)")
-        zeile.set_subtitle("1.0 ist die Standardgröße.")
+        zeile.set_title(_("Size (scaling)"))
+        zeile.set_subtitle(_("1.0 is the default size."))
         zeile.set_digits(2)
         zeile.set_value(self._settings.text_scaling_factor())
         zeile.connect("notify::value", self._on_skalierung)
@@ -114,10 +115,10 @@ class FontsPage(compat.PageBase):
     def _enum_zeile(self, titel, optionen, get_wert, set_wert):
         """Eine Adw.ComboRow über 'optionen' (Label, Wert), bindet einen Enum."""
         zeile = Adw.ComboRow(title=titel)
-        zeile.set_model(Gtk.StringList.new([label for label, _ in optionen]))
+        zeile.set_model(Gtk.StringList.new([label for label, _wert in optionen]))
 
         aktuell = get_wert()
-        for i, (_, wert) in enumerate(optionen):
+        for i, (_label, wert) in enumerate(optionen):
             if wert == aktuell:
                 zeile.set_selected(i)
                 break

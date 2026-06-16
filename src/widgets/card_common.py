@@ -7,6 +7,8 @@ Design entfernen lässt. Der Knopf erscheint nur für löschbare Designs.
 
 from gi.repository import Gtk
 
+from src.i18n import _
+
 
 def status_zeile(karte, loeschbar, on_loeschen):
     """Baut die Status-Zeile der Karte und hängt sie an karte._status.
@@ -26,7 +28,7 @@ def status_zeile(karte, loeschbar, on_loeschen):
         knopf.add_css_class("flat")
         knopf.add_css_class("card-trash")
         knopf.set_valign(Gtk.Align.CENTER)
-        knopf.set_tooltip_text("Dieses Design entfernen")
+        knopf.set_tooltip_text(_("Remove this theme"))
         # Der Button verarbeitet seinen Klick selbst; die FlowBox wertet ihn
         # darum nicht als Auswahl der Karte.
         knopf.connect("clicked", lambda _b: on_loeschen(karte))
