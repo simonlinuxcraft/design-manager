@@ -9,19 +9,12 @@ Bewusst kein Adw.Carousel: das gibt jeder Karte nur ihre schmale natürliche
 Breite und lässt die Nachbarkarte hereinragen.
 """
 
-import os
-
-from gi.repository import Adw, Gdk, Gtk
+from gi.repository import Adw, Gtk
 
 from src import compat
 from src.i18n import _
+from src.logo import logo_texture
 
-
-# Das App-Logo liegt in der Projektwurzel, zwei Ebenen über src/widgets/.
-LOGO_FILE = os.path.join(
-    os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
-    "design-manager-transparent-1024.png",
-)
 
 # Inhalt der Karten: Symbolname (oder None für das Logo), Titel, Beschreibung.
 KARTEN = [
@@ -83,8 +76,8 @@ class WelcomeDialog(compat.DialogBase):
         seite = Adw.StatusPage()
         seite.set_title(titel)
         seite.set_description(text)
-        if icon_name is None and os.path.isfile(LOGO_FILE):
-            seite.set_paintable(Gdk.Texture.new_from_filename(LOGO_FILE))
+        if icon_name is None:
+            seite.set_paintable(logo_texture())
         else:
             seite.set_icon_name(icon_name or "applications-graphics-symbolic")
         return seite

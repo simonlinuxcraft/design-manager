@@ -7,13 +7,13 @@ Zeile merkt sich ihre Seiten-Erzeuger-Funktion direkt am Objekt
 (zeile.erzeuge_seite), damit Trennzeilen die Zuordnung nicht verschieben.
 """
 
-import os
 import threading
 
-from gi.repository import Adw, Gdk, Gio, GLib, Gtk
+from gi.repository import Adw, Gio, GLib, Gtk
 
 from src import compat
 from src.i18n import _
+from src.logo import logo_texture
 from src.core import gdm, healthcheck, lockscreen, onboarding, restorepoint, updater
 from src.core.settings import AppSettings
 from src.pages.background import BackgroundPage
@@ -32,13 +32,6 @@ from src.widgets.welcome import WelcomeDialog
 
 
 APP_VERSION = "0.1.0"
-
-# Logo für die Kopfleiste (Projektwurzel liegt eine Ebene über src/). Gtk.Picture
-# skaliert die hochauflösende Datei auf die kleine Header-Größe herunter.
-LOGO_FILE = os.path.join(
-    os.path.dirname(os.path.dirname(__file__)),
-    "design-manager-transparent-1024.png",
-)
 
 
 class MainWindow(Adw.ApplicationWindow):
@@ -359,7 +352,7 @@ class MainWindow(Adw.ApplicationWindow):
         würde die natürliche Bildgröße (1024) als Platzbedarf anmelden und die
         Kopfleiste aufblähen; Gtk.Image richtet sich nur nach pixel_size.
         """
-        texture = Gdk.Texture.new_from_filename(LOGO_FILE)
+        texture = logo_texture()
         logo = Gtk.Image.new_from_paintable(texture)
         logo.set_pixel_size(22)
         logo.set_valign(Gtk.Align.CENTER)

@@ -12,8 +12,10 @@ PROJEKT="$(dirname "$HIER")"
 ICON_BASIS="$HOME/.local/share/icons/hicolor"
 APP_DIR="$HOME/.local/share/applications"
 
-# 1. Icons in den hicolor-Baum legen, je Groesse aus dem 1024er-Master skaliert.
-MASTER="$PROJEKT/design-manager-transparent-1024.png"
+# 1. Icons in den hicolor-Baum legen, je Groesse aus dem eingebetteten Logo
+#    (src/logo.py) skaliert.
+MASTER="$(mktemp --suffix=.png)"
+python3 -c "import sys; sys.path.insert(0, '$PROJEKT'); from src.logo import logo_bytes; open('$MASTER', 'wb').write(logo_bytes())"
 for N in 48 64 128 256 512; do
     ZIEL_DIR="$ICON_BASIS/${N}x${N}/apps"
     mkdir -p "$ZIEL_DIR"
@@ -24,6 +26,7 @@ for N in 48 64 128 256 512; do
         cp "$MASTER" "$ZIEL_DIR/$APP_ID.png"
     fi
 done
+rm -f "$MASTER"
 
 # 2. .desktop installieren, dabei Exec auf den echten Dev-Start umbiegen.
 mkdir -p "$APP_DIR"
