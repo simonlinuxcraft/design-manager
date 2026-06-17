@@ -1,11 +1,14 @@
 """Seite 'Looks'.
 
 Zwei Galerien: oben die mitgelieferten, kuratierten Komplett-Looks (siehe
-core/looks.py), darunter die selbst gespeicherten Profile (siehe core/backup.py,
-angelegt auf der Sicherungsseite). Beide setzen mit einem Klick einen ganzen
-Look. Bei den mitgelieferten Looks wird der aktuelle Stand vorher als Profil
-gesichert; fehlende Teile werden übersprungen und im Toast genannt. Ein eigenes
-Profil wird unverändert wieder angewendet.
+core/looks.py), darunter die selbst gespeicherten Profile. Profile werden hier
+zentral verwaltet: aktuellen Stand als Profil speichern, per Klick anwenden,
+über den Knopf an der Karte löschen. Bei den mitgelieferten Looks wird der
+aktuelle Stand vorher als Sicherungspunkt festgehalten; fehlende Teile werden
+übersprungen und im Toast genannt.
+
+Nach dem Anwenden baut das Fenster alle Seiten neu (melde_und_reload), damit die
+übrigen Bereiche sofort den neuen Stand zeigen, ohne Neustart.
 """
 
 from gi.repository import Adw, Gtk
@@ -30,11 +33,6 @@ class LooksPage(compat.PageBase):
     def _inhalt(self):
         self._looks = looks.lade_looks()
         self._profile = looks.eigene_profile_als_looks()
-        if not self._looks and not self._profile:
-            return Adw.StatusPage(
-                title=_("No looks found"),
-                description=_("Bundled looks live under data/looks/."),
-                icon_name="starred-symbolic")
 
         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12)
         box.set_margin_top(16)
@@ -44,8 +42,8 @@ class LooksPage(compat.PageBase):
 
         untertitel = Gtk.Label(
             label=_("One click applies the whole look. For bundled looks a "
-                    "\"before-…\" profile is created first, so you can go "
-                    "back."),
+                    "restore point is created first, so you can go back from "
+                    "the Backup page."),
             xalign=0)
         untertitel.add_css_class("dim-label")
         untertitel.set_wrap(True)
@@ -55,9 +53,12 @@ class LooksPage(compat.PageBase):
             box.append(self._ueberschrift(_("Bundled looks")))
             box.append(self._galerie(self._looks, self._on_look_aktiviert))
 
+        box.append(self._ueberschrift(_("Your profiles")))
+        box.append(self._speicher_gruppe())
         if self._profile:
-            box.append(self._ueberschrift(_("Your profiles")))
-            box.append(self._galerie(self._profile, self._on_profil_aktiviert))
+            box.append(self._galerie(
+                self._profile, self._on_profil_aktiviert,
+                self._on_profil_loeschen))
 
         scroll = Gtk.ScrolledWindow()
         scroll.set_vexpand(True)
@@ -70,7 +71,17 @@ class LooksPage(compat.PageBase):
         label.set_margin_top(6)
         return label
 
-    def _galerie(self, looks_liste, handler):
+    def _speicher_gruppe(self):
+        """Eingabezeile, um den aktuellen Stand als Profil zu sichern."""
+        gruppe = Adw.PreferencesGroup()
+        self._name_entry = compat.EntryRow(
+            title=_("Save the current look as a profile"))
+        self._name_entry.set_show_apply_button(True)
+        self._name_entry.connect("apply", self._on_profil_speichern)
+        gruppe.add(self._name_entry)
+        return gruppe
+
+    def _galerie(self, looks_liste, handler, loesch_handler=None):
         flowbox = Gtk.FlowBox()
         flowbox.set_selection_mode(Gtk.SelectionMode.NONE)
         flowbox.set_max_children_per_line(3)
@@ -81,7 +92,7 @@ class LooksPage(compat.PageBase):
         flowbox.set_hexpand(True)
         flowbox.connect("child-activated", handler)
         for look in looks_liste:
-            flowbox.append(LookCard(look))
+            flowbox.append(LookCard(look, on_loeschen=loesch_handler))
         return flowbox
 
     # --- Mitgelieferte Looks ---
@@ -91,8 +102,8 @@ class LooksPage(compat.PageBase):
         compat.alert(
             self,
             _('Apply look "{name}"?').format(name=look.get("name", "")),
-            _("The current state is saved as a profile first. Parts that are "
-              "not installed are skipped."),
+            _("The current state is saved as a restore point first. Parts that "
+              "are not installed are skipped."),
             [("abbrechen", _("Cancel"), ""),
              ("anwenden", _("Apply"), "suggested")],
             default="abbrechen", close="abbrechen",
@@ -103,15 +114,30 @@ class LooksPage(compat.PageBase):
             return
         uebersprungen = looks.wende_an(self._settings, look)
         if uebersprungen:
-            self._melde(
+            self._melde_und_reload(
                 _('Look "{name}" applied. Skipped: {items}.').format(
                     name=look.get("name", ""),
                     items=", ".join(uebersprungen)))
         else:
-            self._melde(
+            self._melde_und_reload(
                 _('Look "{name}" applied.').format(name=look.get("name", "")))
 
     # --- Eigene Profile ---
+
+    def _on_profil_speichern(self, entry):
+        try:
+            gespeichert = backup.save_profile(self._settings, entry.get_text())
+        except ValueError:
+            self._melde(_("Please enter a name."))
+            return
+        except OSError as fehler:
+            self._melde(_("Saving failed: {error}").format(
+                error=fehler.strerror or _("Error")))
+            return
+        entry.set_text("")
+        # Neu aufbauen, damit die frisch gespeicherte Profil-Karte erscheint.
+        self._melde_und_reload(
+            _("Profile saved: {name}").format(name=gespeichert))
 
     def _on_profil_aktiviert(self, _flowbox, karte):
         name = karte.look.get("_profil", "")
@@ -135,11 +161,32 @@ class LooksPage(compat.PageBase):
         if not erfolg:
             self._melde(_("The profile is damaged."))
             return
-        self._melde(
-            _('Profile "{name}" applied. Restart the app to refresh the '
-              "selection in each section.").format(name=name))
+        self._melde_und_reload(
+            _('Profile "{name}" applied.').format(name=name))
+
+    def _on_profil_loeschen(self, look):
+        name = look.get("_profil", "")
+        if not name:
+            return
+        backup.delete_profile(name)
+        self._melde_und_reload(_("Profile deleted: {name}").format(name=name))
+
+    # --- Rückmeldung ans Fenster ---
 
     def _melde(self, text):
         fenster = self.get_root()
         if fenster is not None and hasattr(fenster, "zeige_toast"):
             fenster.zeige_toast(text)
+
+    def _melde_und_reload(self, text):
+        """Toast zeigen und alle Seiten neu bauen.
+
+        Geht über das Fenster (melde_und_reload), weil ein Look-/Profilwechsel
+        mehrere Bereiche betrifft und auch diese Looks-Seite selbst neu gebaut
+        wird (damit die Profilliste stimmt).
+        """
+        fenster = self.get_root()
+        if fenster is not None and hasattr(fenster, "melde_und_reload"):
+            fenster.melde_und_reload(text)
+        else:
+            self._melde(text)

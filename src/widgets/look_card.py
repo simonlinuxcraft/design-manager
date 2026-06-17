@@ -13,6 +13,7 @@ from gi.repository import Gtk
 
 from src import compat
 from src.core import backgrounds
+from src.i18n import _
 from src.widgets.theme_card import _icon_theme_fuer
 
 
@@ -27,9 +28,14 @@ FLAECHE_HOEHE = 84
 
 
 class LookCard(Gtk.FlowBoxChild):
-    """Anklickbare Vorschaukarte für genau einen kuratierten Look."""
+    """Anklickbare Vorschaukarte für genau einen kuratierten Look.
 
-    def __init__(self, look):
+    Bekommt sie eine on_loeschen-Funktion (für eigene Profile), zeigt sie oben
+    rechts einen kleinen Löschen-Knopf. Der fängt seinen Klick selbst ab, löst
+    also nicht das Anwenden der Karte aus.
+    """
+
+    def __init__(self, look, on_loeschen=None):
         super().__init__()
         self.look = look
         self.add_css_class("theme-card")
@@ -49,7 +55,26 @@ class LookCard(Gtk.FlowBoxChild):
         beschreibung.add_css_class("card-status")
         box.append(beschreibung)
 
-        self.set_child(box)
+        if on_loeschen is None:
+            self.set_child(box)
+        else:
+            self.set_child(self._mit_loeschknopf(box, on_loeschen))
+
+    def _mit_loeschknopf(self, box, on_loeschen):
+        overlay = Gtk.Overlay()
+        overlay.set_child(box)
+
+        knopf = Gtk.Button(icon_name="window-close-symbolic")
+        knopf.add_css_class("osd")
+        knopf.add_css_class("circular")
+        knopf.set_halign(Gtk.Align.END)
+        knopf.set_valign(Gtk.Align.START)
+        knopf.set_margin_top(4)
+        knopf.set_margin_end(4)
+        knopf.set_tooltip_text(_("Delete profile"))
+        knopf.connect("clicked", lambda _b: on_loeschen(self.look))
+        overlay.add_overlay(knopf)
+        return overlay
 
     def _flaeche(self, look):
         """Hintergrund-Thumbnail, oder eine Fläche in der Akzentfarbe."""

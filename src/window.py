@@ -14,7 +14,8 @@ from gi.repository import Adw, Gio, GLib, Gtk
 from src import compat
 from src.i18n import _
 from src.logo import logo_texture
-from src.core import gdm, healthcheck, lockscreen, onboarding, restorepoint, updater
+from src.core import (gdm, healthcheck, lockscreen, onboarding, restorepoint,
+                      schedule, updater)
 from src.core.settings import AppSettings
 from src.pages.background import BackgroundPage
 from src.pages.backup import BackupPage
@@ -125,8 +126,13 @@ class MainWindow(Adw.ApplicationWindow):
         # Adwaita zurückgefallen). idle_add, damit das Fenster zuerst erscheint.
         GLib.idle_add(self._pruefe_gesundheit)
 
+        # Reste der früher vorhandenen Tag/Nacht-Automatik einmalig abräumen
+        # (verwaiste systemd-User-Timer). Idempotent und billig, wenn nichts da
+        # ist. Verzögert, um den Start nicht zu blockieren.
+        GLib.idle_add(schedule.entferne_alte_automatik)
+
         # Verzögert und im Hintergrund nach einer neueren Version sehen.
-        if updater.werkzeuge_da():
+        if updater.UPDATER_AKTIV and updater.werkzeuge_da():
             GLib.timeout_add_seconds(3, self._auto_update_check)
 
     def _zeige_willkommen(self):
@@ -190,6 +196,39 @@ class MainWindow(Adw.ApplicationWindow):
         zeile.seite = erzeuge_seite()
         self._split.set_content(zeile.seite)
 
+    def reload_alle_seiten(self):
+        """Verwirft den Cache ALLER Seiten und baut die aktive sofort neu.
+
+        Ein Look- oder Profilwechsel betrifft mehrere Bereiche gleichzeitig
+        (Design, Symbole, Mauszeiger, Hintergrund). Damit nicht nur die gerade
+        sichtbare Seite stimmt und der Rest bis zum Neustart alte Werte zeigt,
+        werfen wir alle zwischengespeicherten Seiten weg; jede wird beim nächsten
+        Anwählen frisch gebaut.
+        """
+        i = 0
+        while True:
+            zeile = self._listbox.get_row_at_index(i)
+            if zeile is None:
+                break
+            if hasattr(zeile, "seite"):
+                zeile.seite = None
+            i += 1
+        self._reload_aktive_seite()
+
+    def melde_und_reload(self, text):
+        """Toast über dem Fenster zeigen und alle Seiten neu bauen.
+
+        Der Toast hängt am fensterweiten Overlay, überlebt also den Neuaufbau
+        der Seiten. Für Aktionen gedacht, die mehrere Bereiche auf einmal ändern
+        (Look/Profil anwenden, Sicherung wiederherstellen, .dmlook importieren).
+
+        Der Neuaufbau läuft über idle_add, nicht direkt: der Aufrufer steckt
+        meist im Signal-Handler genau der Seite, die gleich ersetzt wird. Erst
+        den Handler sauber zu Ende laufen lassen, dann die Seite austauschen.
+        """
+        self.zeige_toast(text)
+        GLib.idle_add(self.reload_alle_seiten)
+
     def _build_sidebar(self):
         """Linke Spalte: flache Kopfleiste mit Marke, darunter die Liste."""
         header = Adw.HeaderBar()
@@ -230,7 +269,7 @@ class MainWindow(Adw.ApplicationWindow):
         """Hamburger-Menü rechts in der Kopfleiste."""
         menue = Gio.Menu()
         menue.append(_("Restore safe state"), "win.safe-state")
-        if updater.werkzeuge_da():
+        if updater.UPDATER_AKTIV and updater.werkzeuge_da():
             menue.append(_("Check for updates"), "win.check-updates")
         menue.append(_("About Design Manager"), "win.about")
         menue.append(_("Quit"), "win.quit")
@@ -279,9 +318,13 @@ class MainWindow(Adw.ApplicationWindow):
         self._settings.reset_gtk_theme()
         self._settings.reset_icon_theme()
         self._settings.reset_cursor_theme()
-        self._settings.reset_shell_theme()
-        # Auch das Sperrbild aus der Shell-CSS nehmen (per-user, kein root).
+        # Erst das Sperrbild aus der Shell-CSS nehmen, SOLANGE das alte Shell-
+        # Design noch aktiv ist: clear_background findet seine gnome-shell.css
+        # über das aktuell gesetzte Theme. Würde reset_shell_theme() zuerst
+        # laufen, zeigte _css_pfad() ins Leere und der Sperrbild-Block bliebe
+        # verwaist im alten Theme zurück (taucht bei Reaktivierung wieder auf).
         lockscreen.clear_background(self._settings)
+        self._settings.reset_shell_theme()
         # Den GDM-Login-Hintergrund nur zurücksetzen, wenn überhaupt einer aktiv
         # ist. Das läuft über pkexec (Passwort-Dialog), darum nebenläufig, damit
         # die schon erledigten dconf-Resets nicht an einem Abbruch hängen.

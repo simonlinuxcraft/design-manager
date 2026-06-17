@@ -4,11 +4,10 @@ Ein Look ist ein stimmiges Set aus GTK-Design, Symbolen, Akzentfarbe, Schrift
 und optional einem Hintergrundbild. Die mitgelieferten Looks liegen als JSON
 unter data/looks/. Jedes Feld ist optional.
 
-Anwenden ist bewusst defensiv: Erst wird der aktuelle Stand als Profil
-"vorher-<name>" gesichert (ein Klick zurück über die Sicherungsseite genügt),
-dann werden nur die Teile gesetzt, die auf diesem System wirklich vorhanden
-sind. Fehlende Teile werden übersprungen und zurückgemeldet, statt einen
-ungültigen Wert zu setzen.
+Anwenden ist bewusst defensiv: Erst wird der aktuelle Stand als Sicherungspunkt
+festgehalten (ein Klick zurück über die Sicherungsseite genügt), dann werden nur
+die Teile gesetzt, die auf diesem System wirklich vorhanden sind. Fehlende Teile
+werden übersprungen und zurückgemeldet, statt einen ungültigen Wert zu setzen.
 """
 
 import json
@@ -16,7 +15,7 @@ import os
 
 from gi.repository import GLib
 
-from src.core import backgrounds, backup, themes
+from src.core import backgrounds, backup, restorepoint, themes
 from src.core.settings import AppSettings
 from src.i18n import _
 
@@ -97,7 +96,10 @@ def eigene_profile_als_looks():
         uri = _profil_wert(daten, AppSettings.BACKGROUND, "picture-uri")
         if uri:
             try:
-                look["wallpaper"], _ = GLib.filename_from_uri(uri)
+                # Zweiter Rückgabewert (Hostname) wird nicht gebraucht; NICHT _
+                # nennen, das ist hier die gettext-Funktion (sonst macht Python
+                # _ zur lokalen Variablen und _("…") oben wirft UnboundLocalError).
+                look["wallpaper"], _host = GLib.filename_from_uri(uri)
             except (GLib.Error, TypeError):
                 pass
         ergebnis.append(look)
@@ -107,12 +109,14 @@ def eigene_profile_als_looks():
 def wende_an(settings, look):
     """Wendet einen Look an und gibt die übersprungenen Teile als Liste zurück.
 
-    Vor der ersten Änderung wird der aktuelle Stand als Profil gesichert.
+    Vor der ersten Änderung wird der aktuelle Stand als Sicherungspunkt
+    festgehalten. Bewusst ein Sicherungspunkt (Ringpuffer, eigener Bereich) und
+    kein benanntes Profil: sonst würde sich die Profilliste bei jedem Look-Klick
+    mit "before-…"-Einträgen zumüllen.
     """
-    try:
-        backup.save_profile(settings, "before-" + look["name"])
-    except (ValueError, OSError):
-        pass  # Sicherung ist Komfort, kein Grund das Anwenden abzubrechen
+    restorepoint.erstelle(
+        settings,
+        _('before look "{name}"').format(name=look.get("name", "")))
 
     uebersprungen = []
 
