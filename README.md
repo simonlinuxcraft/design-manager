@@ -1,4 +1,4 @@
-# Design Manager
+# Design Manager for GNOME - 2026
 
 A GNOME appearance manager built with Python 3, GTK 4 and libadwaita. Change the
 GTK theme, icon theme, cursor, system font and wallpaper from one place, with
