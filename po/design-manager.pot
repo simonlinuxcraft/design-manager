@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Design Manager\n"
 "Report-Msgid-Bugs-To: https://github.com/simonlinuxcraft\n"
-"POT-Creation-Date: 2026-06-16 09:55+0200\n"
+"POT-Creation-Date: 2026-06-17 16:06+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,53 +35,57 @@ msgstr ""
 msgid "Installed"
 msgstr ""
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/look_card.py:74
+msgid "Delete profile"
+msgstr ""
+
 #: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/wallpaper_card.py:50
 msgid "Remove from the app (file is kept)"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/welcome.py:29
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/welcome.py:22
 msgid "Customize the GNOME desktop appearance in one place."
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/welcome.py:30
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/welcome.py:23
 msgid "Everything in one place"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/welcome.py:31
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/welcome.py:24
 msgid ""
 "Background, GTK theme, icons, cursor, fonts and the shell theme. Every "
 "change takes effect immediately."
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/welcome.py:33
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/welcome.py:26
 msgid "Save looks"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/welcome.py:34
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/welcome.py:27
 msgid ""
 "Create profiles, for example day and night, and switch with one click. Or "
 "back up everything to a file."
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/welcome.py:36
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/welcome.py:29
 msgid "Ready"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/welcome.py:37
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/welcome.py:30
 msgid ""
 "Tip: some shell themes need the User Themes extension. Have fun customizing."
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/welcome.py:47
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/welcome.py:40
 msgid "Welcome"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/welcome.py:60
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/welcome.py:126
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/welcome.py:53
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/welcome.py:119
 msgid "Next"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/welcome.py:126
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/welcome.py:119
 msgid "Get started"
 msgstr ""
 
@@ -105,13 +109,17 @@ msgstr ""
 msgid "Installing…"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/dropzone.py:101
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/dropzone.py:95
+msgid "Installation failed unexpectedly."
+msgstr ""
+
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/dropzone.py:108
 #, python-brace-format
 msgid "Failed: {error}"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/dropzone.py:102
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:178
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/dropzone.py:109
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:177
 #, python-brace-format
 msgid "Installed: {items}"
 msgstr ""
@@ -130,6 +138,10 @@ msgstr ""
 
 #: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/healthcheck.py:43
 msgid "shell theme"
+msgstr ""
+
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/looksbundle.py:192
+msgid "before importing a look package"
 msgstr ""
 
 #: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/theme_check.py:43
@@ -154,159 +166,159 @@ msgid "The file gnome-shell.css is not readable."
 msgstr ""
 
 #: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:47
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:266
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:288
 #: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/system.py:173
 msgid "Left"
 msgstr ""
 
 #: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:47
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:266
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:288
 #: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/system.py:173
 msgid "Right"
 msgstr ""
 
 #: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:48
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:265
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:287
 msgid "Top"
 msgstr ""
 
 #: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:48
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:265
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:287
 msgid "Bottom"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:176
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:245
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:194
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:265
 msgid "Position"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:177
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:195
 msgid "Screen edge the dock sits on"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:178
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:196
 msgid "Always visible"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:179
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:197
 msgid "Pin the dock to the edge instead of hiding it"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:180
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:273
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:198
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:295
 msgid "Auto-hide"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:181
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:199
 msgid "Hide the dock until the pointer touches the edge"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:182
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:200
 msgid "Smart hide"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:183
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:201
 msgid "Only hide when a window covers the dock"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:184
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:202
 msgid "Icon size"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:185
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:203
 msgid "Maximum size of the app icons in pixels"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:186
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:204
 msgid "Full height"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:187
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:205
 msgid "Stretch the dock along the whole screen edge (panel style)"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:189
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:207
 msgid "Apps button on top"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:190
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:208
 msgid "Put the applications button at the start"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:191
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:209
 msgid "Show drives"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:192
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:210
 msgid "Show mounted volumes in the dock"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:193
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:211
 msgid "Show trash"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:194
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:212
 msgid "Show the trash in the dock"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:195
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:275
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:213
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:297
 msgid "On all monitors"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:196
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:214
 msgid "Show the dock on every screen"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:245
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:265
 msgid "Screen edge the panel sits on"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:253
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:275
 msgid "Panel height"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:253
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:275
 msgid "Thickness of the bar in pixels"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:263
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:285
 msgid "Indicator position"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:264
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:286
 msgid "Where the dot for open apps sits"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:267
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:289
 msgid "Group windows"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:268
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:290
 msgid "Bundle multiple windows of an app into one icon"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:269
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:291
 msgid "Show favorites"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:270
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:292
 msgid "Show pinned apps in the bar"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:271
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:293
 msgid "Separate workspaces"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:272
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:294
 msgid "Only show windows of the current workspace"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:274
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:296
 msgid "Hide the panel until it is needed"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:276
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py:298
 msgid "Show the panel on every screen"
 msgstr ""
 
@@ -338,31 +350,36 @@ msgstr ""
 msgid "Your profile"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/looks.py:124
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/looks.py:120
+#, python-brace-format
+msgid "before look \"{name}\""
+msgstr ""
+
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/looks.py:129
 #, python-brace-format
 msgid "GTK theme \"{name}\""
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/looks.py:131
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/looks.py:136
 #, python-brace-format
 msgid "Icons \"{name}\""
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/looks.py:138
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/looks.py:143
 #, python-brace-format
 msgid "Cursor \"{name}\""
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/looks.py:145
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/looks.py:150
 #, python-brace-format
 msgid "Shell theme \"{name}\""
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/looks.py:152
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/looks.py:157
 msgid "Accent color (only from GNOME 47)"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/looks.py:164
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/looks.py:169
 #: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/overview.py:66
 msgid "Wallpaper"
 msgstr ""
@@ -375,7 +392,7 @@ msgstr ""
 #: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py:62
 #: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/overview.py:48
 #: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/cursor.py:28
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:76
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:70
 msgid "Cursor"
 msgstr ""
 
@@ -383,7 +400,7 @@ msgstr ""
 #: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py:63
 #: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/icons.py:26
 #: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/overview.py:47
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:74
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:68
 msgid "Icons"
 msgstr ""
 
@@ -402,7 +419,7 @@ msgstr ""
 #: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py:64
 #: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/gtk_theme.py:26
 #: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/overview.py:46
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:72
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:66
 msgid "GTK Theme"
 msgstr ""
 
@@ -413,7 +430,7 @@ msgstr ""
 #: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py:65
 #: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/fonts.py:38
 #: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/fonts.py:42
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:78
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:72
 msgid "Fonts"
 msgstr ""
 
@@ -499,10 +516,10 @@ msgstr ""
 #: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/gtk_theme.py:122
 #: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/shell.py:144
 #: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/shell.py:162
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py:96
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py:122
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py:107
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py:148
 #: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/cursor.py:120
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:274
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:302
 msgid "Cancel"
 msgstr ""
 
@@ -528,7 +545,7 @@ msgid "Could not be removed: {name}"
 msgstr ""
 
 #: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/extensions.py:25
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:84
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:78
 msgid "Extensions"
 msgstr ""
 
@@ -608,7 +625,7 @@ msgid "Activate anyway"
 msgstr ""
 
 #: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/overview.py:25
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:66
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:60
 msgid "Overview"
 msgstr ""
 
@@ -632,13 +649,13 @@ msgstr ""
 #: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/overview.py:52
 #: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/shell.py:27
 #: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/shell.py:71
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:80
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:74
 msgid "Shell Theme"
 msgstr ""
 
 #: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/overview.py:65
 #: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py:43
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:70
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:64
 msgid "Background"
 msgstr ""
 
@@ -654,302 +671,172 @@ msgstr ""
 msgid "No image set"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:25
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:88
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:27
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:82
 msgid "Backup"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:56
-msgid "Profiles"
-msgstr ""
-
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:57
-msgid ""
-"Save the current state as a named set and reapply it with a click. Saved "
-"profiles also appear on the Looks page."
-msgstr ""
-
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:60
-msgid "Name a new profile"
-msgstr ""
-
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:67
-msgid "Saved profiles"
-msgstr ""
-
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:79
-msgid "No profiles yet"
-msgstr ""
-
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:80
-msgid "Enter a name above and save."
-msgstr ""
-
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:89
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py:97
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py:123
-msgid "Apply"
-msgstr ""
-
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:97
-msgid "Delete profile"
-msgstr ""
-
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:109
-msgid "Please enter a name."
-msgstr ""
-
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:112
-#, python-brace-format
-msgid "Saving failed: {error}"
-msgstr ""
-
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:113
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:359
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:414
-msgid "Error"
-msgstr ""
-
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:118
-#, python-brace-format
-msgid "Profile saved: {name}"
-msgstr ""
-
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:124
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py:133
-msgid "The profile could not be read."
-msgstr ""
-
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:127
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py:136
-msgid "The profile is damaged."
-msgstr ""
-
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:129
-#, python-brace-format
-msgid "Profile applied: {name}. Restart the app to refresh the selection here."
-msgstr ""
-
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:136
-#, python-brace-format
-msgid "Profile deleted: {name}"
-msgstr ""
-
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:142
-msgid "Day/night automation"
-msgstr ""
-
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:143
-msgid ""
-"Bind two profiles to fixed times. Switches the whole look automatically via "
-"a systemd timer."
-msgstr ""
-
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:156
-msgid "Not enough profiles yet"
-msgstr ""
-
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:157
-msgid ""
-"Create two different profiles first (e.g. a light \"Day\" and a dark "
-"\"Night\")."
-msgstr ""
-
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:166
-msgid "Day profile"
-msgstr ""
-
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:168
-msgid "Day from (HH:MM)"
-msgstr ""
-
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:170
-msgid "Night profile"
-msgstr ""
-
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:172
-msgid "Night from (HH:MM)"
-msgstr ""
-
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:174
-msgid "Automation active"
-msgstr ""
-
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:211
-msgid "Day/night automation turned off."
-msgstr ""
-
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:218
-msgid "Please enter valid times in HH:MM format."
-msgstr ""
-
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:222
-msgid "Day and night profile must differ, otherwise nothing switches."
-msgstr ""
-
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:227
-msgid "Day/night automation active."
-msgstr ""
-
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:230
-msgid "Automation could not be set up."
-msgstr ""
-
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:257
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:50
 msgid "Restore points"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:258
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:51
 msgid ""
-"Created automatically before every theme, cursor or shell change. Restores "
-"the state from before."
+"Created automatically before every theme, cursor or shell change, and before "
+"applying a look. Restores the state from before."
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:271
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:65
 msgid "No restore points yet"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:272
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:66
 msgid "One is created as soon as you change a theme."
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:284
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:329
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:78
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:122
 msgid "Restore"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:292
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:86
 msgid "Delete restore point"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:308
-msgid "Restore point applied. Restart the app to refresh the selection here."
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:102
+msgid "Restore point applied."
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:311
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:104
 msgid "The restore point could not be read."
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:316
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:109
 msgid "Restore point deleted."
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:322
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:115
 msgid "Backup file"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:323
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:116
 msgid "Export the current state to a file or restore from an earlier backup."
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:326
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:119
 msgid "Back up"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:326
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:119
 msgid "Export to a file"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:329
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:122
 msgid "Import from a file"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:349
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:142
 msgid "Back up settings"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:358
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:151
 #, python-brace-format
 msgid "Backup failed: {error}"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:361
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:152
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:206
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py:135
+msgid "Error"
+msgstr ""
+
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:154
 #, python-brace-format
 msgid "Backed up: {file}"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:368
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:161
 msgid "Backups (*.json)"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:370
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:163
 msgid "Restore backup"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:379
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:172
 msgid "The file could not be read."
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:382
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:175
 msgid "That is not a valid backup."
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:384
-msgid "Restored. Restart the app to refresh the selection here."
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:177
+msgid "Restored."
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:391
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:183
 msgid "Share look package"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:392
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:184
 msgid ""
 "Bundle the whole look as a .dmlook, including the theme files and the "
 "wallpaper, or import such a package."
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:396
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:188
 msgid "Export look"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:396
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:188
 msgid "Pack themes and image into a .dmlook"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:399
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:191
 msgid "Import look"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:399
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:191
 msgid "Install and apply from a .dmlook"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:404
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:196
 msgid "Export look package"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:413
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:205
 #, python-brace-format
 msgid "Export failed: {error}"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:416
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:208
 #, python-brace-format
 msgid "Look package saved: {file}"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:421
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:213
 msgid "Look packages (*.dmlook)"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:423
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:215
 msgid "Import look package"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:432
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:224
 msgid "The look package could not be read."
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:435
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:227
 msgid "That is not a valid look package."
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:438
-msgid "Look package applied. Restart the app to refresh the selection here."
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py:229
+msgid "Look package applied."
 msgstr ""
 
 #: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/dock.py:22
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:82
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:76
 msgid "Dock"
 msgstr ""
 
@@ -1000,7 +887,7 @@ msgid "Slate"
 msgstr ""
 
 #: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/system.py:41
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:86
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:80
 msgid "System"
 msgstr ""
 
@@ -1126,68 +1013,94 @@ msgstr ""
 msgid "Remove shell theme?"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py:23
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:68
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py:26
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:62
 msgid "Looks"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py:35
-msgid "No looks found"
-msgstr ""
-
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py:36
-msgid "Bundled looks live under data/looks/."
-msgstr ""
-
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py:46
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py:44
 msgid ""
-"One click applies the whole look. For bundled looks a \"before-…\" profile "
-"is created first, so you can go back."
+"One click applies the whole look. For bundled looks a restore point is "
+"created first, so you can go back from the Backup page."
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py:55
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py:53
 msgid "Bundled looks"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py:59
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py:56
 msgid "Your profiles"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py:93
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py:78
+msgid "Save the current look as a profile"
+msgstr ""
+
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py:104
 #, python-brace-format
 msgid "Apply look \"{name}\"?"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py:94
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py:105
 msgid ""
-"The current state is saved as a profile first. Parts that are not installed "
-"are skipped."
+"The current state is saved as a restore point first. Parts that are not "
+"installed are skipped."
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py:107
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py:108
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py:149
+msgid "Apply"
+msgstr ""
+
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py:118
 #, python-brace-format
 msgid "Look \"{name}\" applied. Skipped: {items}."
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py:112
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py:123
 #, python-brace-format
 msgid "Look \"{name}\" applied."
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py:120
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py:131
+msgid "Please enter a name."
+msgstr ""
+
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py:134
+#, python-brace-format
+msgid "Saving failed: {error}"
+msgstr ""
+
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py:140
+#, python-brace-format
+msgid "Profile saved: {name}"
+msgstr ""
+
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py:146
 #, python-brace-format
 msgid "Apply profile \"{name}\"?"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py:121
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py:147
 msgid "Applies this profile's saved state."
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py:139
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py:159
+msgid "The profile could not be read."
+msgstr ""
+
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py:162
+msgid "The profile is damaged."
+msgstr ""
+
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py:165
 #, python-brace-format
-msgid ""
-"Profile \"{name}\" applied. Restart the app to refresh the selection in each "
-"section."
+msgid "Profile \"{name}\" applied."
+msgstr ""
+
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py:172
+#, python-brace-format
+msgid "Profile deleted: {name}"
 msgstr ""
 
 #: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py:29
@@ -1248,10 +1161,10 @@ msgstr ""
 
 #: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py:110
 msgid ""
-"Variety manages the background. Your image choice is handed to Variety and "
-"stays across every login. You can change the adjustment mode below, but at "
-"the next login Variety sets its own again. For full control over image and "
-"mode you can remove Variety here."
+"Variety manages the background. Your image choice is handed to Variety, "
+"which normally keeps it across the next login too. You can change the "
+"adjustment mode below, but Variety may set its own image again. For full "
+"control over image and mode you can remove Variety here."
 msgstr ""
 
 #: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py:118
@@ -1469,110 +1382,110 @@ msgstr ""
 msgid "1.0 is the default size."
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:151
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:150
 #, python-brace-format
 msgid "Not found: {names}. GNOME falls back to Adwaita."
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:153
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:152
 msgid "Set default"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:163
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:162
 msgid "Reset to a safe default theme."
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:175
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:174
 #, python-brace-format
 msgid "Installation failed: {error}"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:211
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:239
 msgid "SETTINGS"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:239
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:275
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:267
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:303
 msgid "Restore safe state"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:241
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:269
 msgid "Check for updates"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:242
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:270
 msgid "About Design Manager"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:243
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:271
 msgid "Quit"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:248
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:276
 msgid "Main menu"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:259
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:287
 msgid ""
 "Customize the GNOME desktop appearance in one place: background, themes, "
 "icons, cursor and fonts."
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:269
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:297
 msgid "Restore safe state?"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:270
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:298
 msgid ""
 "First a restore point is created, then the theme, icons, cursor and shell "
 "theme are set to guaranteed working defaults (Adwaita). This helps when a "
 "theme has made the interface unusable."
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:282
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:310
 msgid "before emergency reset"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:298
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:330
 msgid "Safe state restored (Adwaita)."
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:304
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:336
 msgid "Checking for updates…"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:322
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:354
 msgid "You have the latest version."
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:326
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:358
 msgid "Update available"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:327
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:359
 #, python-brace-format
 msgid ""
 "Version {new} is ready (installed: {cur}). Download and install it now? This "
 "asks for the administrator password once."
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:330
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:362
 msgid "Later"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:331
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:363
 msgid "Update"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:339
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:371
 #, python-brace-format
 msgid "Downloading version {ver}… (enter password)"
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:350
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:382
 msgid "Updated. Please restart the app."
 msgstr ""
 
-#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:352
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py:384
 msgid "Update failed or canceled."
 msgstr ""

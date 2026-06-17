@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Design Manager\n"
 "Report-Msgid-Bugs-To: https://github.com/simonlinuxcraft\n"
-"POT-Creation-Date: 2026-06-16 09:55+0200\n"
+"POT-Creation-Date: 2026-06-17 16:06+0200\n"
 "PO-Revision-Date: 2026-06-16 00:00+0200\n"
 "Last-Translator: simonlinuxcraft\n"
 "Language-Team: German\n"
@@ -16,345 +16,591 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/widgets/card_common.py:31
 msgid "Remove this theme"
 msgstr "Dieses Design entfernen"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/widgets/shell_card.py:90 Manager/src/widgets/theme_card.py:88
+#: Manager/src/widgets/wallpaper_card.py:74
+#: Manager/src/widgets/cursor_card.py:66
 msgid "Active"
 msgstr "Aktiv"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/widgets/shell_card.py:93 Manager/src/widgets/theme_card.py:91
+#: Manager/src/widgets/cursor_card.py:69
 msgid "Installed"
 msgstr "Installiert"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/widgets/look_card.py:74
+msgid "Delete profile"
+msgstr "Profil löschen"
+
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/widgets/wallpaper_card.py:50
 msgid "Remove from the app (file is kept)"
 msgstr "Aus der App entfernen (Datei bleibt erhalten)"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/widgets/welcome.py:22
 msgid "Customize the GNOME desktop appearance in one place."
 msgstr "Das Aussehen des GNOME-Desktops an einem Ort anpassen."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/widgets/welcome.py:23
 msgid "Everything in one place"
 msgstr "Alles an einem Ort"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/widgets/welcome.py:24
 msgid ""
 "Background, GTK theme, icons, cursor, fonts and the shell theme. Every "
 "change takes effect immediately."
 msgstr ""
-"Hintergrund, GTK Theme, Symbol-Design, Mauszeiger, Schriftarten und Shell Theme. Jede "
-"Änderung wirkt sofort."
+"Hintergrund, GTK Theme, Symbol-Design, Mauszeiger, Schriftarten und Shell "
+"Theme. Jede Änderung wirkt sofort."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/widgets/welcome.py:26
 msgid "Save looks"
 msgstr "Looks speichern"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/widgets/welcome.py:27
 msgid ""
 "Create profiles, for example day and night, and switch with one click. Or "
 "back up everything to a file."
 msgstr ""
-"Profile erstellen, zum Beispiel Tag und Nacht, und mit einem Klick wechseln. Oder "
-"alles in eine Datei sichern."
+"Profile erstellen, zum Beispiel Tag und Nacht, und mit einem Klick wechseln. "
+"Oder alles in eine Datei sichern."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/widgets/welcome.py:29
 msgid "Ready"
 msgstr "Los geht's"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/widgets/welcome.py:30
 msgid ""
 "Tip: some shell themes need the User Themes extension. Have fun customizing."
 msgstr ""
-"Tipp: Manche Shell Themes brauchen die User Themes-Erweiterung. Viel Spaß beim Anpassen."
+"Tipp: Manche Shell Themes brauchen die User Themes-Erweiterung. Viel Spaß "
+"beim Anpassen."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/widgets/welcome.py:40
 msgid "Welcome"
 msgstr "Willkommen"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/widgets/welcome.py:53 Manager/src/widgets/welcome.py:119
 msgid "Next"
 msgstr "Weiter"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/widgets/welcome.py:119
 msgid "Get started"
 msgstr "Jetzt starten"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/widgets/dropzone.py:23
 msgid "Drag an archive (.tar.gz or .zip) here"
 msgstr "Archiv (.tar.gz oder .zip) hierher ziehen"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/widgets/dropzone.py:43
 msgid "Choose file…"
 msgstr "Datei auswählen…"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/widgets/dropzone.py:67
 msgid "Themes and fonts"
 msgstr "Designs und Schriftarten"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/widgets/dropzone.py:71
 msgid "Choose theme or font"
 msgstr "Design oder Schriftart auswählen"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/widgets/dropzone.py:81
 msgid "Installing…"
 msgstr "Installiere…"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/widgets/dropzone.py:95
+msgid "Installation failed unexpectedly."
+msgstr "Installation unerwartet fehlgeschlagen."
+
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/widgets/dropzone.py:108
 #, python-brace-format
 msgid "Failed: {error}"
 msgstr "Fehlgeschlagen: {error}"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/widgets/dropzone.py:109 Manager/src/window.py:177
 #, python-brace-format
 msgid "Installed: {items}"
 msgstr "Installiert: {items}"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/healthcheck.py:36
 msgid "GTK theme"
 msgstr "GTK Theme"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/healthcheck.py:38
 msgid "icon theme"
 msgstr "Symbol-Design"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/healthcheck.py:40
 msgid "cursor"
 msgstr "Mauszeiger"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/healthcheck.py:43
 msgid "shell theme"
 msgstr "Shell Theme"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/looksbundle.py:192
+msgid "before importing a look package"
+msgstr "vor Look-Paket-Import"
+
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/theme_check.py:43
 msgid "The theme folder was not found."
 msgstr "Der Design-Ordner wurde nicht gefunden."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/theme_check.py:49
 #, python-brace-format
 msgid "The file {sub}/gtk.css is not readable."
 msgstr "Die Datei {sub}/gtk.css ist nicht lesbar."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/theme_check.py:51
 msgid "The theme is missing gtk-4.0/gtk.css. GNOME would fall back to Adwaita."
-msgstr "Dem Design fehlt gtk-4.0/gtk.css. GNOME würde auf Adwaita zurückfallen."
+msgstr ""
+"Dem Design fehlt gtk-4.0/gtk.css. GNOME würde auf Adwaita zurückfallen."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/theme_check.py:61
 msgid "The theme is missing gnome-shell/gnome-shell.css."
 msgstr "Dem Design fehlt gnome-shell/gnome-shell.css."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/theme_check.py:63
 msgid "The file gnome-shell.css is not readable."
 msgstr "Die Datei gnome-shell.css ist nicht lesbar."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/dock.py:47 Manager/src/core/dock.py:288
+#: Manager/src/pages/system.py:173
 msgid "Left"
 msgstr "Links"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/dock.py:47 Manager/src/core/dock.py:288
+#: Manager/src/pages/system.py:173
 msgid "Right"
 msgstr "Rechts"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/dock.py:48 Manager/src/core/dock.py:287
 msgid "Top"
 msgstr "Oben"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/dock.py:48 Manager/src/core/dock.py:287
 msgid "Bottom"
 msgstr "Unten"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/dock.py:194 Manager/src/core/dock.py:265
 msgid "Position"
 msgstr "Position"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/dock.py:195
 msgid "Screen edge the dock sits on"
 msgstr "Bildschirmkante, an der der Dock liegt"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/dock.py:196
 msgid "Always visible"
 msgstr "Immer sichtbar"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/dock.py:197
 msgid "Pin the dock to the edge instead of hiding it"
 msgstr "Dock an der Kante fixieren statt ausblenden"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/dock.py:198 Manager/src/core/dock.py:295
 msgid "Auto-hide"
 msgstr "Auto-hide"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/dock.py:199
 msgid "Hide the dock until the pointer touches the edge"
 msgstr "Dock ausblenden, bis der Mauszeiger die Kante berührt"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/dock.py:200
 msgid "Smart hide"
 msgstr "Smart hide"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/dock.py:201
 msgid "Only hide when a window covers the dock"
 msgstr "Nur ausblenden, wenn ein Fenster den Dock verdeckt"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/dock.py:202
 msgid "Icon size"
 msgstr "Symbolgröße"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/dock.py:203
 msgid "Maximum size of the app icons in pixels"
 msgstr "Maximale Größe der App-Symbole in Pixeln"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/dock.py:204
 msgid "Full height"
 msgstr "Volle Höhe"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/dock.py:205
 msgid "Stretch the dock along the whole screen edge (panel style)"
 msgstr "Dock über die gesamte Bildschirmkante strecken (Panel-Stil)"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/dock.py:207
 msgid "Apps button on top"
 msgstr "Apps-Schaltfläche oben"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/dock.py:208
 msgid "Put the applications button at the start"
 msgstr "Anwendungsschaltfläche an den Anfang setzen"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/dock.py:209
 msgid "Show drives"
 msgstr "Laufwerke anzeigen"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/dock.py:210
 msgid "Show mounted volumes in the dock"
 msgstr "Eingehängte Volumes im Dock anzeigen"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/dock.py:211
 msgid "Show trash"
 msgstr "Papierkorb anzeigen"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/dock.py:212
 msgid "Show the trash in the dock"
 msgstr "Papierkorb im Dock anzeigen"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/dock.py:213 Manager/src/core/dock.py:297
 msgid "On all monitors"
 msgstr "Auf allen Monitoren"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/dock.py:214
 msgid "Show the dock on every screen"
 msgstr "Dock auf jedem Bildschirm anzeigen"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/dock.py:265
 msgid "Screen edge the panel sits on"
 msgstr "Bildschirmkante, an der das Panel liegt"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/dock.py:275
 msgid "Panel height"
 msgstr "Panel-Höhe"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/dock.py:275
 msgid "Thickness of the bar in pixels"
 msgstr "Stärke der Leiste in Pixeln"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/dock.py:285
 msgid "Indicator position"
 msgstr "Indikator-Position"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/dock.py:286
 msgid "Where the dot for open apps sits"
 msgstr "Wo der Punkt für geöffnete Apps liegt"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/dock.py:289
 msgid "Group windows"
 msgstr "Fenster gruppieren"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/dock.py:290
 msgid "Bundle multiple windows of an app into one icon"
 msgstr "Mehrere Fenster einer App unter einem Symbol zusammenfassen"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/dock.py:291
 msgid "Show favorites"
 msgstr "Favoriten anzeigen"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/dock.py:292
 msgid "Show pinned apps in the bar"
 msgstr "Angeheftete Apps in der Leiste anzeigen"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/dock.py:293
 msgid "Separate workspaces"
 msgstr "Arbeitsbereiche trennen"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/dock.py:294
 msgid "Only show windows of the current workspace"
 msgstr "Nur Fenster des aktuellen Arbeitsbereichs anzeigen"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/dock.py:296
 msgid "Hide the panel until it is needed"
 msgstr "Panel ausblenden, bis es benötigt wird"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/dock.py:298
 msgid "Show the panel on every screen"
 msgstr "Panel auf jedem Bildschirm anzeigen"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/looks.py:32
 msgid "Midnight Blue"
 msgstr "Midnight Blue"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/looks.py:32
 msgid "Dark with a blue accent."
 msgstr "Dunkel mit blauer Akzentfarbe."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/looks.py:33
 msgid "Sunrise"
 msgstr "Sunrise"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/looks.py:33
 msgid "Light with warm orange."
 msgstr "Hell mit warmem Orange."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/looks.py:34
 msgid "Forest Clearing"
 msgstr "Forest Clearing"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/looks.py:34
 msgid "Dark green and calm."
 msgstr "Dunkelgrün und ruhig."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/looks.py:90
 msgid "Your profile"
 msgstr "Dein Profil"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/looks.py:120
+#, python-brace-format
+msgid "before look \"{name}\""
+msgstr "vor Look \"{name}\""
+
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/looks.py:129
 #, python-brace-format
 msgid "GTK theme \"{name}\""
 msgstr "GTK Theme \"{name}\""
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/looks.py:136
 #, python-brace-format
 msgid "Icons \"{name}\""
 msgstr "Symbol-Design \"{name}\""
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/looks.py:143
 #, python-brace-format
 msgid "Cursor \"{name}\""
 msgstr "Mauszeiger \"{name}\""
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/looks.py:150
 #, python-brace-format
 msgid "Shell theme \"{name}\""
 msgstr "Shell Theme \"{name}\""
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/looks.py:157
 msgid "Accent color (only from GNOME 47)"
 msgstr "Akzentfarbe (nur ab GNOME 47)"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/looks.py:169 Manager/src/pages/overview.py:66
 msgid "Wallpaper"
 msgstr "Hintergrund"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/installer.py:54
 msgid "Theme"
 msgstr "Design"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/installer.py:55 Manager/src/core/installer.py:62
+#: Manager/src/pages/overview.py:48 Manager/src/pages/cursor.py:28
+#: Manager/src/window.py:70
 msgid "Cursor"
 msgstr "Mauszeiger"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/installer.py:56 Manager/src/core/installer.py:63
+#: Manager/src/pages/icons.py:26 Manager/src/pages/overview.py:47
+#: Manager/src/window.py:68
 msgid "Icons"
 msgstr "Symbole"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/installer.py:62
 msgid "This is a cursor theme."
 msgstr "Dies ist ein Mauszeiger-Design."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/installer.py:63
 msgid "This is an icon theme."
 msgstr "Dies ist ein Symbol-Design."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/installer.py:64
 msgid "This is a GTK theme."
 msgstr "Dies ist ein GTK Theme."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/installer.py:64 Manager/src/pages/gtk_theme.py:26
+#: Manager/src/pages/overview.py:46 Manager/src/window.py:66
 msgid "GTK Theme"
 msgstr "GTK Theme"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/installer.py:65
 msgid "This is a font."
 msgstr "Dies ist eine Schriftart."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/installer.py:65 Manager/src/pages/fonts.py:38
+#: Manager/src/pages/fonts.py:42 Manager/src/window.py:72
 msgid "Fonts"
 msgstr "Schriftarten"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/installer.py:85
 msgid ""
 "This is a folder, not an archive. Please choose an archive (.tar.gz/.zip)."
 msgstr ""
 "Das ist ein Ordner, kein Archiv. Bitte ein Archiv (.tar.gz/.zip) auswählen."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/installer.py:88
 msgid "The file was not found."
 msgstr "Die Datei wurde nicht gefunden."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/installer.py:96
 msgid "The font could not be copied."
 msgstr "Die Schriftart konnte nicht kopiert werden."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/installer.py:130
 #, python-brace-format
 msgid "{sentence} Please install it on the \"{page}\" page."
 msgstr "{sentence} Bitte auf der Seite \"{page}\" installieren."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/installer.py:142
 msgid ""
 "This is a Windows cursor (.cur/.ani). GNOME cannot use it directly. Download "
 "the Linux variant of the theme (a folder with a \"cursors\" subfolder)."
 msgstr ""
-"Das ist ein Windows-Mauszeiger (.cur/.ani). GNOME kann ihn nicht direkt verwenden. "
-"Bitte die Linux-Variante des Designs herunterladen (ein Ordner mit einem \"cursors\"-Unterordner)."
+"Das ist ein Windows-Mauszeiger (.cur/.ani). GNOME kann ihn nicht direkt "
+"verwenden. Bitte die Linux-Variante des Designs herunterladen (ein Ordner "
+"mit einem \"cursors\"-Unterordner)."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/installer.py:145
 msgid "No theme and no font found in the archive."
 msgstr "Kein Design und keine Schriftart im Archiv gefunden."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/installer.py:178
 msgid "Format not supported (only .zip and .tar.*)."
 msgstr "Format nicht unterstützt (nur .zip und .tar.*)."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/installer.py:181
 msgid "The archive could not be extracted."
 msgstr "Das Archiv konnte nicht entpackt werden."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/installer.py:193 Manager/src/core/installer.py:210
 msgid "The archive contains unsafe paths."
 msgstr "Das Archiv enthält unsichere Pfade."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/core/installer.py:345
 #, python-brace-format
 msgid "Font: {n} file"
 msgid_plural "Font: {n} files"
 msgstr[0] "Schrift: {n} Datei"
 msgstr[1] "Schrift: {n} Dateien"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/icons.py:42 Manager/src/pages/dock.py:43
 msgid "Changes take effect immediately."
 msgstr "Änderungen wirken sofort."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/icons.py:47
 msgid "Icon theme"
 msgstr "Symbol-Design"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/icons.py:50
 msgid "Install a new icon theme"
 msgstr "Neues Symbol-Design installieren"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/icons.py:52
 msgid "Drag an icon theme (.tar.gz/.zip) here"
 msgstr "Symbol-Design (.tar.gz/.zip) hierher ziehen"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/icons.py:113
 msgid "Remove icon theme?"
 msgstr "Symbol-Design entfernen?"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/icons.py:114 Manager/src/pages/shell.py:160
+#: Manager/src/pages/cursor.py:118
 #, python-brace-format
 msgid ""
 "\"{name}\" will be permanently deleted from your user folder. This cannot be "
@@ -363,48 +609,80 @@ msgstr ""
 "\"{name}\" wird dauerhaft aus deinem Benutzerordner gelöscht. Das kann nicht "
 "rückgängig gemacht werden."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/icons.py:116 Manager/src/pages/gtk_theme.py:122
+#: Manager/src/pages/shell.py:144 Manager/src/pages/shell.py:162
+#: Manager/src/pages/looks.py:107 Manager/src/pages/looks.py:148
+#: Manager/src/pages/cursor.py:120 Manager/src/window.py:302
 msgid "Cancel"
 msgstr "Abbrechen"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/icons.py:117 Manager/src/pages/shell.py:163
+#: Manager/src/pages/background.py:297 Manager/src/pages/cursor.py:121
 msgid "Remove"
 msgstr "Entfernen"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/icons.py:133 Manager/src/pages/shell.py:187
+#: Manager/src/pages/cursor.py:139
 #, python-brace-format
 msgid "Removed: {name}"
 msgstr "Entfernt: {name}"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/icons.py:135 Manager/src/pages/shell.py:189
+#: Manager/src/pages/cursor.py:141
 #, python-brace-format
 msgid "Could not be removed: {name}"
 msgstr "Konnte nicht entfernt werden: {name}"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/extensions.py:25 Manager/src/window.py:78
 msgid "Extensions"
 msgstr "Erweiterungen"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/extensions.py:40
 msgid "Not available here"
 msgstr "Hier nicht verfügbar"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/extensions.py:41
 msgid ""
 "Managing extensions needs access to the GNOME Shell service, which is not "
 "reachable here (e.g. in a sandbox)."
 msgstr ""
-"Die Verwaltung von Erweiterungen braucht Zugriff auf den GNOME Shell-Dienst, der "
-"hier nicht erreichbar ist (z.B. in einer Sandbox)."
+"Die Verwaltung von Erweiterungen braucht Zugriff auf den GNOME Shell-Dienst, "
+"der hier nicht erreichbar ist (z.B. in einer Sandbox)."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/extensions.py:54
 msgid "User extensions"
 msgstr "Benutzer-Erweiterungen"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/extensions.py:56
 msgid "System extensions"
 msgstr "System-Erweiterungen"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/extensions.py:69
 msgid "Extensions enabled"
 msgstr "Erweiterungen aktiviert"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/extensions.py:70
 msgid "Toggles all user extensions together."
 msgstr "Schaltet alle Benutzer-Erweiterungen gemeinsam um."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/extensions.py:117
 msgid "Extension settings"
 msgstr "Einstellungen der Erweiterung"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/gtk_theme.py:42
 msgid ""
 "Determines how application windows look. Applied immediately, also to modern "
 "apps like Files."
@@ -412,245 +690,237 @@ msgstr ""
 "Bestimmt das Aussehen von Programmfenstern. Wirkt sofort, auch bei modernen "
 "Apps wie Dateien."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/gtk_theme.py:48
 msgid "GTK theme (windows & apps)"
 msgstr "GTK Theme (Fenster & Apps)"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/gtk_theme.py:51
 msgid "Install a new GTK theme"
 msgstr "Neues GTK Theme installieren"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/gtk_theme.py:53
 msgid "Drag a GTK theme (.tar.gz/.zip) here"
 msgstr "GTK Theme (.tar.gz/.zip) hierher ziehen"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/gtk_theme.py:91 Manager/src/pages/overview.py:91
+#: Manager/src/pages/shell.py:97 Manager/src/pages/shell.py:133
+#: Manager/src/pages/shell.py:143
 msgid "Default"
 msgstr "Standard"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/gtk_theme.py:94
 msgid "Reset the GTK theme to the safe default theme (Adwaita)"
 msgstr "GTK Theme auf das sichere Standard-Design zurücksetzen (Adwaita)"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/gtk_theme.py:114 Manager/src/pages/gtk_theme.py:131
 #, python-brace-format
 msgid "before GTK theme {name}"
 msgstr "vor GTK Theme {name}"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/gtk_theme.py:120
 msgid "Activate theme anyway?"
 msgstr "Design trotzdem aktivieren?"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/gtk_theme.py:123 Manager/src/pages/shell.py:145
 msgid "Activate anyway"
 msgstr "Trotzdem aktivieren"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/overview.py:25 Manager/src/window.py:60
 msgid "Overview"
 msgstr "Übersicht"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/overview.py:44
 msgid "Current look"
 msgstr "Aktueller Look"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/overview.py:45
 msgid "Click a row to jump to that section."
 msgstr "Auf eine Zeile klicken, um zu dem Bereich zu springen."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/overview.py:49
 msgid "Font"
 msgstr "Schriftart"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/overview.py:51 Manager/src/pages/system.py:50
 msgid "Accent color"
 msgstr "Akzentfarbe"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/overview.py:52 Manager/src/pages/shell.py:27
+#: Manager/src/pages/shell.py:71 Manager/src/window.py:74
 msgid "Shell Theme"
 msgstr "Shell Theme"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/overview.py:65 Manager/src/pages/background.py:43
+#: Manager/src/window.py:64
 msgid "Background"
 msgstr "Hintergrund"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/overview.py:93
 msgid "not available (User Themes missing)"
 msgstr "nicht verfügbar (User Themes fehlt)"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/overview.py:100
 msgid "not set"
 msgstr "nicht gesetzt"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/overview.py:105
 msgid "No image set"
 msgstr "Kein Bild gesetzt"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/backup.py:27 Manager/src/window.py:82
 msgid "Backup"
 msgstr "Sicherung"
 
-msgid "Profiles"
-msgstr "Profile"
-
-msgid ""
-"Save the current state as a named set and reapply it with a click. Saved "
-"profiles also appear on the Looks page."
-msgstr ""
-"Den aktuellen Zustand als benannten Satz speichern und mit einem Klick wieder "
-"anwenden. Gespeicherte Profile erscheinen auch auf der Looks-Seite."
-
-msgid "Name a new profile"
-msgstr "Neues Profil benennen"
-
-msgid "Saved profiles"
-msgstr "Gespeicherte Profile"
-
-msgid "No profiles yet"
-msgstr "Noch keine Profile"
-
-msgid "Enter a name above and save."
-msgstr "Oben einen Namen eingeben und speichern."
-
-msgid "Apply"
-msgstr "Anwenden"
-
-msgid "Delete profile"
-msgstr "Profil löschen"
-
-msgid "Please enter a name."
-msgstr "Bitte einen Namen eingeben."
-
-#, python-brace-format
-msgid "Saving failed: {error}"
-msgstr "Speichern fehlgeschlagen: {error}"
-
-msgid "Error"
-msgstr "Fehler"
-
-#, python-brace-format
-msgid "Profile saved: {name}"
-msgstr "Profil gespeichert: {name}"
-
-msgid "The profile could not be read."
-msgstr "Das Profil konnte nicht gelesen werden."
-
-msgid "The profile is damaged."
-msgstr "Das Profil ist beschädigt."
-
-#, python-brace-format
-msgid "Profile applied: {name}. Restart the app to refresh the selection here."
-msgstr "Profil angewendet: {name}. App neu starten, um die Auswahl hier zu aktualisieren."
-
-#, python-brace-format
-msgid "Profile deleted: {name}"
-msgstr "Profil gelöscht: {name}"
-
-msgid "Day/night automation"
-msgstr "Tag/Nacht-Automatik"
-
-msgid ""
-"Bind two profiles to fixed times. Switches the whole look automatically via "
-"a systemd timer."
-msgstr ""
-"Zwei Profile an feste Uhrzeiten binden. Wechselt den gesamten Look automatisch "
-"per systemd-Timer."
-
-msgid "Not enough profiles yet"
-msgstr "Noch nicht genug Profile"
-
-msgid ""
-"Create two different profiles first (e.g. a light \"Day\" and a dark "
-"\"Night\")."
-msgstr ""
-"Zuerst zwei verschiedene Profile erstellen (z.B. ein helles \"Tag\" und ein dunkles "
-"\"Nacht\")."
-
-msgid "Day profile"
-msgstr "Tagprofil"
-
-msgid "Day from (HH:MM)"
-msgstr "Tag ab (HH:MM)"
-
-msgid "Night profile"
-msgstr "Nachtprofil"
-
-msgid "Night from (HH:MM)"
-msgstr "Nacht ab (HH:MM)"
-
-msgid "Automation active"
-msgstr "Automatik aktiv"
-
-msgid "Day/night automation turned off."
-msgstr "Tag/Nacht-Automatik deaktiviert."
-
-msgid "Please enter valid times in HH:MM format."
-msgstr "Bitte gültige Uhrzeiten im Format HH:MM eingeben."
-
-msgid "Day and night profile must differ, otherwise nothing switches."
-msgstr "Tag- und Nachtprofil müssen verschieden sein, sonst wird nichts umgeschaltet."
-
-msgid "Day/night automation active."
-msgstr "Tag/Nacht-Automatik aktiv."
-
-msgid "Automation could not be set up."
-msgstr "Automatik konnte nicht eingerichtet werden."
-
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/backup.py:50
 msgid "Restore points"
 msgstr "Sicherungspunkte"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/backup.py:51
 msgid ""
-"Created automatically before every theme, cursor or shell change. Restores "
-"the state from before."
+"Created automatically before every theme, cursor or shell change, and before "
+"applying a look. Restores the state from before."
 msgstr ""
-"Wird automatisch vor jeder Design-, Mauszeiger- oder Shell-Änderung erstellt. "
-"Stellt den vorherigen Zustand wieder her."
+"Wird automatisch vor jeder Design-, Mauszeiger- oder Shell-Änderung und vor "
+"dem Anwenden eines Looks erstellt. Stellt den vorherigen Zustand wieder her."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/backup.py:65
 msgid "No restore points yet"
 msgstr "Noch keine Sicherungspunkte"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/backup.py:66
 msgid "One is created as soon as you change a theme."
 msgstr "Einer wird erstellt, sobald du ein Design änderst."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/backup.py:78 Manager/src/pages/backup.py:122
 msgid "Restore"
 msgstr "Wiederherstellen"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/backup.py:86
 msgid "Delete restore point"
 msgstr "Sicherungspunkt löschen"
 
-msgid "Restore point applied. Restart the app to refresh the selection here."
-msgstr "Sicherungspunkt angewendet. App neu starten, um die Auswahl hier zu aktualisieren."
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/backup.py:102
+msgid "Restore point applied."
+msgstr "Sicherungspunkt angewendet."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/backup.py:104
 msgid "The restore point could not be read."
 msgstr "Der Sicherungspunkt konnte nicht gelesen werden."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/backup.py:109
 msgid "Restore point deleted."
 msgstr "Sicherungspunkt gelöscht."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/backup.py:115
 msgid "Backup file"
 msgstr "Sicherungsdatei"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/backup.py:116
 msgid "Export the current state to a file or restore from an earlier backup."
-msgstr "Den aktuellen Zustand in eine Datei exportieren oder aus einer früheren Sicherung wiederherstellen."
+msgstr ""
+"Den aktuellen Zustand in eine Datei exportieren oder aus einer früheren "
+"Sicherung wiederherstellen."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/backup.py:119
 msgid "Back up"
 msgstr "Sichern"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/backup.py:119
 msgid "Export to a file"
 msgstr "In Datei exportieren"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/backup.py:122
 msgid "Import from a file"
 msgstr "Aus Datei importieren"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/backup.py:142
 msgid "Back up settings"
 msgstr "Einstellungen sichern"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/backup.py:151
 #, python-brace-format
 msgid "Backup failed: {error}"
 msgstr "Sicherung fehlgeschlagen: {error}"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/backup.py:152 Manager/src/pages/backup.py:206
+#: Manager/src/pages/looks.py:135
+msgid "Error"
+msgstr "Fehler"
+
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/backup.py:154
 #, python-brace-format
 msgid "Backed up: {file}"
 msgstr "Gesichert: {file}"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/backup.py:161
 msgid "Backups (*.json)"
 msgstr "Sicherungen (*.json)"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/backup.py:163
 msgid "Restore backup"
 msgstr "Sicherung wiederherstellen"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/backup.py:172
 msgid "The file could not be read."
 msgstr "Die Datei konnte nicht gelesen werden."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/backup.py:175
 msgid "That is not a valid backup."
 msgstr "Das ist keine gültige Sicherung."
 
-msgid "Restored. Restart the app to refresh the selection here."
-msgstr "Wiederhergestellt. App neu starten, um die Auswahl hier zu aktualisieren."
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/backup.py:177
+msgid "Restored."
+msgstr "Wiederhergestellt."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/backup.py:183
 msgid "Share look package"
 msgstr "Look-Paket teilen"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/backup.py:184
 msgid ""
 "Bundle the whole look as a .dmlook, including the theme files and the "
 "wallpaper, or import such a package."
@@ -658,154 +928,248 @@ msgstr ""
 "Den gesamten Look als .dmlook bündeln, einschließlich Design-Dateien und "
 "Hintergrund, oder ein solches Paket importieren."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/backup.py:188
 msgid "Export look"
 msgstr "Look exportieren"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/backup.py:188
 msgid "Pack themes and image into a .dmlook"
 msgstr "Designs und Bild in eine .dmlook packen"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/backup.py:191
 msgid "Import look"
 msgstr "Look importieren"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/backup.py:191
 msgid "Install and apply from a .dmlook"
 msgstr "Aus einer .dmlook installieren und anwenden"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/backup.py:196
 msgid "Export look package"
 msgstr "Look-Paket exportieren"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/backup.py:205
 #, python-brace-format
 msgid "Export failed: {error}"
 msgstr "Export fehlgeschlagen: {error}"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/backup.py:208
 #, python-brace-format
 msgid "Look package saved: {file}"
 msgstr "Look-Paket gespeichert: {file}"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/backup.py:213
 msgid "Look packages (*.dmlook)"
 msgstr "Look-Pakete (*.dmlook)"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/backup.py:215
 msgid "Import look package"
 msgstr "Look-Paket importieren"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/backup.py:224
 msgid "The look package could not be read."
 msgstr "Das Look-Paket konnte nicht gelesen werden."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/backup.py:227
 msgid "That is not a valid look package."
 msgstr "Das ist kein gültiges Look-Paket."
 
-msgid "Look package applied. Restart the app to refresh the selection here."
-msgstr "Look-Paket angewendet. App neu starten, um die Auswahl hier zu aktualisieren."
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/backup.py:229
+msgid "Look package applied."
+msgstr "Look-Paket angewendet."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/dock.py:22 Manager/src/window.py:76
 msgid "Dock"
 msgstr "Dock"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/dock.py:33
 msgid "No dock extension active"
 msgstr "Keine Dock-Erweiterung aktiv"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/dock.py:34
 msgid ""
 "This page controls Ubuntu Dock / Dash to Dock or Dash to Panel. None of them "
 "is enabled on this system."
 msgstr ""
-"Diese Seite steuert Ubuntu Dock / Dash to Dock oder Dash to Panel. Keine davon "
-"ist auf diesem System aktiviert."
+"Diese Seite steuert Ubuntu Dock / Dash to Dock oder Dash to Panel. Keine "
+"davon ist auf diesem System aktiviert."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/system.py:20
 msgid "Blue"
 msgstr "Blau"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/system.py:21
 msgid "Teal"
 msgstr "Petrol"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/system.py:22
 msgid "Green"
 msgstr "Grün"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/system.py:23
 msgid "Yellow"
 msgstr "Gelb"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/system.py:24
 msgid "Orange"
 msgstr "Orange"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/system.py:25
 msgid "Red"
 msgstr "Rot"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/system.py:26
 msgid "Pink"
 msgstr "Rosa"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/system.py:27
 msgid "Purple"
 msgstr "Lila"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/system.py:28
 msgid "Slate"
 msgstr "Schiefer"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/system.py:41 Manager/src/window.py:80
 msgid "System"
 msgstr "System"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/system.py:91
 msgid "The accent color can only be set from GNOME 47 onwards."
 msgstr "Die Akzentfarbe kann nur ab GNOME 47 gesetzt werden."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/system.py:117
 msgid "Color from background"
 msgstr "Farbe aus dem Hintergrund"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/system.py:120
 msgid "Pick the accent color matching the current wallpaper"
 msgstr "Zur aktuellen Hintergrundfarbe passende Akzentfarbe wählen"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/system.py:137
 msgid "No wallpaper found."
 msgstr "Kein Hintergrund gefunden."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/system.py:141
 msgid "No matching accent color found."
 msgstr "Keine passende Akzentfarbe gefunden."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/system.py:145
 msgid "Accent color picked from the background."
 msgstr "Akzentfarbe aus dem Hintergrund übernommen."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/system.py:158
 msgid "Window buttons"
 msgstr "Fensterschaltflächen"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/system.py:159
 msgid ""
 "Which buttons the title bar shows and on which side. Close always stays "
 "visible."
 msgstr ""
-"Welche Schaltflächen die Titelleiste zeigt und auf welcher Seite. Schließen bleibt "
-"immer sichtbar."
+"Welche Schaltflächen die Titelleiste zeigt und auf welcher Seite. Schließen "
+"bleibt immer sichtbar."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/system.py:162
 msgid "Minimize"
 msgstr "Minimieren"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/system.py:167
 msgid "Maximize"
 msgstr "Maximieren"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/system.py:172
 msgid "Arrangement"
 msgstr "Anordnung"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/system.py:212
 msgid "Top bar"
 msgstr "Leiste oben"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/system.py:213
 msgid "What the clock and the system area show."
 msgstr "Was die Uhr und der Systembereich anzeigen."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/system.py:215
 msgid "Seconds in the clock"
 msgstr "Sekunden in der Uhr"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/system.py:219
 msgid "Show weekday"
 msgstr "Wochentag anzeigen"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/system.py:223
 msgid "Show date"
 msgstr "Datum anzeigen"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/system.py:227
 msgid "Battery level in percent"
 msgstr "Akkustand in Prozent"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/system.py:235
 msgid "Motion"
 msgstr "Bewegung"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/system.py:237
 msgid "Animations"
 msgstr "Animationen"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/system.py:237
 msgid "Fade and transition effects of the interface."
 msgstr "Einblend- und Übergangseffekte der Oberfläche."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/shell.py:38
 msgid "User Themes is required"
 msgstr "User Themes wird benötigt"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/shell.py:39
 msgid ""
 "The GNOME shell theme is set via the User Themes extension. It is not "
 "installed on this system."
@@ -813,192 +1177,316 @@ msgstr ""
 "Das Shell Theme wird über die User Themes-Erweiterung gesetzt. Sie ist auf "
 "diesem System nicht installiert."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/shell.py:43
 msgid "User Themes is not enabled"
 msgstr "User Themes ist nicht aktiviert"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/shell.py:44
 msgid ""
 "The User Themes extension is installed but switched off. While it is off, a "
 "chosen shell theme is not applied. Enable it under Extensions, then you can "
 "pick one here."
 msgstr ""
-"Die User Themes-Erweiterung ist installiert, aber ausgeschaltet. Solange sie aus ist, "
-"wird ein gewähltes Shell Theme nicht angewendet. Unter Erweiterungen aktivieren, dann "
-"kann hier eines ausgewählt werden."
+"Die User Themes-Erweiterung ist installiert, aber ausgeschaltet. Solange sie "
+"aus ist, wird ein gewähltes Shell Theme nicht angewendet. Unter "
+"Erweiterungen aktivieren, dann kann hier eines ausgewählt werden."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/shell.py:64
 msgid ""
 "Affects the top bar, calendar and quick settings. The preview shows panel "
 "and accent color (approximation)."
 msgstr ""
-"Betrifft die obere Leiste, den Kalender und die Schnelleinstellungen. Die Vorschau "
-"zeigt Panel und Akzentfarbe (Annäherung)."
+"Betrifft die obere Leiste, den Kalender und die Schnelleinstellungen. Die "
+"Vorschau zeigt Panel und Akzentfarbe (Annäherung)."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/shell.py:132
 #, python-brace-format
 msgid "before shell theme {name}"
 msgstr "vor Shell Theme {name}"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/shell.py:141
 msgid "Activate shell theme anyway?"
 msgstr "Shell Theme trotzdem aktivieren?"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/shell.py:159
 msgid "Remove shell theme?"
 msgstr "Shell Theme entfernen?"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/looks.py:26 Manager/src/window.py:62
 msgid "Looks"
 msgstr "Looks"
 
-msgid "No looks found"
-msgstr "Keine Looks gefunden"
-
-msgid "Bundled looks live under data/looks/."
-msgstr "Mitgelieferte Looks liegen unter data/looks/."
-
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/looks.py:44
 msgid ""
-"One click applies the whole look. For bundled looks a \"before-…\" profile "
-"is created first, so you can go back."
+"One click applies the whole look. For bundled looks a restore point is "
+"created first, so you can go back from the Backup page."
 msgstr ""
-"Ein Klick wendet den gesamten Look an. Bei mitgelieferten Looks wird zuerst ein "
-"\"before-...\"-Profil erstellt, damit du zurückgehen kannst."
+"Ein Klick wendet den gesamten Look an. Bei mitgelieferten Looks wird zuerst "
+"ein Sicherungspunkt angelegt, über den du auf der Seite Sicherung "
+"zurückkehren kannst."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/looks.py:53
 msgid "Bundled looks"
 msgstr "Mitgelieferte Looks"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/looks.py:56
 msgid "Your profiles"
 msgstr "Deine Profile"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/looks.py:78
+msgid "Save the current look as a profile"
+msgstr "Aktuellen Look als Profil speichern"
+
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/looks.py:104
 #, python-brace-format
 msgid "Apply look \"{name}\"?"
 msgstr "Look \"{name}\" anwenden?"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/looks.py:105
 msgid ""
-"The current state is saved as a profile first. Parts that are not installed "
-"are skipped."
+"The current state is saved as a restore point first. Parts that are not "
+"installed are skipped."
 msgstr ""
-"Der aktuelle Zustand wird zuerst als Profil gespeichert. Nicht installierte Teile "
-"werden übersprungen."
+"Der aktuelle Zustand wird zuerst als Sicherungspunkt gespeichert. Nicht "
+"installierte Teile werden übersprungen."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/looks.py:108 Manager/src/pages/looks.py:149
+msgid "Apply"
+msgstr "Anwenden"
+
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/looks.py:118
 #, python-brace-format
 msgid "Look \"{name}\" applied. Skipped: {items}."
 msgstr "Look \"{name}\" angewendet. Übersprungen: {items}."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/looks.py:123
 #, python-brace-format
 msgid "Look \"{name}\" applied."
 msgstr "Look \"{name}\" angewendet."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/looks.py:131
+msgid "Please enter a name."
+msgstr "Bitte einen Namen eingeben."
+
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/looks.py:134
+#, python-brace-format
+msgid "Saving failed: {error}"
+msgstr "Speichern fehlgeschlagen: {error}"
+
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/looks.py:140
+#, python-brace-format
+msgid "Profile saved: {name}"
+msgstr "Profil gespeichert: {name}"
+
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/looks.py:146
 #, python-brace-format
 msgid "Apply profile \"{name}\"?"
 msgstr "Profil \"{name}\" anwenden?"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/looks.py:147
 msgid "Applies this profile's saved state."
 msgstr "Wendet den gespeicherten Zustand dieses Profils an."
 
-#, python-brace-format
-msgid ""
-"Profile \"{name}\" applied. Restart the app to refresh the selection in each "
-"section."
-msgstr ""
-"Profil \"{name}\" angewendet. App neu starten, um die Auswahl in jedem "
-"Bereich zu aktualisieren."
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/looks.py:159
+msgid "The profile could not be read."
+msgstr "Das Profil konnte nicht gelesen werden."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/looks.py:162
+msgid "The profile is damaged."
+msgstr "Das Profil ist beschädigt."
+
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/looks.py:165
+#, python-brace-format
+msgid "Profile \"{name}\" applied."
+msgstr "Profil \"{name}\" angewendet."
+
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/looks.py:172
+#, python-brace-format
+msgid "Profile deleted: {name}"
+msgstr "Profil gelöscht: {name}"
+
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/background.py:29
 msgid "Zoom (fill screen)"
 msgstr "Zoom (Bildschirm füllen)"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/background.py:30
 msgid "Fitted"
 msgstr "Eingepasst"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/background.py:31
 msgid "Stretched"
 msgstr "Gestreckt"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/background.py:32
 msgid "Centered"
 msgstr "Zentriert"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/background.py:33
 msgid "Tiled"
 msgstr "Gekachelt"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/background.py:34
 msgid "Across multiple screens"
 msgstr "Über mehrere Bildschirme"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/background.py:35 Manager/src/pages/fonts.py:24
+#: Manager/src/pages/fonts.py:30
 msgid "None"
 msgstr "Keines"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/background.py:58
 msgid "Current image"
 msgstr "Aktuelles Bild"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/background.py:62
 msgid "Default backgrounds"
 msgstr "Standard-Hintergründe"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/background.py:74 Manager/src/pages/background.py:293
+#: Manager/src/pages/background.py:436
 msgid "Choose your own image…"
 msgstr "Eigenes Bild auswählen…"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/background.py:79
 msgid "Adjustment"
 msgstr "Anpassung"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/background.py:82
 msgid "Lock screen"
 msgstr "Sperrbildschirm"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/background.py:88
 msgid "Login screen (GDM)"
 msgstr "Anmeldebildschirm (GDM)"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/background.py:110
 msgid ""
-"Variety manages the background. Your image choice is handed to Variety and "
-"stays across every login. You can change the adjustment mode below, but at "
-"the next login Variety sets its own again. For full control over image and "
-"mode you can remove Variety here."
+"Variety manages the background. Your image choice is handed to Variety, "
+"which normally keeps it across the next login too. You can change the "
+"adjustment mode below, but Variety may set its own image again. For full "
+"control over image and mode you can remove Variety here."
 msgstr ""
-"Variety verwaltet den Hintergrund. Deine Bildauswahl wird an Variety übergeben und "
-"bleibt bei jeder Anmeldung erhalten. Der Anpassungsmodus kann unten geändert werden, "
-"aber beim nächsten Login setzt Variety seinen eigenen wieder. Für vollständige Kontrolle "
-"über Bild und Modus kann Variety hier entfernt werden."
+"Variety verwaltet den Hintergrund. Deine Bildauswahl wird an Variety "
+"übergeben, das sie normalerweise auch über die nächste Anmeldung hinaus "
+"behält. Der Anpassungsmodus kann unten geändert werden, aber Variety setzt "
+"eventuell wieder sein eigenes Bild. Für vollständige Kontrolle über Bild und "
+"Modus kann Variety hier entfernt werden."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/background.py:118
 msgid "Remove Variety"
 msgstr "Variety entfernen"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/background.py:121
 msgid ""
 "Remove Variety from autostart and quit it, so the app controls the "
 "background and mode directly. Reversible, Variety stays installed."
 msgstr ""
-"Variety aus dem Autostart entfernen und beenden, damit die App den Hintergrund "
-"und Modus direkt steuert. Umkehrbar, Variety bleibt installiert."
+"Variety aus dem Autostart entfernen und beenden, damit die App den "
+"Hintergrund und Modus direkt steuert. Umkehrbar, Variety bleibt installiert."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/background.py:148
 msgid ""
 "Variety was removed from autostart and quit. The app now manages the "
 "background directly, your adjustment mode is kept. To undo: start Variety "
 "again and enable it in autostart."
 msgstr ""
-"Variety wurde aus dem Autostart entfernt und beendet. Die App verwaltet den Hintergrund "
-"jetzt direkt, dein Anpassungsmodus bleibt erhalten. Zum Rückgängigmachen: Variety "
-"neu starten und im Autostart aktivieren."
+"Variety wurde aus dem Autostart entfernt und beendet. Die App verwaltet den "
+"Hintergrund jetzt direkt, dein Anpassungsmodus bleibt erhalten. Zum "
+"Rückgängigmachen: Variety neu starten und im Autostart aktivieren."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/background.py:160
 msgid "No wallpaper set"
 msgstr "Kein Hintergrund gesetzt"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/background.py:233 Manager/src/pages/background.py:354
+#: Manager/src/pages/background.py:449
 msgid "Images"
 msgstr "Bilder"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/background.py:235
 msgid "Choose wallpaper"
 msgstr "Hintergrund auswählen"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/background.py:271
 msgid ""
 "First choose a custom theme (not the default one) under Shell Theme. The app "
 "writes the lock screen image into that theme's style."
 msgstr ""
-"Zuerst unter Shell Theme ein eigenes Design wählen (nicht das Standard-Design). Die App "
-"schreibt das Sperrbild in den Stil dieses Designs."
+"Zuerst unter Shell Theme ein eigenes Design wählen (nicht das Standard-"
+"Design). Die App schreibt das Sperrbild in den Stil dieses Designs."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/background.py:283
 msgid "No custom image set"
 msgstr "Kein eigenes Bild gesetzt"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/background.py:295 Manager/src/pages/background.py:438
 msgid "Same as background"
 msgstr "Wie Hintergrund"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/background.py:308
 msgid ""
 "Experimental. Takes effect only after logging in again and may be covered by "
 "the blurred lock screen on newer GNOME versions."
 msgstr ""
-"Experimentell. Wirkt erst nach erneuter Anmeldung und kann auf neueren GNOME-Versionen "
-"vom unscharfen Sperrbildschirm verdeckt sein."
+"Experimentell. Wirkt erst nach erneuter Anmeldung und kann auf neueren GNOME-"
+"Versionen vom unscharfen Sperrbildschirm verdeckt sein."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/background.py:356
 msgid "Choose lock screen image"
 msgstr "Bild für den Sperrbildschirm auswählen"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/background.py:382
 msgid ""
 "Changes the system-wide login screen and needs the administrator password. "
 "Takes effect after a restart. The original is never overwritten. If the "
@@ -1006,166 +1494,258 @@ msgid ""
 "restarts; from a terminal any time with \"sudo /usr/local/lib/design-manager/"
 "gdm-helper.sh reset\"."
 msgstr ""
-"Ändert den systemweiten Anmeldebildschirm und braucht das Administrator-Passwort. "
-"Wirkt nach einem Neustart. Das Original wird nie überschrieben. Falls der "
-"Anmeldebildschirm ein Problem zeigt, stellt sich der Standard nach zwei "
-"Neustarts selbst wieder her; im Terminal jederzeit mit \"sudo /usr/local/lib/design-manager/"
-"gdm-helper.sh reset\"."
+"Ändert den systemweiten Anmeldebildschirm und braucht das Administrator-"
+"Passwort. Wirkt nach einem Neustart. Das Original wird nie überschrieben. "
+"Falls der Anmeldebildschirm ein Problem zeigt, stellt sich der Standard nach "
+"zwei Neustarts selbst wieder her; im Terminal jederzeit mit \"sudo /usr/"
+"local/lib/design-manager/gdm-helper.sh reset\"."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/background.py:417
 msgid "New login screen set, not yet confirmed."
 msgstr "Neuer Anmeldebildschirm gesetzt, noch nicht bestätigt."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/background.py:419
 msgid ""
 "Restart the computer once. If the login screen appears normally, log in and "
 "click \"Keep\". If you do not, the default restores itself automatically "
 "after two restarts."
 msgstr ""
-"Computer einmal neu starten. Wenn der Anmeldebildschirm normal erscheint, anmelden und "
-"\"Behalten\" klicken. Andernfalls stellt sich der Standard nach zwei Neustarts "
-"automatisch wieder her."
+"Computer einmal neu starten. Wenn der Anmeldebildschirm normal erscheint, "
+"anmelden und \"Behalten\" klicken. Andernfalls stellt sich der Standard nach "
+"zwei Neustarts automatisch wieder her."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/background.py:424
 msgid "Keep"
 msgstr "Behalten"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/background.py:426
 msgid "Discard"
 msgstr "Verwerfen"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/background.py:432
 msgid "A custom login screen background is active."
 msgstr "Ein eigener Anmeldebildschirm-Hintergrund ist aktiv."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/background.py:434
 msgid "Default login screen."
 msgstr "Standard-Anmeldebildschirm."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/background.py:442
 msgid "Reset"
 msgstr "Zurücksetzen"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/background.py:445
 msgid "Confirming… "
 msgstr "Bestätige… "
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/background.py:451
 msgid "Choose login screen image"
 msgstr "Bild für den Anmeldebildschirm auswählen"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/background.py:456 Manager/src/pages/background.py:461
 msgid "Applying… "
 msgstr "Anwenden… "
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/background.py:464
 msgid "Resetting… "
 msgstr "Zurücksetzen… "
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/background.py:469
 msgid "(enter password)"
 msgstr "(Passwort eingeben)"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/background.py:481
 msgid "Not changed (canceled or error)."
 msgstr "Nicht geändert (abgebrochen oder Fehler)."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/cursor.py:39
 msgid ""
 "GTK apps and the cursor over the desktop change immediately. Already open "
 "non-GTK apps (some terminals, Electron apps) show the old cursor until you "
 "restart them."
 msgstr ""
-"GTK-Apps und der Mauszeiger über dem Desktop ändern sich sofort. Bereits geöffnete "
-"Nicht-GTK-Apps (manche Terminals, Electron-Apps) zeigen den alten Mauszeiger, "
-"bis sie neu gestartet werden."
+"GTK-Apps und der Mauszeiger über dem Desktop ändern sich sofort. Bereits "
+"geöffnete Nicht-GTK-Apps (manche Terminals, Electron-Apps) zeigen den alten "
+"Mauszeiger, bis sie neu gestartet werden."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/cursor.py:53
 msgid "Drag a cursor theme (.tar.gz/.zip) here"
 msgstr "Mauszeiger-Design (.tar.gz/.zip) hierher ziehen"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/cursor.py:108
 #, python-brace-format
 msgid "before cursor {name}"
 msgstr "vor Mauszeiger {name}"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/cursor.py:117
 msgid "Remove cursor theme?"
 msgstr "Mauszeiger-Design entfernen?"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/fonts.py:22
 msgid "Grayscale"
 msgstr "Graustufen"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/fonts.py:23
 msgid "Subpixel (RGBA)"
 msgstr "Subpixel (RGBA)"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/fonts.py:27
 msgid "Full"
 msgstr "Voll"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/fonts.py:28
 msgid "Medium"
 msgstr "Mittel"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/fonts.py:29
 msgid "Slight"
 msgstr "Leicht"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/fonts.py:43
 msgid "GNOME keeps three fonts separate."
 msgstr "GNOME verwaltet drei Schriftarten getrennt."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/fonts.py:45
 msgid "Interface"
 msgstr "Oberfläche"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/fonts.py:48
 msgid "Documents"
 msgstr "Dokumente"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/fonts.py:51
 msgid "Monospace"
 msgstr "Monospace"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/fonts.py:55
 msgid "Rendering"
 msgstr "Darstellung"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/fonts.py:56
 msgid "Size and smoothing of the font rendering."
 msgstr "Größe und Glättung der Schriftdarstellung."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/fonts.py:59
 msgid "Smoothing"
 msgstr "Glättung"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/fonts.py:63
 msgid "Hinting"
 msgstr "Hinting"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/fonts.py:68
 msgid "Install a font"
 msgstr "Schriftart installieren"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/fonts.py:69
 msgid ""
 "Drag a font file (.ttf/.otf) or an archive here. It is copied to ~/.local/"
 "share/fonts and the font cache is refreshed."
 msgstr ""
-"Eine Schriftdatei (.ttf/.otf) oder ein Archiv hierher ziehen. Sie wird nach ~/.local/"
-"share/fonts kopiert und der Schrift-Cache wird aktualisiert."
+"Eine Schriftdatei (.ttf/.otf) oder ein Archiv hierher ziehen. Sie wird nach "
+"~/.local/share/fonts kopiert und der Schrift-Cache wird aktualisiert."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/fonts.py:73
 msgid "Drag a font (.ttf/.otf) or archive here"
 msgstr "Schriftart (.ttf/.otf) oder Archiv hierher ziehen"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/fonts.py:103
 msgid "Size (scaling)"
 msgstr "Größe (Skalierung)"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/pages/fonts.py:104
 msgid "1.0 is the default size."
 msgstr "1,0 ist die Standardgröße."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/window.py:150
 #, python-brace-format
 msgid "Not found: {names}. GNOME falls back to Adwaita."
 msgstr "Nicht gefunden: {names}. GNOME fällt auf Adwaita zurück."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/window.py:152
 msgid "Set default"
 msgstr "Standard setzen"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/window.py:162
 msgid "Reset to a safe default theme."
 msgstr "Auf ein sicheres Standard-Design zurücksetzen."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/window.py:174
 #, python-brace-format
 msgid "Installation failed: {error}"
 msgstr "Installation fehlgeschlagen: {error}"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/window.py:239
 msgid "SETTINGS"
 msgstr "EINSTELLUNGEN"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/window.py:267 Manager/src/window.py:303
 msgid "Restore safe state"
 msgstr "Sicheren Zustand wiederherstellen"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/window.py:269
 msgid "Check for updates"
 msgstr "Auf Updates prüfen"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/window.py:270
 msgid "About Design Manager"
 msgstr "Über Design Manager"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/window.py:271
 msgid "Quit"
 msgstr "Beenden"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/window.py:276
 msgid "Main menu"
 msgstr "Hauptmenü"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/window.py:287
 msgid ""
 "Customize the GNOME desktop appearance in one place: background, themes, "
 "icons, cursor and fonts."
@@ -1173,53 +1753,79 @@ msgstr ""
 "Das Aussehen des GNOME-Desktops an einem Ort anpassen: Hintergrund, Designs, "
 "Symbole, Mauszeiger und Schriftarten."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/window.py:297
 msgid "Restore safe state?"
 msgstr "Sicheren Zustand wiederherstellen?"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/window.py:298
 msgid ""
 "First a restore point is created, then the theme, icons, cursor and shell "
 "theme are set to guaranteed working defaults (Adwaita). This helps when a "
 "theme has made the interface unusable."
 msgstr ""
-"Zuerst wird ein Sicherungspunkt erstellt, dann werden Design, Symbole, Mauszeiger und "
-"Shell Theme auf garantiert funktionierende Standards gesetzt (Adwaita). Das hilft, "
-"wenn ein Design die Oberfläche unbenutzbar gemacht hat."
+"Zuerst wird ein Sicherungspunkt erstellt, dann werden Design, Symbole, "
+"Mauszeiger und Shell Theme auf garantiert funktionierende Standards gesetzt "
+"(Adwaita). Das hilft, wenn ein Design die Oberfläche unbenutzbar gemacht hat."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/window.py:310
 msgid "before emergency reset"
 msgstr "vor Notfall-Zurücksetzung"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/window.py:330
 msgid "Safe state restored (Adwaita)."
 msgstr "Sicherer Zustand wiederhergestellt (Adwaita)."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/window.py:336
 msgid "Checking for updates…"
 msgstr "Suche nach Updates…"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/window.py:354
 msgid "You have the latest version."
 msgstr "Du hast die aktuelle Version."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/window.py:358
 msgid "Update available"
 msgstr "Update verfügbar"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/window.py:359
 #, python-brace-format
 msgid ""
 "Version {new} is ready (installed: {cur}). Download and install it now? This "
 "asks for the administrator password once."
 msgstr ""
-"Version {new} ist bereit (installiert: {cur}). Jetzt herunterladen und installieren? "
-"Das fragt einmal nach dem Administrator-Passwort."
+"Version {new} ist bereit (installiert: {cur}). Jetzt herunterladen und "
+"installieren? Das fragt einmal nach dem Administrator-Passwort."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/window.py:362
 msgid "Later"
 msgstr "Später"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/window.py:363
 msgid "Update"
 msgstr "Aktualisieren"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/window.py:371
 #, python-brace-format
 msgid "Downloading version {ver}… (enter password)"
 msgstr "Version {ver} wird heruntergeladen… (Passwort eingeben)"
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/window.py:382
 msgid "Updated. Please restart the app."
 msgstr "Aktualisiert. Bitte die App neu starten."
 
+#: /mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design
+#: Manager/src/window.py:384
 msgid "Update failed or canceled."
 msgstr "Update fehlgeschlagen oder abgebrochen."
