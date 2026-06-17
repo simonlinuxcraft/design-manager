@@ -8,6 +8,7 @@ Galerie übersichtlich bleibt.
 
 import json
 import os
+import sys
 import threading
 
 from gi.repository import Gdk, GdkPixbuf, Gio, GLib
@@ -106,8 +107,15 @@ def apply_wallpaper(settings, pfad):
     gewählte Bild statt Varietys flüchtiger Zwischendatei. Der Desktop zeigt in
     beiden Fällen dasselbe Bild.
     """
-    if variety.laeuft():
-        variety.setze_wallpaper(pfad)
+    if variety.laeuft() and not variety.setze_wallpaper(pfad):
+        # Variety lief, hat die Wahl aber nicht übernommen. Der Desktop zeigt
+        # über den dconf-Wert unten trotzdem das richtige Bild; nur die vom
+        # Banner versprochene Login-Persistenz hängt dann an Variety und greift
+        # womöglich nicht. Nicht still verschlucken, damit es nachvollziehbar
+        # ist (deckt den dokumentierten "Auswahl hält scheinbar nicht"-Effekt).
+        print("Design Manager: variety --set fehlgeschlagen, "
+              "Login-Persistenz des Hintergrunds nicht garantiert.",
+              file=sys.stderr)
     uri = Gio.File.new_for_path(pfad).get_uri()
     settings.set_background_uri(uri)
     settings.set_background_uri_dark(uri)

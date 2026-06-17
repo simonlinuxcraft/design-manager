@@ -11,6 +11,7 @@ hübsch verpackt.
 
 import os
 import shutil
+import sys
 from datetime import datetime
 from urllib.parse import quote
 
@@ -714,9 +715,7 @@ class AppSettings:
 
         # Nach dem Wiederherstellen den libadwaita-Spiegel an das jetzt gesetzte
         # GTK-Design angleichen. Sonst zeigt Nautilus nach einem Profilwechsel
-        # oder der Tag/Nacht-Automatik weiter das alte Design oder bleibt an
-        # einem alten Spiegel kleben. Reiner Datei-Vorgang, läuft auch im
-        # fensterlosen --apply-profile-Pfad ohne GTK.
+        # weiter das alte Design oder bleibt an einem alten Spiegel kleben.
         _spiegle_libadwaita(self.gtk_theme())
 
         # Lief Variety, würde es den gerade gesetzten Hintergrund beim nächsten
@@ -727,4 +726,7 @@ class AppSettings:
             if uri:
                 pfad = Gio.File.new_for_uri(uri).get_path()
                 if pfad and os.path.isfile(pfad):
-                    variety.setze_wallpaper(pfad)
+                    if not variety.setze_wallpaper(pfad):
+                        print("Design Manager: variety --set nach Profilwechsel "
+                              "fehlgeschlagen, Hintergrund evtl. nicht "
+                              "login-fest.", file=sys.stderr)

@@ -86,6 +86,13 @@ class InstallDropzone(Gtk.Box):
                 GLib.idle_add(self._fertig, ergebnis, None)
             except installer.InstallFehler as fehler:
                 GLib.idle_add(self._fertig, None, str(fehler))
+            except Exception:
+                # Die Kopierphase (Platte voll, schreibgeschützte Reste) wirft
+                # rohes OSError/shutil.Error außerhalb von InstallFehler. Ohne
+                # diesen Fang stürbe der Worker still und das Label bliebe für
+                # immer auf "Installing…". Lieber eine ehrliche Meldung.
+                GLib.idle_add(self._fertig, None,
+                              _("Installation failed unexpectedly."))
 
         threading.Thread(target=worker, daemon=True).start()
 

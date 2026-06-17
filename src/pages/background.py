@@ -108,10 +108,10 @@ class BackgroundPage(compat.PageBase):
         Rausnehmen (Autostart aus, beenden, Bild stabil setzen). Reversibel."""
         self._variety_label = Gtk.Label(
             label=_("Variety manages the background. Your image choice is "
-                    "handed to Variety and stays across every login. You can "
-                    "change the adjustment mode below, but at the next login "
-                    "Variety sets its own again. For full control over image "
-                    "and mode you can remove Variety here."),
+                    "handed to Variety, which normally keeps it across the "
+                    "next login too. You can change the adjustment mode below, "
+                    "but Variety may set its own image again. For full control "
+                    "over image and mode you can remove Variety here."),
             xalign=0, wrap=True)
         self._variety_label.add_css_class("dim-label")
 

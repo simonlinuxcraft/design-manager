@@ -84,13 +84,29 @@ class Dock:
 
 # --- Bausteine für einfache (nicht JSON-codierte) Schlüssel ---
 
+def _hat(s, key):
+    """True, wenn das Schema diesen Schlüssel kennt.
+
+    Dash to Dock und Dash to Panel werden über einen breiten Versionsbereich
+    unterstützt (Ubuntu 22.04 bis 25.04). Spätere Schlüssel wie show-mounts oder
+    show-trash fehlen in älteren Fassungen. Ein Gio.Settings.get_* auf einen
+    fehlenden Schlüssel ist kein fangbarer Fehler, sondern ein g_error -> SIGTRAP,
+    der den ganzen Prozess hart beendet. Darum vor dem Bauen jedes Reglers prüfen.
+    """
+    return s.props.settings_schema.has_key(key)
+
+
 def _schalter(s, key, titel, untertitel):
+    if not _hat(s, key):
+        return None
     return Einstellung(ART_SCHALTER, titel, untertitel,
                        lambda: s.get_boolean(key),
                        lambda w: s.set_boolean(key, bool(w)))
 
 
 def _auswahl(s, key, titel, untertitel, optionen):
+    if not _hat(s, key):
+        return None
     return Einstellung(ART_AUSWAHL, titel, untertitel,
                        lambda: s.get_string(key),
                        lambda w: s.set_string(key, w),
@@ -98,6 +114,8 @@ def _auswahl(s, key, titel, untertitel, optionen):
 
 
 def _regler(s, key, titel, untertitel, spanne):
+    if not _hat(s, key):
+        return None
     return Einstellung(ART_REGLER, titel, untertitel,
                        lambda: s.get_int(key),
                        lambda w: s.set_int(key, int(w)),
@@ -195,7 +213,7 @@ def _dtd_dock(s):
         _schalter(s, "multi-monitor", _("On all monitors"),
                   _("Show the dock on every screen")),
     ]
-    return Dock("Ubuntu Dock", e)
+    return Dock("Ubuntu Dock", [x for x in e if x is not None])
 
 
 # --- Dash to Panel (JSON-codierte Pro-Monitor-Werte) ---
@@ -241,6 +259,8 @@ def _json_alle_setzen(s, key, wert):
 
 
 def _panel_position(s):
+    if not _hat(s, "panel-positions"):
+        return None
     return Einstellung(
         ART_AUSWAHL, _("Position"), _("Screen edge the panel sits on"),
         lambda: _json_einheitlich(s, "panel-positions", "TOP"),
@@ -249,6 +269,8 @@ def _panel_position(s):
 
 
 def _panel_hoehe(s):
+    if not _hat(s, "panel-sizes"):
+        return None
     return Einstellung(
         ART_REGLER, _("Panel height"), _("Thickness of the bar in pixels"),
         lambda: int(_json_einheitlich(s, "panel-sizes", 48)),
@@ -275,4 +297,4 @@ def _panel_dock(s):
         _schalter(s, "multi-monitors", _("On all monitors"),
                   _("Show the panel on every screen")),
     ]
-    return Dock("Dash to Panel", e)
+    return Dock("Dash to Panel", [x for x in e if x is not None])

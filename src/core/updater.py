@@ -21,6 +21,13 @@ import tempfile
 import urllib.error
 import urllib.request
 
+# Solange das Repo privat ist (und kein Release hat), liefert die
+# unauthentifizierte GitHub-API 404. pruefe() kann 404/Netzfehler nicht von
+# "kein Update" unterscheiden und meldete sonst fälschlich "neueste Version".
+# Darum das Feature ausgeblendet lassen, bis Repo bzw. Releases öffentlich sind.
+# Dann auf True setzen (kein weiterer Code nötig).
+UPDATER_AKTIV = False
+
 REPO = "simonlinuxcraft/design-manager"
 API_URL = "https://api.github.com/repos/%s/releases/latest" % REPO
 _TIMEOUT = 15

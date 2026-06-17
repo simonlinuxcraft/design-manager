@@ -22,8 +22,11 @@ import json
 import os
 import zipfile
 
-from src.core import backgrounds
+from gi.repository import GLib
+
+from src.core import backgrounds, restorepoint, themes
 from src.core.uninstaller import home_vorkommen
+from src.i18n import _
 
 
 FORMAT = "design-manager-look"
@@ -106,6 +109,48 @@ def _sicheres_ziel(basis, rel):
     return ziel
 
 
+def _gvariant_string(text):
+    """Liest einen als GVariant-Text abgelegten String-Wert, oder ''."""
+    if not text:
+        return ""
+    try:
+        return GLib.Variant.parse(
+            GLib.VariantType.new("s"), text, None, None).get_string()
+    except (GLib.Error, TypeError):
+        return ""
+
+
+def _bereinige_themes(settings, einstellungen):
+    """Entfernt Design-Namen aus dem Manifest, die hier nicht installiert sind.
+
+    Ein .dmlook bringt seine Designdateien mit, das Manifest kann aber auch auf
+    Designs verweisen, die hier weder mitgeliefert noch installiert sind. Ein
+    solcher Name würde GNOME auf einen ungültigen Wert setzen (Fallback auf
+    Adwaita, im schlimmsten Fall eine optisch lahme Sitzung). Statt das wie
+    bisher blind zu tun, lassen wir unbekannte Design-Namen weg; der jeweilige
+    Bereich bleibt dann unverändert. Gibt eine bereinigte Kopie zurück.
+    """
+    pruefungen = [
+        (settings.INTERFACE, "gtk-theme",
+         set(themes.list_gtk_themes()) | {settings.SAFE_GTK_THEME}),
+        (settings.INTERFACE, "icon-theme",
+         set(themes.list_icon_themes()) | {settings.SAFE_ICON_THEME}),
+        (settings.INTERFACE, "cursor-theme",
+         set(themes.list_cursor_themes()) | {settings.SAFE_CURSOR_THEME}),
+        (settings.USER_THEME, "name",
+         set(themes.list_shell_themes()) | {""}),
+    ]
+    bereinigt = {schema: dict(werte)
+                 for schema, werte in einstellungen.items()}
+    for schema, key, erlaubt in pruefungen:
+        werte = bereinigt.get(schema)
+        if not werte or key not in werte:
+            continue
+        if _gvariant_string(werte[key]) not in erlaubt:
+            del werte[key]
+    return bereinigt
+
+
 def importiere(settings, quelle_zip):
     """Installiert die Dateien aus einem .dmlook und wendet den Look an.
 
@@ -140,6 +185,14 @@ def importiere(settings, quelle_zip):
     except (OSError, ValueError, zipfile.BadZipFile, json.JSONDecodeError):
         return False
 
+    # Bevor irgendetwas gesetzt wird, ein Rückkehrnetz anlegen: ein fremdes
+    # Paket ist nicht vertrauenswürdig, ein kaputtes Design (ungültiges CSS)
+    # kann die Sitzung optisch lahmlegen. Mit dem Sicherungspunkt führt ein
+    # Klick auf der Sicherungsseite in den Vorzustand zurück.
+    restorepoint.erstelle(settings, _("before importing a look package"))
+    # Design-Namen, die hier nicht installiert sind, aus dem Manifest nehmen,
+    # statt GNOME blind auf einen ungültigen Wert zu setzen.
+    einstellungen = _bereinige_themes(settings, einstellungen)
     # Erst die Dateien sind da, dann die Auswahl setzen (sonst zeigt der
     # Health-Check kurz auf ein noch fehlendes Design).
     settings.import_settings(einstellungen)
