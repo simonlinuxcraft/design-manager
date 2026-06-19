@@ -8,9 +8,6 @@ __pycache__/
 # Kompilierte Uebersetzungen (.po wird versioniert, .mo nicht)
 build/
 
-# tooling-Werkzeugconfig gehoert nicht ins Repo
-.tooling/
-
 # Privat, nicht ins oeffentlich teilbare Repo (lokal weiter vorhanden)
 design-manager-projekt.md
 design-manager-transparent-1024.png
