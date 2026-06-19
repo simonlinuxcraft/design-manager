@@ -18,6 +18,7 @@ from gi.repository import Adw, Gio, GLib, Gtk
 from src import compat
 from src.core import backgrounds, gdm, lockscreen, variety
 from src.i18n import _
+from src.widgets.monitor_arrangement import MonitorArrangement
 from src.widgets.wallpaper_card import WallpaperCard
 
 
@@ -55,26 +56,39 @@ class BackgroundPage(compat.PageBase):
         if self._variety_aktiv:
             box.append(self._variety_banner())
 
-        box.append(self._feld_titel(_("Current image")))
-        box.append(self._vorschau_bereich())
-        self._zeige_aktuellen()
+        # Bei mehreren Monitoren steht oben die Anordnung statt einer einzelnen
+        # Vorschau; die Galerie weiter unten gilt dann für die hier gewählte
+        # Auswahl ("all" oder ein bestimmter Monitor). Bei einem Monitor bleibt
+        # alles wie gehabt (eine Vorschau, ein Bild für den Schirm).
+        self._monitore = backgrounds.monitors()
+        self._multi = len(self._monitore) >= 2
+        self._auswahl = "all"
+        self._modus_updating = False  # unterdrückt Dropdown-Signal beim Umstellen
+        # Composite-Bauten serialisieren: schnelle Klicks dürfen nicht parallel
+        # denselben a/b-Slot in dieselbe Datei schreiben.
+        self._composite_busy = False
+        self._composite_pending = False
+        self._zuordnung = {
+            k: list(v) for k, v in backgrounds.lade_zuordnung().items()}
 
-        box.append(self._feld_titel(_("Default backgrounds")))
-        self._galerie = Gtk.FlowBox()
-        self._galerie.set_selection_mode(Gtk.SelectionMode.NONE)
-        self._galerie.set_max_children_per_line(4)
-        self._galerie.set_min_children_per_line(2)
-        self._galerie.set_column_spacing(10)
-        self._galerie.set_row_spacing(10)
-        self._galerie.set_homogeneous(True)
-        self._galerie.connect("child-activated", self._on_card_aktiviert)
-        box.append(self._galerie)
+        if self._multi:
+            box.append(self._feld_titel(_("Displays")))
+            self._arrangement = MonitorArrangement(
+                self._monitore, self._on_auswahl,
+                einzeln_erlaubt=not self._variety_aktiv)
+            box.append(self._arrangement)
+            self._arrangement.set_auswahl("all")
+            self._arrangement.set_status(
+                _("One background for all displays. Pick it from the gallery "
+                  "below."))
+            self._arrangement_thumbnails()
+        else:
+            box.append(self._feld_titel(_("Current image")))
+            box.append(self._vorschau_bereich())
+            self._zeige_aktuellen()
+
+        box.append(self._galerie_aufbau())
         self._fuelle_galerie()
-
-        knopf = Gtk.Button(label=_("Choose your own image…"))
-        knopf.set_halign(Gtk.Align.START)
-        knopf.connect("clicked", self._on_eigenes)
-        box.append(knopf)
 
         box.append(self._feld_titel(_("Adjustment")))
         box.append(self._modus_dropdown())
@@ -142,7 +156,14 @@ class BackgroundPage(compat.PageBase):
             uri = Gio.File.new_for_path(quelle).get_uri()
             self._settings.set_background_uri(uri)
             self._settings.set_background_uri_dark(uri)
-            self._vorschau_setzen(quelle)
+            if self._multi:
+                self._arrangement_thumbnails()
+            else:
+                self._vorschau_setzen(quelle)
+
+        # Jetzt ist der Weg frei für eigene Bilder pro Monitor.
+        if self._multi:
+            self._arrangement.einzeln_freischalten()
 
         self._variety_label.set_label(
             _("Variety was removed from autostart and quit. The app now "
@@ -188,29 +209,69 @@ class BackgroundPage(compat.PageBase):
         self._platzhalter.set_visible(False)
         backgrounds.load_texture_async(pfad, 1400, 400, self._vorschau.set_paintable)
 
+    def _galerie_aufbau(self):
+        """Zwei ausklappbare Bereiche: Standard- und eigene Hintergründe. Der
+        Knopf für ein eigenes Bild sitzt direkt im eigenen Bereich."""
+        behaelter = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
+
+        self._galerie_system = self._neue_flowbox()
+        self._exp_system = Gtk.Expander()
+        self._exp_system.set_label_widget(self._feld_titel(_("Default backgrounds")))
+        self._exp_system.set_expanded(True)
+        self._exp_system.set_child(self._galerie_system)
+        behaelter.append(self._exp_system)
+
+        self._galerie_eigene = self._neue_flowbox()
+        eigene_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=8)
+        eigene_box.append(self._galerie_eigene)
+        knopf = Gtk.Button(label=_("Choose your own image…"))
+        knopf.set_halign(Gtk.Align.START)
+        knopf.connect("clicked", self._on_eigenes)
+        eigene_box.append(knopf)
+
+        self._exp_eigene = Gtk.Expander()
+        self._exp_eigene.set_label_widget(self._feld_titel(_("Your own backgrounds")))
+        self._exp_eigene.set_expanded(True)
+        self._exp_eigene.set_child(eigene_box)
+        behaelter.append(self._exp_eigene)
+        return behaelter
+
+    def _neue_flowbox(self):
+        fb = Gtk.FlowBox()
+        fb.set_selection_mode(Gtk.SelectionMode.NONE)
+        fb.set_max_children_per_line(6)
+        fb.set_min_children_per_line(3)
+        fb.set_column_spacing(8)
+        fb.set_row_spacing(8)
+        fb.set_homogeneous(True)
+        fb.set_margin_top(8)
+        fb.connect("child-activated", self._on_card_aktiviert)
+        return fb
+
     def _fuelle_galerie(self):
-        """Baut die Karten der Galerie neu auf und markiert das aktive Bild.
+        """Baut die Karten beider Bereiche neu auf und markiert das aktive Bild.
 
         System-Bilder sind fest, eigene Bilder bekommen einen Entfernen-Knopf.
         """
-        compat.flowbox_clear(self._galerie)
+        compat.flowbox_clear(self._galerie_system)
+        compat.flowbox_clear(self._galerie_eigene)
         self._cards = []
         aktuell = self._aktueller_pfad()
 
-        def hinzufuegen(pfad, entfernbar):
+        def hinzufuegen(flowbox, pfad, entfernbar):
             aktiv = (aktuell is not None and os.path.realpath(pfad) == aktuell)
             karte = WallpaperCard(
                 pfad, aktiv,
                 entfernbar=entfernbar,
                 on_entfernen=self._on_entfernen if entfernbar else None,
             )
-            self._galerie.append(karte)
+            flowbox.append(karte)
             self._cards.append(karte)
 
         for pfad in backgrounds.list_system_wallpapers():
-            hinzufuegen(pfad, False)
+            hinzufuegen(self._galerie_system, pfad, False)
         for pfad in backgrounds.list_user_wallpapers():
-            hinzufuegen(pfad, True)
+            hinzufuegen(self._galerie_eigene, pfad, True)
 
     def _on_entfernen(self, pfad):
         # Nur in der App ausblenden, Datei bleibt erhalten.
@@ -218,15 +279,34 @@ class BackgroundPage(compat.PageBase):
         self._fuelle_galerie()
 
     def _on_card_aktiviert(self, _flowbox, karte):
-        for andere in self._cards:
-            andere.set_aktiv(andere is karte)
+        # Die "aktiv"-Markierung der Galerie ist nur im Ein-Bild-Modus sinnvoll.
+        # Im Pro-Monitor-Modus zeigt das Composite kein einzelnes Galerie-Bild,
+        # die richtige Vorschau liefern die Monitor-Kacheln.
+        if not (self._multi and self._auswahl != "all"):
+            for andere in self._cards:
+                andere.set_aktiv(andere is karte)
         self._setze_bild(karte.pfad)
 
     def _setze_bild(self, pfad):
-        # Variety-respektierendes Setzen liegt jetzt zentral in core/backgrounds,
-        # damit auch Look-Sets denselben Weg nutzen.
+        # Mehrmonitor mit gewähltem Einzelschirm: nur dessen Bild im Composite.
+        # Sonst (ein Monitor, oder "alle"): klassisch für den ganzen Desktop,
+        # variety-respektierend zentral über core/backgrounds.
+        if self._multi and self._auswahl != "all":
+            self._zuordnung.setdefault(self._auswahl, [pfad, "zoom"])[0] = pfad
+            self._composite_anwenden()
+            return
         backgrounds.apply_wallpaper(self._settings, pfad)
-        self._vorschau_setzen(pfad)
+        if self._multi:
+            # Von einem Composite (spanned) kommend ein einzelnes Bild auf allen
+            # Schirmen: spanned würde es über beide strecken, also auf zoom zurück.
+            if self._settings.picture_options() == "spanned":
+                self._settings.set_picture_options("zoom")
+                self._modus_updating = True
+                self._setze_modus_auswahl("zoom")
+                self._modus_updating = False
+            self._arrangement_thumbnails()
+        else:
+            self._vorschau_setzen(pfad)
 
     def _on_eigenes(self, _knopf):
         bilder = Gtk.FileFilter()
@@ -483,19 +563,105 @@ class BackgroundPage(compat.PageBase):
 
     def _modus_dropdown(self):
         labels = [label for label, _wert in MODI]
-        dropdown = Gtk.DropDown.new_from_strings(labels)
-        dropdown.set_hexpand(True)
+        self._modus_dd = Gtk.DropDown.new_from_strings(labels)
+        self._modus_dd.set_hexpand(True)
+        self._setze_modus_auswahl(self._settings.picture_options())
+        self._modus_dd.connect("notify::selected", self._on_modus)
+        return self._modus_dd
 
-        aktuell = self._settings.picture_options()
-        for i, (_label, wert) in enumerate(MODI):
-            if wert == aktuell:
-                dropdown.set_selected(i)
-                break
-
-        dropdown.connect("notify::selected", self._on_modus)
-        return dropdown
+    def _setze_modus_auswahl(self, wert):
+        for i, (_label, w) in enumerate(MODI):
+            if w == wert:
+                self._modus_dd.set_selected(i)
+                return
 
     def _on_modus(self, dropdown, _param):
+        if self._modus_updating:
+            return
         index = dropdown.get_selected()
-        if 0 <= index < len(MODI):
-            self._settings.set_picture_options(MODI[index][1])
+        if not (0 <= index < len(MODI)):
+            return
+        wert = MODI[index][1]
+        if self._multi and self._auswahl != "all":
+            # Modus für den gewählten Monitor im Composite. spanned/none ergeben
+            # pro Monitor keinen Sinn, darum auf zoom zurückfallen.
+            modus = wert if wert in backgrounds.PER_MONITOR_MODI else "zoom"
+            eintrag = self._zuordnung.setdefault(self._auswahl, [None, modus])
+            eintrag[1] = modus
+            if eintrag[0]:
+                self._composite_anwenden()
+            return
+        self._settings.set_picture_options(wert)
+
+    # --- Mehrmonitor-Auswahl und Composite ---
+    # Die Anordnung oben meldet die Auswahl ("all" oder ein connector). Die
+    # Galerie und der Modus weiter unten wirken auf genau diese Auswahl.
+
+    def _on_auswahl(self, auswahl):
+        self._auswahl = auswahl
+        self._arrangement.set_auswahl(auswahl)
+        # Status und Galerie-Überschrift mitführen, damit klar ist, dass die
+        # Galerie jetzt für die gewählte Sache gilt.
+        if auswahl == "all":
+            self._arrangement.set_status(
+                _("One background for all displays. Pick it from the gallery "
+                  "below."))
+            wert = self._settings.picture_options()
+        else:
+            self._arrangement.set_status(
+                _("Editing {name}. Pick its background from the gallery "
+                  "below.").format(name=auswahl))
+            wert = (self._zuordnung.get(auswahl) or [None, "zoom"])[1]
+        self._modus_updating = True
+        self._setze_modus_auswahl(wert)
+        self._modus_updating = False
+
+    def _arrangement_thumbnails(self):
+        """Zeigt in jeder Kachel, was real auf dem Schirm liegt: im Composite-Fall
+        (spanned) das je Monitor zugewiesene Bild, sonst überall das eine globale."""
+        spanned = self._settings.picture_options() == "spanned"
+        global_bild = None
+        if not spanned:
+            global_bild = backgrounds.aktuelles_wallpaper(self._settings)
+        for m in self._monitore:
+            conn = m["connector"]
+            if spanned:
+                eintrag = self._zuordnung.get(conn)
+                bild = eintrag[0] if eintrag and eintrag[0] else None
+            else:
+                bild = global_bild
+            self._arrangement.set_thumbnail(conn, bild)
+
+    def _composite_anwenden(self):
+        """Baut das Composite aus der aktuellen Zuordnung in einem Thread und
+        setzt es danach im Main-Loop (kein Einfrieren bei großen Bildern).
+
+        Serialisiert: läuft schon ein Bau, wird nur vorgemerkt und nach dessen
+        Ende mit dem dann aktuellen Stand erneut gebaut. So greift kein zweiter
+        Thread parallel denselben a/b-Slot."""
+        if self._composite_busy:
+            self._composite_pending = True
+            return
+        zuordnung = {c: (e[0], e[1]) for c, e in self._zuordnung.items() if e[0]}
+        if not zuordnung:
+            return
+        self._composite_busy = True
+        monitore = backgrounds.monitors()
+        ziel = backgrounds.naechster_composite_pfad(self._settings)
+
+        def arbeit():
+            ok = backgrounds.build_composite(zuordnung, monitore, ziel)
+            GLib.idle_add(self._composite_fertig, ok, ziel, zuordnung)
+
+        threading.Thread(target=arbeit, daemon=True).start()
+
+    def _composite_fertig(self, ok, ziel, zuordnung):
+        self._composite_busy = False
+        if ok:
+            backgrounds.setze_composite(self._settings, ziel)
+            backgrounds.speichere_zuordnung(zuordnung)
+            self._arrangement_thumbnails()
+        if self._composite_pending:
+            self._composite_pending = False
+            self._composite_anwenden()
+        return GLib.SOURCE_REMOVE

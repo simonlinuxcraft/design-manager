@@ -68,10 +68,20 @@ def _schreibe_default_cursor(name):
         return
     if os.path.isfile(index) and not _ist_unser_stub(index):
         return
+    inhalt = _CURSOR_STUB_KOPF + "Inherits=" + name + "\n"
+    # Nur schreiben, wenn sich der Inhalt wirklich ändert. Ein erneutes Schreiben
+    # mit gleichem Inhalt löst sonst unnötig File-Monitor-Events aus (gsd, Theme-
+    # Reload-Module), die auf fehlkonfigurierten Systemen Reload-Stürme anstoßen.
+    try:
+        with open(index, encoding="utf-8") as f:
+            if f.read() == inhalt:
+                return
+    except OSError:
+        pass
     try:
         os.makedirs(ordner, exist_ok=True)
         with open(index, "w", encoding="utf-8") as f:
-            f.write(_CURSOR_STUB_KOPF + "Inherits=" + name + "\n")
+            f.write(inhalt)
     except OSError:
         pass  # Cursor ist via dconf gesetzt; die Datei ist nur die Absicherung
 
@@ -270,6 +280,15 @@ def _schreibe_stub(css_pfad):
         return  # echte Fremd-Datei, nicht überschreiben (sollte gesichert sein)
     uri = "file://" + quote(os.path.abspath(css_pfad))
     inhalt = "/* %s */\n@import url(\"%s\");\n" % (_MARKER, uri)
+    # Nur schreiben, wenn sich der Inhalt ändert: ein erneutes Schreiben mit
+    # identischem Inhalt löst sonst unnötig File-Monitor-Events aus (gsd, Theme-
+    # Reload-Module), die auf fehlkonfigurierten Systemen Reload-Stürme anstoßen.
+    try:
+        with open(ziel, encoding="utf-8") as f:
+            if f.read() == inhalt:
+                return
+    except OSError:
+        pass
     with open(ziel, "w", encoding="utf-8") as f:
         f.write(inhalt)
 

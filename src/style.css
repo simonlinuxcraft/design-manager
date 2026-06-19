@@ -104,6 +104,100 @@ window.silber .navigation-sidebar {
   border-radius: 8px;
 }
 
+/* Kompakte Variante der Karten (Hintergrund-Galerie): weniger Rand, damit mehr
+   Bilder auf den Schirm passen. */
+.theme-card.kompakt {
+  padding: 6px;
+}
+
+/* Dateiname klein und dezent unter dem Thumbnail. */
+.wallpaper-name {
+  font-size: 0.82em;
+  color: #aab0b8;
+}
+
+/* Dashboard (Übersicht): Hero-Kopf und Vorschau-Karten. */
+.dash-hero {
+  padding: 6px 2px 10px 2px;
+}
+
+.hero-titel {
+  font-size: 1.75em;
+  font-weight: 800;
+  color: #f2f5f8;
+}
+
+.hero-unter {
+  color: #aab0b8;
+}
+
+/* Eine Karte je Bereich. Sanfter Verlauf, beim Überfahren leicht angehoben. */
+.dash-karte {
+  padding: 18px 14px;
+  background-image: linear-gradient(160deg, #2f343c, #23262d);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.dash-karte:hover {
+  border-color: rgba(199, 206, 214, 0.55);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+}
+
+/* Großes Vorschau-Icon der Karte in dezentem Silber. */
+.dash-icon {
+  color: #c7ced6;
+}
+
+.dash-font {
+  color: #f2f5f8;
+}
+
+/* Wallpaper-Vorschau auf dem Dashboard: nur ein abgerundetes Bild, keine Karte. */
+.dash-wallpaper {
+  border-radius: 12px;
+}
+
+/* Fläche, auf der die Monitore räumlich angeordnet liegen. */
+.monitor-flaeche {
+  background-color: rgba(0, 0, 0, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 12px;
+}
+
+/* Ein Monitor als Rechteck. Klickbar, das gewählte bekommt den silbernen
+   Rahmen wie die aktiven Karten. */
+.monitor-kachel {
+  padding: 0;
+  min-height: 0;
+  min-width: 0;
+  background-image: linear-gradient(160deg, #2c3037, #22252b);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.monitor-kachel:hover {
+  border-color: rgba(199, 206, 214, 0.55);
+}
+
+.monitor-kachel.selected {
+  border-color: #c7ced6;
+  box-shadow: inset 0 0 0 2px #c7ced6;
+}
+
+/* Connector-Name mittig auf der Kachel, mit dunkler Plakette für Lesbarkeit. */
+.monitor-kachel-label {
+  font-size: 0.82em;
+  font-weight: 700;
+  color: #eef1f4;
+  background-color: rgba(0, 0, 0, 0.45);
+  border-radius: 6px;
+  padding: 1px 7px;
+}
+
 /* 8. Drag-&-Drop-Zone für neue Designs (Funktion folgt in Schritt 8). */
 .dropzone {
   border: 1px dashed rgba(199, 206, 214, 0.35);

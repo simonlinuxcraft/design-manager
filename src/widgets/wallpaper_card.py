@@ -1,7 +1,8 @@
 """Vorschaukarte für ein Hintergrundbild.
 
-Zeigt ein Thumbnail des Bildes, darunter den Dateinamen und ob es gerade
-gesetzt ist.
+Kompakt gehalten: ein Thumbnail mit dem Dateinamen klein darunter. Ob das Bild
+gesetzt ist, zeigt der silberne Rahmen (CSS-Klasse "aktiv"), ohne zusätzliche
+Textzeile, damit die Galerie übersichtlich bleibt.
 """
 
 import os
@@ -13,8 +14,8 @@ from src.core import backgrounds
 from src.i18n import _
 
 
-THUMB_BREITE = 168
-THUMB_HOEHE = 96
+THUMB_BREITE = 132
+THUMB_HOEHE = 76
 
 
 class WallpaperCard(Gtk.FlowBoxChild):
@@ -24,8 +25,10 @@ class WallpaperCard(Gtk.FlowBoxChild):
         super().__init__()
         self.pfad = pfad
         self.add_css_class("theme-card")
+        self.add_css_class("kompakt")
+        self.set_tooltip_text(os.path.basename(pfad))
 
-        box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
+        box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=4)
 
         thumb = Gtk.Picture()
         compat.set_cover(thumb)
@@ -56,14 +59,10 @@ class WallpaperCard(Gtk.FlowBoxChild):
 
         name = Gtk.Label(
             label=os.path.splitext(os.path.basename(pfad))[0], xalign=0)
-        name.add_css_class("card-title")
+        name.add_css_class("wallpaper-name")
         name.set_ellipsize(3)
-        name.set_max_width_chars(20)
+        name.set_max_width_chars(16)
         box.append(name)
-
-        self._status = Gtk.Label(xalign=0)
-        self._status.add_css_class("card-status")
-        box.append(self._status)
 
         self.set_child(box)
         self.set_aktiv(aktiv)
@@ -71,7 +70,5 @@ class WallpaperCard(Gtk.FlowBoxChild):
     def set_aktiv(self, aktiv):
         if aktiv:
             self.add_css_class("aktiv")
-            self._status.set_text(_("Active"))
         else:
             self.remove_css_class("aktiv")
-            self._status.set_text("")

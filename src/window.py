@@ -32,7 +32,7 @@ from src.pages.system import SystemPage
 from src.widgets.welcome import WelcomeDialog
 
 
-APP_VERSION = "0.1.0"
+APP_VERSION = "0.1.1"
 
 
 class MainWindow(Adw.ApplicationWindow):
@@ -107,6 +107,7 @@ class MainWindow(Adw.ApplicationWindow):
         self._banner.set_revealed(False)
         self._banner.connect("button-clicked", self._on_banner_korrektur)
         self._banner_probleme = []
+        self._banner_modus = None  # None | "reload" (Reload-Modul-Risiko)
 
         wurzel = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         wurzel.append(self._banner)
@@ -141,7 +142,19 @@ class MainWindow(Adw.ApplicationWindow):
         return GLib.SOURCE_REMOVE
 
     def _pruefe_gesundheit(self):
-        """Blendet ein Banner ein, wenn ein gesetztes Design auf der Platte fehlt."""
+        """Blendet ein Banner ein. Das gefährlichere Reload-Modul-Risiko hat
+        Vorrang (kann die ganze Sitzung lahmlegen), sonst fehlende Designs."""
+        if healthcheck.reload_module_gesetzt():
+            self._banner_modus = "reload"
+            self._banner.set_title(
+                _("A leftover KDE theme-reload module is active. On GNOME it can "
+                  "freeze the whole session on a theme change. The app can "
+                  "remove it safely (a backup is kept)."))
+            self._banner.set_button_label(_("Remove it"))
+            self._banner.set_revealed(True)
+            return GLib.SOURCE_REMOVE
+
+        self._banner_modus = None
         self._banner_probleme = healthcheck.pruefe(self._settings)
         if not self._banner_probleme:
             return GLib.SOURCE_REMOVE
@@ -154,7 +167,20 @@ class MainWindow(Adw.ApplicationWindow):
         return GLib.SOURCE_REMOVE
 
     def _on_banner_korrektur(self, _banner):
-        """Schließt die gemeldeten Lücken über die reset_*-Methoden."""
+        """Behebt das gemeldete Problem: Reload-Modul entfernen oder die
+        Design-Lücken über die reset_*-Methoden schließen."""
+        if self._banner_modus == "reload":
+            if healthcheck.entferne_reload_module():
+                self._banner_modus = None
+                self._banner.set_revealed(False)
+                self.zeige_toast(
+                    _("Removed the theme-reload module. Fully effective after "
+                      "the next login."))
+            else:
+                # Schreiben fehlgeschlagen: Banner offen lassen, damit der Nutzer
+                # es erneut versuchen kann, statt fälschlich Erfolg zu melden.
+                self.zeige_toast(_("Could not remove the module."))
+            return
         for _label, methode in self._banner_probleme:
             getattr(self._settings, methode)()
         self._banner_probleme = []
