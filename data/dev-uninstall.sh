@@ -6,7 +6,7 @@ APP_ID="io.github.simonlinuxcraft.DesignManager"
 ICON_BASIS="$HOME/.local/share/icons/hicolor"
 APP_DIR="$HOME/.local/share/applications"
 
-for N in 48 64 128 256 512; do
+for N in 16 24 32 48 64 128 256 512; do
     rm -f "$ICON_BASIS/${N}x${N}/apps/$APP_ID.png"
 done
 rm -f "$APP_DIR/$APP_ID.desktop"

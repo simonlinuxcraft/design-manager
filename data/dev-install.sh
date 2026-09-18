@@ -16,7 +16,7 @@ APP_DIR="$HOME/.local/share/applications"
 #    (src/logo.py) skaliert.
 MASTER="$(mktemp --suffix=.png)"
 python3 -c "import sys; sys.path.insert(0, '$PROJEKT'); from src.logo import logo_bytes; open('$MASTER', 'wb').write(logo_bytes())"
-for N in 48 64 128 256 512; do
+for N in 16 24 32 48 64 128 256 512; do
     ZIEL_DIR="$ICON_BASIS/${N}x${N}/apps"
     mkdir -p "$ZIEL_DIR"
     if command -v convert >/dev/null; then
