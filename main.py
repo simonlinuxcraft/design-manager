@@ -21,8 +21,10 @@ bewusst nicht: die eigentliche Oberflaeche liegt in src/window.py.
 """
 
 import os
+import re
 import subprocess
 import sys
+import urllib.parse
 
 import gi
 
@@ -39,6 +41,8 @@ from src.window import MainWindow  # noqa: E402
 
 # Pfad zum eigenen Stylesheet (silberne Optik), relativ zu dieser Datei.
 STYLE_FILE = os.path.join(os.path.dirname(__file__), "src", "style.css")
+
+ADW_STYLESHEET = "/org/gnome/Adwaita/styles/gtk.css"
 
 # Eigene Symbolics als hicolor-Rückfall, falls das gewählte Icon-Design sie
 # nicht hat und nicht von Adwaita erbt (z.B. Stylish, breeze).
@@ -79,27 +83,7 @@ class LinuxAnpassungApp(Adw.Application):
 
         Gtk.IconTheme.get_for_display(Gdk.Display.get_default()).add_search_path(
             ICON_DIR)
-        self._load_styles()
-
-    def _load_styles(self):
-        """Liest src/style.css ein und legt es über das Standard-Theme."""
-        provider = Gtk.CssProvider()
-        provider.load_from_path(STYLE_FILE)
-
-        # Knapp ÜBER USER-Priorität. GTK lädt ~/.config/gtk-4.0/gtk.css ebenfalls
-        # mit USER-Priorität; das ist genau die Datei, in die der Design-Manager
-        # ein gewähltes GTK-Design für libadwaita-Apps spiegelt (auch in dieses
-        # Fenster). +1 sorgt dafür, dass unsere eigenen Regeln gleichrangige
-        # Theme-Regeln schlagen, also überall dort, wo style.css eine Eigenschaft
-        # explizit setzt (window.silber, Sidebar, Karten, Akzentpunkte). Achtung:
-        # Eigenschaften, die style.css NICHT setzt (Farbe nackter Knöpfe/Labels),
-        # erbt das Fenster weiter vom gespiegelten Theme. Das ist akzeptiert, rein
-        # optisch; die Marke trägt über die explizit gesetzten Flächen.
-        Gtk.StyleContext.add_provider_for_display(
-            Gdk.Display.get_default(),
-            provider,
-            Gtk.STYLE_PROVIDER_PRIORITY_USER + 1,
-        )
+        lade_styles(Gdk.Display.get_default())
 
     def do_activate(self):
         """Wird beim Start aufgerufen (und wenn die App erneut aktiviert wird).
@@ -115,6 +99,121 @@ class LinuxAnpassungApp(Adw.Application):
             # selbst zieht GNOME aus der .desktop-Datei.
             window.set_icon_name(APP_ID)
         window.present()
+
+
+def lade_styles(display):
+    """Das App-Fenster gegen das gewählte GTK-Design abschirmen, dann Silber.
+
+    GTK lädt ~/.config/gtk-4.0/gtk.css mit USER-Priorität. Genau dorthin spiegelt
+    die App das gewählte GTK-Design für libadwaita-Apps, und es wirkte damit auch
+    in diesem Fenster: ein helles Design wie Orchis machte es unlesbar (helle
+    Flächen, dunkle Schrift auf dunklen Karten). Darum darüber, nur in diesem
+    Prozess: (1) jede Eigenschaft, die das Nutzer-CSS setzt, auf "unset",
+    (2) libadwaitas eigenes Stylesheet neu, (3) unser Silber-Look. Andere Apps
+    bekommen das gewählte Design weiter wie gewollt.
+    """
+    oben = Gtk.STYLE_PROVIDER_PRIORITY_USER
+    try:
+        # Ab libadwaita 1.6 ein einziges Stylesheet (hell/dunkel per @media).
+        Gio.resources_get_info(ADW_STYLESHEET, Gio.ResourceLookupFlags.NONE)
+    except GLib.Error:
+        pass  # ponytail: ältere libadwaita hat getrennte Dateien, dort scheint das Design weiter durch
+    else:
+        reset = Gtk.CssProvider()
+        # Unbekannte Eigenschaften im Fremd-Theme hat GTK beim Original schon
+        # gemeldet; beim Zurücksetzen nicht noch einmal.
+        reset.connect("parsing-error",
+                      lambda p, *_a: p.stop_emission_by_name("parsing-error"))
+        _lade_css_text(reset, _nutzer_css_reset())
+        Gtk.StyleContext.add_provider_for_display(display, reset, oben + 1)
+        # Die App läuft immer dunkel: die Dunkel-Blöcke (@media prefers-color-
+        # scheme: dark) zusätzlich bedingungslos anhängen. Sonst griffen für
+        # Farben, die style.css nicht selbst setzt (z.B. sidebar_fg_color), die
+        # hellen Grundwerte, dunkle Schrift in der Seitenleiste.
+        text = Gio.resources_lookup_data(
+            ADW_STYLESHEET, Gio.ResourceLookupFlags.NONE).get_data().decode()
+        dunkel = "\n".join(_media_inhalte(text, "prefers-color-scheme: dark"))
+        grundstil = Gtk.CssProvider()
+        _lade_css_text(grundstil, text + "\n" + dunkel)
+        Gtk.StyleContext.add_provider_for_display(display, grundstil, oben + 2)
+
+    provider = Gtk.CssProvider()
+    provider.load_from_path(STYLE_FILE)
+    Gtk.StyleContext.add_provider_for_display(display, provider, oben + 3)
+
+
+def _lade_css_text(provider, text):
+    if hasattr(provider, "load_from_string"):  # GTK 4.12+
+        provider.load_from_string(text)
+    else:
+        provider.load_from_data(text, -1)
+
+
+def _nutzer_css_reset():
+    """CSS, das jede vom Nutzer-CSS gesetzte Eigenschaft wieder auf unset setzt."""
+    pfad = os.path.join(GLib.get_user_config_dir(), "gtk-4.0", "gtk.css")
+    zeilen = []
+    for selektor, namen in _css_regeln(pfad, set()):
+        if namen:
+            zeilen.append("%s { %s }" % (
+                selektor, " ".join(n + ": unset;" for n in sorted(namen))))
+    return "\n".join(zeilen)
+
+
+def _css_regeln(pfad, gesehen):
+    """(Selektor, Eigenschaftsnamen) aller Regeln einer CSS-Datei, samt @import."""
+    real = os.path.realpath(pfad)
+    if real in gesehen or not os.path.isfile(real):
+        return []
+    gesehen.add(real)
+    try:
+        with open(real, encoding="utf-8", errors="replace") as f:
+            text = re.sub(r"/\*.*?\*/", "", f.read(), flags=re.S)
+    except OSError:
+        return []
+    regeln = []
+    for ziel in re.findall(r"""@import\s+(?:url\()?\s*["']?([^"')\s;]+)""", text):
+        if ziel.startswith("file://"):
+            ziel = urllib.parse.unquote(ziel[len("file://"):])
+        elif "://" in ziel:
+            continue  # resource:// u.ä. gehört nicht zum Fremd-Theme
+        regeln += _css_regeln(os.path.join(os.path.dirname(real), ziel), gesehen)
+    return regeln + _css_bloecke(text)
+
+
+def _media_inhalte(text, bedingung):
+    """Inhalt aller @media-Blöcke, deren Bedingung 'bedingung' enthält."""
+    inhalte = []
+    for treffer in re.finditer(r"@media[^{]*" + re.escape(bedingung) + r"[^{]*\{",
+                               text):
+        tiefe, zu = 1, treffer.end()
+        while tiefe and zu < len(text):
+            tiefe += {"{": 1, "}": -1}.get(text[zu], 0)
+            zu += 1
+        inhalte.append(text[treffer.end():zu - 1])
+    return inhalte
+
+
+def _css_bloecke(text):
+    """Regeln aus CSS-Text; @media wird aufgeklappt, andere @-Blöcke übersprungen."""
+    regeln, start, i = [], 0, 0
+    while True:
+        auf = text.find("{", i)
+        if auf < 0:
+            return regeln
+        tiefe, zu = 1, auf + 1
+        while tiefe and zu < len(text):
+            tiefe += {"{": 1, "}": -1}.get(text[zu], 0)
+            zu += 1
+        kopf = text[start:auf].split(";")[-1].strip()
+        rumpf = text[auf + 1:zu - 1]
+        if kopf.startswith("@media"):
+            regeln += _css_bloecke(rumpf)
+        elif kopf and not kopf.startswith("@"):
+            namen = {n for n in re.findall(r"(?:^|;)\s*([-\w]+)\s*:", rumpf)
+                     if not n.startswith("--")}
+            regeln.append((kopf, namen))
+        start = i = zu
 
 
 def _software_gl():

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Design Manager\n"
 "Report-Msgid-Bugs-To: https://github.com/simonlinuxcraft\n"
-"POT-Creation-Date: 2026-09-18 23:42+0200\n"
+"POT-Creation-Date: 2026-09-19 00:23+0200\n"
 "PO-Revision-Date: 2026-06-16 00:00+0200\n"
 "Last-Translator: simonlinuxcraft\n"
 "Language-Team: Spanish\n"
@@ -181,16 +181,16 @@ msgstr "tema del shell"
 msgid "before importing a look package"
 msgstr "antes de importar un paquete de aspecto"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/theme_check.py⁩:69
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/theme_check.py⁩:73
 msgid "The theme folder was not found."
 msgstr "No se encontró la carpeta del tema."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/theme_check.py⁩:74
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/theme_check.py⁩:78
 #, python-brace-format
 msgid "The file {sub}/gtk.css is not readable."
 msgstr "El archivo {sub}/gtk.css no se puede leer."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/theme_check.py⁩:78
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/theme_check.py⁩:82
 #, python-brace-format
 msgid ""
 "The theme uses CSS that GTK does not understand ({props}). This can slow "
@@ -199,16 +199,16 @@ msgstr ""
 "El tema usa CSS que GTK no entiende ({props}). Esto puede ralentizar o "
 "congelar toda la sesión."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/theme_check.py⁩:83
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/theme_check.py⁩:87
 msgid "The theme is missing gtk-4.0/gtk.css. GNOME would fall back to Adwaita."
 msgstr ""
 "Al tema le falta gtk-4.0/gtk.css. GNOME usaría Adwaita como alternativa."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/theme_check.py⁩:93
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/theme_check.py⁩:97
 msgid "The theme is missing gnome-shell/gnome-shell.css."
 msgstr "Al tema le falta gnome-shell/gnome-shell.css."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/theme_check.py⁩:95
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/theme_check.py⁩:99
 msgid "The file gnome-shell.css is not readable."
 msgstr "El archivo gnome-shell.css no se puede leer."
 
