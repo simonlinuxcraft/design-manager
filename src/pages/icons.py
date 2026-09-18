@@ -5,11 +5,12 @@ Beispiel-Icons; unten eine Ablage zum Installieren neuer Symbol-Designs. Ein
 Klick auf eine Karte aktiviert das Design sofort.
 """
 
-from gi.repository import Adw, GLib, Gtk
+from gi.repository import GLib, Gtk
 
 from src import compat
 from src.core import themes, uninstaller
 from src.i18n import _
+from src.widgets import mehrfach_entfernen
 from src.widgets.dropzone import InstallDropzone
 from src.widgets.theme_card import ThemeCard
 
@@ -28,7 +29,8 @@ class IconsPage(compat.PageBase):
         self._cards = []
 
         toolbar = compat.toolbar_view(
-            top_bars=[Adw.HeaderBar()], content=self._inhalt())
+            top_bars=[mehrfach_entfernen.kopfleiste(self, settings, "icon")],
+            content=self._inhalt())
         self.set_child(toolbar)
 
     def _inhalt(self):

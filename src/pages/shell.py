@@ -12,6 +12,7 @@ from gi.repository import Adw, GLib, Gtk
 from src import compat
 from src.core import restorepoint, theme_check, themes, uninstaller
 from src.i18n import _
+from src.widgets import mehrfach_entfernen
 from src.widgets.dropzone import InstallDropzone
 from src.widgets.shell_card import ShellCard
 
@@ -30,7 +31,8 @@ class ShellPage(compat.PageBase):
         self._cards = []
 
         toolbar = compat.toolbar_view(
-            top_bars=[Adw.HeaderBar()], content=self._inhalt())
+            top_bars=[mehrfach_entfernen.kopfleiste(self, settings, "shell")],
+            content=self._inhalt())
         self.set_child(toolbar)
 
     def _inhalt(self):

@@ -7,11 +7,12 @@ Terminals, Electron-Apps) behalten den alten Zeiger, bis sie neu gestartet
 werden.
 """
 
-from gi.repository import Adw, GLib, Gtk
+from gi.repository import GLib, Gtk
 
 from src import compat
 from src.core import restorepoint, themes, uninstaller
 from src.i18n import _
+from src.widgets import mehrfach_entfernen
 from src.widgets.cursor_card import CursorCard
 from src.widgets.dropzone import InstallDropzone
 
@@ -59,7 +60,8 @@ class CursorPage(compat.PageBase):
         scroll.set_child(box)
 
         toolbar = compat.toolbar_view(
-            top_bars=[Adw.HeaderBar()], content=scroll)
+            top_bars=[mehrfach_entfernen.kopfleiste(self, settings, "cursor")],
+            content=scroll)
         self.set_child(toolbar)
 
     def _feld_titel(self, text):

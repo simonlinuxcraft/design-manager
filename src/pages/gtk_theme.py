@@ -11,11 +11,12 @@ wirkt (siehe core/settings.py). Der 'Standard'-Knopf räumt diesen Spiegel
 wieder weg.
 """
 
-from gi.repository import Adw, Gtk
+from gi.repository import Gtk
 
 from src import compat
 from src.core import restorepoint, theme_check, themes
 from src.i18n import _
+from src.widgets import mehrfach_entfernen
 from src.widgets.dropzone import InstallDropzone
 
 
@@ -27,7 +28,8 @@ class GtkThemePage(compat.PageBase):
         self._settings = settings
 
         toolbar = compat.toolbar_view(
-            top_bars=[Adw.HeaderBar()], content=self._inhalt())
+            top_bars=[mehrfach_entfernen.kopfleiste(self, settings, "gtk")],
+            content=self._inhalt())
         self.set_child(toolbar)
 
     def _inhalt(self):

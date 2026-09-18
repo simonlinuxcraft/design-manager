@@ -30,7 +30,7 @@ from src.pages.looks import LooksPage
 from src.pages.overview import OverviewPage
 from src.pages.shell import ShellPage
 from src.pages.system import SystemPage
-from src.widgets.paket_auswahl import PaketAuswahl
+from src.widgets.paket_auswahl import AuswahlDialog
 from src.widgets.welcome import WelcomeDialog
 
 
@@ -287,8 +287,14 @@ class MainWindow(Adw.ApplicationWindow):
                     self._toasts.add_toast(neu)
                 self._frage_auswahl(neu, offen, fertig, fehler)
 
-            compat.dialog_present(
-                PaketAuswahl(name, paket.auswaehlbar(), gewaehlt), self)
+            funde = paket.auswaehlbar()
+            compat.dialog_present(AuswahlDialog(
+                _("Choose what to install"),
+                ngettext("{file} contains {n} theme. Choose what you want.",
+                         "{file} contains {n} themes. Choose what you want.",
+                         len(funde)).format(file=name, n=len(funde)),
+                [(f, f.name, f.beschreibung()) for f in funde],
+                _("Install ({n})"), _("Install"), gewaehlt), self)
             return GLib.SOURCE_REMOVE
         self._installiere_pakete(laeuft, fertig, fehler)
         return GLib.SOURCE_REMOVE
