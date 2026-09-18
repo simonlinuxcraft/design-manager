@@ -47,11 +47,12 @@ class CursorPage(compat.PageBase):
         untertitel.add_css_class("dim-label")
         box.append(untertitel)
 
+        box.append(self._feld_titel(_("Cursor theme")))
         box.append(self._karten())
 
+        box.append(self._feld_titel(_("Install a new cursor theme")))
         box.append(InstallDropzone(
-            _("Drag a cursor theme (.tar.gz/.zip) here"),
-            erwartet={"cursor"}))
+            _("Drag a cursor theme (archive or folder) here")))
 
         scroll = Gtk.ScrolledWindow()
         scroll.set_vexpand(True)
@@ -60,6 +61,11 @@ class CursorPage(compat.PageBase):
         toolbar = compat.toolbar_view(
             top_bars=[Adw.HeaderBar()], content=scroll)
         self.set_child(toolbar)
+
+    def _feld_titel(self, text):
+        label = Gtk.Label(label=text, xalign=0)
+        label.add_css_class("feld-titel")
+        return label
 
     def _karten(self):
         flowbox = Gtk.FlowBox()
@@ -84,7 +90,7 @@ class CursorPage(compat.PageBase):
         namen = iter(themes.list_cursor_themes())
 
         def baue_naechste():
-            for _ in range(2):  # zwei Karten pro Durchlauf
+            for _n in range(2):  # zwei Karten pro Durchlauf
                 try:
                     name = next(namen)
                 except StopIteration:

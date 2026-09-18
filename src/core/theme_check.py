@@ -6,12 +6,38 @@ ist sie unlesbar), fällt GNOME beim Umschalten still auf Adwaita zurück und de
 tote Name bleibt in dconf stehen. Diese Prüfung fängt das vorher ab.
 """
 
+import glob
 import os
+import re
 
 from src.core import themes
 # Denselben Lookup wie die Shell-Vorschau nutzen, statt ihn zu duplizieren.
 from src.core.shell_preview import _css_pfad as _shell_css_pfad
 from src.i18n import _
+
+
+# Web-CSS, das GTK nicht kennt. Jede GTK-App loggt pro Parse einen Fehler; über
+# alle Apps summiert legte so ein Design (Cyber-Dusk) die Sitzung lahm. Gegen
+# 35 installierte Designs kalibriert: keine Fehlalarme. "filter" fehlt bewusst,
+# das kann GTK4.
+WEB_CSS = ("backdrop-filter", "width", "height", "position", "display", "float",
+           "z-index", "box-sizing", "overflow", "cursor", "gap", "content",
+           "icon-shadow")
+_WEB_CSS_RX = re.compile(
+    r"(?<![-\w])(" + "|".join(map(re.escape, WEB_CSS)) + r")\s*:")
+
+
+def fremdes_css(ordner):
+    """Sortierte Liste der Web-CSS-Eigenschaften in gtk-3.0/gtk-4.0 (leer = ok)."""
+    gefunden = set()
+    for css in glob.glob(os.path.join(ordner, "gtk-[34].0", "*.css")):
+        try:
+            with open(css, encoding="utf-8", errors="replace") as f:
+                text = re.sub(r"/\*.*?\*/", "", f.read(), flags=re.S)
+        except OSError:
+            continue
+        gefunden.update(m.group(1) for m in _WEB_CSS_RX.finditer(text))
+    return sorted(gefunden)
 
 
 def _lesbar(pfad):
@@ -44,10 +70,16 @@ def pruefe_gtk(name):
     for unter in ("gtk-4.0", "gtk-3.0"):
         css = os.path.join(ordner, unter, "gtk.css")
         if os.path.isfile(css):
-            if _lesbar(css):
-                return True, ""
-            return False, _("The file {sub}/gtk.css is not readable.").format(
-                sub=unter)
+            if not _lesbar(css):
+                return False, _("The file {sub}/gtk.css is not readable.").format(
+                    sub=unter)
+            fremd = fremdes_css(ordner)
+            if fremd:
+                return False, _("The theme uses CSS that GTK does not "
+                                "understand ({props}). This can slow down or "
+                                "freeze the whole session.").format(
+                                    props=", ".join(fremd))
+            return True, ""
     return False, _("The theme is missing gtk-4.0/gtk.css. GNOME would fall "
                     "back to Adwaita.")
 

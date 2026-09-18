@@ -36,6 +36,7 @@ cp -r "$PROJEKT/src" "$LIBDIR/"
 mkdir -p "$LIBDIR/data/looks"
 cp "$PROJEKT"/data/looks/*.json "$LIBDIR/data/looks/"
 cp "$PROJEKT/data/gdm-background.sh" "$LIBDIR/data/"
+cp -r "$PROJEKT/data/icons" "$LIBDIR/data/"
 
 # Byte-Compiled-Reste raus, sie gehören nicht ins Paket.
 find "$LIBDIR" -name '__pycache__' -type d -prune -exec rm -rf {} +
@@ -54,10 +55,10 @@ cp "$PROJEKT/data/$APP_ID.desktop" "$STAGE/usr/share/applications/"
 # 4. Icons aus dem eingebetteten Logo (src/logo.py) skalieren.
 MASTER="$(mktemp --suffix=.png)"
 python3 -c "import sys; sys.path.insert(0, '$PROJEKT'); from src.logo import logo_bytes; open('$MASTER', 'wb').write(logo_bytes())"
-for N in 48 64 128 256 512; do
+for N in 16 24 32 48 64 128 256 512; do
     ZIEL="$STAGE/usr/share/icons/hicolor/${N}x${N}/apps"
     mkdir -p "$ZIEL"
-    convert "$MASTER" -resize "${N}x${N}" "$ZIEL/$APP_ID.png"
+    convert "$MASTER" -filter Lanczos -resize "${N}x${N}" "$ZIEL/$APP_ID.png"
 done
 rm -f "$MASTER"
 

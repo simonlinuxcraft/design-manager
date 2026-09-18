@@ -20,11 +20,13 @@ ausbrechen würden, brechen den Import ab.
 
 import json
 import os
+import shutil
+import tempfile
 import zipfile
 
 from gi.repository import GLib
 
-from src.core import backgrounds, restorepoint, themes
+from src.core import backgrounds, installer, restorepoint, themes
 from src.core.uninstaller import home_vorkommen
 from src.i18n import _
 
@@ -34,9 +36,8 @@ FORMAT_VERSION = 1
 
 # Zielordner je oberster ZIP-Ebene beim Import.
 ZIEL_NACH_PREFIX = {
-    "themes": os.path.expanduser("~/.local/share/themes"),
-    "icons": os.path.expanduser("~/.local/share/icons"),
-    "backgrounds": os.path.expanduser("~/.local/share/backgrounds"),
+    "themes": installer.THEMES_DIR,
+    "icons": installer.ICONS_DIR,
 }
 
 
@@ -100,15 +101,6 @@ def exportiere(settings, ziel_zip):
             z.write(wallpaper, "backgrounds/" + os.path.basename(wallpaper))
 
 
-def _sicheres_ziel(basis, rel):
-    """Pfad innerhalb von basis, oder ValueError bei Ausbruch (Zip-Slip)."""
-    basis_real = os.path.realpath(basis)
-    ziel = os.path.realpath(os.path.join(basis_real, rel))
-    if os.path.commonpath([basis_real, ziel]) != basis_real:
-        raise ValueError("unsicherer Pfad im Look-Paket")
-    return ziel
-
-
 def _gvariant_string(text):
     """Liest einen als GVariant-Text abgelegten String-Wert, oder ''."""
     if not text:
@@ -151,40 +143,57 @@ def _bereinige_themes(settings, einstellungen):
     return bereinigt
 
 
-def importiere(settings, quelle_zip):
-    """Installiert die Dateien aus einem .dmlook und wendet den Look an.
+def entpacke(quelle_zip):
+    """Installiert die Dateien eines .dmlook, ohne etwas anzuwenden.
 
-    Rückgabe True bei Erfolg, False wenn die Datei kein gültiges .dmlook ist.
+    Darf im Hintergrund laufen. Nutzt denselben Weg wie der Installer:
+    Größengrenzen, Pfad- und Link-Prüfung, jedes Design atomar eingesetzt (kein
+    Mischstand aus alter und neuer Version), keine Namen eingebauter
+    Rückfall-Designs. Gibt (einstellungen, wallpaper_pfad) zurück, None wenn
+    es kein gültiges .dmlook ist. Wirft installer.InstallFehler bei zu großen
+    oder kaputten Paketen.
     """
-    extrahiertes_wallpaper = None
     try:
         with zipfile.ZipFile(quelle_zip) as z:
-            namen = z.namelist()
-            if "manifest.json" not in namen:
-                return False
             manifest = json.loads(z.read("manifest.json"))
-            if not isinstance(manifest, dict) or manifest.get("format") != FORMAT:
-                return False
-            einstellungen = manifest.get("einstellungen")
-            if not isinstance(einstellungen, dict):
-                return False
+    except (OSError, KeyError, ValueError, zipfile.BadZipFile):
+        return None
+    if not isinstance(manifest, dict) or manifest.get("format") != FORMAT:
+        return None
+    einstellungen = manifest.get("einstellungen")
+    if not isinstance(einstellungen, dict):
+        return None
 
-            for eintrag in namen:
-                if eintrag.endswith("/"):
-                    continue  # reiner Ordnereintrag
-                kopf, _, rest = eintrag.partition("/")
-                basis = ZIEL_NACH_PREFIX.get(kopf)
-                if basis is None or not rest:
-                    continue  # unbekannte Ebene (auch manifest.json) überspringen
-                ziel = _sicheres_ziel(basis, rest)
-                os.makedirs(os.path.dirname(ziel), exist_ok=True)
-                with z.open(eintrag) as quelle, open(ziel, "wb") as ausgabe:
-                    ausgabe.write(quelle.read())
-                if kopf == "backgrounds" and extrahiertes_wallpaper is None:
-                    extrahiertes_wallpaper = ziel
-    except (OSError, ValueError, zipfile.BadZipFile, json.JSONDecodeError):
-        return False
+    os.makedirs(installer.ARBEIT_DIR, exist_ok=True)
+    arbeit = tempfile.mkdtemp(dir=installer.ARBEIT_DIR, prefix="install-")
+    try:
+        installer._entpacke(quelle_zip, arbeit)
+        for kopf, ziel_basis in ZIEL_NACH_PREFIX.items():
+            ordner = os.path.join(arbeit, kopf)
+            if not os.path.isdir(ordner):
+                continue
+            for name in sorted(os.listdir(ordner)):
+                quelle = os.path.join(ordner, name)
+                if (name.startswith(".") or os.path.islink(quelle)
+                        or not os.path.isdir(quelle)
+                        or installer._systemname(name)):
+                    continue
+                installer._ersetze_ordner(quelle, os.path.join(ziel_basis, name))
+        wallpaper = None
+        for bild in installer._dateien(os.path.join(arbeit, "backgrounds"),
+                                       backgrounds.ENDUNGEN, 1):
+            try:
+                wallpaper = backgrounds.uebernehme_bild(bild)
+                break
+            except (ValueError, OSError):
+                continue
+    finally:
+        shutil.rmtree(arbeit, ignore_errors=True)
+    return einstellungen, wallpaper
 
+
+def wende_an(settings, einstellungen, wallpaper):
+    """Setzt den entpackten Look (im Hauptthread aufrufen)."""
     # Bevor irgendetwas gesetzt wird, ein Rückkehrnetz anlegen: ein fremdes
     # Paket ist nicht vertrauenswürdig, ein kaputtes Design (ungültiges CSS)
     # kann die Sitzung optisch lahmlegen. Mit dem Sicherungspunkt führt ein
@@ -198,6 +207,5 @@ def importiere(settings, quelle_zip):
     settings.import_settings(einstellungen)
     # Das mitgelieferte Bild liegt jetzt lokal; darüber setzen, statt der evtl.
     # fremden picture-uri aus dem Manifest zu vertrauen.
-    if extrahiertes_wallpaper and os.path.isfile(extrahiertes_wallpaper):
-        backgrounds.apply_wallpaper(settings, extrahiertes_wallpaper)
-    return True
+    if wallpaper and os.path.isfile(wallpaper):
+        backgrounds.apply_wallpaper(settings, wallpaper)

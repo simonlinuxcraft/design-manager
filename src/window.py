@@ -7,15 +7,16 @@ Zeile merkt sich ihre Seiten-Erzeuger-Funktion direkt am Objekt
 (zeile.erzeuge_seite), damit Trennzeilen die Zuordnung nicht verschieben.
 """
 
+import os
 import threading
 
-from gi.repository import Adw, Gio, GLib, Gtk
+from gi.repository import Adw, Gdk, Gio, GLib, Gtk
 
 from src import compat
-from src.i18n import _
+from src.i18n import _, ngettext
 from src.logo import logo_texture
-from src.core import (gdm, healthcheck, lockscreen, onboarding, restorepoint,
-                      schedule, updater)
+from src.core import (gdm, healthcheck, installer, lockscreen, looksbundle,
+                      onboarding, restorepoint, schedule, updater)
 from src.core.settings import AppSettings
 from src.pages.background import BackgroundPage
 from src.pages.backup import BackupPage
@@ -29,6 +30,7 @@ from src.pages.looks import LooksPage
 from src.pages.overview import OverviewPage
 from src.pages.shell import ShellPage
 from src.pages.system import SystemPage
+from src.widgets.paket_auswahl import PaketAuswahl
 from src.widgets.welcome import WelcomeDialog
 
 
@@ -112,7 +114,8 @@ class MainWindow(Adw.ApplicationWindow):
         wurzel = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         wurzel.append(self._banner)
         wurzel.append(self._toasts)
-        self.set_content(wurzel)
+        self.set_content(self._drop_flaeche(wurzel))
+        self._installiert_gerade = False
 
         # Startauswahl: erste echte Zeile, löst row-selected aus.
         self._listbox.select_row(self._erste_zeile)
@@ -188,28 +191,199 @@ class MainWindow(Adw.ApplicationWindow):
         self.zeige_toast(_("Reset to a safe default theme."))
         self._reload_aktive_seite()
 
-    def melde_installation(self, ergebnis, fehler):
-        """Rückmeldung der Dropzone: Toast zeigen und die Liste neu laden.
+    # --- Installieren per Drag & Drop (überall im Fenster) ---
 
-        Die Dropzone ruft das nach einer Installation auf. Bei Erfolg bauen wir
-        die aktive Seite neu, damit ein neu installiertes Design sofort in ihrer
-        Liste erscheint.
+    def _drop_flaeche(self, inhalt):
+        """Das ganze Fenster nimmt Dateien an. Beim Drüberziehen erscheint ein
+        silberner Rahmen mit Hinweis (rein per CSS über :drop(active))."""
+        hinweis = Gtk.Label(
+            label=_("Drop to install themes, icons, cursors, fonts, "
+                    "wallpapers or extensions"))
+        hinweis.add_css_class("drop-hinweis")
+        hinweis.set_halign(Gtk.Align.CENTER)
+        hinweis.set_valign(Gtk.Align.END)
+        hinweis.set_margin_bottom(32)
+        hinweis.set_can_target(False)
+
+        overlay = Gtk.Overlay()
+        overlay.add_css_class("install-ziel")
+        overlay.set_child(inhalt)
+        overlay.add_overlay(hinweis)
+
+        ziel = Gtk.DropTarget.new(Gdk.FileList, Gdk.DragAction.COPY)
+        ziel.connect("drop", lambda _z, wert, _x, _y: self.installiere_dateien(
+            wert.get_files()))
+        overlay.add_controller(ziel)
+        return overlay
+
+    def installiere_dateien(self, dateien):
+        """Gio.Files aus einem Drop oder Dateidialog installieren."""
+        pfade = [d.get_path() for d in dateien]
+        if not pfade:
+            return False
+        if None in pfade:
+            # Link aus dem Browser statt einer Datei.
+            self.zeige_toast(_("Only local files can be installed. Download "
+                               "the file first."))
+            return False
+        looks = [p for p in pfade if p.lower().endswith(".dmlook")]
+        if looks:
+            self._frage_look_import(looks[0])
+        rest = [p for p in pfade if p not in looks]
+        if rest:
+            self.installiere(rest)
+        return True
+
+    def installiere(self, pfade):
+        """Installiert im Hintergrund und meldet das Ergebnis.
+
+        Zwei Phasen: erst analysieren (entpacken, erkennen), dann installieren.
+        Dazwischen fragt ein Dialog bei All-in-one-Paketen mit vielen Varianten,
+        welche gewünscht sind. Danach werden alle Seiten neu gebaut: was
+        installiert wurde, kann zu jeder Seite gehören.
         """
-        if fehler:
-            self.zeige_toast(
-                _("Installation failed: {error}").format(error=fehler))
+        if self._installiert_gerade:
+            self.zeige_toast(_("An installation is already running."))
             return
-        self.zeige_toast(
-            _("Installed: {items}").format(items=", ".join(ergebnis)))
-        self._reload_aktive_seite()
+        self._installiert_gerade = True
+        laeuft = Adw.Toast(title=_("Installing…"), timeout=0)
+        self._toasts.add_toast(laeuft)
+
+        def worker():
+            pakete, fehler = [], []
+            for pfad in pfade:
+                name = os.path.basename(pfad.rstrip(os.sep))
+                try:
+                    pakete.append((name, installer.analysiere(pfad)))
+                except installer.InstallFehler as e:
+                    fehler.append("{name}: {grund}".format(name=name, grund=e))
+                except Exception:
+                    fehler.append("{name}: {grund}".format(
+                        name=name,
+                        grund=_("Installation failed unexpectedly.")))
+            GLib.idle_add(self._frage_auswahl, laeuft, pakete, [], fehler)
+
+        threading.Thread(target=worker, daemon=True).start()
+
+    def _frage_auswahl(self, laeuft, offen, fertig, fehler):
+        """Geht die analysierten Pakete durch; große bekommen den Dialog.
+
+        fertig sammelt (name, paket, auswahl); auswahl None = alles.
+        """
+        while offen:
+            name, paket = offen.pop(0)
+            if len(paket.auswaehlbar()) <= installer.AUSWAHL_AB:
+                fertig.append((name, paket, None))
+                continue
+            laeuft.dismiss()
+
+            def gewaehlt(auswahl, name=name, paket=paket):
+                if auswahl:
+                    fertig.append((name, paket, auswahl))
+                else:
+                    paket.aufraeumen()
+                neu = Adw.Toast(title=_("Installing…"), timeout=0)
+                if offen or fertig:
+                    self._toasts.add_toast(neu)
+                self._frage_auswahl(neu, offen, fertig, fehler)
+
+            compat.dialog_present(
+                PaketAuswahl(name, paket.auswaehlbar(), gewaehlt), self)
+            return GLib.SOURCE_REMOVE
+        self._installiere_pakete(laeuft, fertig, fehler)
+        return GLib.SOURCE_REMOVE
+
+    def _installiere_pakete(self, laeuft, fertig, fehler):
+        def worker():
+            ergebnis = []
+            for name, paket, auswahl in fertig:
+                try:
+                    ergebnis += paket.installiere(auswahl)
+                except installer.InstallFehler as e:
+                    fehler.append("{name}: {grund}".format(name=name, grund=e))
+                except Exception:
+                    # Kopierphase (Platte voll, schreibgeschützte Reste) wirft
+                    # rohes OSError/shutil.Error; nie still sterben lassen.
+                    fehler.append("{name}: {grund}".format(
+                        name=name,
+                        grund=_("Installation failed unexpectedly.")))
+                finally:
+                    paket.aufraeumen()
+            GLib.idle_add(self._installation_fertig, laeuft, ergebnis, fehler)
+
+        threading.Thread(target=worker, daemon=True).start()
+
+    def _installation_fertig(self, laeuft, ergebnis, fehler):
+        self._installiert_gerade = False
+        laeuft.dismiss()
+        if ergebnis:
+            gezeigt = ", ".join(ergebnis[:3])
+            if len(ergebnis) > 3:
+                gezeigt += " " + ngettext("and {n} more", "and {n} more",
+                                          len(ergebnis) - 3).format(
+                                              n=len(ergebnis) - 3)
+            self.melde_und_reload(_("Installed: {items}").format(items=gezeigt))
+        if fehler:
+            compat.alert(
+                self,
+                _("Could not install"),
+                "\n\n".join(fehler),
+                [("ok", _("OK"), "")], default="ok", close="ok")
+        return GLib.SOURCE_REMOVE
+
+    def _frage_look_import(self, pfad):
+        compat.alert(
+            self,
+            _("Apply look package?"),
+            _('"{name}" installs its themes and applies the whole look. A '
+              "restore point is created first.").format(
+                  name=os.path.basename(pfad)),
+            [("abbrechen", _("Cancel"), ""),
+             ("anwenden", _("Apply"), "suggested")],
+            default="anwenden", close="abbrechen",
+            on_response=lambda antwort: (
+                self.importiere_look(pfad) if antwort == "anwenden" else None))
+
+    def importiere_look(self, pfad):
+        """.dmlook im Hintergrund entpacken, danach im Hauptthread anwenden."""
+        if self._installiert_gerade:
+            self.zeige_toast(_("An installation is already running."))
+            return
+        self._installiert_gerade = True
+        laeuft = Adw.Toast(title=_("Installing…"), timeout=0)
+        self._toasts.add_toast(laeuft)
+
+        def worker():
+            try:
+                ergebnis, fehler = looksbundle.entpacke(pfad), None
+            except installer.InstallFehler as e:
+                ergebnis, fehler = None, str(e)
+            except Exception:
+                ergebnis, fehler = None, _("The look package could not be read.")
+            GLib.idle_add(self._look_fertig, laeuft, ergebnis, fehler)
+
+        threading.Thread(target=worker, daemon=True).start()
+
+    def _look_fertig(self, laeuft, ergebnis, fehler):
+        self._installiert_gerade = False
+        laeuft.dismiss()
+        if fehler:
+            self.zeige_toast(fehler)
+        elif ergebnis is None:
+            self.zeige_toast(_("That is not a valid look package."))
+        else:
+            looksbundle.wende_an(self._settings, *ergebnis)
+            self.melde_und_reload(_("Look package applied."))
+        return GLib.SOURCE_REMOVE
 
     def zeige_toast(self, text):
         """Zeigt eine kurze Meldung über dem aktuellen Inhalt.
 
         Die Seiten nutzen das über get_root() für Rückmeldungen (z.B. nach dem
-        Entfernen eines Designs).
+        Entfernen eines Designs). Der Titel ist Pango-Markup, fremde Namen wie
+        "Black & White" würden ihn sonst zerschießen.
         """
-        self._toasts.add_toast(Adw.Toast(title=text))
+        self._toasts.add_toast(Adw.Toast(title=GLib.markup_escape_text(text)))
 
     def _reload_aktive_seite(self):
         """Baut die gerade gewählte Seite neu (verwirft ihren Cache)."""
@@ -259,6 +433,7 @@ class MainWindow(Adw.ApplicationWindow):
         """Linke Spalte: flache Kopfleiste mit Marke, darunter die Liste."""
         header = Adw.HeaderBar()
         header.add_css_class("flat")  # kein eigener Hintergrund -> ein Block
+        self._ohne_fenster_icon(header)
         header.pack_start(self._logo())
         header.pack_end(self._menue_knopf())
         header.set_title_widget(
@@ -272,6 +447,21 @@ class MainWindow(Adw.ApplicationWindow):
         toolbar = compat.toolbar_view(top_bars=[header], content=inhalt)
         toolbar.add_css_class("sidebar-pane")  # ein durchgehender dunkler Ton
         return compat.PageBase(title="Design Manager", child=toolbar)
+
+    def _ohne_fenster_icon(self, header):
+        """Ein Knopf-Layout wie "icon:minimize,..." (KDE-Relikt) zeigt links das
+        Fenster-Icon, hier direkt neben unserem Logo. Nur "icon" rausnehmen,
+        die Knöpfe bleiben, auch wenn das Layout später geändert wird."""
+        einstellungen = Gtk.Settings.get_default()
+
+        def setzen(*_args):
+            layout = einstellungen.props.gtk_decoration_layout or ""
+            teile = [",".join(t for t in seite.split(",") if t != "icon")
+                     for seite in layout.split(":")]
+            header.set_decoration_layout(":".join(teile))
+
+        setzen()
+        einstellungen.connect("notify::gtk-decoration-layout", setzen)
 
     def _setup_actions(self):
         """Fenster-Aktionen für das Hauptmenü anlegen (win.about, win.quit)."""

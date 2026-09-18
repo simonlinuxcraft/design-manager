@@ -8,7 +8,8 @@ and login screen from one place, with live previews.
 
 - Overview that summarizes the current look and jumps to any section
 - Looks: curated complete looks and your own saved profiles, applied in one click
-- Background: system and own wallpapers with fit mode, plus the lock screen and the GDM login background
+- Background: own and system wallpapers in tabs, per-monitor images, fit mode, plus the lock screen and the GDM login background
+- Drag and drop anywhere into the window to install themes, icons, cursors, fonts, wallpapers or a .dmlook
 - GTK theme and icon theme, with preview cards
 - Cursor packs with real pointer previews (parsed from Xcursor files)
 - Fonts: interface, document and monospace, with size and rendering options
@@ -27,12 +28,40 @@ Design Manager switches between what is already installed; it does not download
 themes itself. The main source for GNOME GTK themes, shell themes, icon packs,
 cursors and wallpapers is [gnome-look.org](https://www.gnome-look.org/).
 
-Install a downloaded set into one of these and it shows up in the app:
+Drop the downloaded file into the app window. It takes .zip and .tar archives
+(gz, xz, bz2, and zst on Python 3.14+), extracted folders, archives that only
+contain more archives, font files and images, and sorts everything into the
+right folder:
 
-- GTK and shell themes: `~/.themes/` or `~/.local/share/themes/`
-- Icons and cursors: `~/.icons/` or `~/.local/share/icons/`
+| gnome-look category | Goes to |
+| --- | --- |
+| GTK3/4 Themes, Gnome Shell Themes | `~/.local/share/themes/` |
+| Full Icon Themes | `~/.local/share/icons/` |
+| Cursors | `~/.icons/` |
+| Gnome Extensions (zip from extensions.gnome.org) | `~/.local/share/gnome-shell/extensions/<uuid>/` |
+| Wallpapers (single images or packs, 1280x720 and up) | `~/.local/share/backgrounds/` |
+| Fonts | `~/.local/share/fonts/` |
+
+Installing never activates anything; pick the new theme on its page afterwards.
+Extensions show up after the next login and stay off until you enable them.
+
+Rejected on purpose, with an explanation: GDM login themes, GRUB boot menu
+themes and Plymouth boot splashes. They replace system files as root and a
+mistake there can block the login or the boot. For a custom login background
+use Background > Login screen instead. Also rejected: Plank/Latte dock themes,
+theme source code that still needs building, and anything named like a
+built-in fallback theme (Adwaita, Yaru, hicolor), which would otherwise shadow it.
+
+Archives are unpacked under `~/.cache/design-manager` with size limits, path and
+symlink checks, and each folder is swapped in only once it is complete. 7z and
+rar are not supported, extract those first and drop the folder. Themes copied
+into `~/.themes/` or `~/.icons/` by hand show up as well.
 
 Shell themes also need the User Themes extension enabled.
+
+Self-test of the installer (runs in a throwaway home):
+
+    LANGUAGE=en python3 tests/test_installer.py
 
 ## Run
 

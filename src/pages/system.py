@@ -183,7 +183,7 @@ class SystemPage(compat.PageBase):
         Format ist "links:rechts", z.B. "appmenu:minimize,maximize,close".
         Rückgabe: (Menge der aktiven Knöpfe, True wenn rechts).
         """
-        links, _, rechts = layout.partition(":")
+        links, _sep, rechts = layout.partition(":")
         links_knoepfe = [k for k in links.split(",") if k]
         rechts_knoepfe = [k for k in rechts.split(",") if k]
 

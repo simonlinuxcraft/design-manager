@@ -40,7 +40,8 @@ def _ordner_in(suchpfade):
             continue
         for name in sorted(os.listdir(basis)):
             pfad = os.path.join(basis, name)
-            if os.path.isdir(pfad):
+            # Versteckte Ordner sind nie Designs (z.B. Installer-Zwischenstände).
+            if os.path.isdir(pfad) and not name.startswith("."):
                 yield name, pfad
 
 
@@ -56,6 +57,8 @@ def _theme_ordner(suchpfade):
             continue
         for name in sorted(os.listdir(basis)):
             pfad = os.path.join(basis, name)
+            if name.startswith("."):
+                continue
             if os.path.isfile(os.path.join(pfad, "index.theme")):
                 gefunden.append((name, pfad))
     return gefunden
@@ -67,12 +70,13 @@ def _ist_reines_cursor_theme(pfad):
     Mauszeiger liegen im Unterordner cursors/. Ein Symbol-Design hat zusätzlich
     Ordner mit Icon-Größen (16x16, scalable, ...). Enthält ein Ordner *nur*
     cursors/, ist es ein reines Mauszeiger-Design und gehört nicht in die
-    Icon-Liste.
+    Icon-Liste. KDE-Zeiger bringen zusätzlich cursors_scalable/ mit, das zählt
+    ebenfalls als Zeiger-Ordner.
     """
     if not os.path.isdir(os.path.join(pfad, "cursors")):
         return False
     for name in os.listdir(pfad):
-        if name == "cursors":
+        if name.startswith("cursors"):
             continue
         if os.path.isdir(os.path.join(pfad, name)):
             return False  # noch andere Unterordner -> enthält Icons

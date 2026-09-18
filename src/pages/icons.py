@@ -49,7 +49,7 @@ class IconsPage(compat.PageBase):
 
         box.append(self._feld_titel(_("Install a new icon theme")))
         box.append(InstallDropzone(
-            _("Drag an icon theme (.tar.gz/.zip) here"), erwartet={"icon"}))
+            _("Drag an icon theme (archive or folder) here")))
 
         scroll = Gtk.ScrolledWindow()
         scroll.set_vexpand(True)
@@ -82,7 +82,7 @@ class IconsPage(compat.PageBase):
         namen = iter(themes.list_icon_themes())
 
         def baue_naechste():
-            for _ in range(2):  # zwei Karten pro Durchlauf
+            for _n in range(2):  # zwei Karten pro Durchlauf
                 try:
                     name = next(namen)
                 except StopIteration:

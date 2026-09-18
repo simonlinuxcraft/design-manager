@@ -40,6 +40,10 @@ from src.window import MainWindow  # noqa: E402
 # Pfad zum eigenen Stylesheet (silberne Optik), relativ zu dieser Datei.
 STYLE_FILE = os.path.join(os.path.dirname(__file__), "src", "style.css")
 
+# Eigene Symbolics als hicolor-Rückfall, falls das gewählte Icon-Design sie
+# nicht hat und nicht von Adwaita erbt (z.B. Stylish, breeze).
+ICON_DIR = os.path.join(os.path.dirname(__file__), "data", "icons")
+
 
 # Eindeutige App-ID im Reverse-DNS-Stil. GNOME ordnet darüber das Fenster der
 # passenden .desktop-Datei zu und zeigt deren Icon im Dock. Der Name muss zum
@@ -73,6 +77,8 @@ class LinuxAnpassungApp(Adw.Application):
         # dunkle Modus. Darum fix auf dunkel, unabhaengig vom System.
         Adw.StyleManager.get_default().set_color_scheme(Adw.ColorScheme.FORCE_DARK)
 
+        Gtk.IconTheme.get_for_display(Gdk.Display.get_default()).add_search_path(
+            ICON_DIR)
         self._load_styles()
 
     def _load_styles(self):

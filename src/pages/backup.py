@@ -13,7 +13,7 @@ oder Bilddateien selbst (außer beim .dmlook, das die Dateien mitnimmt).
 import os
 import time
 
-from gi.repository import Adw, Gtk
+from gi.repository import Adw, GLib, Gtk
 
 from src import compat
 from src.core import backup, looksbundle, restorepoint
@@ -216,22 +216,16 @@ class BackupPage(compat.PageBase):
                          [nur], self._on_look_import_quelle)
 
     def _on_look_import_quelle(self, pfad):
-        if not pfad:
-            return
-        try:
-            erfolg = looksbundle.importiere(self._settings, pfad)
-        except OSError:
-            self._melde(_("The look package could not be read."))
-            return
-        if not erfolg:
-            self._melde(_("That is not a valid look package."))
-            return
-        self._melde_und_reload(_("Look package applied."))
+        # Entpacken im Hintergrund und Anwenden macht das Fenster, genau wie
+        # beim Ablegen einer .dmlook per Drag & Drop.
+        fenster = self.get_root()
+        if pfad and hasattr(fenster, "importiere_look"):
+            fenster.importiere_look(pfad)
 
     # --- Rückmeldung ---
 
     def _melde(self, text):
-        self._toasts.add_toast(Adw.Toast(title=text))
+        self._toasts.add_toast(Adw.Toast(title=GLib.markup_escape_text(text)))
 
     def _melde_und_reload(self, text):
         """Toast zeigen und alle Seiten neu bauen.

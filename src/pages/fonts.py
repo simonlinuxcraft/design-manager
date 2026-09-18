@@ -70,8 +70,7 @@ class FontsPage(compat.PageBase):
                           "It is copied to ~/.local/share/fonts and the font "
                           "cache is refreshed."))
         installieren.add(InstallDropzone(
-            _("Drag a font (.ttf/.otf) or archive here"),
-            erwartet={"font"}))
+            _("Drag a font (.ttf/.otf) or archive here")))
 
         seite = Adw.PreferencesPage()
         seite.add(schriften)

@@ -6,8 +6,11 @@ sammeln nur die direkt enthaltenen Bilddateien ein, nicht rekursiv, damit die
 Galerie übersichtlich bleibt.
 """
 
+import filecmp
 import json
 import os
+import re
+import shutil
 import sys
 import threading
 
@@ -23,8 +26,21 @@ USER_DIR = os.path.expanduser("~/.local/share/backgrounds")
 # Merker, die Dateien selbst bleiben auf der Platte.
 HIDDEN_FILE = os.path.expanduser("~/.config/design-manager/hidden-backgrounds.json")
 
-# Welche Dateiendungen wir als Bild akzeptieren.
-ENDUNGEN = (".jpg", ".jpeg", ".png", ".webp")
+# Welche Dateiendungen wir als Bild akzeptieren: gängige Fotoformate, soweit
+# GdkPixbuf sie auf diesem System lesen kann (GNOME zeichnet den Hintergrund
+# über denselben Weg, AVIF/JXL/HEIC also nur mit passendem Loader).
+_BILD_KANDIDATEN = ("jpg", "jpeg", "png", "webp", "avif", "jxl", "heic",
+                    "heif", "tif", "tiff", "bmp")
+
+
+def _bild_endungen():
+    da = {e.lower() for f in GdkPixbuf.Pixbuf.get_formats()
+          for e in f.get_extensions()}
+    return tuple("." + e for e in _BILD_KANDIDATEN if e in da) or (
+        ".jpg", ".jpeg", ".png")
+
+
+ENDUNGEN = _bild_endungen()
 
 # Pro-Monitor-Hintergrund. GNOME kennt keinen Schlüssel pro Bildschirm, der
 # eine picture-uri gilt für alle. Der einzige Weg sind unterschiedliche Bilder
@@ -55,13 +71,58 @@ def _versteckte():
         return set()
 
 
+def _speichere_versteckte(versteckt):
+    os.makedirs(os.path.dirname(HIDDEN_FILE), exist_ok=True)
+    with open(HIDDEN_FILE, "w") as f:
+        json.dump(sorted(versteckt), f)
+
+
 def hide_wallpaper(pfad):
     """Blendet ein Bild in der App aus, ohne die Datei zu löschen."""
     versteckt = _versteckte()
     versteckt.add(os.path.realpath(pfad))
-    os.makedirs(os.path.dirname(HIDDEN_FILE), exist_ok=True)
-    with open(HIDDEN_FILE, "w") as f:
-        json.dump(sorted(versteckt), f)
+    _speichere_versteckte(versteckt)
+
+
+def bild_groesse(pfad):
+    """(breite, hoehe) laut Dateikopf, None wenn kein lesbares Bild."""
+    info = GdkPixbuf.Pixbuf.get_file_info(pfad)
+    if info is None or info[0] is None:
+        return None
+    return info[1], info[2]
+
+
+def uebernehme_bild(quelle):
+    """Kopiert ein Bild nach USER_DIR und gibt den Zielpfad zurück.
+
+    Wirft ValueError, wenn GdkPixbuf die Datei nicht als Bild lesen kann (kaputt
+    oder nur falsch benannt). Ein früher ausgeblendetes Bild wird wieder
+    eingeblendet, der Nutzer hat es ja gerade bewusst hinzugefügt.
+    """
+    if bild_groesse(quelle) is None:
+        raise ValueError(quelle)
+    os.makedirs(USER_DIR, exist_ok=True)
+    # CSS-empfindliche Zeichen raus: das Sperrbild landet als Pfad in der
+    # Shell-CSS. lockscreen.py kodiert die URL ohnehin, das hier ist die zweite
+    # Verteidigungslinie.
+    name = re.sub(r'["\\\n\r\x00-\x1f]', "_", os.path.basename(quelle)) or "bild"
+    stamm, endung = os.path.splitext(name)
+    ziel = os.path.join(USER_DIR, name)
+    nummer = 2
+    # Bildpakete heißen oft 01.jpg, 02.jpg ...: ein anderes Bild gleichen Namens
+    # nie überschreiben, sondern durchnummerieren. Gleicher Inhalt = schon da.
+    while (os.path.exists(ziel)
+           and os.path.abspath(quelle) != os.path.abspath(ziel)
+           and not filecmp.cmp(quelle, ziel, shallow=False)):
+        ziel = os.path.join(USER_DIR, "%s-%d%s" % (stamm, nummer, endung))
+        nummer += 1
+    if not os.path.exists(ziel):
+        shutil.copy2(quelle, ziel)
+    versteckt = _versteckte()
+    if os.path.realpath(ziel) in versteckt:
+        versteckt.discard(os.path.realpath(ziel))
+        _speichere_versteckte(versteckt)
+    return ziel
 
 
 def _bilder_in(ordner):

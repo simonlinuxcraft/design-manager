@@ -21,6 +21,8 @@ def status_zeile(karte, loeschbar, on_loeschen):
     karte._status.add_css_class("card-status")
 
     zeile = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+    # Feste Höhe, damit Karten mit und ohne Mülleimer gleich aussehen.
+    zeile.add_css_class("card-status-zeile")
     zeile.append(karte._status)
 
     if loeschbar and on_loeschen is not None:

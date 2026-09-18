@@ -16,6 +16,7 @@ from src.core.extensions import (
     ShellExtensions, STATE_ERROR, TYPE_SYSTEM, TYPE_USER,
 )
 from src.i18n import _
+from src.widgets.dropzone import InstallDropzone
 
 
 class ExtensionsPage(compat.PageBase):
@@ -54,6 +55,16 @@ class ExtensionsPage(compat.PageBase):
             seite.add(self._ext_gruppe(_("User extensions"), benutzer))
         if system:
             seite.add(self._ext_gruppe(_("System extensions"), system))
+
+        installieren = Adw.PreferencesGroup(
+            title=_("Install an extension"),
+            description=_("Drag the .zip from extensions.gnome.org here. It "
+                          "is only installed, not enabled. Log out and back in, "
+                          "then switch it on above. Extensions run with full "
+                          "access to your session, so only use trusted ones."))
+        installieren.add(InstallDropzone(
+            _("Drag an extension (.zip) here")))
+        seite.add(installieren)
 
         # Anfangszustand der Benutzer-Zeilen an den Master-Schalter anpassen.
         self._master_wirkung(self._ext.user_extensions_enabled())
@@ -104,7 +115,14 @@ class ExtensionsPage(compat.PageBase):
             row.set_subtitle(GLib.markup_escape_text(x["error"]))
             row.add_css_class("error")
         elif x["description"]:
-            row.set_subtitle(GLib.markup_escape_text(x["description"]))
+            # Manche Beschreibungen sind ganze Absätze samt Spendenlinks: nur
+            # der erste Absatz, höchstens zwei Zeilen, alles im Tooltip.
+            # Zeilenumbrüche zusammenziehen: Pango zählt die Zeilengrenze pro
+            # Absatz, sonst würden es doch mehr als zwei.
+            erster = " ".join(x["description"].strip().split("\n\n")[0].split())
+            row.set_subtitle(GLib.markup_escape_text(erster))
+            row.set_subtitle_lines(2)
+            row.set_tooltip_text(x["description"].strip())
 
         row.set_active(x["enabled"])
         # Erst nach set_active verbinden (Vorbelegung soll nicht auslösen).

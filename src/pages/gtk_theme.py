@@ -50,7 +50,7 @@ class GtkThemePage(compat.PageBase):
 
         box.append(self._feld_titel(_("Install a new GTK theme")))
         box.append(InstallDropzone(
-            _("Drag a GTK theme (.tar.gz/.zip) here"), erwartet={"gtk"}))
+            _("Drag a GTK theme (archive or folder) here")))
 
         scroll = Gtk.ScrolledWindow()
         scroll.set_vexpand(True)

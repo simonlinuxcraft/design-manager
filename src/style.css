@@ -33,6 +33,14 @@ window.silber {
   );
 }
 
+/* Dünner silberner Rahmen ums Fenster. Deckend statt halbtransparent, damit er
+   über Seitenleiste und Inhalt exakt gleich wirkt; outline folgt den runden
+   Ecken. Maximiert/Vollbild ohne Rahmen (säße sonst am Bildschirmrand). */
+window.silber:not(.maximized):not(.fullscreen) {
+  outline: 1px solid #5c636b;
+  outline-offset: -1px;
+}
+
 /* 3. Kopfleiste schlicht: kein Glanzstreifen. Nur Nicht-flache Header
       bekommen eine dezente Trennlinie unten; der flache Sidebar-Header bleibt
       ohne Linie, damit die Seitenleiste ein Block ist. */
@@ -99,6 +107,10 @@ window.silber .navigation-sidebar {
   color: #d7dde4;
 }
 
+.card-status-zeile {
+  min-height: 34px;
+}
+
 /* Thumbnail in den Hintergrund-Karten leicht abrunden. */
 .wallpaper-thumb {
   border-radius: 8px;
@@ -110,10 +122,41 @@ window.silber .navigation-sidebar {
   padding: 6px;
 }
 
-/* Dateiname klein und dezent unter dem Thumbnail. */
-.wallpaper-name {
-  font-size: 0.82em;
+/* Entfernen-Knopf auf eigenen Bildern nur beim Überfahren/Fokus zeigen. */
+.wallpaper-entfernen {
+  opacity: 0;
+  transition: opacity 150ms ease;
+}
+
+.theme-card:hover .wallpaper-entfernen,
+.theme-card:focus-within .wallpaper-entfernen {
+  opacity: 1;
+}
+
+/* Erste Kachel der eigenen Bilder: "Bild hinzufügen". */
+.theme-card.hinzufuegen-kachel {
+  background-image: none;
+  border: 1px dashed rgba(199, 206, 214, 0.35);
   color: #aab0b8;
+}
+
+.theme-card.hinzufuegen-kachel:hover {
+  border-color: #c7ced6;
+  color: #e7eaef;
+}
+
+/* Große Vorschau oben auf der Hintergrund-Seite (ein Monitor). */
+.hintergrund-vorschau {
+  border-radius: 12px;
+  background-color: rgba(0, 0, 0, 0.22);
+}
+
+/* Hinweis-Kasten (z.B. Variety verwaltet den Hintergrund). */
+.hinweis-karte {
+  padding: 14px;
+  border-radius: 12px;
+  background-color: rgba(0, 0, 0, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.07);
 }
 
 /* Dashboard (Übersicht): Hero-Kopf und Vorschau-Karten. */
@@ -198,12 +241,35 @@ window.silber .navigation-sidebar {
   padding: 1px 7px;
 }
 
-/* 8. Drag-&-Drop-Zone für neue Designs (Funktion folgt in Schritt 8). */
+/* 8. Drag & Drop. Das ganze Fenster nimmt Dateien an (.install-ziel); solange
+      etwas darüber gezogen wird (:drop(active)), blendet unten ein Hinweis ein
+      und die Ablageflächen leuchten. */
 .dropzone {
   border: 1px dashed rgba(199, 206, 214, 0.35);
   border-radius: 12px;
   padding: 18px;
   color: #aab0b8;
+  transition: border-color 150ms ease, background-color 150ms ease;
+}
+
+.install-ziel:drop(active) .dropzone {
+  border-color: #c7ced6;
+  background-color: rgba(199, 206, 214, 0.08);
+}
+
+.drop-hinweis {
+  opacity: 0;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background-color: #c7ced6;
+  color: #1b1d21;
+  font-weight: 700;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
+  transition: opacity 150ms ease;
+}
+
+.install-ziel:drop(active) .drop-hinweis {
+  opacity: 1;
 }
 
 /* 9. Hinweis-Band unten. */

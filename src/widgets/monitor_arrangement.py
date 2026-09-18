@@ -1,10 +1,10 @@
 """Visuelle Monitor-Anordnung als Auswahl für den Hintergrund.
 
-Oben ein Schalter "Alle Bildschirme", darunter die Monitore als Rechtecke in
-ihrer echten räumlichen Lage. Das Widget zeigt nur an und meldet die Auswahl
-über on_select("all" oder connector); die eigentliche Logik (Bild setzen,
-Composite bauen) liegt in der Seite. So gibt es genau eine Galerie, die für die
-hier getroffene Auswahl gilt.
+Oben eine Umschaltleiste "Alle Bildschirme | DP-1 | ...", darunter die Monitore
+als Rechtecke in ihrer echten räumlichen Lage (mit dem Bild, das dort liegt).
+Ein Klick auf Leiste oder Rechteck wählt aus. Das Widget zeigt nur an und
+meldet die Auswahl über on_select("all" oder connector); die eigentliche Logik
+(Bild setzen, Composite bauen) liegt in der Seite.
 
 Bei laufendem Variety ist die Einzelauswahl gesperrt (es würde das Composite
 beim nächsten Login überschreiben); dann bleibt nur "Alle Bildschirme".
@@ -19,8 +19,8 @@ from src.core import backgrounds
 from src.i18n import _
 
 
-CANVAS_W = 460
-CANVAS_H = 200
+CANVAS_W = 560
+CANVAS_H = 230
 
 
 class MonitorArrangement(Gtk.Box):
@@ -32,27 +32,44 @@ class MonitorArrangement(Gtk.Box):
         self._on_select = on_select
         self._einzeln_erlaubt = einzeln_erlaubt
         self._kacheln = {}  # connector -> {"button", "pic"}
+        self._schalter = {}  # "all"/connector -> Gtk.ToggleButton
+        self._setzt = False  # unterdrückt Rückmeldung beim Umschalten per Code
 
-        self._all_button = Gtk.Button(label=_("All displays"))
-        self._all_button.set_halign(Gtk.Align.START)
-        self._all_button.connect("clicked", lambda _b: self._on_select("all"))
-        self.append(self._all_button)
-
+        self.append(self._leiste())
         self.append(self._anordnung())
 
-        if einzeln_erlaubt:
-            hinweis = _("Click a monitor to give it its own image. "
-                        "Re-apply after changing resolution or layout.")
-        else:
-            hinweis = _("You have multiple monitors. To give each its own "
-                        "image, remove Variety first (button above).")
-        self._status = Gtk.Label(label=hinweis, xalign=0, wrap=True)
+        self._status = Gtk.Label(xalign=0.5, wrap=True)
+        self._status.set_justify(Gtk.Justification.CENTER)
         self._status.add_css_class("dim-label")
         self.append(self._status)
+
+    def _leiste(self):
+        leiste = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+        leiste.add_css_class("linked")
+        leiste.set_halign(Gtk.Align.CENTER)
+        erster = None
+        eintraege = [("all", _("All displays"))] + [
+            (m["connector"], m["connector"]) for m in self._monitore]
+        for schluessel, label in eintraege:
+            knopf = Gtk.ToggleButton(label=label)
+            if erster is None:
+                erster = knopf
+            else:
+                knopf.set_group(erster)
+                knopf.set_sensitive(self._einzeln_erlaubt)
+            knopf.connect("toggled", self._on_toggled, schluessel)
+            self._schalter[schluessel] = knopf
+            leiste.append(knopf)
+        return leiste
+
+    def _on_toggled(self, knopf, schluessel):
+        if knopf.get_active() and not self._setzt:
+            self._on_select(schluessel)
 
     def _anordnung(self):
         rahmen = Gtk.Frame()
         rahmen.add_css_class("monitor-flaeche")
+        rahmen.set_halign(Gtk.Align.CENTER)
         fixed = Gtk.Fixed()
         fixed.set_size_request(CANVAS_W, CANVAS_H)
         rahmen.set_child(fixed)
@@ -103,10 +120,12 @@ class MonitorArrangement(Gtk.Box):
     # --- von der Seite gesteuert ---
 
     def einzeln_freischalten(self):
-        """Macht die Monitor-Kacheln klickbar (nach dem Entfernen von Variety)."""
+        """Macht die Einzelauswahl klickbar (nach dem Entfernen von Variety)."""
         self._einzeln_erlaubt = True
         for k in self._kacheln.values():
             k["button"].set_sensitive(True)
+        for knopf in self._schalter.values():
+            knopf.set_sensitive(True)
 
     def set_status(self, text):
         """Setzt den Hinweistext unter der Anordnung (zeigt die aktuelle Auswahl)."""
@@ -114,10 +133,11 @@ class MonitorArrangement(Gtk.Box):
 
     def set_auswahl(self, auswahl):
         """Hebt die aktuelle Auswahl hervor ("all" oder ein connector)."""
-        if auswahl == "all":
-            self._all_button.add_css_class("suggested-action")
-        else:
-            self._all_button.remove_css_class("suggested-action")
+        knopf = self._schalter.get(auswahl)
+        if knopf is not None:
+            self._setzt = True
+            knopf.set_active(True)
+            self._setzt = False
         for conn, k in self._kacheln.items():
             if conn == auswahl:
                 k["button"].add_css_class("selected")

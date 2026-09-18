@@ -12,6 +12,7 @@ from gi.repository import Adw, GLib, Gtk
 from src import compat
 from src.core import restorepoint, theme_check, themes, uninstaller
 from src.i18n import _
+from src.widgets.dropzone import InstallDropzone
 from src.widgets.shell_card import ShellCard
 
 
@@ -71,6 +72,10 @@ class ShellPage(compat.PageBase):
         box.append(self._feld_titel(_("Shell Theme")))
         box.append(self._karten())
 
+        box.append(self._feld_titel(_("Install a new shell theme")))
+        box.append(InstallDropzone(
+            _("Drag a shell theme (archive or folder) here")))
+
         scroll = Gtk.ScrolledWindow()
         scroll.set_vexpand(True)
         scroll.set_child(box)
@@ -100,7 +105,7 @@ class ShellPage(compat.PageBase):
         # Karten häppchenweise bauen (jede parst eine CSS), damit die Seite
         # sofort erscheint und sich füllt.
         def baue_naechste():
-            for _ in range(3):
+            for _n in range(3):
                 try:
                     name, anzeige = next(eintraege)
                 except StopIteration:
