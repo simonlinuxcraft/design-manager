@@ -23,8 +23,11 @@ from src.i18n import _
 WEB_CSS = ("backdrop-filter", "width", "height", "position", "display", "float",
            "z-index", "box-sizing", "overflow", "cursor", "gap", "content",
            "icon-shadow")
+# Nur echte Deklarationen: Eigenschaftsname am Anfang eines { ... }-Blocks oder
+# nach einem ";". Selektoren wie "list.content:not(...)" sind Klassennamen mit
+# Pseudoklasse, kein Web-CSS (Orchis löste sonst einen Fehlalarm aus).
 _WEB_CSS_RX = re.compile(
-    r"(?<![-\w])(" + "|".join(map(re.escape, WEB_CSS)) + r")\s*:")
+    r"(?:^|;)\s*(" + "|".join(map(re.escape, WEB_CSS)) + r")\s*:")
 
 
 def fremdes_css(ordner):
@@ -36,7 +39,8 @@ def fremdes_css(ordner):
                 text = re.sub(r"/\*.*?\*/", "", f.read(), flags=re.S)
         except OSError:
             continue
-        gefunden.update(m.group(1) for m in _WEB_CSS_RX.finditer(text))
+        for block in re.findall(r"\{([^{}]*)\}", text):
+            gefunden.update(m.group(1) for m in _WEB_CSS_RX.finditer(block))
     return sorted(gefunden)
 
 
