@@ -1,6 +1,7 @@
 """Ablage-Hinweis zum Installieren neuer Designs/Schriften.
 
-Eine gestrichelte Fläche mit Hinweis und einem Knopf für den Dateidialog. Das
+Eine gestrichelte Fläche mit Hinweis, einem Knopf für den Dateidialog und
+einem für einen gnome-look-Link (siehe MainWindow.frage_gnomelook_link). Das
 Ziehen selbst nimmt das ganze Fenster an (siehe MainWindow._drop_flaeche); die
 Fläche leuchtet dabei per CSS mit auf. Was installiert wird, erkennt der
 Installer selbst, egal auf welcher Seite die Datei landet.
@@ -35,9 +36,16 @@ class InstallDropzone(Gtk.Box):
         self.append(label)
 
         knopf = Gtk.Button(label=_("Choose file…"))
-        knopf.set_halign(Gtk.Align.CENTER)
         knopf.connect("clicked", self._on_waehlen)
-        self.append(knopf)
+        gnomelook = Gtk.Button(label=_("From gnome-look.org…"))
+        gnomelook.set_tooltip_text(_("Install from a link. The app then keeps "
+                                     "the theme up to date."))
+        gnomelook.connect("clicked", lambda _k: self.get_root()
+                          .frage_gnomelook_link())
+        knoepfe = Gtk.Box(spacing=8, halign=Gtk.Align.CENTER)
+        knoepfe.append(knopf)
+        knoepfe.append(gnomelook)
+        self.append(knoepfe)
 
     def _on_waehlen(self, _knopf):
         filter_ = Gtk.FileFilter()

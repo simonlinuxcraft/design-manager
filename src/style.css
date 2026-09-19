@@ -111,6 +111,20 @@ window.silber .navigation-sidebar {
   min-height: 34px;
 }
 
+/* gnome-look-Update-Zustand: klein und gedämpft, nur ein Hinweis. */
+.dm-status {
+  margin: 0 4px;
+}
+.dm-status.ok {
+  color: #8a9199;
+}
+.dm-status.update {
+  color: #86b4e0;
+}
+.dm-status.problem {
+  color: #d9b061;
+}
+
 /* Thumbnail in den Hintergrund-Karten leicht abrunden. */
 .wallpaper-thumb {
   border-radius: 8px;

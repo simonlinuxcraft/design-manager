@@ -323,14 +323,17 @@ else:
 # --- AlertDialog (Adw.AlertDialog ist 1.5) ----------------------------------
 
 def alert(parent, heading, body, responses, default=None, close=None,
-          on_response=None):
+          on_response=None, extra=None):
     """Bestaetigungsdialog. responses: Liste (id, label, stil).
 
     stil ist "", "suggested" oder "destructive". on_response bekommt die id der
-    gewaehlten Antwort. Fallback nutzt Gtk.MessageDialog (4.0).
+    gewaehlten Antwort. extra: optionales Widget unter dem Text (z.B. ein
+    Eingabefeld). Fallback nutzt Gtk.MessageDialog (4.0).
     """
     if _hat(Adw, "AlertDialog"):
         dialog = Adw.AlertDialog(heading=heading, body=body)
+        if extra is not None:
+            dialog.set_extra_child(extra)
         for rid, label, stil in responses:
             dialog.add_response(rid, label)
             if stil == "suggested":
@@ -352,6 +355,8 @@ def alert(parent, heading, body, responses, default=None, close=None,
         transient_for=parent, modal=True,
         message_type=Gtk.MessageType.QUESTION,
         text=heading, secondary_text=body)
+    if extra is not None:
+        dialog.get_message_area().append(extra)
     nach_id = {}
     for i, (rid, label, stil) in enumerate(responses):
         dialog.add_button(label, i)

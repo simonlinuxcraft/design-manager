@@ -141,7 +141,10 @@ class Paket:
 
     def __init__(self, funde, arbeit=None):
         self.funde = funde
-        self._arbeit = arbeit
+        self.arbeit = [arbeit] if arbeit else []
+        self.quelle = None  # gnome-look-Herkunft, siehe gnomelook.py
+        self.vorauswahl = None  # bei Updates: die Designs von damals
+        self.eintrag = None  # bei Updates: der gemerkte Stand
 
     def auswaehlbar(self):
         return [f for f in self.funde if f.art in ("theme", "extension")]
@@ -167,9 +170,20 @@ class Paket:
         return ergebnis
 
     def aufraeumen(self):
-        if self._arbeit:
-            shutil.rmtree(self._arbeit, ignore_errors=True)
-            self._arbeit = None
+        for ordner in self.arbeit:
+            shutil.rmtree(ordner, ignore_errors=True)
+        self.arbeit = []
+
+
+def ziel_pfade(fund):
+    """Wohin ein Fund installiert wird (Schriften und Bilder: nichts Festes)."""
+    if fund.art == "theme":
+        return [os.path.join(ZIELE[a][0], fund.name) for a in sorted(fund.arten)]
+    if fund.art == "extension":
+        return [os.path.join(EXTENSIONS_DIR, fund.meta["uuid"])]
+    if fund.art == "font" and fund.name:
+        return [os.path.join(FONTS_DIR, fund.name)]
+    return []
 
 
 def install(pfad):

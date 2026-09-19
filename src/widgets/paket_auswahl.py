@@ -17,11 +17,12 @@ class AuswahlDialog(compat.DialogBase):
 
     eintraege: Liste (objekt, titel, untertitel). knopf_mit_zahl enthält {n}.
     on_fertig(liste der gewählten objekte) oder on_fertig(None) bei Abbruch,
-    genau einmal. destruktiv färbt den Knopf als gefährliche Aktion.
+    genau einmal. destruktiv färbt den Knopf als gefährliche Aktion, alle_an
+    hakt zu Beginn alles an.
     """
 
     def __init__(self, titel, info, eintraege, knopf_mit_zahl, knopf_ohne_zahl,
-                 on_fertig, destruktiv=False):
+                 on_fertig, destruktiv=False, alle_an=False):
         super().__init__()
         compat.dialog_setup(self, titel, 520, 640)
         self._on_fertig = on_fertig
@@ -42,7 +43,7 @@ class AuswahlDialog(compat.DialogBase):
         self._liste.set_filter_func(self._passt)
         for objekt, name, untertitel in sorted(eintraege,
                                                key=lambda e: e[1].lower()):
-            haken = Gtk.CheckButton()
+            haken = Gtk.CheckButton(active=alle_an)
             haken.set_valign(Gtk.Align.CENTER)
             haken.connect("toggled", self._zaehle)
             zeile = Adw.ActionRow(title=GLib.markup_escape_text(name),

@@ -3,3 +3,7 @@ License as upstream: CC-BY-SA-3.0 or LGPL-3, and CC-BY-SA-4.0.
 https://gitlab.gnome.org/GNOME/adwaita-icon-theme
 
 Fallback for the app's own UI when the selected icon theme lacks these names.
+
+The dm-status-*-symbolic icons are renamed copies (object-select,
+folder-download, dialog-warning) so the update marks look the same
+in every icon theme.

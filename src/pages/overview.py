@@ -17,6 +17,7 @@ from gi.repository import Adw, Gdk, Gtk, Pango
 from src import compat
 from src.core import backgrounds
 from src.i18n import _
+from src.widgets.update_status import GnomeLookListe
 
 
 # Akzentfarben-Namen (org.gnome.desktop.interface accent-color) auf Hex. Werte
@@ -46,6 +47,7 @@ class OverviewPage(compat.PageBase):
         box.append(self._hero())
         box.append(self._karten_grid())
         box.append(self._hintergrund_vorschau())
+        box.append(GnomeLookListe())
 
         scroll = Gtk.ScrolledWindow()
         scroll.set_vexpand(True)

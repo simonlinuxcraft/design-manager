@@ -2,12 +2,14 @@
 
 Die Status-Zeile (Aktiv/Installiert) ist in jeder Karte gleich aufgebaut und
 trägt rechts optional einen Mülleimer, über den sich ein selbst installiertes
-Design entfernen lässt. Der Knopf erscheint nur für löschbare Designs.
+Design entfernen lässt. Der Knopf erscheint nur für löschbare Designs. Davor
+sitzt der gnome-look-Update-Zustand (unsichtbar, solange keiner bekannt ist).
 """
 
 from gi.repository import Gtk
 
 from src.i18n import _
+from src.widgets.update_status import StatusSymbol
 
 
 def status_zeile(karte, loeschbar, on_loeschen):
@@ -24,6 +26,8 @@ def status_zeile(karte, loeschbar, on_loeschen):
     # Feste Höhe, damit Karten mit und ohne Mülleimer gleich aussehen.
     zeile.add_css_class("card-status-zeile")
     zeile.append(karte._status)
+    if getattr(karte, "theme_name", ""):
+        zeile.append(StatusSymbol(name=karte.theme_name))
 
     if loeschbar and on_loeschen is not None:
         knopf = Gtk.Button(icon_name="user-trash-symbolic")

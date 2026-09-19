@@ -10,6 +10,7 @@ and login screen from one place, with live previews.
 - Looks: curated complete looks and your own saved profiles, applied in one click
 - Background: own and system wallpapers in tabs, per-monitor images, fit mode, plus the lock screen and the GDM login background
 - Drag and drop anywhere into the window to install themes, icons, cursors, fonts, wallpapers or a .dmlook
+- Install straight from a gnome-look.org link (button "From gnome-look.org…" or drag the link) and get update checks for it
 - GTK theme and icon theme, with preview cards
 - Cursor packs with real pointer previews (parsed from Xcursor files)
 - Fonts: interface, document and monospace, with size and rendering options
@@ -24,11 +25,13 @@ subprocess calls.
 
 ## Where to get themes, icons and cursors
 
-Design Manager switches between what is already installed; it does not download
-themes itself. The main source for GNOME GTK themes, shell themes, icon packs,
-cursors and wallpapers is [gnome-look.org](https://www.gnome-look.org/).
+The main source for GNOME GTK themes, shell themes, icon packs, cursors and
+wallpapers is [gnome-look.org](https://www.gnome-look.org/).
 
-Drop the downloaded file into the app window. It takes .zip and .tar archives
+Drop the downloaded file into the app window. Or skip the download: copy the
+address of the gnome-look page (e.g. `https://www.gnome-look.org/p/1013030`),
+click "From gnome-look.org…" next to "Choose file…" and paste it. A link copied
+right before is filled in already. Dragging the link into the window works too. It takes .zip and .tar archives
 (gz, xz, bz2, and zst on Python 3.14+), extracted folders, archives that only
 contain more archives, font files and images, and sorts everything into the
 right folder:
@@ -59,9 +62,29 @@ into `~/.themes/` or `~/.icons/` by hand show up as well.
 
 Shell themes also need the User Themes extension enabled.
 
-Self-test of the installer (runs in a throwaway home):
+### Updates from gnome-look.org
+
+A link is resolved through the gnome-look OCS API. The app lists the
+files of the entry, downloads the chosen one over HTTPS, checks its md5 and runs
+it through the same installer. It remembers where each theme folder came from in
+`~/.config/design-manager/sources.json`.
+
+On start (only if such a file exists) and via the menu entry "Check theme
+updates", the app asks the API again. A changed md5 or a newer file with the same
+name apart from date or version counts as an update. The Overview lists every
+linked entry, and theme cards show a small mark: up to date, update available,
+updating, or a problem with the reason in the tooltip. Updates are installed only
+on request and keep the variants that were installed before. A new version of
+the active GTK theme with CSS that GTK cannot parse is not installed. Offline
+starts change nothing.
+
+Themes installed from a local file have no link; install them once more from
+their gnome-look link to connect them.
+
+Self-tests (run in a throwaway home, no network):
 
     LANGUAGE=en python3 tests/test_installer.py
+    LANGUAGE=en python3 tests/test_gnomelook.py
 
 ## Run
 

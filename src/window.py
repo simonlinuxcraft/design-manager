@@ -15,8 +15,9 @@ from gi.repository import Adw, Gdk, Gio, GLib, Gtk
 from src import compat
 from src.i18n import _, ngettext
 from src.logo import logo_texture
-from src.core import (gdm, healthcheck, installer, lockscreen, looksbundle,
-                      onboarding, restorepoint, schedule, updater)
+from src.core import (gdm, gnomelook, healthcheck, installer, lockscreen,
+                      looksbundle, onboarding, restorepoint, schedule,
+                      theme_check, updater)
 from src.core.settings import AppSettings
 from src.pages.background import BackgroundPage
 from src.pages.backup import BackupPage
@@ -139,6 +140,10 @@ class MainWindow(Adw.ApplicationWindow):
         if updater.UPDATER_AKTIV and updater.werkzeuge_da():
             GLib.timeout_add_seconds(3, self._auto_update_check)
 
+        # Nur wer schon von gnome-look installiert hat, fragt dort nach.
+        if gnomelook.hat_quellen():
+            GLib.timeout_add_seconds(8, self._pruefe_theme_updates, False)
+
     def _zeige_willkommen(self):
         compat.dialog_present(WelcomeDialog(), self)
         onboarding.als_gesehen_markieren()
@@ -218,11 +223,20 @@ class MainWindow(Adw.ApplicationWindow):
 
     def installiere_dateien(self, dateien):
         """Gio.Files aus einem Drop oder Dateidialog installieren."""
+        links = [d.get_uri() for d in dateien
+                 if d.get_uri_scheme() in ("http", "https")]
+        if links:
+            ids = [i for i in map(gnomelook.content_id, links) if i]
+            if not ids:
+                self.zeige_toast(_("Only local files and gnome-look.org links "
+                                   "can be installed."))
+                return False
+            self._von_gnomelook(ids[0])
+            return True
         pfade = [d.get_path() for d in dateien]
         if not pfade:
             return False
         if None in pfade:
-            # Link aus dem Browser statt einer Datei.
             self.zeige_toast(_("Only local files can be installed. Download "
                                "the file first."))
             return False
@@ -242,6 +256,11 @@ class MainWindow(Adw.ApplicationWindow):
         welche gewünscht sind. Danach werden alle Seiten neu gebaut: was
         installiert wurde, kann zu jeder Seite gehören.
         """
+        self._analysiere([(os.path.basename(p.rstrip(os.sep)),
+                           lambda p=p: installer.analysiere(p)) for p in pfade])
+
+    def _analysiere(self, auftraege):
+        """auftraege: (name, funktion, die ein installer.Paket liefert)."""
         if self._installiert_gerade:
             self.zeige_toast(_("An installation is already running."))
             return
@@ -251,10 +270,9 @@ class MainWindow(Adw.ApplicationWindow):
 
         def worker():
             pakete, fehler = [], []
-            for pfad in pfade:
-                name = os.path.basename(pfad.rstrip(os.sep))
+            for name, analysiere in auftraege:
                 try:
-                    pakete.append((name, installer.analysiere(pfad)))
+                    pakete.append((name, analysiere()))
                 except installer.InstallFehler as e:
                     fehler.append("{name}: {grund}".format(name=name, grund=e))
                 except Exception:
@@ -272,6 +290,9 @@ class MainWindow(Adw.ApplicationWindow):
         """
         while offen:
             name, paket = offen.pop(0)
+            if paket.vorauswahl:
+                fertig.append((name, paket, paket.vorauswahl))
+                continue
             if len(paket.auswaehlbar()) <= installer.AUSWAHL_AB:
                 fertig.append((name, paket, None))
                 continue
@@ -281,6 +302,7 @@ class MainWindow(Adw.ApplicationWindow):
                 if auswahl:
                     fertig.append((name, paket, auswahl))
                 else:
+                    gnomelook.merke(paket, [])  # Update abgebrochen
                     paket.aufraeumen()
                 neu = Adw.Toast(title=_("Installing…"), timeout=0)
                 if offen or fertig:
@@ -300,19 +322,40 @@ class MainWindow(Adw.ApplicationWindow):
         return GLib.SOURCE_REMOVE
 
     def _installiere_pakete(self, laeuft, fertig, fehler):
+        aktiv = self._settings.gtk_theme()
+
         def worker():
             ergebnis = []
             for name, paket, auswahl in fertig:
                 try:
-                    ergebnis += paket.installiere(auswahl)
+                    wahl = paket.funde if auswahl is None else auswahl
+                    # Ein neues aktives GTK-Theme mit Web-CSS würde nach dem
+                    # nächsten Anmelden jede App bremsen (Cyber-Dusk-Fall).
+                    riskant = [f for f in wahl if f.art == "theme"
+                               and f.name == aktiv and "gtk" in f.arten
+                               and theme_check.fremdes_css(f.quelle)]
+                    for f in riskant:
+                        grund = _("The new version uses CSS that GTK does not "
+                                  "understand. The active theme was left "
+                                  "unchanged.")
+                        fehler.append("{name}: {grund}".format(
+                            name=f.name, grund=grund))
+                        gnomelook.setze(installer.ziel_pfade(f),
+                                        gnomelook.PROBLEM, grund)
+                    wahl = [f for f in wahl if f not in riskant]
+                    if wahl:
+                        ergebnis += paket.installiere(wahl)
+                    gnomelook.merke(paket, wahl)
                 except installer.InstallFehler as e:
                     fehler.append("{name}: {grund}".format(name=name, grund=e))
+                    gnomelook.fehlgeschlagen(paket, str(e))
                 except Exception:
                     # Kopierphase (Platte voll, schreibgeschützte Reste) wirft
                     # rohes OSError/shutil.Error; nie still sterben lassen.
+                    grund = _("Installation failed unexpectedly.")
                     fehler.append("{name}: {grund}".format(
-                        name=name,
-                        grund=_("Installation failed unexpectedly.")))
+                        name=name, grund=grund))
+                    gnomelook.fehlgeschlagen(paket, grund)
                 finally:
                     paket.aufraeumen()
             GLib.idle_add(self._installation_fertig, laeuft, ergebnis, fehler)
@@ -487,10 +530,15 @@ class MainWindow(Adw.ApplicationWindow):
         aktualisieren.connect("activate", self._on_check_updates)
         self.add_action(aktualisieren)
 
+        theme_updates = Gio.SimpleAction.new("theme-updates", None)
+        theme_updates.connect("activate", lambda *_: self._on_theme_updates())
+        self.add_action(theme_updates)
+
     def _menue_knopf(self):
         """Hamburger-Menü rechts in der Kopfleiste."""
         menue = Gio.Menu()
         menue.append(_("Restore safe state"), "win.safe-state")
+        menue.append(_("Check theme updates"), "win.theme-updates")
         if updater.UPDATER_AKTIV and updater.werkzeuge_da():
             menue.append(_("Check for updates"), "win.check-updates")
         menue.append(_("About Design Manager"), "win.about")
@@ -555,6 +603,135 @@ class MainWindow(Adw.ApplicationWindow):
         self._banner.set_revealed(False)
         self.zeige_toast(_("Safe state restored (Adwaita)."))
         self._reload_aktive_seite()
+
+    # --- gnome-look: Link installieren, Designs aktualisieren ---
+
+    def frage_gnomelook_link(self):
+        """Eingabefeld für die Adresse einer gnome-look-Seite. Liegt schon ein
+        passender Link in der Zwischenablage, steht er gleich drin."""
+        feld = Gtk.Entry(activates_default=True, hexpand=True,
+                         placeholder_text="https://www.gnome-look.org/p/…")
+
+        def zwischenablage(ablage, ergebnis):
+            try:
+                text = (ablage.read_text_finish(ergebnis) or "").strip()
+            except GLib.Error:
+                return
+            if gnomelook.content_id(text) and not feld.get_text():
+                feld.set_text(text)
+
+        self.get_clipboard().read_text_async(None, zwischenablage)
+
+        def antwort(rid):
+            if rid != "installieren":
+                return
+            cid = gnomelook.content_id(feld.get_text().strip())
+            if cid:
+                self._von_gnomelook(cid)
+            else:
+                self.zeige_toast(_("That is not a link to a gnome-look.org "
+                                   "page."))
+
+        compat.alert(
+            self, _("Install from gnome-look.org"),
+            _("Open the theme page on gnome-look.org, copy the address from the "
+              "address bar and paste it here. The app installs the theme and "
+              "keeps it up to date."),
+            [("abbrechen", _("Cancel"), ""),
+             ("installieren", _("Install"), "suggested")],
+            default="installieren", close="abbrechen", on_response=antwort,
+            extra=feld)
+
+    def _von_gnomelook(self, cid):
+        self.zeige_toast(_("Looking up the gnome-look entry…"))
+
+        def worker():
+            try:
+                titel, dateien = gnomelook.dateien(cid)
+                GLib.idle_add(self._waehle_dateien,
+                              [(cid, titel, dateien, None)], [])
+            except installer.InstallFehler as e:
+                GLib.idle_add(self.zeige_toast, str(e))
+
+        threading.Thread(target=worker, daemon=True).start()
+
+    def _waehle_dateien(self, offen, auftraege):
+        """offen: (id, titel, dateien, eintrag). Bei mehreren Dateien fragen."""
+        while offen:
+            cid, titel, dateien, eintrag = offen.pop(0)
+            if len(dateien) == 1:
+                auftraege.append((cid, titel, dateien[0], eintrag))
+                continue
+
+            def gewaehlt(auswahl, cid=cid, titel=titel, eintrag=eintrag):
+                auftraege.extend((cid, titel, d, eintrag) for d in auswahl or [])
+                self._waehle_dateien(offen, auftraege)
+
+            compat.dialog_present(AuswahlDialog(
+                _("Choose files"),
+                ngettext("{title} offers {n} file. Choose what you want.",
+                         "{title} offers {n} files. Choose what you want.",
+                         len(dateien)).format(title=titel, n=len(dateien)),
+                [(d, d["name"], d["version"]) for d in dateien],
+                _("Install ({n})"), _("Install"), gewaehlt), self)
+            return GLib.SOURCE_REMOVE
+        if auftraege:
+            self._analysiere([
+                (d["name"], lambda a=(cid, titel, d, e): gnomelook.analysiere(*a))
+                for cid, titel, d, e in auftraege])
+        return GLib.SOURCE_REMOVE
+
+    def _on_theme_updates(self):
+        if not gnomelook.hat_quellen():
+            compat.alert(
+                self, _("No themes from gnome-look.org yet"),
+                _('Install a theme with the "From gnome-look.org…" button on '
+                  "the theme pages. The app checks it for updates from then "
+                  "on."),
+                [("ok", _("OK"), "")], default="ok", close="ok")
+            return
+        self.zeige_toast(_("Checking theme updates…"))
+        self._pruefe_theme_updates(True)
+
+    def _pruefe_theme_updates(self, manuell):
+        def worker():
+            liste, netzfehler = gnomelook.updates()
+            GLib.idle_add(self._theme_updates_da, liste, netzfehler, manuell)
+
+        threading.Thread(target=worker, daemon=True).start()
+        return GLib.SOURCE_REMOVE
+
+    def _theme_updates_da(self, liste, netzfehler, manuell):
+        if not liste:
+            if manuell:
+                self.zeige_toast(netzfehler or _(
+                    "All themes from gnome-look.org are up to date."))
+            return GLib.SOURCE_REMOVE
+        if manuell:
+            self._frage_theme_updates(liste)
+            return GLib.SOURCE_REMOVE
+        hinweis = Adw.Toast(title=ngettext(
+            "Update available for {n} theme", "Updates available for {n} themes",
+            len(liste)).format(n=len(liste)), button_label=_("Show"), timeout=0)
+        hinweis.connect("button-clicked",
+                        lambda _t: self._frage_theme_updates(liste))
+        self._toasts.add_toast(hinweis)
+        return GLib.SOURCE_REMOVE
+
+    def _frage_theme_updates(self, liste):
+        def gewaehlt(auswahl):
+            if auswahl:
+                self._waehle_dateien(
+                    [(e["id"], e["titel"], neu, e) for e, neu in auswahl], [])
+
+        compat.dialog_present(AuswahlDialog(
+            _("Theme updates"),
+            _("New versions are available on gnome-look.org. Themes in use "
+              "change after the next login."),
+            [((e, neu), e["titel"],
+              ", ".join(sorted({os.path.basename(p) for p in e["pfade"]})))
+             for e, neu in liste],
+            _("Update ({n})"), _("Update"), gewaehlt, alle_an=True), self)
 
     # --- Updates (GitHub-Release) ---
 
