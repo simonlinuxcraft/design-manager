@@ -35,7 +35,7 @@ from src.widgets.paket_auswahl import AuswahlDialog
 from src.widgets.welcome import WelcomeDialog
 
 
-APP_VERSION = "0.1.2"
+APP_VERSION = "0.1.3"
 
 
 class MainWindow(Adw.ApplicationWindow):
