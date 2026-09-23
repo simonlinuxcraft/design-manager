@@ -393,8 +393,17 @@ def _entpacke_zip(z, infos, ziel):
     for info in infos:
         if stat.S_ISLNK(info.external_attr >> 16):
             links.append(info)
-        else:
+        elif info.is_dir():
             z.extract(info, ziel)
+        else:
+            # Dateizeit aus dem Archiv wie bei tar: gnomelook.verknuepfe
+            # erkennt daran, ob die Datei neuer ist als das Installierte.
+            pfad = z.extract(info, ziel)
+            try:
+                zeit = time.mktime(info.date_time + (0, 0, -1))
+                os.utime(pfad, (zeit, zeit))
+            except (OverflowError, ValueError, OSError):
+                pass
     for info in links:
         if info.file_size > 4096:
             continue  # ein Linkziel ist ein kurzer Pfad, kein Datenblock

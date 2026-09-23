@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Design Manager\n"
 "Report-Msgid-Bugs-To: https://github.com/simonlinuxcraft\n"
-"POT-Creation-Date: 2026-09-19 01:47+0200\n"
+"POT-Creation-Date: 2026-09-23 14:59+0200\n"
 "PO-Revision-Date: 2026-06-16 00:00+0200\n"
 "Last-Translator: simonlinuxcraft\n"
 "Language-Team: Spanish\n"
@@ -284,55 +284,57 @@ msgstr "Al tema le falta gnome-shell/gnome-shell.css."
 msgid "The file gnome-shell.css is not readable."
 msgstr "El archivo gnome-shell.css no se puede leer."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:72
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:81
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:82
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:114
 msgid "This gnome-look entry was not found."
 msgstr "No se encontró esta entrada de gnome-look."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:74
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:77
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:84
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:87
 msgid "gnome-look.org could not be reached."
 msgstr "No se pudo acceder a gnome-look.org."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:95
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:117
 msgid "This gnome-look entry has no file the app can install."
 msgstr ""
 "Esta entrada de gnome-look no tiene ningún archivo que la app pueda instalar."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:108
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:130
 msgid "Updating…"
 msgstr "Actualizando…"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:119
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:141
 #: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:281
 #: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:355
 msgid "Installation failed unexpectedly."
 msgstr "La instalación falló de forma inesperada."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:140
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:149
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:162
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:171
 msgid "The download from gnome-look.org failed."
 msgstr "La descarga desde gnome-look.org ha fallado."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:145
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:167
 msgid "The download is too large."
 msgstr "La descarga es demasiado grande."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:152
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:174
 msgid "The download is damaged. Try again later."
 msgstr "La descarga está dañada. Inténtalo de nuevo más tarde."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:192
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:330
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:214
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:357
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:516
 msgid "Up to date with gnome-look.org"
 msgstr "Al día según gnome-look.org"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:193
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:327
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:215
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:354
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:514
 msgid "Update available on gnome-look.org"
 msgstr "Actualización disponible en gnome-look.org"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:324
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:351
 msgid "The file is no longer offered on gnome-look.org."
 msgstr "El archivo ya no se ofrece en gnome-look.org."
 
@@ -599,7 +601,7 @@ msgstr ""
 "Esta carpeta contiene demasiados temas. Arrastra la carpeta del propio tema."
 
 #: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:269
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:444
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:453
 msgid "The archive is too large to unpack safely."
 msgstr ""
 "El archivo comprimido es demasiado grande para extraerlo de forma segura."
@@ -667,17 +669,17 @@ msgstr ""
 msgid "The archive could not be extracted."
 msgstr "No se pudo extraer el archivo comprimido."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:446
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:455
 msgid "Not enough free disk space to unpack the archive."
 msgstr ""
 "No hay suficiente espacio libre en disco para extraer el archivo comprimido."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:459
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:474
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:468
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:483
 msgid "The archive contains unsafe paths."
 msgstr "El archivo comprimido contiene rutas no seguras."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:640
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:649
 msgid ""
 "This is the source code of a theme and has to be built first. Download a "
 "ready-made release package instead."
@@ -685,7 +687,7 @@ msgstr ""
 "Es el código fuente de un tema y primero hay que compilarlo. Descarga en su "
 "lugar un paquete de versión ya listo."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:644
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:653
 #, python-brace-format
 msgid ""
 "\"{name}\" would replace a built-in system theme and was skipped for safety."
@@ -693,45 +695,45 @@ msgstr ""
 "\"{name}\" sustituiría un tema integrado del sistema y se omitió por "
 "seguridad."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:680
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:685
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:689
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:694
 msgid "The extension has no valid metadata.json."
 msgstr "La extensión no tiene un metadata.json válido."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:688
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:697
 #, python-brace-format
 msgid "\"{name}\" is a system extension and was skipped."
 msgstr "\"{name}\" es una extensión del sistema y se omitió."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:711
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:720
 #, python-brace-format
 msgid "Extension: {name} (made for GNOME {versions}, may not load)"
 msgstr "Extensión: {name} (hecha para GNOME {versions}, puede que no cargue)"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:713
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:722
 #, python-brace-format
 msgid "Extension: {name} (enable it after the next login)"
 msgstr "Extensión: {name} (actívala tras el próximo inicio de sesión)"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:764
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:773
 #, python-brace-format
 msgid "Font: {n} file"
 msgid_plural "Font: {n} files"
 msgstr[0] "Tipografía: {n} archivo"
 msgstr[1] "Tipografía: {n} archivos"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:772
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:781
 #: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:384
 msgid "The image could not be read."
 msgstr "No se pudo leer la imagen."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:773
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:782
 #: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:48
 #: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:67
 msgid "Background"
 msgstr "Fondo"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:797
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:806
 #, python-brace-format
 msgid "Backgrounds: {n} image"
 msgid_plural "Backgrounds: {n} images"
@@ -1795,6 +1797,7 @@ msgstr "Solo se pueden instalar archivos locales. Descarga primero el archivo."
 
 #: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:265
 #: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:399
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:753
 msgid "An installation is already running."
 msgstr "Ya hay una instalación en curso."
 
@@ -1852,7 +1855,7 @@ msgid "Could not install"
 msgstr "No se pudo instalar"
 
 #: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:380
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:691
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:713
 msgid "OK"
 msgstr "Aceptar"
 
@@ -1972,11 +1975,15 @@ msgid_plural "{title} offers {n} files. Choose what you want."
 msgstr[0] "{title} ofrece {n} archivo. Elige lo que quieras."
 msgstr[1] "{title} ofrece {n} archivos. Elige los que quieras."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:687
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:685
+msgid "Checking theme updates…"
+msgstr "Buscando actualizaciones de temas…"
+
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:709
 msgid "No themes from gnome-look.org yet"
 msgstr "Aún no hay temas de gnome-look.org"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:688
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:710
 msgid ""
 "Install a theme with the \"From gnome-look.org…\" button on the theme pages. "
 "The app checks it for updates from then on."
@@ -1984,30 +1991,68 @@ msgstr ""
 "Instala un tema con el botón «Desde gnome-look.org…» en las páginas de "
 "temas. Desde entonces la app busca actualizaciones."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:693
-msgid "Checking theme updates…"
-msgstr "Buscando actualizaciones de temas…"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:708
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:716
 msgid "All themes from gnome-look.org are up to date."
 msgstr "Todos los temas de gnome-look.org están actualizados."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:714
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:722
 #, python-brace-format
 msgid "Update available for {n} theme"
 msgid_plural "Updates available for {n} themes"
 msgstr[0] "Actualización disponible para {n} tema"
 msgstr[1] "Actualizaciones disponibles para {n} temas"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:715
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:723
 msgid "Show"
 msgstr "Mostrar"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:728
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:741
+msgid "Found on gnome-look.org"
+msgstr "Encontrado en gnome-look.org"
+
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:742
+msgid ""
+"These installed themes are also on gnome-look.org. The app downloads each "
+"file once and compares it with your version. Matching themes are then "
+"checked for updates."
+msgstr "Estos temas instalados también están en gnome-look.org. La aplicación descarga cada archivo una vez y lo compara con tu versión. Los temas que coinciden se comprueban después en busca de actualizaciones."
+
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:748
+#, python-brace-format
+msgid "Link ({n})"
+msgstr "Vincular ({n})"
+
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:748
+msgid "Link"
+msgstr "Vincular"
+
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:756
+msgid "Comparing with gnome-look.org…"
+msgstr "Comparando con gnome-look.org…"
+
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:781
+#, python-brace-format
+msgid "Linked {n} theme to gnome-look.org."
+msgid_plural "Linked {n} themes to gnome-look.org."
+msgstr[0] "{n} tema vinculado a gnome-look.org."
+msgstr[1] "{n} temas vinculados a gnome-look.org."
+
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:786
+#, python-brace-format
+msgid ""
+"{n} theme differs from the gnome-look.org file and is not checked for "
+"updates."
+msgid_plural ""
+"{n} themes differ from the gnome-look.org file and are not checked for "
+"updates."
+msgstr[0] "{n} tema difiere del archivo de gnome-look.org y no se comprueba en busca de actualizaciones."
+msgstr[1] "{n} temas difieren del archivo de gnome-look.org y no se comprueban en busca de actualizaciones."
+
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:800
 msgid "Theme updates"
 msgstr "Actualizaciones de temas"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:729
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:801
 msgid ""
 "New versions are available on gnome-look.org. Themes in use change after the "
 "next login."
@@ -2015,29 +2060,29 @@ msgstr ""
 "Hay versiones nuevas en gnome-look.org. Los temas en uso cambian tras el "
 "próximo inicio de sesión."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:734
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:806
 #, python-brace-format
 msgid "Update ({n})"
 msgstr "Actualizar ({n})"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:734
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:766
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:806
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:838
 msgid "Update"
 msgstr "Actualizar"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:739
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:811
 msgid "Checking for updates…"
 msgstr "Buscando actualizaciones…"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:757
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:829
 msgid "You have the latest version."
 msgstr "Tienes la última versión."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:761
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:833
 msgid "Update available"
 msgstr "Actualización disponible"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:762
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:834
 #, python-brace-format
 msgid ""
 "Version {new} is ready (installed: {cur}). Download and install it now? This "
@@ -2046,20 +2091,20 @@ msgstr ""
 "La versión {new} está lista (instalada: {cur}). ¿Descargar e instalar ahora? "
 "Esto pedirá la contraseña de administrador una sola vez."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:765
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:837
 msgid "Later"
 msgstr "Más tarde"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:774
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:846
 #, python-brace-format
 msgid "Downloading version {ver}… (enter password)"
 msgstr "Descargando versión {ver}… (introduce la contraseña)"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:785
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:857
 msgid "Updated. Please restart the app."
 msgstr "Actualizado. Reinicia la app."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:787
+#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:859
 msgid "Update failed or canceled."
 msgstr "Actualización fallida o cancelada."
 

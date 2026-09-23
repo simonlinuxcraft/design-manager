@@ -10,7 +10,7 @@ and login screen from one place, with live previews.
 - Looks: curated complete looks and your own saved profiles, applied in one click
 - Background: own and system wallpapers in tabs, per-monitor images, fit mode, plus the lock screen and the GDM login background
 - Drag and drop anywhere into the window to install themes, icons, cursors, fonts, wallpapers or a .dmlook
-- Install straight from a gnome-look.org link (button "From gnome-look.org…" or drag the link) and get update checks for it
+- Install straight from a gnome-look.org link (button "From gnome-look.org…" or drag the link) and get update checks for it, also for themes installed before
 - GTK theme and icon theme, with preview cards
 - Cursor packs with real pointer previews (parsed from Xcursor files)
 - Fonts: interface, document and monospace, with size and rendering options
@@ -78,8 +78,14 @@ on request and keep the variants that were installed before. A new version of
 the active GTK theme with CSS that GTK cannot parse is not installed. Offline
 starts change nothing.
 
-Themes installed from a local file have no link; install them once more from
-their gnome-look link to connect them.
+Themes that were there before (installed by hand or from a local file) can be
+linked as well. "Check theme updates" also searches gnome-look for installed
+themes without a known source and lists entries offering a file with the same
+name and kind. Each confirmed file is downloaded once and compared with the
+installed folder. Same content counts as up to date, an older copy shows an
+update. A folder that differs and is newer (built from git, edited by hand)
+stays unlinked, so an update never downgrades it. Skipped folders are kept in
+`~/.config/design-manager/sources-skipped.json` and not offered again.
 
 Self-tests (run in a throwaway home, no network):
 

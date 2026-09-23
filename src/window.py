@@ -682,28 +682,36 @@ class MainWindow(Adw.ApplicationWindow):
         return GLib.SOURCE_REMOVE
 
     def _on_theme_updates(self):
-        if not gnomelook.hat_quellen():
-            compat.alert(
-                self, _("No themes from gnome-look.org yet"),
-                _('Install a theme with the "From gnome-look.org…" button on '
-                  "the theme pages. The app checks it for updates from then "
-                  "on."),
-                [("ok", _("OK"), "")], default="ok", close="ok")
-            return
         self.zeige_toast(_("Checking theme updates…"))
         self._pruefe_theme_updates(True)
 
     def _pruefe_theme_updates(self, manuell):
+        """Automatisch nur die bekannten Designs, von Hand zusätzlich die
+        Suche nach installierten Designs ohne Herkunft."""
         def worker():
             liste, netzfehler = gnomelook.updates()
-            GLib.idle_add(self._theme_updates_da, liste, netzfehler, manuell)
+            kandidaten = []
+            if manuell and not netzfehler:
+                kandidaten, netzfehler = gnomelook.kandidaten()
+            GLib.idle_add(self._theme_updates_da, liste, netzfehler, manuell,
+                          kandidaten)
 
         threading.Thread(target=worker, daemon=True).start()
         return GLib.SOURCE_REMOVE
 
-    def _theme_updates_da(self, liste, netzfehler, manuell):
+    def _theme_updates_da(self, liste, netzfehler, manuell, kandidaten=()):
+        if kandidaten:
+            self._frage_verknuepfen(kandidaten, liste, netzfehler)
+            return GLib.SOURCE_REMOVE
         if not liste:
-            if manuell:
+            if manuell and not netzfehler and not gnomelook.hat_quellen():
+                compat.alert(
+                    self, _("No themes from gnome-look.org yet"),
+                    _('Install a theme with the "From gnome-look.org…" button '
+                      "on the theme pages. The app checks it for updates from "
+                      "then on."),
+                    [("ok", _("OK"), "")], default="ok", close="ok")
+            elif manuell:
                 self.zeige_toast(netzfehler or _(
                     "All themes from gnome-look.org are up to date."))
             return GLib.SOURCE_REMOVE
@@ -716,6 +724,70 @@ class MainWindow(Adw.ApplicationWindow):
         hinweis.connect("button-clicked",
                         lambda _t: self._frage_theme_updates(liste))
         self._toasts.add_toast(hinweis)
+        return GLib.SOURCE_REMOVE
+
+    def _frage_verknuepfen(self, kandidaten, liste, netzfehler):
+        """Installierte Designs, die es auch auf gnome-look gibt. Abgewählte
+        kommen nicht wieder, Abbrechen fragt beim nächsten Mal erneut."""
+        def gewaehlt(auswahl):
+            if auswahl is None:
+                self._theme_updates_da(liste, netzfehler, True)
+                return
+            gnomelook.uebergehe([p for k in kandidaten if k not in auswahl
+                                 for p in k["pfade"]])
+            self._verknuepfe(auswahl)
+
+        compat.dialog_present(AuswahlDialog(
+            _("Found on gnome-look.org"),
+            _("These installed themes are also on gnome-look.org. The app "
+              "downloads each file once and compares it with your version. "
+              "Matching themes are then checked for updates."),
+            [(k, ", ".join(sorted({os.path.basename(p) for p in k["pfade"]})),
+              "{title}: {file}".format(title=k["titel"], file=k["datei"]["name"]))
+             for k in kandidaten],
+            _("Link ({n})"), _("Link"), gewaehlt, alle_an=True), self)
+
+    def _verknuepfe(self, auswahl):
+        # Gleiche Sperre wie Installationen: beide schreiben sources.json.
+        if self._installiert_gerade:
+            self.zeige_toast(_("An installation is already running."))
+            return
+        self._installiert_gerade = True
+        laeuft = Adw.Toast(title=_("Comparing with gnome-look.org…"), timeout=0)
+        self._toasts.add_toast(laeuft)
+
+        def worker():
+            verknuepft, anders = [], []
+            for kandidat in auswahl:
+                try:
+                    neu, abweichend = gnomelook.verknuepfe(kandidat)
+                except Exception:
+                    continue  # Download kaputt: beim nächsten Mal wieder dabei
+                verknuepft += neu
+                anders += abweichend
+            liste, netzfehler = gnomelook.updates()
+            GLib.idle_add(self._verknuepft, laeuft, verknuepft, anders, liste,
+                          netzfehler)
+
+        threading.Thread(target=worker, daemon=True).start()
+
+    def _verknuepft(self, laeuft, verknuepft, anders, liste, netzfehler):
+        self._installiert_gerade = False
+        laeuft.dismiss()
+        namen = {os.path.basename(p) for p in verknuepft}
+        andere = {os.path.basename(p) for p in anders} - namen
+        if namen:
+            self.zeige_toast(ngettext(
+                "Linked {n} theme to gnome-look.org.",
+                "Linked {n} themes to gnome-look.org.", len(namen)).format(
+                    n=len(namen)))
+        if andere:
+            self.zeige_toast(ngettext(
+                "{n} theme differs from the gnome-look.org file and is not "
+                "checked for updates.",
+                "{n} themes differ from the gnome-look.org file and are not "
+                "checked for updates.", len(andere)).format(n=len(andere)))
+        self._theme_updates_da(liste, netzfehler, True)
         return GLib.SOURCE_REMOVE
 
     def _frage_theme_updates(self, liste):
