@@ -24,6 +24,9 @@ from src.widgets.monitor_arrangement import MonitorArrangement
 from src.widgets.wallpaper_card import HinzufuegenKachel, WallpaperCard
 
 
+# Anmeldebildschirm-Funktion gesperrt (ausgegraut), siehe _mehr_gruppe.
+GDM_GESPERRT = True
+
 # Anpassungsmodus: Label und der dazugehörige Enum-Wert von picture-options.
 MODI = [
     (_("Zoom (fill screen)"), "zoom"),
@@ -143,8 +146,11 @@ class BackgroundPage(compat.PageBase):
         """Nimmt Variety aus dem Spiel: Autostart aus, beenden, Hintergrund von
         Varietys Zwischendatei auf ein stabiles Quellbild umbiegen."""
         quelle = variety.aktuelles_quellbild()  # vor dem Beenden lesen
-        variety.autostart_aus()
-        variety.beenden()
+        if not variety.autostart_aus() or not variety.beenden():
+            # Sonst käme Variety beim nächsten Login zurück und die App
+            # behauptete das Gegenteil.
+            self._melde(_("Variety could not be disabled."))
+            return
         self._variety_aktiv = False
 
         # Bild von Varietys Zwischendatei auf das echte Quellbild umbiegen, damit
@@ -473,8 +479,20 @@ class BackgroundPage(compat.PageBase):
     def _mehr_gruppe(self):
         gruppe = Adw.PreferencesGroup(title=_("Lock and login screen"))
         gruppe.add(self._sperr_zeile())
+        # ponytail: Anmeldebildschirm vorerst gesperrt, bis die Ursache des
+        # 24.04-Absturzes sicher geklaert ist. Zum Freischalten GDM_GESPERRT
+        # auf False setzen; der komplette Pfad bleibt intakt.
+        # Ist aus einer frueheren Version noch ein Hintergrund aktiv, bleibt
+        # die Zeile bedienbar, bietet aber nur noch Zuruecksetzen an.
+        if GDM_GESPERRT and not gdm.aktiv():
+            zeile = Adw.ActionRow(
+                title=_("Login screen (GDM)"),
+                subtitle=_esc(_("Temporarily disabled until this feature has "
+                                "been verified as crash-safe.")))
+            zeile.set_sensitive(False)
+            gruppe.add(zeile)
         # Anmeldebildschirm nur zeigen, wenn der root-Weg überhaupt möglich ist.
-        if gdm.verfuegbar():
+        elif gdm.verfuegbar():
             gruppe.add(self._gdm_zeile())
         return gruppe
 
@@ -605,6 +623,21 @@ class BackgroundPage(compat.PageBase):
         while kind is not None:
             self._gdm_knoepfe.remove(kind)
             kind = self._gdm_knoepfe.get_first_child()
+
+        if GDM_GESPERRT:
+            self._gdm_expander.set_expanded(True)
+            if gdm.aktiv():
+                self._gdm_status(_("A custom login screen background is "
+                                   "active. The feature is temporarily "
+                                   "disabled, only resetting is possible."))
+                self._gdm_aktion.set_title("")
+                self._gdm_knoepfe.append(
+                    self._knopf(_("Reset"), self._on_gdm_reset))
+            else:
+                self._gdm_status(_("Temporarily disabled until this feature "
+                                   "has been verified as crash-safe."))
+                self._gdm_expander.set_sensitive(False)
+            return
 
         if gdm.bestaetigung_offen():
             self._gdm_status(_("New login screen set, not yet confirmed."))

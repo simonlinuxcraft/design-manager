@@ -27,11 +27,20 @@ BEISPIEL_ICONS = [
 VORSCHAU_GROESSE = 32
 
 
+_ICON_THEMES = {}
+
+
 def _icon_theme_fuer(name):
-    """Ein Gtk.IconTheme, das gezielt im Design 'name' sucht."""
-    icon_theme = Gtk.IconTheme.new()
-    icon_theme.set_search_path(themes.ICON_DIRS)
-    icon_theme.set_theme_name(name)
+    """Ein Gtk.IconTheme, das gezielt im Design 'name' sucht.
+
+    Pro Name gecacht: der erste Lookup scannt die Vererbungskette (bis 50 ms),
+    jeder weitere am selben Objekt ist frei. GTK überwacht die Ordner selbst."""
+    icon_theme = _ICON_THEMES.get(name)
+    if icon_theme is None:
+        icon_theme = Gtk.IconTheme.new()
+        icon_theme.set_search_path(themes.ICON_DIRS)
+        icon_theme.set_theme_name(name)
+        _ICON_THEMES[name] = icon_theme
     return icon_theme
 
 

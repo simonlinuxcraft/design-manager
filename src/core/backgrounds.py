@@ -6,13 +6,14 @@ sammeln nur die direkt enthaltenen Bilddateien ein, nicht rekursiv, damit die
 Galerie übersichtlich bleibt.
 """
 
+import concurrent.futures
 import filecmp
+import hashlib
 import json
 import os
 import re
 import shutil
 import sys
-import threading
 
 from gi.repository import Gdk, GdkPixbuf, Gio, GLib
 
@@ -215,14 +216,51 @@ def load_texture_async(pfad, breite, hoehe, callback):
         return False
 
     def worker():
+        cache = _thumb_pfad(pfad, breite, hoehe)
         try:
-            pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(
-                pfad, breite, hoehe, True)
+            if cache and os.path.isfile(cache):
+                pixbuf = GdkPixbuf.Pixbuf.new_from_file(cache)
+            else:
+                pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(
+                    pfad, breite, hoehe, True)
+                if cache:
+                    _thumb_speichern(pixbuf, cache)
         except Exception:
             return
         GLib.idle_add(fertig, pixbuf)
 
-    threading.Thread(target=worker, daemon=True).start()
+    # Begrenzt: hunderte Galeriebilder würden sonst hunderte Threads und bei
+    # großen Quellbildern entsprechend viel Speicher gleichzeitig belegen.
+    _DECODER.submit(worker)
+
+
+_DECODER = concurrent.futures.ThreadPoolExecutor(max_workers=3)
+_THUMB_DIR = os.path.expanduser("~/.cache/design-manager/thumbs")
+
+
+def _thumb_pfad(pfad, breite, hoehe):
+    """Cache-Datei für ein verkleinertes Bild; Schlüssel aus Pfad, mtime,
+    Größe und Zielmaß, damit ein ersetztes Bild nie ein altes Thumbnail zeigt.
+    Ein Galerie-Aufbau dekodiert sonst jedes Mal alle Originale neu (rund 9 s
+    CPU bei 40 Bildern), aus dem Cache sind es Millisekunden."""
+    try:
+        st = os.stat(pfad)
+    except OSError:
+        return None
+    schluessel = hashlib.sha1("{}|{}|{}|{}x{}".format(
+        os.path.realpath(pfad), int(st.st_mtime), st.st_size,
+        breite, hoehe).encode()).hexdigest()
+    return os.path.join(_THUMB_DIR, schluessel + ".png")
+
+
+def _thumb_speichern(pixbuf, cache):
+    try:
+        os.makedirs(_THUMB_DIR, exist_ok=True)
+        tmp = cache + ".part"
+        pixbuf.savev(tmp, "png", [], [])
+        os.replace(tmp, cache)
+    except (OSError, GLib.Error):
+        pass  # Cache ist nur Beschleunigung
 
 
 # --- Pro-Monitor-Hintergrund (Composite + spanned) ---

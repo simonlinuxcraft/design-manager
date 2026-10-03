@@ -15,8 +15,16 @@ from src import compat
 from src.core.extensions import (
     ShellExtensions, STATE_ERROR, TYPE_SYSTEM, TYPE_USER,
 )
+from src.core import dock
+from src.core.settings import AppSettings
 from src.i18n import _
 from src.widgets.dropzone import InstallDropzone
+
+# Erweiterungen, von deren Zustand andere Seiten abhängen.
+_SEITEN_UUIDS = {
+    AppSettings.USER_THEME_UUID, dock.DASH_TO_PANEL_UUID,
+    dock.UBUNTU_DOCK_UUID, dock.DASH_TO_DOCK_UUID,
+}
 
 
 class ExtensionsPage(compat.PageBase):
@@ -148,6 +156,13 @@ class ExtensionsPage(compat.PageBase):
             self._ext.enable(uuid)
         else:
             self._ext.disable(uuid)
+        # Shell- und Dock-Seite entscheiden beim Bau, ob ihre Erweiterung an
+        # ist; die gecachten Seiten müssen das mitbekommen.
+        if uuid in _SEITEN_UUIDS:
+            fenster = self.get_root()
+            if fenster is not None and hasattr(fenster, "reload_alle_seiten"):
+                # Nicht mitten im eigenen Signal-Handler neu bauen.
+                GLib.idle_add(fenster.reload_alle_seiten)
 
     def _on_prefs(self, _knopf, uuid):
         self._ext.open_prefs(uuid)

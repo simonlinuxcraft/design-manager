@@ -40,9 +40,9 @@ def laeuft():
         return False
     try:
         ergebnis = subprocess.run(
-            ["pgrep", "-f", "bin/variety"],
+            ["pgrep", "-f", "bin/variety"], timeout=5,
             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    except FileNotFoundError:
+    except (FileNotFoundError, subprocess.TimeoutExpired):
         return False  # ohne pgrep nicht prüfbar -> lieber direkt über gsettings
     return ergebnis.returncode == 0
 
@@ -56,9 +56,9 @@ def setze_wallpaper(pfad):
     """
     try:
         ergebnis = subprocess.run(
-            ["variety", "--set", os.path.abspath(pfad)],
+            ["variety", "--set", os.path.abspath(pfad)], timeout=10,
             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    except FileNotFoundError:
+    except (FileNotFoundError, subprocess.TimeoutExpired):
         return False
     return ergebnis.returncode == 0
 
@@ -86,9 +86,9 @@ def aktuelles_quellbild():
 def beenden():
     """Beendet die laufende Variety-Instanz (variety --quit)."""
     try:
-        subprocess.run(["variety", "--quit"],
+        subprocess.run(["variety", "--quit"], timeout=10,
                        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    except FileNotFoundError:
+    except (FileNotFoundError, subprocess.TimeoutExpired):
         return False
     return True
 

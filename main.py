@@ -93,6 +93,7 @@ class LinuxAnpassungApp(Adw.Application):
         """
         window = self.props.active_window
         if not window:
+            _waehle_renderer()
             window = MainWindow(application=self)
             # Icon-Name = App-ID. Greift, sobald ein gleichnamiges Icon im
             # Theme installiert ist (siehe data/dev-install.sh). Das Dock-Icon
@@ -222,14 +223,14 @@ def _software_gl():
     Erst GL direkt fragen (genauester Hinweis: meldet der Renderer llvmpipe/
     softpipe/swrast?). Fehlt glxinfo, gilt eine VM als Software-GL-Verdacht.
     """
-    try:
-        ausgabe = subprocess.run(
-            ["glxinfo", "-B"], capture_output=True, text=True, timeout=2).stdout
-        if ausgabe:
-            return any(s in ausgabe.lower()
-                       for s in ("llvmpipe", "softpipe", "swrast"))
-    except (OSError, subprocess.SubprocessError):
-        pass
+    if _GLXINFO is not None:
+        try:
+            ausgabe = _GLXINFO.communicate(timeout=2)[0]
+            if ausgabe:
+                return any(s in ausgabe.lower()
+                           for s in ("llvmpipe", "softpipe", "swrast"))
+        except (OSError, subprocess.SubprocessError):
+            _GLXINFO.kill()
     try:
         return subprocess.run(
             ["systemd-detect-virt", "--quiet"], timeout=2).returncode == 0
@@ -254,10 +255,21 @@ def _waehle_renderer():
               file=sys.stderr)
 
 
+_GLXINFO = None
+
+
 def main():
-    # Renderer-Wahl vor dem ersten Fenster (GTK legt den Renderer beim
-    # Realisieren der ersten Oberfläche an, danach wirkt GSK_RENDERER nicht mehr).
-    _waehle_renderer()
+    # glxinfo braucht 130-160 ms; parallel zu Imports und GTK-Init starten und
+    # erst in do_activate auswerten. Das reicht: GTK legt den Renderer beim
+    # Realisieren der ersten Oberfläche an, danach wirkt GSK_RENDERER nicht mehr.
+    global _GLXINFO
+    if not os.environ.get("GSK_RENDERER"):
+        try:
+            _GLXINFO = subprocess.Popen(
+                ["glxinfo", "-B"], stdout=subprocess.PIPE,
+                stderr=subprocess.DEVNULL, text=True)
+        except OSError:
+            _GLXINFO = None
     app = LinuxAnpassungApp()
     return app.run(sys.argv)
 

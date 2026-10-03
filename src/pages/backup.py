@@ -42,6 +42,8 @@ class BackupPage(compat.PageBase):
         self.set_child(toolbar)
 
         self._fuelle_punkte()
+        # Die Seite wird gecacht; andere Seiten legen inzwischen Punkte an.
+        self.connect("map", lambda _w: self._fuelle_punkte())
 
     # --- Sicherungspunkte (automatisch vor riskanten Wechseln) ---
 
@@ -72,7 +74,7 @@ class BackupPage(compat.PageBase):
         for punkt in punkte:
             # Der Anlass wird beim Anlegen bereits übersetzt gespeichert.
             zeile = Adw.ActionRow(
-                title=punkt["anlass"],
+                title=GLib.markup_escape_text(punkt["anlass"]),
                 subtitle=self._format_zeit(punkt["zeit"]))
 
             zurueck = Gtk.Button(label=_("Restore"))
@@ -98,6 +100,18 @@ class BackupPage(compat.PageBase):
             return ""
 
     def _on_punkt_anwenden(self, _knopf, datei):
+        compat.alert(
+            self, _("Restore this point?"),
+            _("The current state is saved as a new restore point first."),
+            [("abbrechen", _("Cancel"), ""),
+             ("anwenden", _("Restore"), "suggested")],
+            default="abbrechen", close="abbrechen",
+            on_response=lambda antwort: self._on_punkt_antwort(antwort, datei))
+
+    def _on_punkt_antwort(self, antwort, datei):
+        if antwort != "anwenden":
+            return
+        restorepoint.erstelle(self._settings, _("before restoring"))
         if restorepoint.wende_an(self._settings, datei):
             self._melde_und_reload(_("Restore point applied."))
         else:
@@ -166,6 +180,7 @@ class BackupPage(compat.PageBase):
     def _on_quelle(self, pfad):
         if not pfad:
             return
+        restorepoint.erstelle(self._settings, _("before restoring"))
         try:
             erfolg = backup.load_from_file(self._settings, pfad)
         except (OSError, ValueError):
@@ -201,9 +216,10 @@ class BackupPage(compat.PageBase):
             return
         try:
             looksbundle.exportiere(self._settings, pfad)
-        except OSError as fehler:
+        except (OSError, ValueError) as fehler:
             self._melde(_("Export failed: {error}").format(
-                error=fehler.strerror or _("Error")))
+                error=getattr(fehler, "strerror", None) or str(fehler)
+                or _("Error")))
             return
         self._melde(_("Look package saved: {file}").format(
             file=os.path.basename(pfad)))

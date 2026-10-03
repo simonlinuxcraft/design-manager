@@ -16,6 +16,7 @@ import re
 import time
 
 from src.core import backup
+from src.i18n import _
 
 
 # Ablageort und maximale Zahl gehaltener Punkte (Ringpuffer).
@@ -103,7 +104,7 @@ def liste():
             continue
         punkte.append({
             "datei": datei,
-            "anlass": daten.get("anlass", "Sicherungspunkt"),
+            "anlass": daten.get("anlass") or _("Restore point"),
             "zeit": daten.get("zeit", 0),
         })
     return punkte

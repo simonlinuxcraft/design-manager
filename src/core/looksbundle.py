@@ -80,7 +80,10 @@ def exportiere(settings, ziel_zip):
         (settings.cursor_theme(), "cursor", "icons"),
     ]
 
-    with zipfile.ZipFile(ziel_zip, "w", zipfile.ZIP_DEFLATED) as z:
+    # strict_timestamps=False: aus tar entpackte Designs haben oft mtime 0, zip
+    # wirft sonst ValueError (Zeitstempel vor 1980).
+    with zipfile.ZipFile(ziel_zip, "w", zipfile.ZIP_DEFLATED,
+                         strict_timestamps=False) as z:
         z.writestr("manifest.json", json.dumps(manifest, indent=2, sort_keys=True))
 
         gesehen = set()
@@ -155,6 +158,8 @@ def entpacke(quelle_zip):
     """
     try:
         with zipfile.ZipFile(quelle_zip) as z:
+            if z.getinfo("manifest.json").file_size > 1_000_000:
+                return None
             manifest = json.loads(z.read("manifest.json"))
     except (OSError, KeyError, ValueError, zipfile.BadZipFile):
         return None

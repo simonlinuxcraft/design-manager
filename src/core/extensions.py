@@ -34,8 +34,11 @@ class ShellExtensions:
 
     def __init__(self):
         try:
+            # Properties nie laden: das GetAll an die Shell kostet 200-450 ms
+            # und wird nicht gebraucht (nur Methoden und Signale).
             self._proxy = Gio.DBusProxy.new_for_bus_sync(
-                Gio.BusType.SESSION, Gio.DBusProxyFlags.NONE, None,
+                Gio.BusType.SESSION,
+                Gio.DBusProxyFlags.DO_NOT_LOAD_PROPERTIES, None,
                 self.BUS, self.PATH, self.BUS, None)
         except GLib.Error:
             self._proxy = None
@@ -58,7 +61,7 @@ class ShellExtensions:
             return []
         try:
             ergebnis = self._proxy.call_sync(
-                "ListExtensions", None, Gio.DBusCallFlags.NONE, -1, None)
+                "ListExtensions", None, Gio.DBusCallFlags.NONE, 5000, None)
         except GLib.Error:
             return []
 
@@ -98,7 +101,7 @@ class ShellExtensions:
         try:
             self._proxy.call_sync(
                 methode, GLib.Variant("(s)", (uuid,)),
-                Gio.DBusCallFlags.NONE, -1, None)
+                Gio.DBusCallFlags.NONE, 5000, None)
         except GLib.Error:
             pass
 

@@ -14,7 +14,7 @@ Nach dem Anwenden baut das Fenster alle Seiten neu (melde_und_reload), damit die
 from gi.repository import Adw, Gtk
 
 from src import compat
-from src.core import backup, looks
+from src.core import backup, looks, restorepoint
 from src.i18n import _
 from src.widgets.look_card import LookCard
 
@@ -153,6 +153,7 @@ class LooksPage(compat.PageBase):
     def _on_profil_antwort(self, antwort, name):
         if antwort != "anwenden":
             return
+        restorepoint.erstelle(self._settings, _("before restoring"))
         try:
             erfolg = backup.load_profile(self._settings, name)
         except (OSError, ValueError):
@@ -168,8 +169,20 @@ class LooksPage(compat.PageBase):
         name = look.get("_profil", "")
         if not name:
             return
-        backup.delete_profile(name)
-        self._melde_und_reload(_("Profile deleted: {name}").format(name=name))
+
+        def antwort(wahl):
+            if wahl != "loeschen":
+                return
+            backup.delete_profile(name)
+            self._melde_und_reload(
+                _("Profile deleted: {name}").format(name=name))
+
+        compat.alert(
+            self, _('Delete profile "{name}"?').format(name=name),
+            _("This cannot be undone."),
+            [("abbrechen", _("Cancel"), ""),
+             ("loeschen", _("Delete"), "destructive")],
+            default="abbrechen", close="abbrechen", on_response=antwort)
 
     # --- Rückmeldung ans Fenster ---
 

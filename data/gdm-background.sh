@@ -27,6 +27,10 @@
 
 set -euo pipefail
 
+# sort und comm muessen dieselbe Kollation nutzen; unter de_DE (glibc 2.43)
+# widersprechen sie sich, comm meldet "not in sorted order" und der Build stirbt.
+export LC_ALL=C
+
 ALT_NAME="gdm-theme.gresource"
 ALT_LINK="/usr/share/gnome-shell/gdm-theme.gresource"
 ALT_PRIO=99

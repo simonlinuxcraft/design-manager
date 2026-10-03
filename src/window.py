@@ -35,7 +35,7 @@ from src.widgets.paket_auswahl import AuswahlDialog
 from src.widgets.welcome import WelcomeDialog
 
 
-APP_VERSION = "0.1.3"
+APP_VERSION = "0.1.4"
 
 
 class MainWindow(Adw.ApplicationWindow):
@@ -194,7 +194,7 @@ class MainWindow(Adw.ApplicationWindow):
         self._banner_probleme = []
         self._banner.set_revealed(False)
         self.zeige_toast(_("Reset to a safe default theme."))
-        self._reload_aktive_seite()
+        self.reload_alle_seiten()
 
     # --- Installieren per Drag & Drop (überall im Fenster) ---
 
@@ -275,6 +275,9 @@ class MainWindow(Adw.ApplicationWindow):
                     pakete.append((name, analysiere()))
                 except installer.InstallFehler as e:
                     fehler.append("{name}: {grund}".format(name=name, grund=e))
+                except OSError as e:
+                    fehler.append("{name}: {grund}".format(
+                        name=name, grund=e.strerror or str(e)))
                 except Exception:
                     fehler.append("{name}: {grund}".format(
                         name=name,
@@ -349,6 +352,11 @@ class MainWindow(Adw.ApplicationWindow):
                 except installer.InstallFehler as e:
                     fehler.append("{name}: {grund}".format(name=name, grund=e))
                     gnomelook.fehlgeschlagen(paket, str(e))
+                except OSError as e:
+                    grund = e.strerror or str(e)
+                    fehler.append("{name}: {grund}".format(
+                        name=name, grund=grund))
+                    gnomelook.fehlgeschlagen(paket, grund)
                 except Exception:
                     # Kopierphase (Platte voll, schreibgeschützte Reste) wirft
                     # rohes OSError/shutil.Error; nie still sterben lassen.
@@ -593,7 +601,10 @@ class MainWindow(Adw.ApplicationWindow):
         # über das aktuell gesetzte Theme. Würde reset_shell_theme() zuerst
         # laufen, zeigte _css_pfad() ins Leere und der Sperrbild-Block bliebe
         # verwaist im alten Theme zurück (taucht bei Reaktivierung wieder auf).
-        lockscreen.clear_background(self._settings)
+        try:
+            lockscreen.clear_background(self._settings)
+        except (OSError, ValueError):
+            pass  # kaputte Theme-CSS darf den Notausstieg nicht stoppen
         self._settings.reset_shell_theme()
         # Den GDM-Login-Hintergrund nur zurücksetzen, wenn überhaupt einer aktiv
         # ist. Das läuft über pkexec (Passwort-Dialog), darum nebenläufig, damit
@@ -602,7 +613,7 @@ class MainWindow(Adw.ApplicationWindow):
             threading.Thread(target=gdm.reset, daemon=True).start()
         self._banner.set_revealed(False)
         self.zeige_toast(_("Safe state restored (Adwaita)."))
-        self._reload_aktive_seite()
+        self.reload_alle_seiten()
 
     # --- gnome-look: Link installieren, Designs aktualisieren ---
 
@@ -652,6 +663,9 @@ class MainWindow(Adw.ApplicationWindow):
                               [(cid, titel, dateien, None)], [])
             except installer.InstallFehler as e:
                 GLib.idle_add(self.zeige_toast, str(e))
+            except Exception:
+                GLib.idle_add(self.zeige_toast,
+                              _("gnome-look.org could not be reached."))
 
         threading.Thread(target=worker, daemon=True).start()
 
@@ -689,10 +703,15 @@ class MainWindow(Adw.ApplicationWindow):
         """Automatisch nur die bekannten Designs, von Hand zusätzlich die
         Suche nach installierten Designs ohne Herkunft."""
         def worker():
-            liste, netzfehler = gnomelook.updates()
-            kandidaten = []
-            if manuell and not netzfehler:
-                kandidaten, netzfehler = gnomelook.kandidaten()
+            liste, kandidaten = [], []
+            try:
+                liste, netzfehler = gnomelook.updates()
+                if manuell and not netzfehler:
+                    kandidaten, netzfehler = gnomelook.kandidaten()
+            except Exception:
+                # http.client-Fehler sind kein OSError; der Thread darf nie
+                # ohne Rückmeldung sterben.
+                netzfehler = _("gnome-look.org could not be reached.")
             GLib.idle_add(self._theme_updates_da, liste, netzfehler, manuell,
                           kandidaten)
 
@@ -765,7 +784,12 @@ class MainWindow(Adw.ApplicationWindow):
                     continue  # Download kaputt: beim nächsten Mal wieder dabei
                 verknuepft += neu
                 anders += abweichend
-            liste, netzfehler = gnomelook.updates()
+            try:
+                liste, netzfehler = gnomelook.updates()
+            except Exception:
+                # Sonst bliebe _installiert_gerade bis zum Neustart gesetzt.
+                liste = []
+                netzfehler = _("gnome-look.org could not be reached.")
             GLib.idle_add(self._verknuepft, laeuft, verknuepft, anders, liste,
                           netzfehler)
 
@@ -842,12 +866,19 @@ class MainWindow(Adw.ApplicationWindow):
         return GLib.SOURCE_REMOVE
 
     def _starte_update(self, info):
+        if getattr(self, "_update_laeuft", False):
+            return
+        self._update_laeuft = True
         self.zeige_toast(
             _("Downloading version {ver}… (enter password)").format(
                 ver=info["version"]))
 
         def arbeit():
-            erfolg = updater.lade_und_installiere(info)
+            try:
+                erfolg = updater.lade_und_installiere(info)
+            except Exception:
+                erfolg = False
+            self._update_laeuft = False
             GLib.idle_add(self._update_fertig, erfolg)
 
         threading.Thread(target=arbeit, daemon=True).start()

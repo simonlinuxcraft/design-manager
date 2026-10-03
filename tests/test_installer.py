@@ -14,6 +14,7 @@ import zipfile
 
 HOME = tempfile.mkdtemp(prefix="dm-test-home-")
 os.environ["HOME"] = HOME  # vor den src-Importen, die Pfade stehen zur Importzeit fest
+os.environ["LANGUAGE"] = "C"  # Erwartungen unten sind englische msgids
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import gi  # noqa: E402

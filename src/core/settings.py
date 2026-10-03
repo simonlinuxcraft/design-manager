@@ -713,7 +713,10 @@ class AppSettings:
             settings = self._nach_schema.get(schema_id)
             if not _hat_schluessel(settings, key):
                 continue
-            text = daten.get(schema_id, {}).get(key)
+            schema_daten = daten.get(schema_id)
+            if not isinstance(schema_daten, dict):
+                continue
+            text = schema_daten.get(key)
             if text is None:
                 continue
             try:
