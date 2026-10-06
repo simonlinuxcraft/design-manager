@@ -2,7 +2,7 @@
 
 Eine Sicherung ist eine kleine JSON-Datei mit den aktuellen Werten der von der
 App verwalteten dconf-Schlüssel (Design, Symbole, Mauszeiger, Schrift,
-Hintergrund). Wiederherstellen setzt diese Werte zurück. Die Design- und
+Hintergrund, Silver-Dock-Design). Wiederherstellen setzt diese Werte zurück. Die Design- und
 Bilddateien selbst werden nicht mitgesichert, nur die Auswahl darauf (Name bzw.
 URI).
 

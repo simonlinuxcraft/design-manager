@@ -34,6 +34,31 @@ def schema_vorhanden(schema_id):
     return quelle.lookup(schema_id, True) is not None
 
 
+def erweiterungs_settings(uuid, schema_id, ordner=None):
+    """Gio.Settings einer Erweiterung, oder None wenn sie nicht da ist.
+
+    Erweiterungen bringen ihr kompiliertes Schema im eigenen Ordner mit
+    (<uuid>/schemas/gschemas.compiled), systemweit ist es nicht installiert.
+    GNOME lädt es von dort, wir auch. Fehlt Erweiterung oder Schema, werden
+    ihre Schlüssel in Sicherungen einfach übersprungen.
+    """
+    if ordner is None:
+        ordner = [os.path.join(basis, "gnome-shell", "extensions", uuid, "schemas")
+                  for basis in [GLib.get_user_data_dir(), *GLib.get_system_data_dirs()]]
+    for pfad in ordner:
+        if not os.path.isfile(os.path.join(pfad, "gschemas.compiled")):
+            continue
+        try:
+            quelle = Gio.SettingsSchemaSource.new_from_directory(
+                pfad, Gio.SettingsSchemaSource.get_default(), False)
+        except GLib.Error:
+            continue
+        schema = quelle.lookup(schema_id, False)
+        if schema is not None:
+            return Gio.Settings.new_full(schema, None, None)
+    return None
+
+
 def _hat_schluessel(settings, key):
     """True, wenn das Schema hinter 'settings' den Schlüssel 'key' kennt.
 
@@ -384,6 +409,10 @@ class AppSettings:
     # gesetztes Design wird nur angewendet, wenn diese Erweiterung eingeschaltet
     # ist (steht dann in org.gnome.shell/enabled-extensions).
     SHELL = "org.gnome.shell"
+    # Schema und UUID von Silver Dock, dem eigenen Dock. Sein Design (Silver Dock
+    # oder Haiku) gehört in einen Look, damit ein Look Symbole und Dock schaltet.
+    SILVER_DOCK = "org.gnome.shell.extensions.silver-dock"
+    SILVER_DOCK_UUID = "silver-dock@simonlinuxcraft.github.io"
     USER_THEME_UUID = "user-theme@gnome-shell-extensions.gcampax.github.com"
 
     # Sicheres Standard-GTK-Design für den Notausstieg-Knopf. Adwaita ist in GTK
@@ -420,6 +449,9 @@ class AppSettings:
         (BACKGROUND, "picture-options"),
         (WM, "button-layout"),
         (USER_THEME, "name"),
+        (SILVER_DOCK, "design"),
+        (SILVER_DOCK, "colors"),
+        (SILVER_DOCK, "color"),
     ]
 
     def __init__(self):
@@ -442,6 +474,11 @@ class AppSettings:
             self._nach_schema[self.USER_THEME] = self._user_theme
         else:
             self._user_theme = None
+
+        # Silver Dock: nur wenn die Erweiterung samt Schema da ist.
+        self._silver_dock = erweiterungs_settings(self.SILVER_DOCK_UUID, self.SILVER_DOCK)
+        if self._silver_dock is not None:
+            self._nach_schema[self.SILVER_DOCK] = self._silver_dock
 
         # Shell-Schema (für die Prüfung, ob die Erweiterung eingeschaltet ist).
         if schema_vorhanden(self.SHELL):
