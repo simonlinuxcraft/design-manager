@@ -28,6 +28,7 @@ XML = """<schemalist>
     <key name="design" type="s"><default>'silver'</default></key>
     <key name="colors" type="s"><default>'dock'</default></key>
     <key name="color" type="s"><default>'#1c1d21'</default></key>
+    <key name="scheme" type="s"><default>'design'</default></key>
   </schema>
 </schemalist>
 """ % AppSettings.SILVER_DOCK
@@ -49,18 +50,29 @@ app._nach_schema[AppSettings.SILVER_DOCK] = dock
 dock.set_string("design", "haiku")
 dock.set_string("colors", "custom")
 dock.set_string("color", "#d8d8d8")
+dock.set_string("scheme", "dark")
 look = app.export_settings()
-assert look[AppSettings.SILVER_DOCK] == {"design": "'haiku'", "colors": "'custom'", "color": "'#d8d8d8'"}, look
+assert look[AppSettings.SILVER_DOCK] == \
+    {"design": "'haiku'", "colors": "'custom'", "color": "'#d8d8d8'", "scheme": "'dark'"}, look
 
 dock.set_string("design", "silver")
 dock.set_string("colors", "dock")
+dock.set_string("scheme", "design")
 app.import_settings(look)
-assert (dock.get_string("design"), dock.get_string("colors"), dock.get_string("color")) == \
-    ("haiku", "custom", "#d8d8d8"), "Look hat das Dock nicht mitgeschaltet"
+assert (dock.get_string("design"), dock.get_string("colors"), dock.get_string("color"), dock.get_string("scheme")) == \
+    ("haiku", "custom", "#d8d8d8", "dark"), "Look hat das Dock nicht mitgeschaltet"
 
 # Ein Look ohne Dock-Teil (älter oder von einem anderen System) lässt das Dock in Ruhe.
 app.import_settings({"org.gnome.desktop.interface": {"icon-theme": "'Adwaita'"}})
 assert dock.get_string("design") == "haiku", "Look ohne Dock-Teil hat das Dock verändert"
+
+# Hell/Dunkel reist mit, sonst bleiben Browser und Electron-Apps unter einem hellen Look dunkel.
+app._interface.set_string("color-scheme", "default")
+look = app.export_settings()
+assert look["org.gnome.desktop.interface"]["color-scheme"] == "'default'", look
+app._interface.set_string("color-scheme", "prefer-dark")
+app.import_settings(look)
+assert app._interface.get_string("color-scheme") == "default", "color-scheme nicht zurückgespielt"
 
 shutil.rmtree(HOME)
 print("erweiterungs_schluessel ok")

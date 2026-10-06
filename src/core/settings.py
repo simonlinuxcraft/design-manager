@@ -439,6 +439,7 @@ class AppSettings:
         (INTERFACE, "font-antialiasing"),
         (INTERFACE, "font-hinting"),
         (INTERFACE, "accent-color"),
+        (INTERFACE, "color-scheme"),
         (INTERFACE, "enable-animations"),
         (INTERFACE, "show-battery-percentage"),
         (INTERFACE, "clock-show-seconds"),
@@ -452,6 +453,7 @@ class AppSettings:
         (SILVER_DOCK, "design"),
         (SILVER_DOCK, "colors"),
         (SILVER_DOCK, "color"),
+        (SILVER_DOCK, "scheme"),
     ]
 
     def __init__(self):
