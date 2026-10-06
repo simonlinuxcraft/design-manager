@@ -74,5 +74,15 @@ app._interface.set_string("color-scheme", "prefer-dark")
 app.import_settings(look)
 assert app._interface.get_string("color-scheme") == "default", "color-scheme nicht zurückgespielt"
 
+# Ein dunkles GTK-Design schaltet den Dunkelmodus mit, der Wechsel zurück auf hell schaltet ihn ab.
+app.set_gtk_theme("Haiku-Dark")
+assert app._interface.get_string("color-scheme") == "prefer-dark", "dunkles Design ohne Dunkelmodus"
+app.set_gtk_theme("Haiku")
+assert app._interface.get_string("color-scheme") == "default", "helles Design nach dunklem blieb dunkel"
+# Adwaita mit bewusst gewähltem Dunkelmodus bleibt dunkel, wenn kein dunkles Design vorher war.
+app._interface.set_string("color-scheme", "prefer-dark")
+app.set_gtk_theme("Adwaita")
+assert app._interface.get_string("color-scheme") == "prefer-dark", "Dunkelmodus ohne Grund abgeschaltet"
+
 shutil.rmtree(HOME)
 print("erweiterungs_schluessel ok")

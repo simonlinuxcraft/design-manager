@@ -334,6 +334,11 @@ def _entferne_libadwaita():
                 pass
 
 
+def _ist_dunkel(name):
+    """Dunkle Designs tragen das im Namen (Haiku-Dark, Yaru-blue-dark, Flat-Remix-...-Dark)."""
+    return "dark" in (name or "").lower()
+
+
 def _spiegle_libadwaita(name):
     """Spiegelt das gtk-4.0-CSS des Themes nach ~/.config/gtk-4.0/gtk.css.
 
@@ -498,8 +503,16 @@ class AppSettings:
         # (Nautilus, Einstellungen, ...) lesen den Schluessel nicht; fuer die
         # spiegeln wir zusaetzlich das gtk-4.0-CSS nach ~/.config/gtk-4.0. Die
         # zum Modus passende Variante (hell/dunkel) waehlt _spiegle_libadwaita.
+        vorher = self._interface.get_string("gtk-theme")
         self._interface.set_string("gtk-theme", name)
         _spiegle_libadwaita(name)
+        # Ein dunkles Design schaltet den Dunkelmodus mit, sonst bleiben Browser, Electron-Apps und
+        # ein Dock "wie das System" hell. Zurück nur beim Wechsel weg von einem dunklen Design, denn
+        # Adwaita mit Dunkelmodus ist ein gewollter GNOME-Zustand.
+        if _ist_dunkel(name):
+            self._interface.set_string("color-scheme", "prefer-dark")
+        elif _ist_dunkel(vorher):
+            self._interface.set_string("color-scheme", "default")
 
     def reset_gtk_theme(self):
         """Setzt das GTK-Design auf das sichere Standard-Design (Adwaita).
