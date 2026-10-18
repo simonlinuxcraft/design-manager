@@ -94,7 +94,9 @@ def main():
     assert "Inherits=Paket,hicolor\n" in index and "[32x32/apps]\n" in index, index
     assert icon_luecken.basis("Paket-filled") == "Paket"
     assert icon_luecken.basis("Paket") == "Paket"
-    assert icon_luecken.zustand("Paket") == (["E", "Foo"], ["F"], ["G"])
+    assert icon_luecken.zustand("Paket-filled") == (["E", "Foo"], ["F"], ["G"])
+    # Overlay liegt da, dconf nennt aber das Paket (Notausstieg): nichts ergänzt.
+    assert icon_luecken.zustand("Paket") == ([], ["E", "F", "Foo"], ["G"])
     assert "Paket-filled" not in themes.list_icon_themes()
     assert "Fremd-filled" in themes.list_icon_themes()  # ohne Marker kein Overlay
 
@@ -107,6 +109,15 @@ def main():
     assert icon_luecken.ergaenze("Fremd")[0] == "Fremd"
     assert not os.path.exists(os.path.join(LOKAL, "icons", "Fremd-filled", "32x32"))
     assert icon_luecken.ergaenze("GibtsNicht") == ("GibtsNicht", ([], [], []))
+
+    # Ein entferntes Paket nimmt sein Overlay mit, ein fremdes -filled bleibt.
+    from src.core import uninstaller
+    theme(os.path.join(LOKAL, "icons", "Lokal"), "", ["scalable/apps"], [])
+    assert icon_luecken.ergaenze("Lokal", "Vorher")[0] == "Lokal-filled"
+    assert uninstaller.deinstalliere("Lokal", "icon")
+    assert not os.path.lexists(os.path.join(LOKAL, "icons", "Lokal"))
+    assert not os.path.lexists(os.path.join(LOKAL, "icons", "Lokal-filled"))
+    assert os.path.isdir(os.path.join(LOKAL, "icons", "Fremd-filled"))
 
     shutil.rmtree(T)
     print("icon_luecken ok")

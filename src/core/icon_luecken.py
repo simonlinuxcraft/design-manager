@@ -204,10 +204,13 @@ def bericht(theme, vorher=None):
     return b
 
 
-def zustand(paket):
-    """(ergaenzt, fehlt, pfad) für das angewendete Paket, ohne etwas zu schreiben."""
-    overlay = paket + SUFFIX
-    b = bericht(overlay if basis(overlay) == paket else paket)
+def zustand(aktiv):
+    """(ergaenzt, fehlt, pfad) für den icon-theme-Wert aus dconf, ohne etwas zu schreiben.
+
+    aktiv ist das Paket oder sein Overlay. Ein Overlay, das nur herumliegt (etwa
+    nach dem Notausstieg auf Adwaita), zählt nicht.
+    """
+    b = bericht(aktiv)
     return b["ergaenzt"], sorted(b["neu"] + b["fehlt"], key=str.lower), b["pfad"]
 
 

@@ -15,6 +15,8 @@ per unlink (nur die Verknüpfung), der echte Ordner per rmtree.
 import os
 import shutil
 
+from src.core import icon_luecken
+
 
 # Home-Orte je Design-Art, in denen gelöscht werden darf. Bewusst ohne die
 # systemweiten /usr/share-Pfade. Symbole und Mauszeiger teilen sich dieselben
@@ -105,4 +107,8 @@ def deinstalliere(name, kategorie):
                 shutil.rmtree(pfad)
         except OSError:
             return False
+    # Unser Overlay für fehlende App-Icons gehört zum Paket und geht mit.
+    overlay = name + icon_luecken.SUFFIX
+    if kategorie == "icon" and icon_luecken.basis(overlay) == name:
+        deinstalliere(overlay, kategorie)
     return True

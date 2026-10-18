@@ -57,8 +57,9 @@ class IconsPage(compat.PageBase):
         self._hinweis.add_css_class("dim-label")
         box.append(self._hinweis)
         paket = self._settings.icon_theme()
+        aktiv = self._settings.icon_theme_dconf()
         threading.Thread(target=lambda: GLib.idle_add(
-            self._zeige_hinweis, icon_luecken.zustand(paket), paket),
+            self._zeige_hinweis, icon_luecken.zustand(aktiv), paket),
             daemon=True).start()
 
         box.append(self._feld_titel(_("Install a new icon theme")))

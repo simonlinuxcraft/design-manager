@@ -532,6 +532,10 @@ class AppSettings:
         # Das gewählte Paket, auch wenn dconf auf dessen Overlay zeigt.
         return icon_luecken.basis(self._interface.get_string("icon-theme"))
 
+    def icon_theme_dconf(self):
+        """Der Wert in dconf: das Paket oder sein Overlay <Paket>-filled."""
+        return self._interface.get_string("icon-theme")
+
     def set_icon_theme(self, name):
         """Setzt ein Symbol-Paket samt Overlay für fehlende App-Icons.
 
