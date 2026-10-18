@@ -5,10 +5,12 @@ Beispiel-Icons; unten eine Ablage zum Installieren neuer Symbol-Designs. Ein
 Klick auf eine Karte aktiviert das Design sofort.
 """
 
+import threading
+
 from gi.repository import GLib, Gtk
 
 from src import compat
-from src.core import themes, uninstaller
+from src.core import icon_luecken, themes, uninstaller
 from src.i18n import _
 from src.widgets import mehrfach_entfernen
 from src.widgets.dropzone import InstallDropzone
@@ -48,6 +50,16 @@ class IconsPage(compat.PageBase):
 
         box.append(self._feld_titel(_("Icon theme")))
         box.append(self._icon_karten())
+
+        # Welche Apps ihr Original-Icon bekommen haben und welche kein Theme
+        # erreicht. Das Auswerten liest viele Ordner, darum im Hintergrund.
+        self._hinweis = Gtk.Label(xalign=0, wrap=True, visible=False)
+        self._hinweis.add_css_class("dim-label")
+        box.append(self._hinweis)
+        paket = self._settings.icon_theme()
+        threading.Thread(target=lambda: GLib.idle_add(
+            self._zeige_hinweis, icon_luecken.zustand(paket), paket),
+            daemon=True).start()
 
         box.append(self._feld_titel(_("Install a new icon theme")))
         box.append(InstallDropzone(
@@ -104,7 +116,24 @@ class IconsPage(compat.PageBase):
         # Genau die angeklickte Karte als aktiv markieren, die anderen nicht.
         for andere in self._cards:
             andere.set_aktiv(andere is karte)
-        self._settings.set_icon_theme(karte.theme_name)
+        self._zeige_hinweis(self._settings.set_icon_theme(karte.theme_name))
+
+    def _zeige_hinweis(self, bericht, paket=None):
+        if paket is not None and paket != self._settings.icon_theme():
+            return  # inzwischen ein anderes Paket gewählt
+        ergaenzt, fehlt, pfad = bericht
+        zeilen = []
+        if ergaenzt:
+            zeilen.append(_("Added the original icon for apps this theme has "
+                            "none for: {apps}").format(apps=", ".join(ergaenzt)))
+        if pfad:
+            zeilen.append(_("Fixed icon file, no icon theme can change it: "
+                            "{apps}").format(apps=", ".join(pfad)))
+        if fehlt:
+            zeilen.append(_("No icon found for: {apps}").format(
+                apps=", ".join(fehlt)))
+        self._hinweis.set_label("\n".join(zeilen))
+        self._hinweis.set_visible(bool(zeilen))
 
     # --- Entfernen ---
 
@@ -125,7 +154,7 @@ class IconsPage(compat.PageBase):
             return
         name = karte.theme_name
         if self._settings.icon_theme() == name:
-            self._settings.set_icon_theme(STANDARD_ICON)
+            self._zeige_hinweis(self._settings.set_icon_theme(STANDARD_ICON))
             for andere in self._cards:
                 andere.set_aktiv(andere.theme_name == STANDARD_ICON)
         if uninstaller.deinstalliere(name, "icon"):

@@ -17,7 +17,7 @@ from urllib.parse import quote
 
 from gi.repository import GLib, Gio
 
-from src.core import themes, variety
+from src.core import icon_luecken, themes, variety
 
 
 def schema_vorhanden(schema_id):
@@ -529,10 +529,19 @@ class AppSettings:
     # --- Symbol-Design (Icons) ---
 
     def icon_theme(self):
-        return self._interface.get_string("icon-theme")
+        # Das gewählte Paket, auch wenn dconf auf dessen Overlay zeigt.
+        return icon_luecken.basis(self._interface.get_string("icon-theme"))
 
     def set_icon_theme(self, name):
-        self._interface.set_string("icon-theme", name)
+        """Setzt ein Symbol-Paket samt Overlay für fehlende App-Icons.
+
+        Gibt (ergaenzt, fehlt, pfad) als Listen von App-Namen zurück.
+        """
+        # Synchron, gemessen 0,1 bis 0,3 s; in einen Thread erst, wenn das stört.
+        aktiv, ergebnis = icon_luecken.ergaenze(
+            icon_luecken.basis(name), self._interface.get_string("icon-theme"))
+        self._interface.set_string("icon-theme", aktiv)
+        return ergebnis
 
     def reset_icon_theme(self):
         """Setzt das Symbol-Design auf den sicheren Standard (Adwaita)."""
@@ -751,6 +760,9 @@ class AppSettings:
             if schema_id == self.BACKGROUND and key in (
                     "picture-uri", "picture-uri-dark"):
                 wert = _stabiler_hintergrund_wert(wert)
+            # Das Paket statt seines Overlays, das gibt es nur auf diesem Rechner.
+            if schema_id == self.INTERFACE and key == "icon-theme":
+                wert = GLib.Variant("s", self.icon_theme())
             daten.setdefault(schema_id, {})[key] = wert.print_(True)
         return daten
 
@@ -776,6 +788,9 @@ class AppSettings:
                 # nicht als Ganzzahl ankommt; set_value verlangt den exakten Typ.
                 erwartet = settings.get_value(key).get_type()
                 wert = GLib.Variant.parse(erwartet, text, None, None)
+                if schema_id == self.INTERFACE and key == "icon-theme":
+                    self.set_icon_theme(wert.get_string())
+                    continue
                 settings.set_value(key, wert)
                 # Der Mauszeiger braucht zusätzlich den ~/.icons/default-Stub,
                 # damit er nach Restore/Profilwechsel überall greift (sonst zeigt

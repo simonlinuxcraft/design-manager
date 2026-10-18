@@ -8,6 +8,8 @@ GTK- und Mauszeiger-Designs kommen in einem späteren Schritt dazu.
 
 import os
 
+from src.core import icon_luecken
+
 
 # Such-Orte für Symbole und Mauszeiger. Reihenfolge: zuerst die des Nutzers,
 # dann systemweit. /usr/share/... ist schreibgeschützt (nur lesen).
@@ -91,6 +93,8 @@ def list_icon_themes():
             continue
         if _ist_reines_cursor_theme(pfad):
             continue
+        if icon_luecken.basis(name) != name:
+            continue  # unser Overlay, gewählt wird das Paket dahinter
         namen.add(name)
     return sorted(namen, key=str.lower)
 
