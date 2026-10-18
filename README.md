@@ -7,11 +7,11 @@ and login screen from one place, with live previews.
 ## Features
 
 - Overview that summarizes the current look and jumps to any section
-- Looks: curated complete looks and your own saved profiles, applied in one click
+- Looks: curated complete looks and your own saved profiles, applied in one click, including light or dark style and the Silver Dock design
 - Background: own and system wallpapers in tabs, per-monitor images, fit mode, plus the lock screen and the GDM login background
 - Drag and drop anywhere into the window to install themes, icons, cursors, fonts, wallpapers or a .dmlook
 - Install straight from a gnome-look.org link (button "From gnome-look.org…" or drag the link) and get update checks for it, also for themes installed before
-- GTK theme and icon theme, with preview cards
+- GTK theme and icon theme, with preview cards. App icons an icon theme lacks are filled in with the apps' own icons
 - Cursor packs with real pointer previews (parsed from Xcursor files)
 - Fonts: interface, document and monospace, with size and rendering options
 - Shell theme with panel and accent preview cards

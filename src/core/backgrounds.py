@@ -194,8 +194,8 @@ def apply_wallpaper(settings, pfad):
         # Banner versprochene Login-Persistenz hängt dann an Variety und greift
         # womöglich nicht. Nicht still verschlucken, damit es nachvollziehbar
         # ist (deckt den dokumentierten "Auswahl hält scheinbar nicht"-Effekt).
-        print("Design Manager: variety --set fehlgeschlagen, "
-              "Login-Persistenz des Hintergrunds nicht garantiert.",
+        print("Design Manager: variety --set failed, the wallpaper may not "
+              "survive the next login.",
               file=sys.stderr)
     uri = Gio.File.new_for_path(pfad).get_uri()
     settings.set_background_uri(uri)
@@ -369,7 +369,7 @@ def build_composite(zuordnung, monitore, zielpfad):
     try:
         return _build_composite(zuordnung, monitore, zielpfad)
     except Exception as fehler:  # bewusst breit: nichts darf nach oben crashen
-        print("Design Manager: Composite fehlgeschlagen:", fehler,
+        print("Design Manager: building the multi-monitor wallpaper failed:", fehler,
               file=sys.stderr)
         return False
 

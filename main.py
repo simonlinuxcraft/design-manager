@@ -251,7 +251,7 @@ def _waehle_renderer():
         return
     if _software_gl():
         os.environ["GSK_RENDERER"] = "cairo"
-        print("Design Manager: Software-GL erkannt, nutze GSK_RENDERER=cairo.",
+        print("Design Manager: software OpenGL detected, using GSK_RENDERER=cairo.",
               file=sys.stderr)
 
 

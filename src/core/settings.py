@@ -820,6 +820,6 @@ class AppSettings:
                 pfad = Gio.File.new_for_uri(uri).get_path()
                 if pfad and os.path.isfile(pfad):
                     if not variety.setze_wallpaper(pfad):
-                        print("Design Manager: variety --set nach Profilwechsel "
-                              "fehlgeschlagen, Hintergrund evtl. nicht "
-                              "login-fest.", file=sys.stderr)
+                        print("Design Manager: variety --set failed after applying "
+                              "a profile, the wallpaper may not survive "
+                              "the next login.", file=sys.stderr)
