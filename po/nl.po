@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Design Manager\n"
 "Report-Msgid-Bugs-To: https://github.com/simonlinuxcraft\n"
-"POT-Creation-Date: 2026-10-21 10:53+0200\n"
+"POT-Creation-Date: 2026-10-21 11:00+0200\n"
 "PO-Revision-Date: 2026-06-16 00:00+0200\n"
 "Last-Translator: simonlinuxcraft\n"
 "Language-Team: Dutch\n"
@@ -16,587 +16,240 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/monitor_arrangement.py⁩:51
-msgid "All displays"
-msgstr "Alle schermen"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/card_common.py⁩:38
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/card_common.py⁩:41
-msgid "Remove this theme"
-msgstr "Dit thema verwijderen"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/update_status.py⁩:62
-msgid "From gnome-look.org"
-msgstr "Van gnome-look.org"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/update_status.py⁩:87
-msgid "Not checked yet"
-msgstr "Nog niet gecontroleerd"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/update_status.py⁩:94
-msgid "Update…"
-msgstr "Bijwerken…"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/update_status.py⁩:94
-msgid "Check now"
-msgstr "Nu controleren"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/shell_card.py⁩:90
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/mehrfach_entfernen.py⁩:51
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/theme_card.py⁩:97
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/cursor_card.py⁩:66
-msgid "Active"
-msgstr "Actief"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/shell_card.py⁩:93
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/theme_card.py⁩:100
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/cursor_card.py⁩:69
-msgid "Installed"
-msgstr "Geïnstalleerd"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/look_card.py⁩:74
-msgid "Delete profile"
-msgstr "Profiel verwijderen"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/mehrfach_entfernen.py⁩:31
-msgid "Remove several themes…"
-msgstr "Meerdere thema's verwijderen…"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/mehrfach_entfernen.py⁩:47
-msgid "Nothing to remove: only built-in themes are installed here."
-msgstr ""
-"Niets te verwijderen: hier zijn alleen ingebouwde thema's geïnstalleerd."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/mehrfach_entfernen.py⁩:53
-msgid "Remove themes"
-msgstr "Thema's verwijderen"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/mehrfach_entfernen.py⁩:54
-msgid ""
-"Only themes in your user folder are listed. Built-in themes like Yaru and "
-"Adwaita stay."
-msgstr ""
-"Alleen thema's in je gebruikersmap worden getoond. Ingebouwde thema's zoals "
-"Yaru en Adwaita blijven."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/mehrfach_entfernen.py⁩:56
-#, python-brace-format
-msgid "Remove ({n})"
-msgstr "Verwijderen ({n})"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/mehrfach_entfernen.py⁩:56
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/mehrfach_entfernen.py⁩:68
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/icons.py⁩:149
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/shell.py⁩:170
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:544
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/cursor.py⁩:129
-msgid "Remove"
-msgstr "Verwijderen"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/mehrfach_entfernen.py⁩:64
-#, python-brace-format
-msgid "Remove {n} theme permanently?"
-msgid_plural "Remove {n} themes permanently?"
-msgstr[0] "{n} thema permanent verwijderen?"
-msgstr[1] "{n} thema's permanent verwijderen?"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/mehrfach_entfernen.py⁩:66
-msgid "They are deleted from your user folder. This cannot be undone."
-msgstr ""
-"Ze worden uit je gebruikersmap verwijderd. Dit kan niet ongedaan worden "
-"gemaakt."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/mehrfach_entfernen.py⁩:67
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/paket_auswahl.py⁩:72
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/icons.py⁩:148
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/gtk_theme.py⁩:124
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py⁩:106
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/shell.py⁩:151
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/shell.py⁩:169
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py⁩:107
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py⁩:148
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py⁩:183
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/cursor.py⁩:128
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:414
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:598
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:665
-msgid "Cancel"
-msgstr "Annuleren"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/mehrfach_entfernen.py⁩:79
-msgid "before removing themes"
-msgstr "voor het verwijderen van thema's"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/mehrfach_entfernen.py⁩:102
-#, python-brace-format
-msgid "Removed {n} theme."
-msgid_plural "Removed {n} themes."
-msgstr[0] "{n} thema verwijderd."
-msgstr[1] "{n} thema's verwijderd."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/mehrfach_entfernen.py⁩:105
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/icons.py⁩:167
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/shell.py⁩:196
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/cursor.py⁩:149
-#, python-brace-format
-msgid "Could not be removed: {name}"
-msgstr "Kon niet worden verwijderd: {name}"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/wallpaper_card.py⁩:64
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/wallpaper_card.py⁩:66
-msgid "Remove from the app (file is kept)"
-msgstr "Uit de app verwijderen (bestand blijft bewaard)"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/wallpaper_card.py⁩:89
-msgid "Or drag images into the window"
-msgstr "Of sleep afbeeldingen naar het venster"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/wallpaper_card.py⁩:100
-msgid "Add image"
-msgstr "Afbeelding toevoegen"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/welcome.py⁩:22
-msgid "Customize the GNOME desktop appearance in one place."
-msgstr "Pas de uitstraling van het GNOME-bureaublad op een plek aan."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/welcome.py⁩:23
-msgid "Everything in one place"
-msgstr "Alles op een plek"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/welcome.py⁩:24
-msgid ""
-"Background, GTK theme, icons, cursor, fonts and the shell theme. Every "
-"change takes effect immediately."
-msgstr ""
-"Achtergrond, GTK-thema, pictogrammen, cursor, lettertypen en het Shell-"
-"thema. Elke wijziging wordt direct toegepast."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/welcome.py⁩:26
-msgid "Save looks"
-msgstr "Looks opslaan"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/welcome.py⁩:27
-msgid ""
-"Create profiles, for example day and night, and switch with one click. Or "
-"back up everything to a file."
-msgstr ""
-"Maak profielen aan, bijvoorbeeld dag en nacht, en wissel met een klik. Of "
-"sla alles op in een back-upbestand."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/welcome.py⁩:29
-msgid "Ready"
-msgstr "Klaar"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/welcome.py⁩:30
-msgid ""
-"Tip: some shell themes need the User Themes extension. Have fun customizing."
-msgstr ""
-"Tip: sommige Shell-themas hebben de User Themes-extensie nodig. Veel plezier "
-"met aanpassen."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/welcome.py⁩:40
-msgid "Welcome"
-msgstr "Welkom"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/welcome.py⁩:53
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/welcome.py⁩:119
-msgid "Next"
-msgstr "Volgende"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/welcome.py⁩:119
-msgid "Get started"
-msgstr "Aan de slag"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/paket_auswahl.py⁩:36
-msgid "Filter, e.g. Blue or Dark"
-msgstr "Filteren, bijv. Blue of Dark"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/paket_auswahl.py⁩:69
-msgid "Select all shown"
-msgstr "Alle getoonde selecteren"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/dropzone.py⁩:22
-msgid "Drag an archive, a folder or a font here"
-msgstr "Sleep een archief, map of lettertype hierheen"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/dropzone.py⁩:38
-msgid "Choose file…"
-msgstr "Bestand kiezen…"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/dropzone.py⁩:40
-msgid "From gnome-look.org…"
-msgstr "Van gnome-look.org…"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/dropzone.py⁩:41
-msgid "Install from a link. The app then keeps the theme up to date."
-msgstr "Installeren via een link. De app houdt het thema daarna up-to-date."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/dropzone.py⁩:52
-msgid "Themes, fonts, images and look packages"
-msgstr "Thema's, lettertypen, afbeeldingen en look-pakketten"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/widgets/dropzone.py⁩:57
-msgid "Choose theme or font"
-msgstr "Thema of lettertype kiezen"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/healthcheck.py⁩:119
-msgid "GTK theme"
-msgstr "GTK-thema"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/healthcheck.py⁩:121
-msgid "icon theme"
-msgstr "pictogramthema"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/healthcheck.py⁩:123
-msgid "cursor"
-msgstr "cursor"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/healthcheck.py⁩:126
-msgid "shell theme"
-msgstr "Shell-thema"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/looksbundle.py⁩:229
-msgid "before importing a look package"
-msgstr "voor import van een look-pakket"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/theme_check.py⁩:73
-msgid "The theme folder was not found."
-msgstr "De themamap is niet gevonden."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/theme_check.py⁩:78
-#, python-brace-format
-msgid "The file {sub}/gtk.css is not readable."
-msgstr "Het bestand {sub}/gtk.css is niet leesbaar."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/theme_check.py⁩:82
-#, python-brace-format
-msgid ""
-"The theme uses CSS that GTK does not understand ({props}). This can slow "
-"down or freeze the whole session."
-msgstr ""
-"Het thema gebruikt CSS die GTK niet begrijpt ({props}). Dit kan de hele "
-"sessie vertragen of laten vastlopen."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/theme_check.py⁩:87
-msgid "The theme is missing gtk-4.0/gtk.css. GNOME would fall back to Adwaita."
-msgstr "Het thema mist gtk-4.0/gtk.css. GNOME valt terug op Adwaita."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/theme_check.py⁩:97
-msgid "The theme is missing gnome-shell/gnome-shell.css."
-msgstr "Het thema mist gnome-shell/gnome-shell.css."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/theme_check.py⁩:99
-msgid "The file gnome-shell.css is not readable."
-msgstr "Het bestand gnome-shell.css is niet leesbaar."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:82
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:114
-msgid "This gnome-look entry was not found."
-msgstr "Dit gnome-look-item is niet gevonden."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:84
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:87
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:682
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:728
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:804
-msgid "gnome-look.org could not be reached."
-msgstr "gnome-look.org is niet bereikbaar."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:117
-msgid "This gnome-look entry has no file the app can install."
-msgstr "Dit gnome-look-item heeft geen bestand dat de app kan installeren."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:130
-msgid "Updating…"
-msgstr "Bezig met bijwerken…"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:141
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:299
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:378
-msgid "Installation failed unexpectedly."
-msgstr "Installatie onverwacht mislukt."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:162
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:171
-msgid "The download from gnome-look.org failed."
-msgstr "Het downloaden van gnome-look.org is mislukt."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:167
-msgid "The download is too large."
-msgstr "De download is te groot."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:174
-msgid "The download is damaged. Try again later."
-msgstr "De download is beschadigd. Probeer het later opnieuw."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:214
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:357
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:515
-msgid "Up to date with gnome-look.org"
-msgstr "Up-to-date volgens gnome-look.org"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:215
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:354
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:513
-msgid "Update available on gnome-look.org"
-msgstr "Update beschikbaar op gnome-look.org"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/gnomelook.py⁩:351
-msgid "The file is no longer offered on gnome-look.org."
-msgstr "Het bestand wordt niet meer aangeboden op gnome-look.org."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py⁩:47
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py⁩:288
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/system.py⁩:173
+#: src/core/dock.py:47 src/core/dock.py:288 src/pages/system.py:173
 msgid "Left"
 msgstr "Links"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py⁩:47
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py⁩:288
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/system.py⁩:173
+#: src/core/dock.py:47 src/core/dock.py:288 src/pages/system.py:173
 msgid "Right"
 msgstr "Rechts"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py⁩:48
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py⁩:287
+#: src/core/dock.py:48 src/core/dock.py:287
 msgid "Top"
 msgstr "Boven"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py⁩:48
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py⁩:287
+#: src/core/dock.py:48 src/core/dock.py:287
 msgid "Bottom"
 msgstr "Onder"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py⁩:194
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py⁩:265
+#: src/core/dock.py:194 src/core/dock.py:265
 msgid "Position"
 msgstr "Positie"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py⁩:195
+#: src/core/dock.py:195
 msgid "Screen edge the dock sits on"
 msgstr "Schermrand waarop de Dock staat"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py⁩:196
+#: src/core/dock.py:196
 msgid "Always visible"
 msgstr "Altijd zichtbaar"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py⁩:197
+#: src/core/dock.py:197
 msgid "Pin the dock to the edge instead of hiding it"
 msgstr "Dock vastzetten aan de rand in plaats van verbergen"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py⁩:198
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py⁩:295
+#: src/core/dock.py:198 src/core/dock.py:295
 msgid "Auto-hide"
 msgstr "Automatisch verbergen"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py⁩:199
+#: src/core/dock.py:199
 msgid "Hide the dock until the pointer touches the edge"
 msgstr "Dock verbergen totdat de muisaanwijzer de rand raakt"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py⁩:200
+#: src/core/dock.py:200
 msgid "Smart hide"
 msgstr "Slim verbergen"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py⁩:201
+#: src/core/dock.py:201
 msgid "Only hide when a window covers the dock"
 msgstr "Alleen verbergen als een venster de Dock bedekt"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py⁩:202
+#: src/core/dock.py:202
 msgid "Icon size"
 msgstr "Pictogramgrootte"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py⁩:203
+#: src/core/dock.py:203
 msgid "Maximum size of the app icons in pixels"
 msgstr "Maximale grootte van de apppictogrammen in pixels"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py⁩:204
+#: src/core/dock.py:204
 msgid "Full height"
 msgstr "Volledige hoogte"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py⁩:205
+#: src/core/dock.py:205
 msgid "Stretch the dock along the whole screen edge (panel style)"
 msgstr "Dock over de hele schermrand uitrekken (paneelstijl)"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py⁩:207
+#: src/core/dock.py:207
 msgid "Apps button on top"
 msgstr "Appsknop bovenaan"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py⁩:208
+#: src/core/dock.py:208
 msgid "Put the applications button at the start"
 msgstr "De appsknop aan het begin plaatsen"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py⁩:209
+#: src/core/dock.py:209
 msgid "Show drives"
 msgstr "Schijven tonen"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py⁩:210
+#: src/core/dock.py:210
 msgid "Show mounted volumes in the dock"
 msgstr "Gekoppelde volumes in de Dock tonen"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py⁩:211
+#: src/core/dock.py:211
 msgid "Show trash"
 msgstr "Prullenbak tonen"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py⁩:212
+#: src/core/dock.py:212
 msgid "Show the trash in the dock"
 msgstr "De prullenbak in de Dock tonen"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py⁩:213
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py⁩:297
+#: src/core/dock.py:213 src/core/dock.py:297
 msgid "On all monitors"
 msgstr "Op alle monitoren"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py⁩:214
+#: src/core/dock.py:214
 msgid "Show the dock on every screen"
 msgstr "De Dock op elk scherm tonen"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py⁩:265
+#: src/core/dock.py:265
 msgid "Screen edge the panel sits on"
 msgstr "Schermrand waarop het paneel staat"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py⁩:275
+#: src/core/dock.py:275
 msgid "Panel height"
 msgstr "Paneelhoogte"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py⁩:275
+#: src/core/dock.py:275
 msgid "Thickness of the bar in pixels"
 msgstr "Dikte van de balk in pixels"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py⁩:285
+#: src/core/dock.py:285
 msgid "Indicator position"
 msgstr "Indicatorpositie"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py⁩:286
+#: src/core/dock.py:286
 msgid "Where the dot for open apps sits"
 msgstr "Waar het puntje voor geopende apps staat"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py⁩:289
+#: src/core/dock.py:289
 msgid "Group windows"
 msgstr "Vensters groeperen"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py⁩:290
+#: src/core/dock.py:290
 msgid "Bundle multiple windows of an app into one icon"
 msgstr "Meerdere vensters van een app samenvoegen tot een pictogram"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py⁩:291
+#: src/core/dock.py:291
 msgid "Show favorites"
 msgstr "Favorieten tonen"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py⁩:292
+#: src/core/dock.py:292
 msgid "Show pinned apps in the bar"
 msgstr "Vastgezette apps in de balk tonen"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py⁩:293
+#: src/core/dock.py:293
 msgid "Separate workspaces"
 msgstr "Werkbladen scheiden"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py⁩:294
+#: src/core/dock.py:294
 msgid "Only show windows of the current workspace"
 msgstr "Alleen vensters van het huidige werkblad tonen"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py⁩:296
+#: src/core/dock.py:296
 msgid "Hide the panel until it is needed"
 msgstr "Paneel verbergen totdat het nodig is"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/dock.py⁩:298
+#: src/core/dock.py:298
 msgid "Show the panel on every screen"
 msgstr "Het paneel op elk scherm tonen"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/restorepoint.py⁩:107
-msgid "Restore point"
-msgstr "Herstelpunt"
+#: src/core/gnomelook.py:82 src/core/gnomelook.py:114
+msgid "This gnome-look entry was not found."
+msgstr "Dit gnome-look-item is niet gevonden."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/looks.py⁩:31
-msgid "Midnight Blue"
-msgstr "Middernachtblauw"
+#: src/core/gnomelook.py:84 src/core/gnomelook.py:87 src/window.py:682
+#: src/window.py:728 src/window.py:804
+msgid "gnome-look.org could not be reached."
+msgstr "gnome-look.org is niet bereikbaar."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/looks.py⁩:31
-msgid "Dark with a blue accent."
-msgstr "Donker met een blauwe accentkleur."
+#: src/core/gnomelook.py:117
+msgid "This gnome-look entry has no file the app can install."
+msgstr "Dit gnome-look-item heeft geen bestand dat de app kan installeren."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/looks.py⁩:32
-msgid "Sunrise"
-msgstr "Zonsopgang"
+#: src/core/gnomelook.py:130
+msgid "Updating…"
+msgstr "Bezig met bijwerken…"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/looks.py⁩:32
-msgid "Light with warm orange."
-msgstr "Licht met warm oranje."
+#: src/core/gnomelook.py:141 src/window.py:299 src/window.py:378
+msgid "Installation failed unexpectedly."
+msgstr "Installatie onverwacht mislukt."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/looks.py⁩:33
-msgid "Forest Clearing"
-msgstr "Bosopen plek"
+#: src/core/gnomelook.py:162 src/core/gnomelook.py:171
+msgid "The download from gnome-look.org failed."
+msgstr "Het downloaden van gnome-look.org is mislukt."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/looks.py⁩:33
-msgid "Dark green and calm."
-msgstr "Donkergroen en rustig."
+#: src/core/gnomelook.py:167
+msgid "The download is too large."
+msgstr "De download is te groot."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/looks.py⁩:89
-msgid "Your profile"
-msgstr "Jouw profiel"
+#: src/core/gnomelook.py:174
+msgid "The download is damaged. Try again later."
+msgstr "De download is beschadigd. Probeer het later opnieuw."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/looks.py⁩:119
-#, python-brace-format
-msgid "before look \"{name}\""
-msgstr "voor look \"{name}\""
+#: src/core/gnomelook.py:214 src/core/gnomelook.py:357
+#: src/core/gnomelook.py:515
+msgid "Up to date with gnome-look.org"
+msgstr "Up-to-date volgens gnome-look.org"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/looks.py⁩:128
-#, python-brace-format
-msgid "GTK theme \"{name}\""
-msgstr "GTK-thema \"{name}\""
+#: src/core/gnomelook.py:215 src/core/gnomelook.py:354
+#: src/core/gnomelook.py:513
+msgid "Update available on gnome-look.org"
+msgstr "Update beschikbaar op gnome-look.org"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/looks.py⁩:135
-#, python-brace-format
-msgid "Icons \"{name}\""
-msgstr "Pictogrammen \"{name}\""
+#: src/core/gnomelook.py:351
+msgid "The file is no longer offered on gnome-look.org."
+msgstr "Het bestand wordt niet meer aangeboden op gnome-look.org."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/looks.py⁩:142
-#, python-brace-format
-msgid "Cursor \"{name}\""
-msgstr "Cursor \"{name}\""
+#: src/core/healthcheck.py:119
+msgid "GTK theme"
+msgstr "GTK-thema"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/looks.py⁩:149
-#, python-brace-format
-msgid "Shell theme \"{name}\""
-msgstr "Shell-thema \"{name}\""
+#: src/core/healthcheck.py:121
+msgid "icon theme"
+msgstr "pictogramthema"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/looks.py⁩:156
-msgid "Accent color (only from GNOME 47)"
-msgstr "Accentkleur (alleen vanaf GNOME 47)"
+#: src/core/healthcheck.py:123
+msgid "cursor"
+msgstr "cursor"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/looks.py⁩:168
-msgid "Wallpaper"
-msgstr "Achtergrond"
+#: src/core/healthcheck.py:126
+msgid "shell theme"
+msgstr "Shell-thema"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:94
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:133
+#: src/core/installer.py:94 src/core/installer.py:133
 msgid "Theme"
 msgstr "Thema"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:95
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:132
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/overview.py⁩:88
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/cursor.py⁩:29
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:73
+#: src/core/installer.py:95 src/core/installer.py:132 src/pages/cursor.py:29
+#: src/pages/overview.py:88 src/window.py:73
 msgid "Cursor"
 msgstr "Cursor"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:96
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:130
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/icons.py⁩:29
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/overview.py⁩:86
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:71
+#: src/core/installer.py:96 src/core/installer.py:130 src/pages/icons.py:29
+#: src/pages/overview.py:86 src/window.py:71
 msgid "Icons"
 msgstr "Pictogrammen"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:122
+#: src/core/installer.py:122
 msgid "Extension"
 msgstr "Extensie"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:213
+#: src/core/installer.py:213
 msgid "The file was not found."
 msgstr "Het bestand is niet gevonden."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:221
+#: src/core/installer.py:221
 msgid ""
 "7z and rar archives are not supported. Extract it first and drop the folder "
 "instead."
@@ -604,17 +257,16 @@ msgstr ""
 "7z- en rar-archieven worden niet ondersteund. Pak het eerst uit en sleep dan "
 "de map."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:252
+#: src/core/installer.py:252
 msgid ""
 "This folder contains too many themes. Drop the folder of the theme itself."
 msgstr "Deze map bevat te veel thema's. Sleep de map van het thema zelf."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:271
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:455
+#: src/core/installer.py:271 src/core/installer.py:455
 msgid "The archive is too large to unpack safely."
 msgstr "Het archief is te groot om veilig uit te pakken."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:290
+#: src/core/installer.py:290
 msgid ""
 "This is a Windows cursor (.cur/.ani). GNOME cannot use it directly. Download "
 "the Linux variant of the theme (a folder with a \"cursors\" subfolder)."
@@ -622,7 +274,7 @@ msgstr ""
 "Dit is een Windows-cursor (.cur/.ani). GNOME kan deze niet direct gebruiken. "
 "Download de Linux-variant van het thema (een map met een submap \"cursors\")."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:294
+#: src/core/installer.py:294
 msgid ""
 "This is a login screen (GDM) theme. It replaces system files and can lock "
 "you out, so it is not installed. For a custom login background use "
@@ -632,7 +284,7 @@ msgstr ""
 "en kan je buitensluiten, daarom wordt het niet geïnstalleerd. Gebruik voor "
 "een eigen inlogachtergrond Achtergrond > Inlogscherm."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:298
+#: src/core/installer.py:298
 msgid ""
 "This is a boot splash (Plymouth) theme. Installing it rebuilds the boot "
 "image as root, so it is not supported."
@@ -640,7 +292,7 @@ msgstr ""
 "Dit is een opstartschermthema (Plymouth). Installeren bouwt het opstartimage "
 "als root opnieuw op, daarom wordt het niet ondersteund."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:301
+#: src/core/installer.py:301
 msgid ""
 "This is a boot menu (GRUB) theme. It changes the boot loader as root, so it "
 "is not supported."
@@ -648,7 +300,7 @@ msgstr ""
 "Dit is een thema voor het opstartmenu (GRUB). Het wijzigt de bootloader als "
 "root, daarom wordt het niet ondersteund."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:304
+#: src/core/installer.py:304
 msgid ""
 "This is a theme for the Plank or Latte dock. Ubuntu Dock and Dash to Panel "
 "cannot use it."
@@ -656,7 +308,7 @@ msgstr ""
 "Dit is een thema voor het Plank- of Latte-dock. Ubuntu Dock en Dash to Panel "
 "kunnen het niet gebruiken."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:308
+#: src/core/installer.py:308
 msgid ""
 "Nothing installable found (no theme, icons, cursor, font, extension or "
 "wallpaper)."
@@ -664,7 +316,7 @@ msgstr ""
 "Niets installeerbaars gevonden (geen thema, pictogrammen, cursor, "
 "lettertype, extensie of achtergrond)."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:378
+#: src/core/installer.py:378
 msgid ""
 "Format not supported. Use a .zip or .tar archive, a font, an image or an "
 "extracted theme folder."
@@ -672,20 +324,19 @@ msgstr ""
 "Formaat niet ondersteund. Gebruik een .zip- of .tar-archief, een lettertype, "
 "een afbeelding of een uitgepakte themamap."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:383
+#: src/core/installer.py:383
 msgid "The archive could not be extracted."
 msgstr "Het archief kon niet worden uitgepakt."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:457
+#: src/core/installer.py:457
 msgid "Not enough free disk space to unpack the archive."
 msgstr "Niet genoeg vrije schijfruimte om het archief uit te pakken."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:470
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:485
+#: src/core/installer.py:470 src/core/installer.py:485
 msgid "The archive contains unsafe paths."
 msgstr "Het archief bevat onveilige paden."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:660
+#: src/core/installer.py:660
 msgid ""
 "This is the source code of a theme and has to be built first. Download a "
 "ready-made release package instead."
@@ -693,7 +344,7 @@ msgstr ""
 "Dit is de broncode van een thema en moet eerst worden gebouwd. Download in "
 "plaats daarvan een kant-en-klaar releasepakket."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:664
+#: src/core/installer.py:664
 #, python-brace-format
 msgid ""
 "\"{name}\" would replace a built-in system theme and was skipped for safety."
@@ -701,772 +352,180 @@ msgstr ""
 "\"{name}\" zou een ingebouwd systeemthema vervangen en is voor de veiligheid "
 "overgeslagen."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:700
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:705
+#: src/core/installer.py:700 src/core/installer.py:705
 msgid "The extension has no valid metadata.json."
 msgstr "De extensie heeft geen geldige metadata.json."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:708
+#: src/core/installer.py:708
 #, python-brace-format
 msgid "\"{name}\" is a system extension and was skipped."
 msgstr "\"{name}\" is een systeemextensie en is overgeslagen."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:731
+#: src/core/installer.py:731
 #, python-brace-format
 msgid "Extension: {name} (made for GNOME {versions}, may not load)"
 msgstr "Extensie: {name} (gemaakt voor GNOME {versions}, laadt mogelijk niet)"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:733
+#: src/core/installer.py:733
 #, python-brace-format
 msgid "Extension: {name} (enable it after the next login)"
 msgstr "Extensie: {name} (inschakelen na de volgende keer aanmelden)"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:784
+#: src/core/installer.py:784
 #, python-brace-format
 msgid "Font: {n} file"
 msgid_plural "Font: {n} files"
 msgstr[0] "Lettertype: {n} bestand"
 msgstr[1] "Lettertypen: {n} bestanden"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:792
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:390
+#: src/core/installer.py:792 src/pages/background.py:390
 msgid "The image could not be read."
 msgstr "De afbeelding kon niet worden gelezen."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:793
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/overview.py⁩:192
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:51
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:67
+#: src/core/installer.py:793 src/pages/background.py:51
+#: src/pages/overview.py:192 src/window.py:67
 msgid "Background"
 msgstr "Achtergrond"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/core/installer.py⁩:817
+#: src/core/installer.py:817
 #, python-brace-format
 msgid "Backgrounds: {n} image"
 msgid_plural "Backgrounds: {n} images"
 msgstr[0] "Achtergronden: {n} afbeelding"
 msgstr[1] "Achtergronden: {n} afbeeldingen"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/icons.py⁩:46
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/dock.py⁩:43
-msgid "Changes take effect immediately."
-msgstr "Wijzigingen worden direct toegepast."
+#: src/core/looks.py:31
+msgid "Midnight Blue"
+msgstr "Middernachtblauw"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/icons.py⁩:51
-msgid "Icon theme"
-msgstr "Pictogramthema"
+#: src/core/looks.py:31
+msgid "Dark with a blue accent."
+msgstr "Donker met een blauwe accentkleur."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/icons.py⁩:65
-msgid "Install a new icon theme"
-msgstr "Nieuw pictogramthema installeren"
+#: src/core/looks.py:32
+msgid "Sunrise"
+msgstr "Zonsopgang"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/icons.py⁩:67
-msgid "Drag an icon theme (archive or folder) here"
-msgstr "Sleep een pictogramthema (archief of map) hierheen"
+#: src/core/looks.py:32
+msgid "Light with warm orange."
+msgstr "Licht met warm oranje."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/icons.py⁩:128
+#: src/core/looks.py:33
+msgid "Forest Clearing"
+msgstr "Bosopen plek"
+
+#: src/core/looks.py:33
+msgid "Dark green and calm."
+msgstr "Donkergroen en rustig."
+
+#: src/core/looks.py:89
+msgid "Your profile"
+msgstr "Jouw profiel"
+
+#: src/core/looks.py:119
 #, python-brace-format
-msgid "Added the original icon for apps this theme has none for: {apps}"
-msgstr "Origineel pictogram toegevoegd voor apps die dit thema mist: {apps}"
+msgid "before look \"{name}\""
+msgstr "voor look \"{name}\""
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/icons.py⁩:131
+#: src/core/looks.py:128
 #, python-brace-format
-msgid "Fixed icon file, no icon theme can change it: {apps}"
-msgstr "Vast pictogrambestand, geen pictogramthema kan het wijzigen: {apps}"
+msgid "GTK theme \"{name}\""
+msgstr "GTK-thema \"{name}\""
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/icons.py⁩:134
+#: src/core/looks.py:135
 #, python-brace-format
-msgid "No icon found for: {apps}"
-msgstr "Geen pictogram gevonden voor: {apps}"
+msgid "Icons \"{name}\""
+msgstr "Pictogrammen \"{name}\""
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/icons.py⁩:145
-msgid "Remove icon theme?"
-msgstr "Pictogramthema verwijderen?"
+#: src/core/looks.py:142
+#, python-brace-format
+msgid "Cursor \"{name}\""
+msgstr "Cursor \"{name}\""
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/icons.py⁩:146
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/shell.py⁩:167
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/cursor.py⁩:126
+#: src/core/looks.py:149
+#, python-brace-format
+msgid "Shell theme \"{name}\""
+msgstr "Shell-thema \"{name}\""
+
+#: src/core/looks.py:156
+msgid "Accent color (only from GNOME 47)"
+msgstr "Accentkleur (alleen vanaf GNOME 47)"
+
+#: src/core/looks.py:168
+msgid "Wallpaper"
+msgstr "Achtergrond"
+
+#: src/core/looksbundle.py:229
+msgid "before importing a look package"
+msgstr "voor import van een look-pakket"
+
+#: src/core/restorepoint.py:107
+msgid "Restore point"
+msgstr "Herstelpunt"
+
+#: src/core/theme_check.py:73
+msgid "The theme folder was not found."
+msgstr "De themamap is niet gevonden."
+
+#: src/core/theme_check.py:78
+#, python-brace-format
+msgid "The file {sub}/gtk.css is not readable."
+msgstr "Het bestand {sub}/gtk.css is niet leesbaar."
+
+#: src/core/theme_check.py:82
 #, python-brace-format
 msgid ""
-"\"{name}\" will be permanently deleted from your user folder. This cannot be "
-"undone."
+"The theme uses CSS that GTK does not understand ({props}). This can slow "
+"down or freeze the whole session."
 msgstr ""
-"\"{name}\" wordt permanent verwijderd uit je gebruikersmap. Dit kan niet "
-"ongedaan worden gemaakt."
+"Het thema gebruikt CSS die GTK niet begrijpt ({props}). Dit kan de hele "
+"sessie vertragen of laten vastlopen."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/icons.py⁩:165
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/shell.py⁩:194
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/cursor.py⁩:147
-#, python-brace-format
-msgid "Removed: {name}"
-msgstr "Verwijderd: {name}"
+#: src/core/theme_check.py:87
+msgid "The theme is missing gtk-4.0/gtk.css. GNOME would fall back to Adwaita."
+msgstr "Het thema mist gtk-4.0/gtk.css. GNOME valt terug op Adwaita."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/extensions.py⁩:34
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:81
-msgid "Extensions"
-msgstr "Extensies"
+#: src/core/theme_check.py:97
+msgid "The theme is missing gnome-shell/gnome-shell.css."
+msgstr "Het thema mist gnome-shell/gnome-shell.css."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/extensions.py⁩:49
-msgid "Not available here"
-msgstr "Hier niet beschikbaar"
+#: src/core/theme_check.py:99
+msgid "The file gnome-shell.css is not readable."
+msgstr "Het bestand gnome-shell.css is niet leesbaar."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/extensions.py⁩:50
-msgid ""
-"Managing extensions needs access to the GNOME Shell service, which is not "
-"reachable here (e.g. in a sandbox)."
-msgstr ""
-"Het beheren van extensies vereist toegang tot de GNOME Shell-service, die "
-"hier niet bereikbaar is (bijv. in een sandbox)."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/extensions.py⁩:63
-msgid "User extensions"
-msgstr "Gebruikersextensies"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/extensions.py⁩:65
-msgid "System extensions"
-msgstr "Systeemextensies"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/extensions.py⁩:68
-msgid "Install an extension"
-msgstr "Extensie installeren"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/extensions.py⁩:69
-msgid ""
-"Drag the .zip from extensions.gnome.org here. It is only installed, not "
-"enabled. Log out and back in, then switch it on above. Extensions run with "
-"full access to your session, so only use trusted ones."
-msgstr ""
-"Sleep de .zip van extensions.gnome.org hierheen. Hij wordt alleen "
-"geïnstalleerd, niet ingeschakeld. Meld je af en weer aan en schakel hem dan "
-"hierboven in. Extensies hebben volledige toegang tot je sessie, gebruik dus "
-"alleen betrouwbare."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/extensions.py⁩:74
-msgid "Drag an extension (.zip) here"
-msgstr "Sleep een extensie (.zip) hierheen"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/extensions.py⁩:88
-msgid "Extensions enabled"
-msgstr "Extensies ingeschakeld"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/extensions.py⁩:89
-msgid "Toggles all user extensions together."
-msgstr "Schakelt alle gebruikersextensies tegelijk in of uit."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/extensions.py⁩:143
-msgid "Extension settings"
-msgstr "Extensie-instellingen"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/gtk_theme.py⁩:27
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/overview.py⁩:83
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:69
-msgid "GTK Theme"
-msgstr "GTK-thema"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/gtk_theme.py⁩:44
-msgid ""
-"Determines how application windows look. Applied immediately, also to modern "
-"apps like Files."
-msgstr ""
-"Bepaalt hoe toepassingsvensters eruitzien. Wordt direct toegepast, ook op "
-"moderne apps zoals Bestanden."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/gtk_theme.py⁩:50
-msgid "GTK theme (windows & apps)"
-msgstr "GTK-thema (vensters en apps)"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/gtk_theme.py⁩:53
-msgid "Install a new GTK theme"
-msgstr "Nieuw GTK-thema installeren"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/gtk_theme.py⁩:55
-msgid "Drag a GTK theme (archive or folder) here"
-msgstr "Sleep een GTK-thema (archief of map) hierheen"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/gtk_theme.py⁩:93
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/overview.py⁩:207
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/shell.py⁩:104
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/shell.py⁩:140
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/shell.py⁩:150
-msgid "Default"
-msgstr "Standaard"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/gtk_theme.py⁩:96
-msgid "Reset the GTK theme to the safe default theme (Adwaita)"
-msgstr "GTK-thema terugzetten naar het veilige standaardthema (Adwaita)"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/gtk_theme.py⁩:116
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/gtk_theme.py⁩:133
-#, python-brace-format
-msgid "before GTK theme {name}"
-msgstr "voor GTK-thema {name}"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/gtk_theme.py⁩:122
-msgid "Activate theme anyway?"
-msgstr "Thema toch activeren?"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/gtk_theme.py⁩:125
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/shell.py⁩:152
-msgid "Activate anyway"
-msgstr "Toch activeren"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/overview.py⁩:36
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:63
-msgid "Overview"
-msgstr "Overzicht"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/overview.py⁩:67
-msgid "Your look at a glance"
-msgstr "Je look in één oogopslag"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/overview.py⁩:70
-msgid ""
-"Everything your desktop is made of. Click a card to jump in and change it."
-msgstr ""
-"Alles waaruit je bureaublad bestaat. Klik op een kaart om het aan te passen."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/overview.py⁩:90
-msgid "Font"
-msgstr "Lettertype"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/overview.py⁩:91
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/shell.py⁩:29
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/shell.py⁩:74
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:77
-msgid "Shell Theme"
-msgstr "Shell-thema"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/overview.py⁩:95
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/system.py⁩:50
-msgid "Accent color"
-msgstr "Accentkleur"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/overview.py⁩:200
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/overview.py⁩:202
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/overview.py⁩:204
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/overview.py⁩:206
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/overview.py⁩:213
-msgid "not set"
-msgstr "niet ingesteld"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/overview.py⁩:209
-msgid "not available (User Themes missing)"
-msgstr "niet beschikbaar (User Themes ontbreekt)"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py⁩:27
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:85
-msgid "Backup"
-msgstr "Back-up"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py⁩:52
-msgid "Restore points"
-msgstr "Herstelpunten"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py⁩:53
-msgid ""
-"Created automatically before every theme, cursor or shell change, and before "
-"applying a look. Restores the state from before."
-msgstr ""
-"Wordt automatisch aangemaakt voor elke thema-, cursor- of Shell-wijziging en "
-"voor het toepassen van een look. Herstelt de staat van daarvoor."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py⁩:67
-msgid "No restore points yet"
-msgstr "Nog geen herstelpunten"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py⁩:68
-msgid "One is created as soon as you change a theme."
-msgstr "Er wordt een aangemaakt zodra je een thema wijzigt."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py⁩:80
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py⁩:107
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py⁩:136
-msgid "Restore"
-msgstr "Herstellen"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py⁩:88
-msgid "Delete restore point"
-msgstr "Herstelpunt verwijderen"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py⁩:104
-msgid "Restore this point?"
-msgstr "Dit punt herstellen?"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py⁩:105
-msgid "The current state is saved as a new restore point first."
-msgstr "De huidige toestand wordt eerst als nieuw herstelpunt opgeslagen."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py⁩:114
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py⁩:183
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py⁩:156
-msgid "before restoring"
-msgstr "voor het herstellen"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py⁩:116
-msgid "Restore point applied."
-msgstr "Herstelpunt toegepast."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py⁩:118
-msgid "The restore point could not be read."
-msgstr "Het herstelpunt kon niet worden gelezen."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py⁩:123
-msgid "Restore point deleted."
-msgstr "Herstelpunt verwijderd."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py⁩:129
-msgid "Backup file"
-msgstr "Back-upbestand"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py⁩:130
-msgid "Export the current state to a file or restore from an earlier backup."
-msgstr ""
-"Exporteer de huidige staat naar een bestand of herstel vanuit een eerdere "
-"back-up."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py⁩:133
-msgid "Back up"
-msgstr "Back-up maken"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py⁩:133
-msgid "Export to a file"
-msgstr "Naar een bestand exporteren"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py⁩:136
-msgid "Import from a file"
-msgstr "Vanuit een bestand importeren"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py⁩:156
-msgid "Back up settings"
-msgstr "Instellingen back-uppen"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py⁩:165
-#, python-brace-format
-msgid "Backup failed: {error}"
-msgstr "Back-up mislukt: {error}"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py⁩:166
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py⁩:222
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py⁩:135
-msgid "Error"
-msgstr "Fout"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py⁩:168
-#, python-brace-format
-msgid "Backed up: {file}"
-msgstr "Back-up gemaakt: {file}"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py⁩:175
-msgid "Backups (*.json)"
-msgstr "Back-ups (*.json)"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py⁩:177
-msgid "Restore backup"
-msgstr "Back-up herstellen"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py⁩:187
-msgid "The file could not be read."
-msgstr "Het bestand kon niet worden gelezen."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py⁩:190
-msgid "That is not a valid backup."
-msgstr "Dit is geen geldige back-up."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py⁩:192
-msgid "Restored."
-msgstr "Hersteld."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py⁩:198
-msgid "Share look package"
-msgstr "Look-pakket delen"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py⁩:199
-msgid ""
-"Bundle the whole look as a .dmlook, including the theme files and the "
-"wallpaper, or import such a package."
-msgstr ""
-"Bundel de hele look als een .dmlook, inclusief de themabestanden en de "
-"achtergrond, of importeer zo'n pakket."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py⁩:203
-msgid "Export look"
-msgstr "Look exporteren"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py⁩:203
-msgid "Pack themes and image into a .dmlook"
-msgstr "Themas en afbeelding inpakken als .dmlook"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py⁩:206
-msgid "Import look"
-msgstr "Look importeren"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py⁩:206
-msgid "Install and apply from a .dmlook"
-msgstr "Installeren en toepassen vanuit een .dmlook"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py⁩:211
-msgid "Export look package"
-msgstr "Look-pakket exporteren"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py⁩:220
-#, python-brace-format
-msgid "Export failed: {error}"
-msgstr "Exporteren mislukt: {error}"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py⁩:224
-#, python-brace-format
-msgid "Look package saved: {file}"
-msgstr "Look-pakket opgeslagen: {file}"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py⁩:229
-msgid "Look packages (*.dmlook)"
-msgstr "Look-pakketten (*.dmlook)"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/backup.py⁩:231
-msgid "Import look package"
-msgstr "Look-pakket importeren"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/dock.py⁩:22
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:79
-msgid "Dock"
-msgstr "Dock"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/dock.py⁩:33
-msgid "No dock extension active"
-msgstr "Geen Dock-extensie actief"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/dock.py⁩:34
-msgid ""
-"This page controls Ubuntu Dock / Dash to Dock or Dash to Panel. None of them "
-"is enabled on this system."
-msgstr ""
-"Deze pagina beheert Ubuntu Dock, Dash to Dock of Dash to Panel. Geen van "
-"deze is ingeschakeld op dit systeem."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/system.py⁩:20
-msgid "Blue"
-msgstr "Blauw"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/system.py⁩:21
-msgid "Teal"
-msgstr "Blauwgroen"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/system.py⁩:22
-msgid "Green"
-msgstr "Groen"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/system.py⁩:23
-msgid "Yellow"
-msgstr "Geel"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/system.py⁩:24
-msgid "Orange"
-msgstr "Oranje"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/system.py⁩:25
-msgid "Red"
-msgstr "Rood"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/system.py⁩:26
-msgid "Pink"
-msgstr "Roze"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/system.py⁩:27
-msgid "Purple"
-msgstr "Paars"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/system.py⁩:28
-msgid "Slate"
-msgstr "Leisteen"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/system.py⁩:41
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:278
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:83
-msgid "System"
-msgstr "Systeem"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/system.py⁩:91
-msgid "The accent color can only be set from GNOME 47 onwards."
-msgstr "De accentkleur kan alleen worden ingesteld vanaf GNOME 47."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/system.py⁩:117
-msgid "Color from background"
-msgstr "Kleur uit achtergrond"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/system.py⁩:120
-msgid "Pick the accent color matching the current wallpaper"
-msgstr "Kies de accentkleur die bij de huidige achtergrond past"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/system.py⁩:137
-msgid "No wallpaper found."
-msgstr "Geen achtergrond gevonden."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/system.py⁩:141
-msgid "No matching accent color found."
-msgstr "Geen overeenkomende accentkleur gevonden."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/system.py⁩:145
-msgid "Accent color picked from the background."
-msgstr "Accentkleur gekozen uit de achtergrond."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/system.py⁩:158
-msgid "Window buttons"
-msgstr "Vensterknoppen"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/system.py⁩:159
-msgid ""
-"Which buttons the title bar shows and on which side. Close always stays "
-"visible."
-msgstr ""
-"Welke knoppen de titelbalk toont en aan welke kant. Sluiten blijft altijd "
-"zichtbaar."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/system.py⁩:162
-msgid "Minimize"
-msgstr "Minimaliseren"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/system.py⁩:167
-msgid "Maximize"
-msgstr "Maximaliseren"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/system.py⁩:172
-msgid "Arrangement"
-msgstr "Rangschikking"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/system.py⁩:212
-msgid "Top bar"
-msgstr "Bovenste balk"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/system.py⁩:213
-msgid "What the clock and the system area show."
-msgstr "Wat de klok en het systeemgebied tonen."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/system.py⁩:215
-msgid "Seconds in the clock"
-msgstr "Seconden in de klok"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/system.py⁩:219
-msgid "Show weekday"
-msgstr "Weekdag tonen"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/system.py⁩:223
-msgid "Show date"
-msgstr "Datum tonen"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/system.py⁩:227
-msgid "Battery level in percent"
-msgstr "Batterijniveau in procenten"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/system.py⁩:235
-msgid "Motion"
-msgstr "Beweging"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/system.py⁩:237
-msgid "Animations"
-msgstr "Animaties"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/system.py⁩:237
-msgid "Fade and transition effects of the interface."
-msgstr "Vervagings- en overganseffecten van de interface."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/shell.py⁩:41
-msgid "User Themes is required"
-msgstr "User Themes is vereist"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/shell.py⁩:42
-msgid ""
-"The GNOME shell theme is set via the User Themes extension. It is not "
-"installed on this system."
-msgstr ""
-"Het GNOME Shell-thema wordt ingesteld via de User Themes-extensie. Deze is "
-"niet geïnstalleerd op dit systeem."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/shell.py⁩:46
-msgid "User Themes is not enabled"
-msgstr "User Themes is niet ingeschakeld"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/shell.py⁩:47
-msgid ""
-"The User Themes extension is installed but switched off. While it is off, a "
-"chosen shell theme is not applied. Enable it under Extensions, then you can "
-"pick one here."
-msgstr ""
-"De User Themes-extensie is geïnstalleerd maar uitgeschakeld. Zolang deze uit "
-"staat, wordt een gekozen Shell-thema niet toegepast. Schakel het in onder "
-"Extensies, dan kun je er hier een kiezen."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/shell.py⁩:67
-msgid ""
-"Affects the top bar, calendar and quick settings. The preview shows panel "
-"and accent color (approximation)."
-msgstr ""
-"Beinvloedt de bovenste balk, kalender en snelle instellingen. Het voorbeeld "
-"toont paneel en accentkleur (benadering)."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/shell.py⁩:77
-msgid "Install a new shell theme"
-msgstr "Nieuw Shell-thema installeren"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/shell.py⁩:79
-msgid "Drag a shell theme (archive or folder) here"
-msgstr "Sleep een Shell-thema (archief of map) hierheen"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/shell.py⁩:139
-#, python-brace-format
-msgid "before shell theme {name}"
-msgstr "voor Shell-thema {name}"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/shell.py⁩:148
-msgid "Activate shell theme anyway?"
-msgstr "Shell-thema toch activeren?"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/shell.py⁩:166
-msgid "Remove shell theme?"
-msgstr "Shell-thema verwijderen?"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py⁩:26
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:65
-msgid "Looks"
-msgstr "Looks"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py⁩:44
-msgid ""
-"One click applies the whole look. For bundled looks a restore point is "
-"created first, so you can go back from the Backup page."
-msgstr ""
-"Een klik past de hele look toe. Voor meegeleverde looks wordt eerst een "
-"herstelpunt aangemaakt, zodat je via de pagina Back-up terug kunt."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py⁩:53
-msgid "Bundled looks"
-msgstr "Meegeleverde looks"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py⁩:56
-msgid "Your profiles"
-msgstr "Jouw profielen"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py⁩:78
-msgid "Save the current look as a profile"
-msgstr "De huidige look als profiel opslaan"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py⁩:104
-#, python-brace-format
-msgid "Apply look \"{name}\"?"
-msgstr "Look \"{name}\" toepassen?"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py⁩:105
-msgid ""
-"The current state is saved as a restore point first. Parts that are not "
-"installed are skipped."
-msgstr ""
-"De huidige staat wordt eerst opgeslagen als herstelpunt. Onderdelen die niet "
-"zijn geïnstalleerd worden overgeslagen."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py⁩:108
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py⁩:149
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:415
-msgid "Apply"
-msgstr "Toepassen"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py⁩:118
-#, python-brace-format
-msgid "Look \"{name}\" applied. Skipped: {items}."
-msgstr "Look \"{name}\" toegepast. Overgeslagen: {items}."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py⁩:123
-#, python-brace-format
-msgid "Look \"{name}\" applied."
-msgstr "Look \"{name}\" toegepast."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py⁩:131
-msgid "Please enter a name."
-msgstr "Voer een naam in."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py⁩:134
-#, python-brace-format
-msgid "Saving failed: {error}"
-msgstr "Opslaan mislukt: {error}"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py⁩:140
-#, python-brace-format
-msgid "Profile saved: {name}"
-msgstr "Profiel opgeslagen: {name}"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py⁩:146
-#, python-brace-format
-msgid "Apply profile \"{name}\"?"
-msgstr "Profiel \"{name}\" toepassen?"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py⁩:147
-msgid "Applies this profile's saved state."
-msgstr "Past de opgeslagen staat van dit profiel toe."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py⁩:160
-msgid "The profile could not be read."
-msgstr "Het profiel kon niet worden gelezen."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py⁩:163
-msgid "The profile is damaged."
-msgstr "Het profiel is beschadigd."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py⁩:166
-#, python-brace-format
-msgid "Profile \"{name}\" applied."
-msgstr "Profiel \"{name}\" toegepast."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py⁩:178
-#, python-brace-format
-msgid "Profile deleted: {name}"
-msgstr "Profiel verwijderd: {name}"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py⁩:181
-#, python-brace-format
-msgid "Delete profile \"{name}\"?"
-msgstr "Profiel \"{name}\" verwijderen?"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py⁩:182
-msgid "This cannot be undone."
-msgstr "Dit kan niet ongedaan worden gemaakt."
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/looks.py⁩:184
-msgid "Delete"
-msgstr "Verwijderen"
-
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:32
+#: src/pages/background.py:32
 msgid "Zoom (fill screen)"
 msgstr "Zoom (scherm vullen)"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:33
+#: src/pages/background.py:33
 msgid "Fitted"
 msgstr "Passend"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:34
+#: src/pages/background.py:34
 msgid "Stretched"
 msgstr "Uitgerekt"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:35
+#: src/pages/background.py:35
 msgid "Centered"
 msgstr "Gecentreerd"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:36
+#: src/pages/background.py:36
 msgid "Tiled"
 msgstr "Betegeld"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:37
+#: src/pages/background.py:37
 msgid "Across multiple screens"
 msgstr "Over meerdere schermen"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:38
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/fonts.py⁩:24
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/fonts.py⁩:30
+#: src/pages/background.py:38 src/pages/fonts.py:24 src/pages/fonts.py:30
 msgid "None"
 msgstr "Geen"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:101
+#: src/pages/background.py:101
 msgid "Add image…"
 msgstr "Afbeelding toevoegen…"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:123
+#: src/pages/background.py:123
 msgid ""
 "Variety manages the background. Your image choice is handed to Variety, "
 "which normally keeps it across the next login too. You can change the "
@@ -1479,11 +538,11 @@ msgstr ""
 "weer zijn eigen afbeelding in. Voor volledige controle over afbeelding en "
 "modus kun je Variety hier verwijderen."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:131
+#: src/pages/background.py:131
 msgid "Remove Variety"
 msgstr "Variety verwijderen"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:134
+#: src/pages/background.py:134
 msgid ""
 "Remove Variety from autostart and quit it, so the app controls the "
 "background and mode directly. Reversible, Variety stays installed."
@@ -1491,11 +550,11 @@ msgstr ""
 "Variety uit autostart verwijderen en afsluiten, zodat de app de achtergrond "
 "en modus direct beheert. Omkeerbaar, Variety blijft geïnstalleerd."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:152
+#: src/pages/background.py:152
 msgid "Variety could not be disabled."
 msgstr "Variety kon niet worden uitgeschakeld."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:173
+#: src/pages/background.py:173
 msgid ""
 "Variety was removed from autostart and quit. The app now manages the "
 "background directly, your adjustment mode is kept. To undo: start Variety "
@@ -1505,42 +564,46 @@ msgstr ""
 "achtergrond direct, je aanpassingsmodus blijft behouden. Ongedaan maken: "
 "start Variety opnieuw en schakel het in via autostart."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:186
+#: src/pages/background.py:186
 msgid "No wallpaper set"
 msgstr "Geen achtergrond ingesteld"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:231
+#: src/pages/background.py:231
 msgid "Adjustment"
 msgstr "Aanpassing"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:277
+#: src/pages/background.py:277
 msgid "Your images"
 msgstr "Je afbeeldingen"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:334
+#: src/pages/background.py:278 src/pages/system.py:41 src/window.py:83
+msgid "System"
+msgstr "Systeem"
+
+#: src/pages/background.py:334
 #, python-brace-format
 msgid "Your images ({n})"
 msgstr "Je afbeeldingen ({n})"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:336
+#: src/pages/background.py:336
 #, python-brace-format
 msgid "System ({n})"
 msgstr "Systeem ({n})"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:381
+#: src/pages/background.py:381
 msgid "Images"
 msgstr "Afbeeldingen"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:394
+#: src/pages/background.py:394
 msgid "Choose wallpaper"
 msgstr "Achtergrond kiezen"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:413
+#: src/pages/background.py:413
 #, python-brace-format
 msgid "Editing {name}. Pick its background from the gallery below."
 msgstr "{name} bewerken. Kies de achtergrond uit de galerij hieronder."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:416
+#: src/pages/background.py:416
 msgid ""
 "You have multiple monitors. To give each its own image, remove Variety first "
 "(button above)."
@@ -1548,7 +611,7 @@ msgstr ""
 "Je hebt meerdere monitoren. Geef elke monitor een eigen afbeelding door "
 "eerst Variety te verwijderen (knop hierboven)."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:419
+#: src/pages/background.py:419
 msgid ""
 "One background for all displays. Choose a display above to give it its own "
 "image."
@@ -1556,28 +619,25 @@ msgstr ""
 "Eén achtergrond voor alle schermen. Kies hierboven een scherm om het een "
 "eigen afbeelding te geven."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:480
+#: src/pages/background.py:480
 msgid "Lock and login screen"
 msgstr "Vergrendel- en aanmeldscherm"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:489
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:601
+#: src/pages/background.py:489 src/pages/background.py:601
 msgid "Login screen (GDM)"
 msgstr "Inlogscherm (GDM)"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:490
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:650
+#: src/pages/background.py:490 src/pages/background.py:650
 msgid ""
 "Temporarily disabled until this feature has been verified as crash-safe."
 msgstr ""
 "Tijdelijk uitgeschakeld totdat deze functie als crashveilig is bevestigd."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:516
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:524
+#: src/pages/background.py:516 src/pages/background.py:524
 msgid "Lock screen"
 msgstr "Vergrendelscherm"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:517
+#: src/pages/background.py:517
 msgid ""
 "First choose a custom theme (not the default one) under Shell Theme. The app "
 "writes the lock screen image into that theme's style."
@@ -1585,7 +645,7 @@ msgstr ""
 "Kies eerst een aangepast thema (niet het standaardthema) onder Shell-thema. "
 "De app schrijft de vergrendelschermafbeelding in de stijl van dat thema."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:525
+#: src/pages/background.py:525
 msgid ""
 "Experimental. Takes effect only after logging in again and may be covered by "
 "the blurred lock screen on newer GNOME versions."
@@ -1593,34 +653,37 @@ msgstr ""
 "Experimenteel. Heeft alleen effect na opnieuw inloggen en kan worden bedekt "
 "door het wazig vergrendelscherm op nieuwere GNOME-versies."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:538
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:673
+#: src/pages/background.py:538 src/pages/background.py:673
 msgid "Same as background"
 msgstr "Zelfde als achtergrond"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:540
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:674
+#: src/pages/background.py:540 src/pages/background.py:674
 msgid "Choose…"
 msgstr "Kiezen…"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:555
+#: src/pages/background.py:544 src/pages/cursor.py:129 src/pages/icons.py:149
+#: src/pages/shell.py:170 src/widgets/mehrfach_entfernen.py:56
+#: src/widgets/mehrfach_entfernen.py:68
+msgid "Remove"
+msgstr "Verwijderen"
+
+#: src/pages/background.py:555
 msgid "Custom image set"
 msgstr "Eigen afbeelding ingesteld"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:559
+#: src/pages/background.py:559
 msgid "No custom image set"
 msgstr "Geen aangepaste afbeelding ingesteld"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:572
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:587
+#: src/pages/background.py:572 src/pages/background.py:587
 msgid "The style sheet of the shell theme could not be changed."
 msgstr "Het stijlblad van het shell-thema kon niet worden gewijzigd."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:593
+#: src/pages/background.py:593
 msgid "Choose lock screen image"
 msgstr "Vergrendelschermafbeelding kiezen"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:611
+#: src/pages/background.py:611
 msgid ""
 "Changes the system-wide login screen and needs the administrator password. "
 "Takes effect after a restart. The original is never overwritten. If the "
@@ -1634,7 +697,7 @@ msgstr ""
 "herstarts; vanuit een terminal altijd met \"sudo /usr/local/lib/design-"
 "manager/gdm-helper.sh reset\"."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:643
+#: src/pages/background.py:643
 msgid ""
 "A custom login screen background is active. The feature is temporarily "
 "disabled, only resetting is possible."
@@ -1642,16 +705,15 @@ msgstr ""
 "Een eigen achtergrond voor het aanmeldscherm is actief. De functie is "
 "tijdelijk uitgeschakeld, alleen herstellen is mogelijk."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:648
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:677
+#: src/pages/background.py:648 src/pages/background.py:677
 msgid "Reset"
 msgstr "Herstellen"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:656
+#: src/pages/background.py:656
 msgid "New login screen set, not yet confirmed."
 msgstr "Nieuw inlogscherm ingesteld, nog niet bevestigd."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:659
+#: src/pages/background.py:659
 msgid ""
 "Restart the computer once. If the login screen appears normally, log in and "
 "click \"Keep\". If you do not, the default restores itself automatically "
@@ -1661,48 +723,221 @@ msgstr ""
 "in en klik op \"Bewaren\". Als je dat niet doet, herstelt de standaard "
 "zichzelf automatisch na twee herstarts."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:662
+#: src/pages/background.py:662
 msgid "Keep"
 msgstr "Bewaren"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:664
+#: src/pages/background.py:664
 msgid "Discard"
 msgstr "Verwerpen"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:669
+#: src/pages/background.py:669
 msgid "A custom login screen background is active."
 msgstr "Een aangepaste inlogschermachtergrond is actief."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:671
+#: src/pages/background.py:671
 msgid "Default login screen."
 msgstr "Standaard inlogscherm."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:680
+#: src/pages/background.py:680
 msgid "Confirming… "
 msgstr "Bevestigen… "
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:683
+#: src/pages/background.py:683
 msgid "Choose login screen image"
 msgstr "Inlogschermafbeelding kiezen"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:687
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:692
+#: src/pages/background.py:687 src/pages/background.py:692
 msgid "Applying… "
 msgstr "Toepassen… "
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:695
+#: src/pages/background.py:695
 msgid "Resetting… "
 msgstr "Herstellen… "
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:705
+#: src/pages/background.py:705
 msgid "(enter password)"
 msgstr "(wachtwoord invoeren)"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/background.py⁩:721
+#: src/pages/background.py:721
 msgid "Not changed (canceled or error)."
 msgstr "Niet gewijzigd (geannuleerd of fout)."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/cursor.py⁩:40
+#: src/pages/backup.py:27 src/window.py:85
+msgid "Backup"
+msgstr "Back-up"
+
+#: src/pages/backup.py:52
+msgid "Restore points"
+msgstr "Herstelpunten"
+
+#: src/pages/backup.py:53
+msgid ""
+"Created automatically before every theme, cursor or shell change, and before "
+"applying a look. Restores the state from before."
+msgstr ""
+"Wordt automatisch aangemaakt voor elke thema-, cursor- of Shell-wijziging en "
+"voor het toepassen van een look. Herstelt de staat van daarvoor."
+
+#: src/pages/backup.py:67
+msgid "No restore points yet"
+msgstr "Nog geen herstelpunten"
+
+#: src/pages/backup.py:68
+msgid "One is created as soon as you change a theme."
+msgstr "Er wordt een aangemaakt zodra je een thema wijzigt."
+
+#: src/pages/backup.py:80 src/pages/backup.py:107 src/pages/backup.py:136
+msgid "Restore"
+msgstr "Herstellen"
+
+#: src/pages/backup.py:88
+msgid "Delete restore point"
+msgstr "Herstelpunt verwijderen"
+
+#: src/pages/backup.py:104
+msgid "Restore this point?"
+msgstr "Dit punt herstellen?"
+
+#: src/pages/backup.py:105
+msgid "The current state is saved as a new restore point first."
+msgstr "De huidige toestand wordt eerst als nieuw herstelpunt opgeslagen."
+
+#: src/pages/backup.py:106 src/pages/cursor.py:128 src/pages/gtk_theme.py:124
+#: src/pages/icons.py:148 src/pages/looks.py:107 src/pages/looks.py:148
+#: src/pages/looks.py:183 src/pages/shell.py:151 src/pages/shell.py:169
+#: src/widgets/mehrfach_entfernen.py:67 src/widgets/paket_auswahl.py:72
+#: src/window.py:414 src/window.py:598 src/window.py:665
+msgid "Cancel"
+msgstr "Annuleren"
+
+#: src/pages/backup.py:114 src/pages/backup.py:183 src/pages/looks.py:156
+msgid "before restoring"
+msgstr "voor het herstellen"
+
+#: src/pages/backup.py:116
+msgid "Restore point applied."
+msgstr "Herstelpunt toegepast."
+
+#: src/pages/backup.py:118
+msgid "The restore point could not be read."
+msgstr "Het herstelpunt kon niet worden gelezen."
+
+#: src/pages/backup.py:123
+msgid "Restore point deleted."
+msgstr "Herstelpunt verwijderd."
+
+#: src/pages/backup.py:129
+msgid "Backup file"
+msgstr "Back-upbestand"
+
+#: src/pages/backup.py:130
+msgid "Export the current state to a file or restore from an earlier backup."
+msgstr ""
+"Exporteer de huidige staat naar een bestand of herstel vanuit een eerdere "
+"back-up."
+
+#: src/pages/backup.py:133
+msgid "Back up"
+msgstr "Back-up maken"
+
+#: src/pages/backup.py:133
+msgid "Export to a file"
+msgstr "Naar een bestand exporteren"
+
+#: src/pages/backup.py:136
+msgid "Import from a file"
+msgstr "Vanuit een bestand importeren"
+
+#: src/pages/backup.py:156
+msgid "Back up settings"
+msgstr "Instellingen back-uppen"
+
+#: src/pages/backup.py:165
+#, python-brace-format
+msgid "Backup failed: {error}"
+msgstr "Back-up mislukt: {error}"
+
+#: src/pages/backup.py:166 src/pages/backup.py:222 src/pages/looks.py:135
+msgid "Error"
+msgstr "Fout"
+
+#: src/pages/backup.py:168
+#, python-brace-format
+msgid "Backed up: {file}"
+msgstr "Back-up gemaakt: {file}"
+
+#: src/pages/backup.py:175
+msgid "Backups (*.json)"
+msgstr "Back-ups (*.json)"
+
+#: src/pages/backup.py:177
+msgid "Restore backup"
+msgstr "Back-up herstellen"
+
+#: src/pages/backup.py:187
+msgid "The file could not be read."
+msgstr "Het bestand kon niet worden gelezen."
+
+#: src/pages/backup.py:190
+msgid "That is not a valid backup."
+msgstr "Dit is geen geldige back-up."
+
+#: src/pages/backup.py:192
+msgid "Restored."
+msgstr "Hersteld."
+
+#: src/pages/backup.py:198
+msgid "Share look package"
+msgstr "Look-pakket delen"
+
+#: src/pages/backup.py:199
+msgid ""
+"Bundle the whole look as a .dmlook, including the theme files and the "
+"wallpaper, or import such a package."
+msgstr ""
+"Bundel de hele look als een .dmlook, inclusief de themabestanden en de "
+"achtergrond, of importeer zo'n pakket."
+
+#: src/pages/backup.py:203
+msgid "Export look"
+msgstr "Look exporteren"
+
+#: src/pages/backup.py:203
+msgid "Pack themes and image into a .dmlook"
+msgstr "Themas en afbeelding inpakken als .dmlook"
+
+#: src/pages/backup.py:206
+msgid "Import look"
+msgstr "Look importeren"
+
+#: src/pages/backup.py:206
+msgid "Install and apply from a .dmlook"
+msgstr "Installeren en toepassen vanuit een .dmlook"
+
+#: src/pages/backup.py:211
+msgid "Export look package"
+msgstr "Look-pakket exporteren"
+
+#: src/pages/backup.py:220
+#, python-brace-format
+msgid "Export failed: {error}"
+msgstr "Exporteren mislukt: {error}"
+
+#: src/pages/backup.py:224
+#, python-brace-format
+msgid "Look package saved: {file}"
+msgstr "Look-pakket opgeslagen: {file}"
+
+#: src/pages/backup.py:229
+msgid "Look packages (*.dmlook)"
+msgstr "Look-pakketten (*.dmlook)"
+
+#: src/pages/backup.py:231
+msgid "Import look package"
+msgstr "Look-pakket importeren"
+
+#: src/pages/cursor.py:40
 msgid ""
 "GTK apps and the cursor over the desktop change immediately. Already open "
 "non-GTK apps (some terminals, Electron apps) show the old cursor until you "
@@ -1712,90 +947,183 @@ msgstr ""
 "GTK-apps (sommige terminals, Electron-apps) tonen de oude cursor totdat je "
 "ze herstart."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/cursor.py⁩:51
+#: src/pages/cursor.py:51
 msgid "Cursor theme"
 msgstr "Cursorthema"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/cursor.py⁩:54
+#: src/pages/cursor.py:54
 msgid "Install a new cursor theme"
 msgstr "Nieuw cursorthema installeren"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/cursor.py⁩:56
+#: src/pages/cursor.py:56
 msgid "Drag a cursor theme (archive or folder) here"
 msgstr "Sleep een cursorthema (archief of map) hierheen"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/cursor.py⁩:116
+#: src/pages/cursor.py:116
 #, python-brace-format
 msgid "before cursor {name}"
 msgstr "voor cursor {name}"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/cursor.py⁩:125
+#: src/pages/cursor.py:125
 msgid "Remove cursor theme?"
 msgstr "Cursorthema verwijderen?"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/fonts.py⁩:22
+#: src/pages/cursor.py:126 src/pages/icons.py:146 src/pages/shell.py:167
+#, python-brace-format
+msgid ""
+"\"{name}\" will be permanently deleted from your user folder. This cannot be "
+"undone."
+msgstr ""
+"\"{name}\" wordt permanent verwijderd uit je gebruikersmap. Dit kan niet "
+"ongedaan worden gemaakt."
+
+#: src/pages/cursor.py:147 src/pages/icons.py:165 src/pages/shell.py:194
+#, python-brace-format
+msgid "Removed: {name}"
+msgstr "Verwijderd: {name}"
+
+#: src/pages/cursor.py:149 src/pages/icons.py:167 src/pages/shell.py:196
+#: src/widgets/mehrfach_entfernen.py:105
+#, python-brace-format
+msgid "Could not be removed: {name}"
+msgstr "Kon niet worden verwijderd: {name}"
+
+#: src/pages/dock.py:22 src/window.py:79
+msgid "Dock"
+msgstr "Dock"
+
+#: src/pages/dock.py:33
+msgid "No dock extension active"
+msgstr "Geen Dock-extensie actief"
+
+#: src/pages/dock.py:34
+msgid ""
+"This page controls Ubuntu Dock / Dash to Dock or Dash to Panel. None of them "
+"is enabled on this system."
+msgstr ""
+"Deze pagina beheert Ubuntu Dock, Dash to Dock of Dash to Panel. Geen van "
+"deze is ingeschakeld op dit systeem."
+
+#: src/pages/dock.py:43 src/pages/icons.py:46
+msgid "Changes take effect immediately."
+msgstr "Wijzigingen worden direct toegepast."
+
+#: src/pages/extensions.py:34 src/window.py:81
+msgid "Extensions"
+msgstr "Extensies"
+
+#: src/pages/extensions.py:49
+msgid "Not available here"
+msgstr "Hier niet beschikbaar"
+
+#: src/pages/extensions.py:50
+msgid ""
+"Managing extensions needs access to the GNOME Shell service, which is not "
+"reachable here (e.g. in a sandbox)."
+msgstr ""
+"Het beheren van extensies vereist toegang tot de GNOME Shell-service, die "
+"hier niet bereikbaar is (bijv. in een sandbox)."
+
+#: src/pages/extensions.py:63
+msgid "User extensions"
+msgstr "Gebruikersextensies"
+
+#: src/pages/extensions.py:65
+msgid "System extensions"
+msgstr "Systeemextensies"
+
+#: src/pages/extensions.py:68
+msgid "Install an extension"
+msgstr "Extensie installeren"
+
+#: src/pages/extensions.py:69
+msgid ""
+"Drag the .zip from extensions.gnome.org here. It is only installed, not "
+"enabled. Log out and back in, then switch it on above. Extensions run with "
+"full access to your session, so only use trusted ones."
+msgstr ""
+"Sleep de .zip van extensions.gnome.org hierheen. Hij wordt alleen "
+"geïnstalleerd, niet ingeschakeld. Meld je af en weer aan en schakel hem dan "
+"hierboven in. Extensies hebben volledige toegang tot je sessie, gebruik dus "
+"alleen betrouwbare."
+
+#: src/pages/extensions.py:74
+msgid "Drag an extension (.zip) here"
+msgstr "Sleep een extensie (.zip) hierheen"
+
+#: src/pages/extensions.py:88
+msgid "Extensions enabled"
+msgstr "Extensies ingeschakeld"
+
+#: src/pages/extensions.py:89
+msgid "Toggles all user extensions together."
+msgstr "Schakelt alle gebruikersextensies tegelijk in of uit."
+
+#: src/pages/extensions.py:143
+msgid "Extension settings"
+msgstr "Extensie-instellingen"
+
+#: src/pages/fonts.py:22
 msgid "Grayscale"
 msgstr "Grijswaarden"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/fonts.py⁩:23
+#: src/pages/fonts.py:23
 msgid "Subpixel (RGBA)"
 msgstr "Subpixel (RGBA)"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/fonts.py⁩:27
+#: src/pages/fonts.py:27
 msgid "Full"
 msgstr "Volledig"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/fonts.py⁩:28
+#: src/pages/fonts.py:28
 msgid "Medium"
 msgstr "Gemiddeld"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/fonts.py⁩:29
+#: src/pages/fonts.py:29
 msgid "Slight"
 msgstr "Licht"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/fonts.py⁩:38
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/fonts.py⁩:42
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:75
+#: src/pages/fonts.py:38 src/pages/fonts.py:42 src/window.py:75
 msgid "Fonts"
 msgstr "Lettertypen"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/fonts.py⁩:43
+#: src/pages/fonts.py:43
 msgid "GNOME keeps three fonts separate."
 msgstr "GNOME houdt drie lettertypen apart."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/fonts.py⁩:45
+#: src/pages/fonts.py:45
 msgid "Interface"
 msgstr "Interface"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/fonts.py⁩:48
+#: src/pages/fonts.py:48
 msgid "Documents"
 msgstr "Documenten"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/fonts.py⁩:51
+#: src/pages/fonts.py:51
 msgid "Monospace"
 msgstr "Vaste breedte"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/fonts.py⁩:55
+#: src/pages/fonts.py:55
 msgid "Rendering"
 msgstr "Weergave"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/fonts.py⁩:56
+#: src/pages/fonts.py:56
 msgid "Size and smoothing of the font rendering."
 msgstr "Grootte en vloeiendheid van de lettertypeweergave."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/fonts.py⁩:59
+#: src/pages/fonts.py:59
 msgid "Smoothing"
 msgstr "Vloeiendheid"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/fonts.py⁩:63
+#: src/pages/fonts.py:63
 msgid "Hinting"
 msgstr "Hinting"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/fonts.py⁩:68
+#: src/pages/fonts.py:68
 msgid "Install a font"
 msgstr "Lettertype installeren"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/fonts.py⁩:69
+#: src/pages/fonts.py:69
 msgid ""
 "Drag a font file (.ttf/.otf) or an archive here. It is copied to ~/.local/"
 "share/fonts and the font cache is refreshed."
@@ -1803,19 +1131,596 @@ msgstr ""
 "Sleep een lettertypebestand (.ttf/.otf) of een archief hierheen. Het wordt "
 "gekopieerd naar ~/.local/share/fonts en de lettertypecache wordt vernieuwd."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/fonts.py⁩:73
+#: src/pages/fonts.py:73
 msgid "Drag a font (.ttf/.otf) or archive here"
 msgstr "Sleep een lettertype (.ttf/.otf) of archief hierheen"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/fonts.py⁩:102
+#: src/pages/fonts.py:102
 msgid "Size (scaling)"
 msgstr "Grootte (schaling)"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/pages/fonts.py⁩:103
+#: src/pages/fonts.py:103
 msgid "1.0 is the default size."
 msgstr "1,0 is de standaardgrootte."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:159
+#: src/pages/gtk_theme.py:27 src/pages/overview.py:83 src/window.py:69
+msgid "GTK Theme"
+msgstr "GTK-thema"
+
+#: src/pages/gtk_theme.py:44
+msgid ""
+"Determines how application windows look. Applied immediately, also to modern "
+"apps like Files."
+msgstr ""
+"Bepaalt hoe toepassingsvensters eruitzien. Wordt direct toegepast, ook op "
+"moderne apps zoals Bestanden."
+
+#: src/pages/gtk_theme.py:50
+msgid "GTK theme (windows & apps)"
+msgstr "GTK-thema (vensters en apps)"
+
+#: src/pages/gtk_theme.py:53
+msgid "Install a new GTK theme"
+msgstr "Nieuw GTK-thema installeren"
+
+#: src/pages/gtk_theme.py:55
+msgid "Drag a GTK theme (archive or folder) here"
+msgstr "Sleep een GTK-thema (archief of map) hierheen"
+
+#: src/pages/gtk_theme.py:93 src/pages/overview.py:207 src/pages/shell.py:104
+#: src/pages/shell.py:140 src/pages/shell.py:150
+msgid "Default"
+msgstr "Standaard"
+
+#: src/pages/gtk_theme.py:96
+msgid "Reset the GTK theme to the safe default theme (Adwaita)"
+msgstr "GTK-thema terugzetten naar het veilige standaardthema (Adwaita)"
+
+#: src/pages/gtk_theme.py:116 src/pages/gtk_theme.py:133
+#, python-brace-format
+msgid "before GTK theme {name}"
+msgstr "voor GTK-thema {name}"
+
+#: src/pages/gtk_theme.py:122
+msgid "Activate theme anyway?"
+msgstr "Thema toch activeren?"
+
+#: src/pages/gtk_theme.py:125 src/pages/shell.py:152
+msgid "Activate anyway"
+msgstr "Toch activeren"
+
+#: src/pages/icons.py:51
+msgid "Icon theme"
+msgstr "Pictogramthema"
+
+#: src/pages/icons.py:65
+msgid "Install a new icon theme"
+msgstr "Nieuw pictogramthema installeren"
+
+#: src/pages/icons.py:67
+msgid "Drag an icon theme (archive or folder) here"
+msgstr "Sleep een pictogramthema (archief of map) hierheen"
+
+#: src/pages/icons.py:128
+#, python-brace-format
+msgid "Added the original icon for apps this theme has none for: {apps}"
+msgstr "Origineel pictogram toegevoegd voor apps die dit thema mist: {apps}"
+
+#: src/pages/icons.py:131
+#, python-brace-format
+msgid "Fixed icon file, no icon theme can change it: {apps}"
+msgstr "Vast pictogrambestand, geen pictogramthema kan het wijzigen: {apps}"
+
+#: src/pages/icons.py:134
+#, python-brace-format
+msgid "No icon found for: {apps}"
+msgstr "Geen pictogram gevonden voor: {apps}"
+
+#: src/pages/icons.py:145
+msgid "Remove icon theme?"
+msgstr "Pictogramthema verwijderen?"
+
+#: src/pages/looks.py:26 src/window.py:65
+msgid "Looks"
+msgstr "Looks"
+
+#: src/pages/looks.py:44
+msgid ""
+"One click applies the whole look. For bundled looks a restore point is "
+"created first, so you can go back from the Backup page."
+msgstr ""
+"Een klik past de hele look toe. Voor meegeleverde looks wordt eerst een "
+"herstelpunt aangemaakt, zodat je via de pagina Back-up terug kunt."
+
+#: src/pages/looks.py:53
+msgid "Bundled looks"
+msgstr "Meegeleverde looks"
+
+#: src/pages/looks.py:56
+msgid "Your profiles"
+msgstr "Jouw profielen"
+
+#: src/pages/looks.py:78
+msgid "Save the current look as a profile"
+msgstr "De huidige look als profiel opslaan"
+
+#: src/pages/looks.py:104
+#, python-brace-format
+msgid "Apply look \"{name}\"?"
+msgstr "Look \"{name}\" toepassen?"
+
+#: src/pages/looks.py:105
+msgid ""
+"The current state is saved as a restore point first. Parts that are not "
+"installed are skipped."
+msgstr ""
+"De huidige staat wordt eerst opgeslagen als herstelpunt. Onderdelen die niet "
+"zijn geïnstalleerd worden overgeslagen."
+
+#: src/pages/looks.py:108 src/pages/looks.py:149 src/window.py:415
+msgid "Apply"
+msgstr "Toepassen"
+
+#: src/pages/looks.py:118
+#, python-brace-format
+msgid "Look \"{name}\" applied. Skipped: {items}."
+msgstr "Look \"{name}\" toegepast. Overgeslagen: {items}."
+
+#: src/pages/looks.py:123
+#, python-brace-format
+msgid "Look \"{name}\" applied."
+msgstr "Look \"{name}\" toegepast."
+
+#: src/pages/looks.py:131
+msgid "Please enter a name."
+msgstr "Voer een naam in."
+
+#: src/pages/looks.py:134
+#, python-brace-format
+msgid "Saving failed: {error}"
+msgstr "Opslaan mislukt: {error}"
+
+#: src/pages/looks.py:140
+#, python-brace-format
+msgid "Profile saved: {name}"
+msgstr "Profiel opgeslagen: {name}"
+
+#: src/pages/looks.py:146
+#, python-brace-format
+msgid "Apply profile \"{name}\"?"
+msgstr "Profiel \"{name}\" toepassen?"
+
+#: src/pages/looks.py:147
+msgid "Applies this profile's saved state."
+msgstr "Past de opgeslagen staat van dit profiel toe."
+
+#: src/pages/looks.py:160
+msgid "The profile could not be read."
+msgstr "Het profiel kon niet worden gelezen."
+
+#: src/pages/looks.py:163
+msgid "The profile is damaged."
+msgstr "Het profiel is beschadigd."
+
+#: src/pages/looks.py:166
+#, python-brace-format
+msgid "Profile \"{name}\" applied."
+msgstr "Profiel \"{name}\" toegepast."
+
+#: src/pages/looks.py:178
+#, python-brace-format
+msgid "Profile deleted: {name}"
+msgstr "Profiel verwijderd: {name}"
+
+#: src/pages/looks.py:181
+#, python-brace-format
+msgid "Delete profile \"{name}\"?"
+msgstr "Profiel \"{name}\" verwijderen?"
+
+#: src/pages/looks.py:182
+msgid "This cannot be undone."
+msgstr "Dit kan niet ongedaan worden gemaakt."
+
+#: src/pages/looks.py:184
+msgid "Delete"
+msgstr "Verwijderen"
+
+#: src/pages/overview.py:36 src/window.py:63
+msgid "Overview"
+msgstr "Overzicht"
+
+#: src/pages/overview.py:67
+msgid "Your look at a glance"
+msgstr "Je look in één oogopslag"
+
+#: src/pages/overview.py:70
+msgid ""
+"Everything your desktop is made of. Click a card to jump in and change it."
+msgstr ""
+"Alles waaruit je bureaublad bestaat. Klik op een kaart om het aan te passen."
+
+#: src/pages/overview.py:90
+msgid "Font"
+msgstr "Lettertype"
+
+#: src/pages/overview.py:91 src/pages/shell.py:29 src/pages/shell.py:74
+#: src/window.py:77
+msgid "Shell Theme"
+msgstr "Shell-thema"
+
+#: src/pages/overview.py:95 src/pages/system.py:50
+msgid "Accent color"
+msgstr "Accentkleur"
+
+#: src/pages/overview.py:200 src/pages/overview.py:202
+#: src/pages/overview.py:204 src/pages/overview.py:206
+#: src/pages/overview.py:213
+msgid "not set"
+msgstr "niet ingesteld"
+
+#: src/pages/overview.py:209
+msgid "not available (User Themes missing)"
+msgstr "niet beschikbaar (User Themes ontbreekt)"
+
+#: src/pages/shell.py:41
+msgid "User Themes is required"
+msgstr "User Themes is vereist"
+
+#: src/pages/shell.py:42
+msgid ""
+"The GNOME shell theme is set via the User Themes extension. It is not "
+"installed on this system."
+msgstr ""
+"Het GNOME Shell-thema wordt ingesteld via de User Themes-extensie. Deze is "
+"niet geïnstalleerd op dit systeem."
+
+#: src/pages/shell.py:46
+msgid "User Themes is not enabled"
+msgstr "User Themes is niet ingeschakeld"
+
+#: src/pages/shell.py:47
+msgid ""
+"The User Themes extension is installed but switched off. While it is off, a "
+"chosen shell theme is not applied. Enable it under Extensions, then you can "
+"pick one here."
+msgstr ""
+"De User Themes-extensie is geïnstalleerd maar uitgeschakeld. Zolang deze uit "
+"staat, wordt een gekozen Shell-thema niet toegepast. Schakel het in onder "
+"Extensies, dan kun je er hier een kiezen."
+
+#: src/pages/shell.py:67
+msgid ""
+"Affects the top bar, calendar and quick settings. The preview shows panel "
+"and accent color (approximation)."
+msgstr ""
+"Beinvloedt de bovenste balk, kalender en snelle instellingen. Het voorbeeld "
+"toont paneel en accentkleur (benadering)."
+
+#: src/pages/shell.py:77
+msgid "Install a new shell theme"
+msgstr "Nieuw Shell-thema installeren"
+
+#: src/pages/shell.py:79
+msgid "Drag a shell theme (archive or folder) here"
+msgstr "Sleep een Shell-thema (archief of map) hierheen"
+
+#: src/pages/shell.py:139
+#, python-brace-format
+msgid "before shell theme {name}"
+msgstr "voor Shell-thema {name}"
+
+#: src/pages/shell.py:148
+msgid "Activate shell theme anyway?"
+msgstr "Shell-thema toch activeren?"
+
+#: src/pages/shell.py:166
+msgid "Remove shell theme?"
+msgstr "Shell-thema verwijderen?"
+
+#: src/pages/system.py:20
+msgid "Blue"
+msgstr "Blauw"
+
+#: src/pages/system.py:21
+msgid "Teal"
+msgstr "Blauwgroen"
+
+#: src/pages/system.py:22
+msgid "Green"
+msgstr "Groen"
+
+#: src/pages/system.py:23
+msgid "Yellow"
+msgstr "Geel"
+
+#: src/pages/system.py:24
+msgid "Orange"
+msgstr "Oranje"
+
+#: src/pages/system.py:25
+msgid "Red"
+msgstr "Rood"
+
+#: src/pages/system.py:26
+msgid "Pink"
+msgstr "Roze"
+
+#: src/pages/system.py:27
+msgid "Purple"
+msgstr "Paars"
+
+#: src/pages/system.py:28
+msgid "Slate"
+msgstr "Leisteen"
+
+#: src/pages/system.py:91
+msgid "The accent color can only be set from GNOME 47 onwards."
+msgstr "De accentkleur kan alleen worden ingesteld vanaf GNOME 47."
+
+#: src/pages/system.py:117
+msgid "Color from background"
+msgstr "Kleur uit achtergrond"
+
+#: src/pages/system.py:120
+msgid "Pick the accent color matching the current wallpaper"
+msgstr "Kies de accentkleur die bij de huidige achtergrond past"
+
+#: src/pages/system.py:137
+msgid "No wallpaper found."
+msgstr "Geen achtergrond gevonden."
+
+#: src/pages/system.py:141
+msgid "No matching accent color found."
+msgstr "Geen overeenkomende accentkleur gevonden."
+
+#: src/pages/system.py:145
+msgid "Accent color picked from the background."
+msgstr "Accentkleur gekozen uit de achtergrond."
+
+#: src/pages/system.py:158
+msgid "Window buttons"
+msgstr "Vensterknoppen"
+
+#: src/pages/system.py:159
+msgid ""
+"Which buttons the title bar shows and on which side. Close always stays "
+"visible."
+msgstr ""
+"Welke knoppen de titelbalk toont en aan welke kant. Sluiten blijft altijd "
+"zichtbaar."
+
+#: src/pages/system.py:162
+msgid "Minimize"
+msgstr "Minimaliseren"
+
+#: src/pages/system.py:167
+msgid "Maximize"
+msgstr "Maximaliseren"
+
+#: src/pages/system.py:172
+msgid "Arrangement"
+msgstr "Rangschikking"
+
+#: src/pages/system.py:212
+msgid "Top bar"
+msgstr "Bovenste balk"
+
+#: src/pages/system.py:213
+msgid "What the clock and the system area show."
+msgstr "Wat de klok en het systeemgebied tonen."
+
+#: src/pages/system.py:215
+msgid "Seconds in the clock"
+msgstr "Seconden in de klok"
+
+#: src/pages/system.py:219
+msgid "Show weekday"
+msgstr "Weekdag tonen"
+
+#: src/pages/system.py:223
+msgid "Show date"
+msgstr "Datum tonen"
+
+#: src/pages/system.py:227
+msgid "Battery level in percent"
+msgstr "Batterijniveau in procenten"
+
+#: src/pages/system.py:235
+msgid "Motion"
+msgstr "Beweging"
+
+#: src/pages/system.py:237
+msgid "Animations"
+msgstr "Animaties"
+
+#: src/pages/system.py:237
+msgid "Fade and transition effects of the interface."
+msgstr "Vervagings- en overganseffecten van de interface."
+
+#: src/widgets/card_common.py:38 src/widgets/card_common.py:41
+msgid "Remove this theme"
+msgstr "Dit thema verwijderen"
+
+#: src/widgets/cursor_card.py:66 src/widgets/mehrfach_entfernen.py:51
+#: src/widgets/shell_card.py:90 src/widgets/theme_card.py:97
+msgid "Active"
+msgstr "Actief"
+
+#: src/widgets/cursor_card.py:69 src/widgets/shell_card.py:93
+#: src/widgets/theme_card.py:100
+msgid "Installed"
+msgstr "Geïnstalleerd"
+
+#: src/widgets/dropzone.py:22
+msgid "Drag an archive, a folder or a font here"
+msgstr "Sleep een archief, map of lettertype hierheen"
+
+#: src/widgets/dropzone.py:38
+msgid "Choose file…"
+msgstr "Bestand kiezen…"
+
+#: src/widgets/dropzone.py:40
+msgid "From gnome-look.org…"
+msgstr "Van gnome-look.org…"
+
+#: src/widgets/dropzone.py:41
+msgid "Install from a link. The app then keeps the theme up to date."
+msgstr "Installeren via een link. De app houdt het thema daarna up-to-date."
+
+#: src/widgets/dropzone.py:52
+msgid "Themes, fonts, images and look packages"
+msgstr "Thema's, lettertypen, afbeeldingen en look-pakketten"
+
+#: src/widgets/dropzone.py:57
+msgid "Choose theme or font"
+msgstr "Thema of lettertype kiezen"
+
+#: src/widgets/look_card.py:74
+msgid "Delete profile"
+msgstr "Profiel verwijderen"
+
+#: src/widgets/mehrfach_entfernen.py:31
+msgid "Remove several themes…"
+msgstr "Meerdere thema's verwijderen…"
+
+#: src/widgets/mehrfach_entfernen.py:47
+msgid "Nothing to remove: only built-in themes are installed here."
+msgstr ""
+"Niets te verwijderen: hier zijn alleen ingebouwde thema's geïnstalleerd."
+
+#: src/widgets/mehrfach_entfernen.py:53
+msgid "Remove themes"
+msgstr "Thema's verwijderen"
+
+#: src/widgets/mehrfach_entfernen.py:54
+msgid ""
+"Only themes in your user folder are listed. Built-in themes like Yaru and "
+"Adwaita stay."
+msgstr ""
+"Alleen thema's in je gebruikersmap worden getoond. Ingebouwde thema's zoals "
+"Yaru en Adwaita blijven."
+
+#: src/widgets/mehrfach_entfernen.py:56
+#, python-brace-format
+msgid "Remove ({n})"
+msgstr "Verwijderen ({n})"
+
+#: src/widgets/mehrfach_entfernen.py:64
+#, python-brace-format
+msgid "Remove {n} theme permanently?"
+msgid_plural "Remove {n} themes permanently?"
+msgstr[0] "{n} thema permanent verwijderen?"
+msgstr[1] "{n} thema's permanent verwijderen?"
+
+#: src/widgets/mehrfach_entfernen.py:66
+msgid "They are deleted from your user folder. This cannot be undone."
+msgstr ""
+"Ze worden uit je gebruikersmap verwijderd. Dit kan niet ongedaan worden "
+"gemaakt."
+
+#: src/widgets/mehrfach_entfernen.py:79
+msgid "before removing themes"
+msgstr "voor het verwijderen van thema's"
+
+#: src/widgets/mehrfach_entfernen.py:102
+#, python-brace-format
+msgid "Removed {n} theme."
+msgid_plural "Removed {n} themes."
+msgstr[0] "{n} thema verwijderd."
+msgstr[1] "{n} thema's verwijderd."
+
+#: src/widgets/monitor_arrangement.py:51
+msgid "All displays"
+msgstr "Alle schermen"
+
+#: src/widgets/paket_auswahl.py:36
+msgid "Filter, e.g. Blue or Dark"
+msgstr "Filteren, bijv. Blue of Dark"
+
+#: src/widgets/paket_auswahl.py:69
+msgid "Select all shown"
+msgstr "Alle getoonde selecteren"
+
+#: src/widgets/update_status.py:62
+msgid "From gnome-look.org"
+msgstr "Van gnome-look.org"
+
+#: src/widgets/update_status.py:87
+msgid "Not checked yet"
+msgstr "Nog niet gecontroleerd"
+
+#: src/widgets/update_status.py:94
+msgid "Update…"
+msgstr "Bijwerken…"
+
+#: src/widgets/update_status.py:94
+msgid "Check now"
+msgstr "Nu controleren"
+
+#: src/widgets/wallpaper_card.py:64 src/widgets/wallpaper_card.py:66
+msgid "Remove from the app (file is kept)"
+msgstr "Uit de app verwijderen (bestand blijft bewaard)"
+
+#: src/widgets/wallpaper_card.py:89
+msgid "Or drag images into the window"
+msgstr "Of sleep afbeeldingen naar het venster"
+
+#: src/widgets/wallpaper_card.py:100
+msgid "Add image"
+msgstr "Afbeelding toevoegen"
+
+#: src/widgets/welcome.py:22
+msgid "Customize the GNOME desktop appearance in one place."
+msgstr "Pas de uitstraling van het GNOME-bureaublad op een plek aan."
+
+#: src/widgets/welcome.py:23
+msgid "Everything in one place"
+msgstr "Alles op een plek"
+
+#: src/widgets/welcome.py:24
+msgid ""
+"Background, GTK theme, icons, cursor, fonts and the shell theme. Every "
+"change takes effect immediately."
+msgstr ""
+"Achtergrond, GTK-thema, pictogrammen, cursor, lettertypen en het Shell-"
+"thema. Elke wijziging wordt direct toegepast."
+
+#: src/widgets/welcome.py:26
+msgid "Save looks"
+msgstr "Looks opslaan"
+
+#: src/widgets/welcome.py:27
+msgid ""
+"Create profiles, for example day and night, and switch with one click. Or "
+"back up everything to a file."
+msgstr ""
+"Maak profielen aan, bijvoorbeeld dag en nacht, en wissel met een klik. Of "
+"sla alles op in een back-upbestand."
+
+#: src/widgets/welcome.py:29
+msgid "Ready"
+msgstr "Klaar"
+
+#: src/widgets/welcome.py:30
+msgid ""
+"Tip: some shell themes need the User Themes extension. Have fun customizing."
+msgstr ""
+"Tip: sommige Shell-themas hebben de User Themes-extensie nodig. Veel plezier "
+"met aanpassen."
+
+#: src/widgets/welcome.py:40
+msgid "Welcome"
+msgstr "Welkom"
+
+#: src/widgets/welcome.py:53 src/widgets/welcome.py:119
+msgid "Next"
+msgstr "Volgende"
+
+#: src/widgets/welcome.py:119
+msgid "Get started"
+msgstr "Aan de slag"
+
+#: src/window.py:159
 msgid ""
 "A leftover KDE theme-reload module is active. On GNOME it can freeze the "
 "whole session on a theme change. The app can remove it safely (a backup is "
@@ -1825,79 +1730,74 @@ msgstr ""
 "sessie laten vastlopen bij een themawissel. De app kan die veilig "
 "verwijderen (er blijft een back-up bewaard)."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:162
+#: src/window.py:162
 msgid "Remove it"
 msgstr "Verwijderen"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:172
+#: src/window.py:172
 #, python-brace-format
 msgid "Not found: {names}. GNOME falls back to Adwaita."
 msgstr "Niet gevonden: {names}. GNOME valt terug op Adwaita."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:174
+#: src/window.py:174
 msgid "Set default"
 msgstr "Standaard instellen"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:186
+#: src/window.py:186
 msgid "Removed the theme-reload module. Fully effective after the next login."
 msgstr "Herlaadmodule verwijderd. Volledig actief na de volgende aanmelding."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:191
+#: src/window.py:191
 msgid "Could not remove the module."
 msgstr "Kon de module niet verwijderen."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:197
+#: src/window.py:197
 msgid "Reset to a safe default theme."
 msgstr "Terugzetten naar een veilig standaardthema."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:206
+#: src/window.py:206
 msgid "Drop to install themes, icons, cursors, fonts, wallpapers or extensions"
 msgstr ""
 "Loslaten om thema's, pictogrammen, cursors, lettertypen, achtergronden of "
 "extensies te installeren"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:232
+#: src/window.py:232
 msgid "Only local files and gnome-look.org links can be installed."
 msgstr ""
 "Alleen lokale bestanden en links van gnome-look.org kunnen worden "
 "geïnstalleerd."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:241
+#: src/window.py:241
 msgid "Only local files can be installed. Download the file first."
 msgstr ""
 "Alleen lokale bestanden kunnen worden geïnstalleerd. Download het bestand "
 "eerst."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:283
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:325
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:424
+#: src/window.py:283 src/window.py:325 src/window.py:424
 msgid "Installing…"
 msgstr "Installeren…"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:332
+#: src/window.py:332
 msgid "Choose what to install"
 msgstr "Kiezen wat er wordt geïnstalleerd"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:333
+#: src/window.py:333
 #, python-brace-format
 msgid "{file} contains {n} theme. Choose what you want."
 msgid_plural "{file} contains {n} themes. Choose what you want."
 msgstr[0] "{file} bevat {n} thema. Kies wat je wilt."
 msgstr[1] "{file} bevat {n} thema's. Kies wat je wilt."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:337
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:704
+#: src/window.py:337 src/window.py:704
 #, python-brace-format
 msgid "Install ({n})"
 msgstr "Installeren ({n})"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:337
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:666
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:704
+#: src/window.py:337 src/window.py:666 src/window.py:704
 msgid "Install"
 msgstr "Installeren"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:356
+#: src/window.py:356
 msgid ""
 "The new version uses CSS that GTK does not understand. The active theme was "
 "left unchanged."
@@ -1905,81 +1805,82 @@ msgstr ""
 "De nieuwe versie gebruikt CSS die GTK niet begrijpt. Het actieve thema is "
 "niet gewijzigd."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:393
+#: src/window.py:393
 #, python-brace-format
 msgid "and {n} more"
 msgid_plural "and {n} more"
 msgstr[0] "en nog {n}"
 msgstr[1] "en nog {n}"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:396
+#: src/window.py:396
 #, python-brace-format
 msgid "Installed: {items}"
 msgstr "Geïnstalleerd: {items}"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:400
+#: src/window.py:400
 msgid "Could not install"
 msgstr "Installeren mislukt"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:402
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:746
+#: src/window.py:402 src/window.py:746
 msgid "OK"
 msgstr "OK"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:409
+#: src/window.py:409
 msgid "Apply look package?"
 msgstr "Look-pakket toepassen?"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:410
+#: src/window.py:410
 #, python-brace-format
 msgid ""
 "\"{name}\" installs its themes and applies the whole look. A restore point "
 "is created first. Themes of the same name that you already have are moved to "
 "the trash."
-msgstr "\"{name}\" installeert de thema's en past de hele look toe. Eerst wordt een herstelpunt gemaakt. Thema's met dezelfde naam die je al hebt, gaan naar de prullenbak."
+msgstr ""
+"\"{name}\" installeert de thema's en past de hele look toe. Eerst wordt een "
+"herstelpunt gemaakt. Thema's met dezelfde naam die je al hebt, gaan naar de "
+"prullenbak."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:433
+#: src/window.py:433
 msgid "The look package could not be read."
 msgstr "Het look-pakket kon niet worden gelezen."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:443
+#: src/window.py:443
 msgid "That is not a valid look package."
 msgstr "Dit is geen geldig look-pakket."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:446
+#: src/window.py:446
 msgid "Look package applied."
 msgstr "Look-pakket toegepast."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:515
+#: src/window.py:515
 msgid "SETTINGS"
 msgstr "INSTELLINGEN"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:562
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:599
+#: src/window.py:562 src/window.py:599
 msgid "Restore safe state"
 msgstr "Veilige staat herstellen"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:563
+#: src/window.py:563
 msgid "Check theme updates"
 msgstr "Thema-updates controleren"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:565
+#: src/window.py:565
 msgid "Check for updates"
 msgstr "Controleren op updates"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:566
+#: src/window.py:566
 msgid "About Design Manager"
 msgstr "Over Design Manager"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:567
+#: src/window.py:567
 msgid "Quit"
 msgstr "Afsluiten"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:572
+#: src/window.py:572
 msgid "Main menu"
 msgstr "Hoofdmenu"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:583
+#: src/window.py:583
 msgid ""
 "Customize the GNOME desktop appearance in one place: background, themes, "
 "icons, cursor and fonts."
@@ -1987,11 +1888,11 @@ msgstr ""
 "Pas de uitstraling van het GNOME-bureaublad op een plek aan: achtergrond, "
 "themas, pictogrammen, cursor en lettertypen."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:593
+#: src/window.py:593
 msgid "Restore safe state?"
 msgstr "Veilige staat herstellen?"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:594
+#: src/window.py:594
 msgid ""
 "First a restore point is created, then the theme, icons, cursor and shell "
 "theme are set to guaranteed working defaults (Adwaita). This helps when a "
@@ -2002,23 +1903,23 @@ msgstr ""
 "standaardwaarden (Adwaita). Dit helpt als een thema de interface onbruikbaar "
 "heeft gemaakt."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:606
+#: src/window.py:606
 msgid "before emergency reset"
 msgstr "voor noodherstel"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:629
+#: src/window.py:629
 msgid "Safe state restored (Adwaita)."
 msgstr "Veilige staat hersteld (Adwaita)."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:657
+#: src/window.py:657
 msgid "That is not a link to a gnome-look.org page."
 msgstr "Dat is geen link naar een pagina op gnome-look.org."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:661
+#: src/window.py:661
 msgid "Install from gnome-look.org"
 msgstr "Installeren van gnome-look.org"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:662
+#: src/window.py:662
 msgid ""
 "Open the theme page on gnome-look.org, copy the address from the address bar "
 "and paste it here. The app installs the theme and keeps it up to date."
@@ -2027,30 +1928,30 @@ msgstr ""
 "adresbalk en plak het hier. De app installeert het thema en houdt het up-to-"
 "date."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:671
+#: src/window.py:671
 msgid "Looking up the gnome-look entry…"
 msgstr "gnome-look-item wordt opgehaald…"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:699
+#: src/window.py:699
 msgid "Choose files"
 msgstr "Bestanden kiezen"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:700
+#: src/window.py:700
 #, python-brace-format
 msgid "{title} offers {n} file. Choose what you want."
 msgid_plural "{title} offers {n} files. Choose what you want."
 msgstr[0] "{title} biedt {n} bestand. Kies wat je wilt."
 msgstr[1] "{title} biedt {n} bestanden. Kies wat je wilt."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:713
+#: src/window.py:713
 msgid "Checking theme updates…"
 msgstr "Thema-updates worden gecontroleerd…"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:742
+#: src/window.py:742
 msgid "No themes from gnome-look.org yet"
 msgstr "Nog geen thema's van gnome-look.org"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:743
+#: src/window.py:743
 msgid ""
 "Install a theme with the \"From gnome-look.org…\" button on the theme pages. "
 "The app checks it for updates from then on."
@@ -2058,26 +1959,26 @@ msgstr ""
 "Installeer een thema met de knop \"Van gnome-look.org…\" op de "
 "themapagina's. De app controleert het vanaf dan op updates."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:749
+#: src/window.py:749
 msgid "All themes from gnome-look.org are up to date."
 msgstr "Alle thema's van gnome-look.org zijn up-to-date."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:755
+#: src/window.py:755
 #, python-brace-format
 msgid "Update available for {n} theme"
 msgid_plural "Updates available for {n} themes"
 msgstr[0] "Update beschikbaar voor {n} thema"
 msgstr[1] "Updates beschikbaar voor {n} thema's"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:756
+#: src/window.py:756
 msgid "Show"
 msgstr "Tonen"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:774
+#: src/window.py:774
 msgid "Found on gnome-look.org"
 msgstr "Gevonden op gnome-look.org"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:775
+#: src/window.py:775
 msgid ""
 "These installed themes are also on gnome-look.org. The app downloads each "
 "file once and compares it with your version. Matching themes are then "
@@ -2087,27 +1988,27 @@ msgstr ""
 "elk bestand één keer en vergelijkt het met jouw versie. Overeenkomende "
 "thema's worden daarna op updates gecontroleerd."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:781
+#: src/window.py:781
 #, python-brace-format
 msgid "Link ({n})"
 msgstr "Koppelen ({n})"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:781
+#: src/window.py:781
 msgid "Link"
 msgstr "Koppelen"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:787
+#: src/window.py:787
 msgid "Comparing with gnome-look.org…"
 msgstr "Vergelijken met gnome-look.org…"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:816
+#: src/window.py:816
 #, python-brace-format
 msgid "Linked {n} theme to gnome-look.org."
 msgid_plural "Linked {n} themes to gnome-look.org."
 msgstr[0] "{n} thema aan gnome-look.org gekoppeld."
 msgstr[1] "{n} thema's aan gnome-look.org gekoppeld."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:821
+#: src/window.py:821
 #, python-brace-format
 msgid ""
 "{n} theme differs from the gnome-look.org file and is not checked for "
@@ -2122,11 +2023,11 @@ msgstr[1] ""
 "{n} thema's wijken af van het bestand op gnome-look.org en worden niet op "
 "updates gecontroleerd."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:836
+#: src/window.py:836
 msgid "Theme updates"
 msgstr "Thema-updates"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:837
+#: src/window.py:837
 msgid ""
 "New versions are available on gnome-look.org. Themes in use change after the "
 "next login."
@@ -2134,29 +2035,28 @@ msgstr ""
 "Er zijn nieuwe versies beschikbaar op gnome-look.org. Thema's die in gebruik "
 "zijn, veranderen na de volgende aanmelding."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:842
+#: src/window.py:842
 #, python-brace-format
 msgid "Update ({n})"
 msgstr "Bijwerken ({n})"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:842
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:874
+#: src/window.py:842 src/window.py:874
 msgid "Update"
 msgstr "Bijwerken"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:847
+#: src/window.py:847
 msgid "Checking for updates…"
 msgstr "Controleren op updates…"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:865
+#: src/window.py:865
 msgid "You have the latest version."
 msgstr "Je hebt de nieuwste versie."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:869
+#: src/window.py:869
 msgid "Update available"
 msgstr "Update beschikbaar"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:870
+#: src/window.py:870
 #, python-brace-format
 msgid ""
 "Version {new} is ready (installed: {cur}). Download and install it now? This "
@@ -2165,20 +2065,20 @@ msgstr ""
 "Versie {new} is beschikbaar (geïnstalleerd: {cur}). Nu downloaden en "
 "installeren? Dit vraagt eenmalig om het beheerderswachtwoord."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:873
+#: src/window.py:873
 msgid "Later"
 msgstr "Later"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:885
+#: src/window.py:885
 #, python-brace-format
 msgid "Downloading version {ver}… (enter password)"
 msgstr "Versie {ver} downloaden… (wachtwoord invoeren)"
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:900
+#: src/window.py:900
 msgid "Updated. Please restart the app."
 msgstr "Bijgewerkt. Herstart de app."
 
-#: ⁨/mnt/3258545c-3c1f-4f3b-8dfc-8664328102bb/App-Entwicklung/Design Manager/src/window.py⁩:902
+#: src/window.py:902
 msgid "Update failed or canceled."
 msgstr "Bijwerken mislukt of geannuleerd."
 

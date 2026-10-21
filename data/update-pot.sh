@@ -9,10 +9,11 @@ POT="$PO/design-manager.pot"
 
 mkdir -p "$PO"
 
-# Collect all source files. xgettext --files-from reads newline-separated
-# names; .py paths have no newlines, so this is safe even with spaces in the
-# project path.
-find "$PROJEKT/main.py" "$PROJEKT/src" -name '*.py' \
+# Collect all source files relative to the project root, so the #: references
+# in the .pot/.po files never contain the local checkout path. Sorted for a
+# stable order across machines.
+cd "$PROJEKT"
+find main.py src -name '*.py' | LC_ALL=C sort \
     | xgettext --files-from=- --from-code=UTF-8 \
         --language=Python \
         --keyword=_ --keyword=ngettext:1,2 \
