@@ -117,6 +117,7 @@ class MainWindow(Adw.ApplicationWindow):
         wurzel.append(self._toasts)
         self.set_content(self._drop_flaeche(wurzel))
         self._installiert_gerade = False
+        self._warteschlange = []  # Aufträge, die während einer Installation kamen
 
         # Startauswahl: erste echte Zeile, löst row-selected aus.
         self._listbox.select_row(self._erste_zeile)
@@ -259,12 +260,26 @@ class MainWindow(Adw.ApplicationWindow):
         self._analysiere([(os.path.basename(p.rstrip(os.sep)),
                            lambda p=p: installer.analysiere(p)) for p in pfade])
 
+    def _belege(self, auftrag):
+        """True, wenn nichts installiert wird (dann ist es jetzt belegt). Sonst
+        startet auftrag nach dem laufenden, statt verloren zu gehen: ein mit
+        Dateien gezogenes .dmlook wird erst nach deren Installation bestätigt.
+        Alle Wege schreiben in dieselben Ordner und in sources.json."""
+        if self._installiert_gerade:
+            self._warteschlange.append(auftrag)
+            return False
+        self._installiert_gerade = True
+        return True
+
+    def _gib_frei(self):
+        self._installiert_gerade = False
+        if self._warteschlange:
+            self._warteschlange.pop(0)()
+
     def _analysiere(self, auftraege):
         """auftraege: (name, funktion, die ein installer.Paket liefert)."""
-        if self._installiert_gerade:
-            self.zeige_toast(_("An installation is already running."))
+        if not self._belege(lambda: self._analysiere(auftraege)):
             return
-        self._installiert_gerade = True
         laeuft = Adw.Toast(title=_("Installing…"), timeout=0)
         self._toasts.add_toast(laeuft)
 
@@ -371,7 +386,6 @@ class MainWindow(Adw.ApplicationWindow):
         threading.Thread(target=worker, daemon=True).start()
 
     def _installation_fertig(self, laeuft, ergebnis, fehler):
-        self._installiert_gerade = False
         laeuft.dismiss()
         if ergebnis:
             gezeigt = ", ".join(ergebnis[:3])
@@ -386,6 +400,7 @@ class MainWindow(Adw.ApplicationWindow):
                 _("Could not install"),
                 "\n\n".join(fehler),
                 [("ok", _("OK"), "")], default="ok", close="ok")
+        self._gib_frei()
         return GLib.SOURCE_REMOVE
 
     def _frage_look_import(self, pfad):
@@ -393,7 +408,8 @@ class MainWindow(Adw.ApplicationWindow):
             self,
             _("Apply look package?"),
             _('"{name}" installs its themes and applies the whole look. A '
-              "restore point is created first.").format(
+              "restore point is created first. Themes of the same name that "
+              "you already have are moved to the trash.").format(
                   name=os.path.basename(pfad)),
             [("abbrechen", _("Cancel"), ""),
              ("anwenden", _("Apply"), "suggested")],
@@ -403,10 +419,8 @@ class MainWindow(Adw.ApplicationWindow):
 
     def importiere_look(self, pfad):
         """.dmlook im Hintergrund entpacken, danach im Hauptthread anwenden."""
-        if self._installiert_gerade:
-            self.zeige_toast(_("An installation is already running."))
+        if not self._belege(lambda: self.importiere_look(pfad)):
             return
-        self._installiert_gerade = True
         laeuft = Adw.Toast(title=_("Installing…"), timeout=0)
         self._toasts.add_toast(laeuft)
 
@@ -422,7 +436,6 @@ class MainWindow(Adw.ApplicationWindow):
         threading.Thread(target=worker, daemon=True).start()
 
     def _look_fertig(self, laeuft, ergebnis, fehler):
-        self._installiert_gerade = False
         laeuft.dismiss()
         if fehler:
             self.zeige_toast(fehler)
@@ -431,6 +444,7 @@ class MainWindow(Adw.ApplicationWindow):
         else:
             looksbundle.wende_an(self._settings, *ergebnis)
             self.melde_und_reload(_("Look package applied."))
+        self._gib_frei()
         return GLib.SOURCE_REMOVE
 
     def zeige_toast(self, text):
@@ -768,10 +782,8 @@ class MainWindow(Adw.ApplicationWindow):
 
     def _verknuepfe(self, auswahl):
         # Gleiche Sperre wie Installationen: beide schreiben sources.json.
-        if self._installiert_gerade:
-            self.zeige_toast(_("An installation is already running."))
+        if not self._belege(lambda: self._verknuepfe(auswahl)):
             return
-        self._installiert_gerade = True
         laeuft = Adw.Toast(title=_("Comparing with gnome-look.org…"), timeout=0)
         self._toasts.add_toast(laeuft)
 
@@ -787,7 +799,7 @@ class MainWindow(Adw.ApplicationWindow):
             try:
                 liste, netzfehler = gnomelook.updates()
             except Exception:
-                # Sonst bliebe _installiert_gerade bis zum Neustart gesetzt.
+                # Sonst bliebe die Installation bis zum Neustart belegt.
                 liste = []
                 netzfehler = _("gnome-look.org could not be reached.")
             GLib.idle_add(self._verknuepft, laeuft, verknuepft, anders, liste,
@@ -796,7 +808,6 @@ class MainWindow(Adw.ApplicationWindow):
         threading.Thread(target=worker, daemon=True).start()
 
     def _verknuepft(self, laeuft, verknuepft, anders, liste, netzfehler):
-        self._installiert_gerade = False
         laeuft.dismiss()
         namen = {os.path.basename(p) for p in verknuepft}
         andere = {os.path.basename(p) for p in anders} - namen
@@ -811,6 +822,7 @@ class MainWindow(Adw.ApplicationWindow):
                 "checked for updates.",
                 "{n} themes differ from the gnome-look.org file and are not "
                 "checked for updates.", len(andere)).format(n=len(andere)))
+        self._gib_frei()
         self._theme_updates_da(liste, netzfehler, True)
         return GLib.SOURCE_REMOVE
 

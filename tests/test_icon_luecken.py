@@ -71,8 +71,12 @@ def main():
             ("f.desktop", "F", "nirgends", ""),
             ("g.desktop", "G", os.path.join(T, "pfad.svg"), ""),
             ("h.desktop", "H", "versteckt", "NoDisplay=true\n"),
-            ("i.desktop", "I", "nur-kde", "OnlyShowIn=KDE;\n")]:
+            ("i.desktop", "I", "nur-kde", "OnlyShowIn=KDE;\n"),
+            # relativer Pfad statt Icon-Name: fände über Vorher eine Quelle und
+            # würde beim Schreiben aus dem Overlay ausbrechen
+            ("j.desktop", "J", "../../../raus", "")]:
         starter(SYS, id_, name, icon, extra)
+    datei(os.path.join(SYS, "icons", "raus.svg"))
     # Lokale Kopie eines Snap-Starters mit Icon-Namen, das Original hat den Pfad.
     datei(os.path.join(T, "snap", "icon.png"), PNG32)
     starter(SNAPD, "foo_foo.desktop", "Foo", os.path.join(T, "snap", "icon.png"))

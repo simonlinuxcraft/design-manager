@@ -12,6 +12,7 @@ GTK-Apps reagieren und die Sitzung lahmlegen. Die App bietet an, es zu entfernen
 """
 
 import os
+import shutil
 import tempfile
 
 from src.core import themes
@@ -76,13 +77,16 @@ def entferne_reload_module():
                 f.writelines(zeilen)
             # Atomar ersetzen: erst in eine Temp-Datei im selben Ordner, dann
             # umbenennen. Ein Fehler mitten im Schreiben darf die settings.ini
-            # nie abgeschnitten zurücklassen.
-            fd, tmp = tempfile.mkstemp(dir=os.path.dirname(pfad),
+            # nie abgeschnitten zurücklassen. Über realpath, damit ein
+            # Dotfile-Symlink Symlink bleibt; Rechte vom Original.
+            echt = os.path.realpath(pfad)
+            fd, tmp = tempfile.mkstemp(dir=os.path.dirname(echt),
                                        prefix=".dm-ini-", suffix=".ini")
             try:
                 with os.fdopen(fd, "w", encoding="utf-8") as f:
                     f.writelines(neu)
-                os.replace(tmp, pfad)
+                shutil.copymode(echt, tmp)
+                os.replace(tmp, echt)
             except OSError:
                 try:
                     os.unlink(tmp)

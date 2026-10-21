@@ -37,6 +37,7 @@ class WallpaperCard(Gtk.FlowBoxChild):
         self.add_css_class("theme-card")
         self.add_css_class("kompakt")
         self.set_tooltip_text(os.path.basename(pfad))
+        compat.a11y(self, label=os.path.basename(pfad))
 
         thumb = _Thumb()
         compat.set_cover(thumb)
@@ -61,6 +62,8 @@ class WallpaperCard(Gtk.FlowBoxChild):
             knopf.set_margin_top(4)
             knopf.set_margin_end(4)
             knopf.set_tooltip_text(_("Remove from the app (file is kept)"))
+            compat.a11y(knopf, label="{}: {}".format(
+                _("Remove from the app (file is kept)"), os.path.basename(pfad)))
             knopf.connect("clicked", lambda _b: on_entfernen(pfad))
             overlay.add_overlay(knopf)
 
@@ -72,6 +75,7 @@ class WallpaperCard(Gtk.FlowBoxChild):
             self.add_css_class("aktiv")
         else:
             self.remove_css_class("aktiv")
+        compat.a11y(self, selected=aktiv)
 
 
 class HinzufuegenKachel(Gtk.FlowBoxChild):

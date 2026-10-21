@@ -21,6 +21,7 @@ ausbrechen würden, brechen den Import ab.
 import json
 import os
 import shutil
+import stat
 import tempfile
 import zipfile
 
@@ -54,13 +55,25 @@ def _quell_ordner(name, kategorie):
 
 
 def _zippe_ordner(z, ordner, arc_prefix):
-    for wurzel, _dirs, dateien in os.walk(ordner):
-        for datei in dateien:
-            voll = os.path.join(wurzel, datei)
-            if os.path.islink(voll) and not os.path.exists(voll):
-                continue  # toter Symlink
-            rel = os.path.relpath(voll, ordner)
-            z.write(voll, arc_prefix + "/" + rel)
+    """Packt ordner unter arc_prefix. Links, die innerhalb bleiben, gehen als
+    Links ins ZIP (Größen-Ordner wie 24x24@2x -> 48x48 sind Ordner-Links, die
+    os.walk nicht betritt); Datei-Links nach außen werden aufgelöst."""
+    grenze = os.path.realpath(ordner) + os.sep
+    for wurzel, dirs, dateien in os.walk(ordner):
+        for name in dirs + dateien:
+            voll = os.path.join(wurzel, name)
+            arc = arc_prefix + "/" + os.path.relpath(voll, ordner)
+            if os.path.islink(voll):
+                if not os.path.exists(voll):
+                    continue  # toter Symlink
+                real = os.path.realpath(voll)
+                if real.startswith(grenze):
+                    info = zipfile.ZipInfo(arc)
+                    info.external_attr = (stat.S_IFLNK | 0o777) << 16
+                    z.writestr(info, os.path.relpath(real, os.path.realpath(wurzel)))
+                    continue
+            if name in dateien:
+                z.write(voll, arc)
 
 
 def exportiere(settings, ziel_zip):
@@ -88,12 +101,14 @@ def exportiere(settings, ziel_zip):
 
         gesehen = set()
         for name, kategorie, prefix in quellen:
-            if not name:
+            if not name or os.sep in name or name.startswith("."):
                 continue
             ordner = _quell_ordner(name, kategorie)
             if ordner is None:
                 continue  # systemweit oder nicht gefunden -> nicht mitpacken
-            arc = prefix + "/" + os.path.basename(ordner)
+            # Unter dem Namen aus dconf, nicht dem des Link-Ziels: das Manifest
+            # verweist auf diesen Namen.
+            arc = prefix + "/" + name
             if arc in gesehen:
                 continue  # gtk und shell teilen oft denselben Ordner
             gesehen.add(arc)
@@ -136,7 +151,14 @@ def _bereinige_themes(settings, einstellungen):
          set(themes.list_shell_themes()) | {""}),
     ]
     bereinigt = {schema: dict(werte)
-                 for schema, werte in einstellungen.items()}
+                 for schema, werte in einstellungen.items()
+                 if isinstance(werte, dict)}
+    # Der Hintergrund kommt nur aus dem mitgelieferten Bild (wende_an), nie als
+    # fremde URI aus dem Manifest: die könnte auf beliebige Dateien oder per
+    # gvfs ins Netz zeigen.
+    hintergrund = bereinigt.get(settings.BACKGROUND, {})
+    for key in ("picture-uri", "picture-uri-dark"):
+        hintergrund.pop(key, None)
     for schema, key, erlaubt in pruefungen:
         werte = bereinigt.get(schema)
         if not werte or key not in werte:
@@ -183,7 +205,8 @@ def entpacke(quelle_zip):
                         or not os.path.isdir(quelle)
                         or installer._systemname(name)):
                     continue
-                installer._ersetze_ordner(quelle, os.path.join(ziel_basis, name))
+                installer._ersetze_ordner(quelle, os.path.join(ziel_basis, name),
+                                          alt_in_papierkorb=True)
         wallpaper = None
         for bild in installer._dateien(os.path.join(arbeit, "backgrounds"),
                                        backgrounds.ENDUNGEN, 1):

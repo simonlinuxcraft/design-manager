@@ -5,16 +5,18 @@ mitgelieferte .deb. Die Installation laeuft ueber pkexec (apt-get loest dabei
 Abhaengigkeiten auf). Netzwerk und Download liegen in einem Hintergrund-Thread;
 die UI ruft pruefe()/lade_und_installiere() und bekommt das Ergebnis per Callback.
 
-Sicherheit: HTTPS mit Zertifikatspruefung (urllib-Standardkontext). Liefert die
-GitHub-API einen sha256-Digest fuer das Asset, wird er nach dem Download geprueft;
-sonst dient die gemeldete Dateigroesse als einfacher Integritaetsabgleich. Das
-.deb wird als root installiert, der Nutzer bestaetigt das ueber den
+Sicherheit: HTTPS mit Zertifikatspruefung (urllib-Standardkontext). Ohne
+sha256-Digest der GitHub-API gibt es kein Update. Geprueft wird zweimal: nach
+dem Download als Nutzer (scheitert frueh, vor der Passwortfrage) und noch einmal
+als root an einer root-eigenen Kopie, damit niemand die Datei waehrend der
+Passwortfrage austauschen kann. Der Nutzer bestaetigt ueber den
 pkexec-Passwortdialog.
 """
 
 import hashlib
 import json
 import os
+import re
 import shutil
 import subprocess
 import tempfile
@@ -34,12 +36,10 @@ _KOPF = {"User-Agent": "design-manager-updater",
 
 
 def _version_tupel(text):
-    """'v1.2.3' -> (1, 2, 3). Nicht-Ziffern werden ignoriert."""
-    teile = []
-    for stueck in text.strip().lstrip("vV").split("."):
-        ziffern = "".join(c for c in stueck if c.isdigit())
-        teile.append(int(ziffern) if ziffern else 0)
-    return tuple(teile) or (0,)
+    """'v1.2.3' -> (1, 2, 3). Zusätze wie '-2' oder '-rc1' zählen nicht mit,
+    sonst würde '0.1.5-2' zu 0.1.52 und schiene neuer als 0.1.6."""
+    treffer = re.match(r"[vV]?(\d+(?:\.\d+)*)", text.strip())
+    return tuple(int(t) for t in treffer.group(1).split(".")) if treffer else (0,)
 
 
 def pruefe(aktuelle_version):
@@ -67,7 +67,9 @@ def pruefe(aktuelle_version):
         if not url.startswith("https://"):
             return None
         digest = asset.get("digest") or ""  # Format "sha256:abc..."
-        sha256 = digest.split(":", 1)[1] if digest.startswith("sha256:") else ""
+        sha256 = digest.split(":", 1)[1].lower() if digest.startswith("sha256:") else ""
+        if not re.fullmatch(r"[0-9a-f]{64}", sha256):
+            return None
         return {
             "version": tag.lstrip("vV"),
             "url": url,
@@ -106,34 +108,35 @@ def _lade_herunter(info):
 
 
 def _integritaet_ok(pfad, info):
-    """Prueft sha256 (wenn vorhanden), sonst die gemeldete Dateigroesse."""
+    """Prueft den sha256 aus der GitHub-API."""
     sha256 = info.get("sha256", "")
-    if sha256:
-        h = hashlib.sha256()
-        try:
-            with open(pfad, "rb") as f:
-                for block in iter(lambda: f.read(1 << 16), b""):
-                    h.update(block)
-        except OSError:
-            return False
-        return h.hexdigest().lower() == sha256.lower()
-
-    groesse = info.get("groesse", 0)
-    if groesse:
-        try:
-            return os.path.getsize(pfad) == groesse
-        except OSError:
-            return False
-    # Ohne Digest und ohne Groesse keine Pruefung moeglich: lieber ablehnen.
-    return False
+    if not sha256:
+        return False
+    h = hashlib.sha256()
+    try:
+        with open(pfad, "rb") as f:
+            for block in iter(lambda: f.read(1 << 16), b""):
+                h.update(block)
+    except OSError:
+        return False
+    return h.hexdigest() == sha256
 
 
-def _installiere(deb_pfad):
-    """Installiert das .deb als root ueber pkexec apt-get. True bei Erfolg."""
+# Laeuft als root: erst in einen root-eigenen Ordner kopieren, dort erneut
+# pruefen, dann installieren. $1 = .deb des Nutzers, $2 = erwarteter sha256.
+_ALS_ROOT = (
+    'set -eu; d="$(mktemp -d)"; trap \'rm -f "$d/update.deb"; rmdir "$d"\' EXIT; '
+    'cp -- "$1" "$d/update.deb"; chmod 755 "$d"; chmod 644 "$d/update.deb"; '
+    'echo "$2  $d/update.deb" | sha256sum --check --status; '
+    'apt-get install -y "$d/update.deb"')
+
+
+def _installiere(deb_pfad, sha256):
+    """Installiert das .deb als root ueber pkexec. True bei Erfolg."""
     try:
         erg = subprocess.run(
-            ["pkexec", "apt-get", "install", "-y", "--allow-downgrades",
-             os.path.abspath(deb_pfad)],
+            ["pkexec", "/bin/sh", "-c", _ALS_ROOT, "sh",
+             os.path.abspath(deb_pfad), sha256],
             stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=300)
         return erg.returncode == 0
     except (OSError, subprocess.SubprocessError):
@@ -157,7 +160,7 @@ def lade_und_installiere(info):
     if deb is None:
         return False
     try:
-        return _installiere(deb)
+        return _installiere(deb, info["sha256"])
     finally:
         _entferne(deb)
 

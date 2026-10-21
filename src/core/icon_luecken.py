@@ -186,6 +186,8 @@ def bericht(theme, vorher=None):
         if not isinstance(icon, Gio.ThemedIcon):
             continue
         name = icon.get_names()[0]
+        if "/" in name or name.startswith("."):
+            continue  # kein Theme-Icon-Name; wird unten zum Dateinamen
         if name in eigene:
             b["ergaenzt"].append(app)
         elif name in vorhanden:

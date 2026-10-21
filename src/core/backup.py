@@ -78,6 +78,15 @@ def _profil_pfad(name):
     return os.path.join(PROFIL_DIR, name + ".json")
 
 
+def _gelistetes_profil(name):
+    """Pfad eines Profils aus list_profiles(). Die Namen dort sind Dateinamen
+    und können Zeichen tragen, die sicherer_name() entfernen würde (z.B. von
+    Hand abgelegte "Nacht v1.2.json"), darum nur prüfen, nicht umbauen."""
+    if not name or os.sep in name or name in (".", ".."):
+        raise ValueError("ungültiger Profilname")
+    return _profil_pfad(name)
+
+
 def list_profiles():
     """Namen aller gespeicherten Profile, alphabetisch sortiert."""
     try:
@@ -101,12 +110,12 @@ def save_profile(settings, name):
 
 def load_profile(settings, name):
     """Wendet ein gespeichertes Profil an. Rückgabe wie load_from_file."""
-    return load_from_file(settings, _profil_pfad(sicherer_name(name)))
+    return load_from_file(settings, _gelistetes_profil(name))
 
 
 def delete_profile(name):
     """Löscht ein Profil. Ein nicht vorhandenes Profil ist kein Fehler."""
-    pfad = _profil_pfad(sicherer_name(name))
+    pfad = _gelistetes_profil(name)
     try:
         os.remove(pfad)
     except FileNotFoundError:

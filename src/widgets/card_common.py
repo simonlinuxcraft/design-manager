@@ -8,6 +8,7 @@ sitzt der gnome-look-Update-Zustand (unsichtbar, solange keiner bekannt ist).
 
 from gi.repository import Gtk
 
+from src import compat
 from src.i18n import _
 from src.widgets.update_status import StatusSymbol
 
@@ -35,6 +36,9 @@ def status_zeile(karte, loeschbar, on_loeschen):
         knopf.add_css_class("card-trash")
         knopf.set_valign(Gtk.Align.CENTER)
         knopf.set_tooltip_text(_("Remove this theme"))
+        # Für Screenreader mit Namen, sonst klingt jeder Mülleimer gleich.
+        compat.a11y(knopf, label="{}: {}".format(
+            _("Remove this theme"), getattr(karte, "theme_name", "")))
         # Der Button verarbeitet seinen Klick selbst; die FlowBox wertet ihn
         # darum nicht als Auswahl der Karte.
         knopf.connect("clicked", lambda _b: on_loeschen(karte))

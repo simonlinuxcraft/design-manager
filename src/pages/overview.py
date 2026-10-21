@@ -170,10 +170,11 @@ class OverviewPage(compat.PageBase):
         """Das Wallpaper als abgerundetes Bild, zentriert und klickbar, ohne
         Karten-Rahmen und ohne Beschriftung.
 
-        Ein GestureClick statt eines Buttons, damit kein Knopf-Chrome ums Bild
-        liegt; der Zeiger wird zur Hand, damit die Klickbarkeit klar ist. Die
-        umschließende Box mit valign START hält die feste Bildhöhe; ein Picture
-        allein zöge sich sonst auf seine natürliche Bildhöhe auf."""
+        Ein flacher Knopf ohne Polster (CSS dash-wallpaper-knopf), damit kein
+        Knopf-Chrome ums Bild liegt und er trotzdem per Tastatur und Screenreader
+        erreichbar ist. Die umschließende Box mit valign START hält die feste
+        Bildhöhe; ein Picture allein zöge sich sonst auf seine natürliche
+        Bildhöhe auf."""
         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         box.set_halign(Gtk.Align.CENTER)
         box.set_valign(Gtk.Align.START)
@@ -183,11 +184,13 @@ class OverviewPage(compat.PageBase):
         compat.set_cover(self._hg_bild)
         self._hg_bild.set_size_request(440, 132)
         self._hg_bild.add_css_class("dash-wallpaper")
-        self._hg_bild.set_cursor(Gdk.Cursor.new_from_name("pointer", None))
-        klick = Gtk.GestureClick()
-        klick.connect("released", lambda *_: self._springe_zu("background"))
-        self._hg_bild.add_controller(klick)
-        box.append(self._hg_bild)
+        knopf = Gtk.Button(child=self._hg_bild)
+        knopf.add_css_class("flat")
+        knopf.add_css_class("dash-wallpaper-knopf")
+        knopf.set_cursor(Gdk.Cursor.new_from_name("pointer", None))
+        knopf.connect("clicked", lambda _k: self._springe_zu("background"))
+        compat.a11y(knopf, label=_("Background"))
+        box.append(knopf)
         return box
 
     # --- Aktualisierung ---

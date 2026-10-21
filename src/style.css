@@ -217,6 +217,17 @@ window.silber .navigation-sidebar {
   border-radius: 12px;
 }
 
+/* Knopf ums Übersichts-Wallpaper: nur Fokusring, kein Polster, kein Hover-Grau. */
+.dash-wallpaper-knopf {
+  padding: 0;
+  border-radius: 12px;
+}
+
+.dash-wallpaper-knopf:hover,
+.dash-wallpaper-knopf:active {
+  background-color: transparent;
+}
+
 /* Fläche, auf der die Monitore räumlich angeordnet liegen. */
 .monitor-flaeche {
   background-color: rgba(0, 0, 0, 0.22);

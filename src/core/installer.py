@@ -38,6 +38,8 @@ import tempfile
 import time
 import zipfile
 
+from gi.repository import Gio, GLib
+
 from src.core import backgrounds
 from src.core.uninstaller import _geschuetzt
 from src.i18n import _, ngettext
@@ -497,12 +499,15 @@ def _link_unsicher(m):
 
 # --- Einsetzen ---
 
-def _ersetze_ordner(quelle, ziel):
+def _ersetze_ordner(quelle, ziel, alt_in_papierkorb=False):
     """Kopiert quelle nach ziel, ohne dass je ein halber Ordner sichtbar ist.
 
     Erst versteckt neben dem Ziel fertig kopieren, dann per rename tauschen.
     Ein vorhandenes Ziel (Update) wird erst danach entfernt; ein Symlink (der
-    Cursor-Spiegel in ~/.icons) nur als Verknüpfung.
+    Cursor-Spiegel in ~/.icons) nur als Verknüpfung. alt_in_papierkorb: das
+    vorhandene Ziel in den Papierkorb statt löschen (Look-Pakete ersetzen
+    Designs, die der Nutzer nicht selbst ausgewählt hat). Klappt das nicht,
+    bleibt das alte Design und das neue wird verworfen.
     """
     if os.path.realpath(quelle) == os.path.realpath(ziel):
         return  # aus dem eigenen Theme-Ordner gezogen, liegt schon da
@@ -516,6 +521,12 @@ def _ersetze_ordner(quelle, ziel):
     # Am Zielort dürfen Links nur in den Zielordner (Varianten wie Papirus-Dark
     # verlinken auf ../Papirus) oder auf Systemdaten zeigen, sonst nirgendwohin.
     _entferne_fremde_links(neu, [basis, "/usr/share"])
+    if os.path.lexists(ziel) and alt_in_papierkorb:
+        try:
+            Gio.File.new_for_path(ziel).trash(None)
+        except GLib.Error:
+            _entferne(neu)
+            return
     if os.path.lexists(ziel):
         os.rename(ziel, alt)
     os.rename(neu, ziel)

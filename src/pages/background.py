@@ -564,7 +564,15 @@ class BackgroundPage(compat.PageBase):
         """Legt das Bild dauerhaft ab und trägt es ins Shell-Design-CSS ein.
         Der Theme-Verweis ist ein Dateipfad, das Bild muss also bleiben."""
         ziel = self._uebernimm(quelle)
-        if ziel and lockscreen.set_background(self._settings, ziel):
+        if not ziel:
+            return
+        try:
+            gesetzt = lockscreen.set_background(self._settings, ziel)
+        except (OSError, ValueError):
+            self._melde(_("The style sheet of the shell theme could not be "
+                          "changed."))
+            return
+        if gesetzt:
             self._sperr_zeigen(ziel)
 
     def _on_sperr_wie_hintergrund(self, _knopf):
@@ -573,7 +581,12 @@ class BackgroundPage(compat.PageBase):
             self._sperr_setze_bild(pfad)
 
     def _on_sperr_entfernen(self, _knopf):
-        lockscreen.clear_background(self._settings)
+        try:
+            lockscreen.clear_background(self._settings)
+        except (OSError, ValueError):
+            self._melde(_("The style sheet of the shell theme could not be "
+                          "changed."))
+            return
         self._sperr_zeigen(None)
 
     def _on_sperr_eigenes(self, _knopf):
@@ -683,16 +696,25 @@ class BackgroundPage(compat.PageBase):
 
     def _gdm_anwenden(self, aktion, meldung):
         """Führt eine GDM-Aktion (apply/reset) im Hintergrund aus. pkexec zeigt
-        dabei seinen eigenen Passwort-Dialog, darum nicht im Main-Loop blockieren."""
+        dabei seinen eigenen Passwort-Dialog, darum nicht im Main-Loop blockieren.
+        Knöpfe gesperrt, bis sie fertig ist: zwei root-Läufe des Helfers dürfen
+        nie gleichzeitig an Zustand und Weiche arbeiten."""
+        if not self._gdm_knoepfe.get_sensitive():
+            return
+        self._gdm_knoepfe.set_sensitive(False)
         self._gdm_status(meldung + _("(enter password)"))
 
         def arbeit():
-            erfolg = aktion()
+            try:
+                erfolg = aktion()
+            except Exception:
+                erfolg = False
             GLib.idle_add(self._gdm_fertig, erfolg)
 
         threading.Thread(target=arbeit, daemon=True).start()
 
     def _gdm_fertig(self, erfolg):
+        self._gdm_knoepfe.set_sensitive(True)
         if erfolg:
             self._gdm_aktualisieren()
         else:

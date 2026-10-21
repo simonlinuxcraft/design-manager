@@ -8,23 +8,25 @@ GTK- und Mauszeiger-Designs kommen in einem späteren Schritt dazu.
 
 import os
 
+from gi.repository import GLib
+
 from src.core import icon_luecken
 
 
-# Such-Orte für Symbole und Mauszeiger. Reihenfolge: zuerst die des Nutzers,
-# dann systemweit. /usr/share/... ist schreibgeschützt (nur lesen).
-ICON_DIRS = [
-    os.path.expanduser("~/.icons"),
-    os.path.expanduser("~/.local/share/icons"),
-    "/usr/share/icons",
-]
+def _such_orte(home_ordner, unterordner):
+    """Erst die Orte des Nutzers, dann alle XDG-Datenordner wie bei GTK
+    (/usr/local/share, /usr/share/gnome ...). Systemweite sind nur lesbar."""
+    orte = [os.path.expanduser(home_ordner),
+            os.path.join(GLib.get_user_data_dir(), unterordner),
+            *(os.path.join(d, unterordner) for d in GLib.get_system_data_dirs())]
+    return list(dict.fromkeys(os.path.normpath(o) for o in orte))
+
+
+# Such-Orte für Symbole und Mauszeiger.
+ICON_DIRS = _such_orte("~/.icons", "icons")
 
 # Such-Orte für GTK- und Shell-Designs.
-THEME_DIRS = [
-    os.path.expanduser("~/.themes"),
-    os.path.expanduser("~/.local/share/themes"),
-    "/usr/share/themes",
-]
+THEME_DIRS = _such_orte("~/.themes", "themes")
 
 # Technische Basis-/Fallback-Designs, die der Nutzer nicht wählen soll.
 VERSTECKTE_THEMES = {"hicolor", "default", "locolor"}

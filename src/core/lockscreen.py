@@ -15,6 +15,7 @@ entfernen ihn rückstandslos wieder.
 
 import os
 import re
+import shutil
 import tempfile
 
 from gi.repository import Gio
@@ -135,6 +136,8 @@ def _schreib(pfad, text):
     da oder die unveränderte alte, nie ein Torso. Schlägt das Schreiben fehl,
     bleibt das Original unangetastet und die temporäre Datei wird entfernt.
     """
+    # realpath: ein verlinktes Theme-CSS bleibt verlinkt; Rechte vom Original.
+    pfad = os.path.realpath(pfad)
     ordner = os.path.dirname(pfad)
     fd, tmp = tempfile.mkstemp(dir=ordner, prefix=".dm-shell-", suffix=".css")
     try:
@@ -142,6 +145,7 @@ def _schreib(pfad, text):
             f.write(text)
             f.flush()
             os.fsync(f.fileno())
+        shutil.copymode(pfad, tmp)
         os.replace(tmp, pfad)
     except OSError:
         try:

@@ -36,6 +36,22 @@ def set_cover(picture):
         picture.set_keep_aspect_ratio(True)
 
 
+# --- Screenreader: Name und Auswahlzustand ----------------------------------
+
+def a11y(widget, label=None, selected=None):
+    """Setzt den Namen (für Widgets ohne Text) und den Auswahlzustand, den
+    sonst nur eine CSS-Klasse zeigt. Kann eine ältere PyGObject die Werte
+    nicht umsetzen, bleibt es beim Tooltip."""
+    try:
+        if label is not None:
+            widget.update_property([Gtk.AccessibleProperty.LABEL], [label])
+        if selected is not None:
+            # int statt bool: der Zustand wird als int-GValue gelesen
+            widget.update_state([Gtk.AccessibleState.SELECTED], [int(selected)])
+    except (TypeError, ValueError, AttributeError):
+        pass
+
+
 # --- FlowBox leeren (Gtk.FlowBox.remove_all ist 4.12) -----------------------
 
 def flowbox_clear(box):
